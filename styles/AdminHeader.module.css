@@ -1,0 +1,13 @@
+.adminHeader { 
+    width: 100%;   
+
+    display: flex;
+    
+}
+
+.logo { 
+    background-image: url('../public/favicon.ico');
+    background-size: 100%;
+    width: 50px;
+    height: 50px;
+}
