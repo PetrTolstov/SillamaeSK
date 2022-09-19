@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SillamaeSK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+    body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        font-family: 'Montserrat', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+    }
+
+
+    .aboveNav{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logoInformation{
+        display: flex;
+        align-items: center;
+    }
+
+    .logo{
+        background-image: url("../public/logo.png");
+        width: 52px;
+        height: 70px;
+        background-size: 100% 100%;
+        margin-right: 20px;
+    }
+
+    .logoName{
+        font-weight: 700;
+        font-size: 32px;
+    }
+
+    .changeLanguage{
+        color: #525252;
+
+        font-weight: 600;
+        font-size: 16px;
+
+        width: 44px;
+        height: 44px;
+        border: 2px #979797 solid;
+        border-radius: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .mainNav{
+        height: 50px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .mainNav a{
+        border-top: 2px #CACACA solid;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+
+        color: #525252;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    .mainNav a.chosenPage{
+        border-top: 2px #0070f3 solid ;
+        color: #0167FF;
+    }
+
+    .firstBlock{
+        margin-top: 50px;
+        border-radius: 10px;
+
+        background-image: url("../public/backgroundMainPageFirstBlock.png");
+        height: 200px;
+        background-size: 100% 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .schedule{
+        font-size: 20px;
+        background: rgba(33, 53, 77, 0.75);
+        color: #FFFFFF;
+        border-radius: 5px;
+        padding: 15px;
+        margin: auto 20px;
+    }
+
+    .schedule thead{
+        font-weight: 700;
+    }
+
+
+
+    .scheduleButtons{
+        position: relative;
+        bottom: -10px;
+        display: flex;
+        margin: 0 20px;
+
+    }
+
+    .scheduleButtons button{
+        color: white;
+        border: none;
+        width: 31px;
+        height: 31px;
+
+    }
+
+    .scheduleButtons .right{
+        background: #005BE4;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .scheduleButtons .left{
+        background: #0167FF;
+        border-radius: 5px 0 0 5px;
+    }
+
+    .secondBlock{
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-around;
+        flex-direction: row;
+        margin-top: 30px;
+    }
+
+    .secondBlock .news{
+        padding: 10px 25px;
+        width: 40%;
+        border-radius: 5px;
+        box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .secondBlock .news h2{
+        font-weight: 500;
+        font-size: 32px;
+    }
+
+    .secondBlock .news p{
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 24px;
+    }
+
+    .secondBlock .news span{
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 20px;
+    }
+
+    .secondBlock .news button{
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .secondBlock .textSecondBlock{
+        width: 40%;
+    }
+
+    .secondBlock .textSecondBlock h2{
+        font-weight: 500;
+        font-size: 32px;
+    }
+
+    .secondBlock .textSecondBlock p{
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-size: 20px;
+    }
+
+
+    .secondBlock .news button{
+        margin-left: auto;
+        border: none;
+        padding: 5px 15px;
+        color: #ffffff;
+        background: #0167FF;
+        border-radius: 3px;
+    }
+
+    .sideNav{
+        margin: 25px auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 60vw;
+    }
+
+    .sideNav a{
+        margin: 3%;
+        color: #002B5C;
+        padding: 10px 20px;
+        box-shadow: 0 10px 10px 5px rgba(0, 0, 0, 0.1);
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+    }
+
+    .kalender{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 100%;
+        background: #0167FF;
+        color: white;
+    }
+
+    .kalender h2{
+        font-weight: 500;
+        font-size: 32px;
+    }
+
+    .kalender .kalenderFrame{
+        max-width: 1000px;
+        min-width: 400px;
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .kalender ul{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin: 0;
+        padding: 0  ;
+
+    }
+
+    .kalender ul li{
+        display: flex;
+        flex-direction: column;
+        background: #FFFFFF;
+        color: #002B5C;
+        padding: 0 25px;
+        border-radius: 5px;
+        list-style-type: none;
+    }
+
+    .kalenderFrame li h3{
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+    }
+
+    .kalenderFrame li p{
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+    }
+
+    .kalenderFrame li span{
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+    }
+
+    .kalenderFrame li button{
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .kalenderFrame li button{
+        margin-left: auto;
+        border: none;
+        padding: 5px 15px;
+        color: #ffffff;
+        background: #0167FF;
+        border-radius: 3px;
+    }
+
+    .kalenderFrame button{
+        margin: 20px;
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .kalenderFrame .more{
+        margin-left: auto;
+        border: none;
+        padding: 5px 15px;
+        color: #ffffff;
+        background: #002967;
+        border-radius: 3px;
+    }
+
+    .kalender .place:before{
+        background-image: url("../public/placeMarker.png");
+        background-repeat: no-repeat;
+        background-size: 12px 17px;
+        display: inline-block;
+        width: 20px;
+        height: 17px;
+        content:"";
+    }
+
+    .kalender .time:before{
+        background-image: url("../public/timeClock.png");
+        background-repeat: no-repeat;
+        background-size: 15px 15px;
+        display: inline-block;
+        width: 20px;
+        height: 15px;
+        content:"";
+    }
+
+    footer{
+        background: #181818;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+
+        color: white;
+    }
+
+    footer a{
+        padding: 20px;
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    footer a:after{
+        position: relative;
+        bottom: -6px;
+        background-image: url("../public/facebookIcon.png");
+        background-repeat: no-repeat;
+        background-size: 26px 26px;
+        display: inline-block;
+        width: 26px;
+        height: 26px;
+        content:"";
+    }
+
+    footer .footerInformation h3{
+        font-weight: 500;
+        font-size: 24px;
+    }
+
+    footer .footerInformation span{
+        font-weight: 500;
+        font-size: 16px;
+    }
+
+    .footerInformation{
+        max-width: 1000px;
+        min-width: 400px;
+        width: 60%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .containerInformationFooter{
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .containerInformationFooter .containerScheduleFooter{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .containerInformationFooter .containerScheduleFooter div{
+        display: flex;
+        flex-direction: column;
+        margin-right: 40px;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="aboveNav">
+            <div class="logoInformation">
+                <a class="logo" alt="logo"></a>
+                <h1 class="logoName">SILLAMÄE SPORDIKOMPLEKS KALEV</h1>
+            </div>
+            <a class="changeLanguage">RU</a>
+        </div>
+        <nav class="mainNav">
+            <a class="chosenPage">Avaleht</a>
+            <a>Spordikompleksist</a>
+            <a>Sportimisvõimalused</a>
+            <a>Kalender</a>
+            <a>Hinnakiri</a>
+            <a>Hostel</a>
+            <a>Kontakt</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="firstBlock">
+            <table class="schedule">
+                <thead>
+                    <tr>
+                        <th>OLEME AVATUD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Spordikompleks</td>
+                        <td>Ujula</td>
+                    </tr>
+                    <tr>
+                        <td>E-R: 08.00-22.00</td>
+                        <td>E-R: 07.00-21.00</td>
+                    </tr>
+                    <tr>
+                        <td>L-P: 09.00-21.00</td>
+                        <td>L-P: 09.00-17.00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="scheduleButtons">
+                <button class="left">◀</button>
+                <button class="right">▶</button>
+            </div>
+        </article>
+
+        <div class="secondBlock">
+            <article class="textSecondBlock">
+                <h2>SPORTIMISVÕIMALUSED</h2>
+                <p>Pakume oma klientidele Sillamäel väga erinevaid spordialasid!</p>
+                <p>Spordikompleks Kalev on kõigile kättesaadav! Lastelt täiskasvanutele!
+                    Koht on kõigile!</p>
+            </article>
+            <article class="news">
+                <h2>Viimased uudised</h2>
+                <p>Neljapäeval on maraton...</p>
+                <span>22.05.2022</span>
+                <button>Vaata rohkem   ▶</button>
+            </article>
+        </div>
+
+        <nav class="sideNav">
+            <a>Kunstmurustaadion</a>
+            <a>Ujula</a>
+            <a>Kergejõustikumaneež</a>
+            <a>Staadion</a>
+
+            <a>Fitnessi saal</a>
+            <a>Suur saal</a>
+            <a>Väike saal</a>
+            <a>Jõusaal</a>
+            <a>Maleruum</a>
+        </nav>
+    </main>
+
+    <article class="kalender">
+        <div class="kalenderFrame">
+
+        <h2>SÜNDMUSTE KALENDER </h2>
+        <ul>
+            <li>
+                <h3>Jalgpallimatš</h3>
+                <p>Sillamäe vs. Narva</p>
+                <span class="place">Narva staadion</span>
+                <span class="time">16:30 - 19:00</span>
+                <button>Rohkem</button>
+            </li>
+            <li>
+            <h3>Jalgpallimatš</h3>
+            <p>Sillamäe vs. Narva</p>
+            <span class="place">Narva staadion</span>
+            <span class="time">16:30 - 19:00</span>
+            <button>Rohkem</button>
+            </li>
+            <li>
+                <h3>Jalgpallimatš</h3>
+                <p>Sillamäe vs. Narva</p>
+                <span class="place">Narva staadion</span>
+                <span class="time">16:30 - 19:00</span>
+                <button>Rohkem</button>
+            </li>
+            <li>
+                <h3>Jalgpallimatš</h3>
+                <p>Sillamäe vs. Narva</p>
+                <span class="place">Narva staadion</span>
+                <span class="time">16:30 - 19:00</span>
+                <button>Rohkem</button>
+            </li>
+
+        </ul>
+        <button class="more">Vaata rohkem   ▶</button>
+        </div>
+    </article>
+
+    <footer>
+        <div class="footerInformation">
+            <div class="containerInformationFooter">
+                <h3>Võta ühendust</h3>
+                <span>+372 5487 4236</span>
+                <span>example@gmail.com</span>
+            </div>
+            <div class="containerInformationFooter">
+                <h3>Spordikompleks kalev</h3>
+                <span>Võta ühendust</span>
+                <span>Spordikompleks Kalev</span>
+                <span>Külasta meid</span>
+            </div>
+            <div class="containerInformationFooter">
+                <h3>Külasta meid</h3>
+                <div class="containerScheduleFooter">
+                    <div>
+                        <span>Spordikompleks:</span>
+                        <span>E-R: 08.00-22.00</span>
+                        <span>L-P: 09.00-21.00</span>
+                    </div>
+                    <div>
+                        <span>Ujula:</span>
+                        <span>E-R: 07.00-21.00</span>
+                        <span>L-P: 09.00-17.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a>Jälgi meid sotsiaalmeedias </a>
+    </footer>
+</body>
+</html>

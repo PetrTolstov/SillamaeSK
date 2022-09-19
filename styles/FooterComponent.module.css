@@ -1,0 +1,62 @@
+.footer{
+    background: #181818;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    color: white;
+}
+
+.footer a{
+    padding: 20px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.footer a:after{
+    position: relative;
+    bottom: -6px;
+    background-image: url("../public/facebookIcon.png");
+    background-repeat: no-repeat;
+    background-size: 26px 26px;
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    content:"";
+}
+
+.footerInformation h3{
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.footerInformation span{
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.footerInformation{
+    max-width: 1000px;
+    min-width: 400px;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.containerInformationFooter{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.containerInformationFooter .containerScheduleFooter{
+    display: flex;
+    flex-direction: row;
+}
+
+.containerInformationFooter .containerScheduleFooter div {
+    display: flex;
+    flex-direction: column;
+}

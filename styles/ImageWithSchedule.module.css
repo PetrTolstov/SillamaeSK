@@ -1,0 +1,52 @@
+.ImageWithSchedule{
+    margin-top: 50px;
+    border-radius: 10px;
+
+    background-image: url("../public/backgroundMainPageFirstBlock.png");
+    height: 200px;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.schedule{
+    font-size: 20px;
+    background: rgba(33, 53, 77, 0.75);
+    color: #FFFFFF;
+    border-radius: 5px;
+    padding: 15px;
+    margin: auto 20px;
+}
+
+.schedule thead{
+    font-weight: 700;
+}
+
+
+
+.scheduleButtons{
+    position: relative;
+    bottom: -10px;
+    display: flex;
+    margin: 0 20px;
+
+}
+
+.scheduleButtons button{
+    color: white;
+    border: none;
+    width: 31px;
+    height: 31px;
+
+}
+
+.scheduleButtons .right{
+    background: #005BE4;
+    border-radius: 0 5px 5px 0;
+}
+
+.scheduleButtons .left{
+    background: #0167FF;
+    border-radius: 5px 0 0 5px;
+}

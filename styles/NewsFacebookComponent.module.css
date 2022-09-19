@@ -1,0 +1,44 @@
+.NewsFacebook{
+    padding: 10px 25px;
+    width: 40%;
+    border-radius: 5px;
+    box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.NewsFacebook h2{
+    font-weight: 500;
+    font-size: 32px;
+}
+
+.NewsFacebook p{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+}
+
+.NewsFacebook span{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+}
+
+.NewsFacebook button{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.NewsFacebook button{
+    margin-left: auto;
+    border: none;
+    padding: 5px 15px;
+    color: #ffffff;
+    background: #0167FF;
+    border-radius: 3px;
+}

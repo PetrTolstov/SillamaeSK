@@ -1,0 +1,66 @@
+
+.aboveNav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.logoInformation{
+    display: flex;
+    align-items: center;
+}
+
+.logo{
+    background-image: url("../public/logo.png");
+    width: 52px;
+    height: 70px;
+    background-size: 100% 100%;
+    margin-right: 20px;
+}
+
+.logoName{
+    font-weight: 700;
+    font-size: 32px;
+}
+
+.changeLanguage{
+    color: #525252;
+
+    font-weight: 600;
+    font-size: 16px;
+
+    width: 44px;
+    height: 44px;
+    border: 2px #979797 solid;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.mainNav{
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.mainNav a{
+    border-top: 2px #CACACA solid;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+
+    color: #525252;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.mainNav a.chosenPage{
+    border-top: 2px #0070f3 solid ;
+    color: #0167FF;
+}

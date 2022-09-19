@@ -1,0 +1,14 @@
+.textSecondBlock{
+    width: 40%;
+}
+
+.textSecondBlock h2{
+    font-weight: 500;
+    font-size: 32px;
+}
+
+.textSecondBlock p{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 20px;
+}

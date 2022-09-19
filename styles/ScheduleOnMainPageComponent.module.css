@@ -1,0 +1,116 @@
+.kalender{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    background: #0167FF;
+    color: white;
+}
+
+.kalender h2{
+    font-weight: 500;
+    font-size: 32px;
+}
+
+.kalenderFrame{
+    max-width: 1000px;
+    min-width: 400px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.kalender ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0  ;
+
+}
+
+.kalender ul li{
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    color: #002B5C;
+    padding: 0 25px;
+    border-radius: 5px;
+    list-style-type: none;
+}
+
+.kalenderFrame li h3{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.kalenderFrame li p{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.kalenderFrame li span{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.kalenderFrame li button{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.kalenderFrame li button{
+    margin-left: auto;
+    border: none;
+    padding: 5px 15px;
+    color: #ffffff;
+    background: #0167FF;
+    border-radius: 3px;
+}
+
+.kalenderFrame button{
+    margin: 20px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+button.more{
+    margin-left: auto;
+    border: none;
+    padding: 5px 15px;
+    color: #ffffff;
+    background: #002967;
+    border-radius: 3px;
+}
+
+.place:before{
+    background-image: url("../public/placeMarker.png");
+    background-repeat: no-repeat;
+    background-size: 12px 17px;
+    display: inline-block;
+    width: 20px;
+    height: 17px;
+    content:"";
+}
+
+.time:before{
+    background-image: url("../public/timeClock.png");
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    display: inline-block;
+    width: 20px;
+    height: 15px;
+    content:"";
+}
