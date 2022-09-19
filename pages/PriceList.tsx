@@ -2,9 +2,9 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 
 import styles from '../styles/Home.module.css'
-import HeaderComponent from "./components/HeaderComponent";
+import HeaderComponent from "../components/HeaderComponent";
 
-import FooterComponent from "./components/FooterComponent";
+import FooterComponent from "../components/FooterComponent";
 
 const Home: NextPage = () => {
     return (

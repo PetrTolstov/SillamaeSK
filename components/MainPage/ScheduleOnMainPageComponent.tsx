@@ -1,4 +1,4 @@
-import styles from '../../../styles/ScheduleOnMainPageComponent.module.css'
+import styles from '../../styles/ScheduleOnMainPageComponent.module.css'
 
 
 function ScheduleOnMainPageComponent(){

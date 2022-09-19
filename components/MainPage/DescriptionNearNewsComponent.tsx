@@ -1,4 +1,4 @@
-import styles from '../../../styles/DescriptionNearNewsComponent.module.css'
+import styles from '../../styles/DescriptionNearNewsComponent.module.css'
 
 function DescriptionNearNewsComponent(){
     return(

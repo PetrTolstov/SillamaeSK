@@ -1,4 +1,4 @@
-import styles from '../../../styles/PriceListTableComponent.module.css'
+import styles from '../../styles/PriceListTableComponent.module.css'
 
 function PriceListTableComponent(){
     return(

@@ -5,7 +5,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    max-width: 67vw;
 }
 
 .sideNav a{

@@ -1,4 +1,4 @@
-import styles from '../../../styles/NewsFacebookComponent.module.css'
+import styles from '../../styles/NewsFacebookComponent.module.css'
 
 function NewsFacebookComponent(){
     return(

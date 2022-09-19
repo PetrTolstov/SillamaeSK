@@ -1,4 +1,4 @@
-import styles from '../../../styles/SideNavComponent.module.css'
+import styles from '../../styles/SideNavComponent.module.css'
 
 function SideNavComponent(){
     return(

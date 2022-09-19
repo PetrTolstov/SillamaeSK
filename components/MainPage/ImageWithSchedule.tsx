@@ -1,4 +1,4 @@
-import styles from '../../../styles/ImageWithSchedule.module.css'
+import styles from '../../styles/ImageWithSchedule.module.css'
 
 function ImageWithScheduleComponent(){
     return(

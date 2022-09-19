@@ -15,4 +15,5 @@
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
+  flex-wrap: wrap;
 }

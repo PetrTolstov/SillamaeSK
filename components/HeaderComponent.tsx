@@ -1,4 +1,4 @@
-import styles from '../../styles/HeaderComponent.module.css'
+import styles from '../styles/HeaderComponent.module.css'
 import Link from "next/link";
 
 function HeaderComponent(){
