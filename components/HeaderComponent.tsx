@@ -1,7 +1,23 @@
 import styles from '../styles/HeaderComponent.module.css'
 import Link from "next/link";
+import {useState} from "react";
 
 function HeaderComponent(){
+    /*
+    const [isEst, setLang] = useState(true);
+    const handleLanguageChange = () => {
+        if (isEst) {
+            setLang(false);
+        } else {
+            setLang(true)
+        }
+    }
+    <div onClick={handleLanguageChange} className={styles.lang}>
+        {isEst ? "RU" : "EE"}
+    </div>
+    </div>
+
+     */
     return(
         <header>
             <div className={styles.aboveNav}>
