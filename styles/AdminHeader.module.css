@@ -1,13 +1,119 @@
-.adminHeader { 
-    width: 100%;   
-
+.adminHeader {
+    width: 75%;
     display: flex;
-    
+    justify-content: center;
 }
 
-.logo { 
+.adminHeader>* {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.adminHeader :nth-child(3) {
+    font-weight: 300;
+}
+
+.logo {
     background-image: url('../public/favicon.ico');
-    background-size: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     width: 50px;
     height: 50px;
+}
+
+@media (max-width: 600px) {
+    .logo {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.sidePanel {
+    background-color: #F9F9F9;
+    height: 100%;
+    min-width: 200px;
+    width: 25%;
+    position: fixed;
+    right: 0;
+    top: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.BurgerButton { 
+    align-self:flex-end;
+}
+
+
+
+/* HAMBURGER BUTTON STYLING */
+.container {
+    cursor: pointer;
+    display: flex;
+}
+
+.svg {
+    transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.active .svg {
+    transform: rotate(90deg);
+}
+
+.path {
+    transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1),
+        stroke-dasharray 500ms cubic-bezier(0.4, 0, 0.2, 1),
+        stroke-dashoffset 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.path:nth-child(1) {
+    transform-origin: 36% 40%;
+}
+
+.path:nth-child(2) {
+    stroke-dasharray: 29 299;
+}
+
+.path:nth-child(3) {
+    transform-origin: 35% 63%;
+}
+
+.path:nth-child(4) {
+    stroke-dasharray: 29 299;
+}
+
+.path:nth-child(5) {
+    transform-origin: 61% 52%;
+}
+
+.path:nth-child(6) {
+    transform-origin: 62% 52%;
+}
+
+.active path:nth-child(1) {
+    transform: translateX(9px) translateY(1px) rotate(45deg);
+}
+
+.active path:nth-child(2) {
+    stroke-dasharray: 225 299;
+    stroke-dashoffset: -72px;
+}
+
+.active path:nth-child(3) {
+    transform: translateX(9px) translateY(1px) rotate(-45deg);
+}
+
+.active path:nth-child(4) {
+    stroke-dasharray: 225 299;
+    stroke-dashoffset: -72px;
+}
+
+.active path:nth-child(5) {
+    transform: translateX(9px) translateY(1px) rotate(-45deg);
+}
+
+.active path:nth-child(6) {
+    transform: translateX(9px) translateY(1px) rotate(45deg);
 }
