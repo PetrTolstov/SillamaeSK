@@ -1,6 +1,7 @@
 import styles from '../styles/HeaderComponent.module.css'
 import Link from "next/link";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
 
 function HeaderComponent(){
     /*
@@ -18,6 +19,9 @@ function HeaderComponent(){
     </div>
 
      */
+    const router = useRouter()
+    console.log(router.pathname)
+
     return(
         <header>
             <div className={styles.aboveNav}>
@@ -29,25 +33,25 @@ function HeaderComponent(){
             </div>
             <nav className={styles.mainNav}>
                 <Link href={`/`}>
-                    <a className={styles.chosenPage}>Avaleht</a>
+                    <a className={router.pathname == '/' ? styles.chosenPage : ""}>Avaleht</a>
                 </Link>
                 <Link href={`/SportComplex`}>
-                    <a>Spordikompleksist</a>
+                    <a className={router.pathname == '/SportComplex' ? styles.chosenPage : ""}>Spordikompleksist</a>
                 </Link>
                 <Link href={`/SportOpportunities`}>
-                    <a>Sportimisvõimalused</a>
+                    <a className={router.pathname == '/SportOpportunities' ? styles.chosenPage : ""}>Sportimisvõimalused</a>
                 </Link>
                 <Link href={`/Kalender`}>
-                    <a>Kalender</a>
+                    <a className={router.pathname == '/Kalender' ? styles.chosenPage : ""}>Kalender</a>
                 </Link>
                 <Link href={`/PriceList`}>
-                    <a>Hinnakiri</a>
+                    <a className={router.pathname == '/PriceList' ? styles.chosenPage : ""}>Hinnakiri</a>
                 </Link>
                 <Link href={`/Hostel`}>
-                    <a>Hostel</a>
+                    <a className={router.pathname == '/Hostel' ? styles.chosenPage : ""}>Hostel</a>
                 </Link>
                 <Link href={`/Contact`}>
-                    <a>Kontakt</a>
+                    <a className={router.pathname == '/Contact' ? styles.chosenPage : ""}>Kontakt</a>
                 </Link>
             </nav>
         </header>
