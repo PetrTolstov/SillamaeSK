@@ -4,6 +4,9 @@ import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 
 function HeaderComponent(){
+    function openNav(){
+        console.log("S")
+    }
     /*
     const [isEst, setLang] = useState(true);
     const handleLanguageChange = () => {
@@ -20,7 +23,6 @@ function HeaderComponent(){
 
      */
     const router = useRouter()
-    console.log(router.pathname)
 
     return(
         <header>
@@ -29,6 +31,7 @@ function HeaderComponent(){
                     <a className={styles.logo}/>
                     <h1 className={styles.logoName}>SILLAMÄE SPORDIKOMPLEKS KALEV</h1>
                 </div>
+                <button className={styles.openbtn} onClick={openNav}>☰</button>
                 <a className={styles.changeLanguage}>RU</a>
             </div>
             <nav className={styles.mainNav}>

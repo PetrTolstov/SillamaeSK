@@ -13,7 +13,7 @@ import Layout from "../components/Layout";
 const Home: NextPage = () => {
   return (
       <Layout>
-        <main>
+        <main className={styles.main}>
             <ImageWithSchedule/>
 
             <div className={styles.textAndNewsFrame}>
