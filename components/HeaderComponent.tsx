@@ -1,11 +1,30 @@
 import styles from '../styles/HeaderComponent.module.css'
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/router";
 
+function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+        width,
+        height
+    };
+}
+
+
 function HeaderComponent(){
+    const [navStyles, setNavStyles] = useState([styles.mainNav, styles.hiddenMainNav])
+
     function openNav(){
-        console.log("S")
+        switch (navStyles.length){
+            case 1:
+                setNavStyles([styles.mainNav, styles.hiddenMainNav])
+                break
+            case 2:
+                setNavStyles([styles.mainNav])
+                break
+        }
+
     }
     /*
     const [isEst, setLang] = useState(true);
@@ -23,7 +42,7 @@ function HeaderComponent(){
 
      */
     const router = useRouter()
-
+    const navRef = useRef(null)
     return(
         <header>
             <div className={styles.aboveNav}>
@@ -34,7 +53,7 @@ function HeaderComponent(){
                 <button className={styles.openbtn} onClick={openNav}>☰</button>
                 <a className={styles.changeLanguage}>RU</a>
             </div>
-            <nav className={styles.mainNav}>
+            <nav className={navStyles.join(' ')}>
                 <Link href={`/`}>
                     <a className={router.pathname == '/' ? styles.chosenPage : ""}>Avaleht</a>
                 </Link>

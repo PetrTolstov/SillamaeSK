@@ -1,8 +1,4 @@
 @media screen and (max-width: 1300px) {
-    .mainNav{
-        display: none !important;
-    }
-
     .changeLanguage{
         display: none !important;
     }
@@ -13,6 +9,26 @@
 
     .aboveNav{
         min-width: 90vw;
+    }
+
+
+
+
+    nav.mainNav{
+        position: fixed;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        top: 0;
+        left: 0;
+        background: #ffffff;
+        height: auto;
+        width: 75%;
+    }
+
+
+    nav.hiddenMainNav{
+        display: none !important;
     }
 }
 
