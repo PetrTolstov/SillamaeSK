@@ -431,15 +431,7 @@ const EditingForm = ({ priceListElement, handleChange }: { priceListElement: Pri
                 })
 			}}>
 			{loading ? <p>Loading...</p> : <></>}
-			{error ? (
-				<p>
-					{error.graphQLErrors.map((el) => (
-						<p>{el.message}</p>
-					))}
-				</p>
-			) : (
-				<></>
-			)}
+
 			<input
 				type='text'
 				defaultValue={name.EST ?? ""}

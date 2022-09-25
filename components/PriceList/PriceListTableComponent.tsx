@@ -41,12 +41,16 @@ function PriceListTableComponent(){
                     element.className = styles.hidden
                 });
                 element.className = styles.showen
+                // @ts-ignore
                 document.getElementById(`${id}-butP`).className = styles.tdButtonHd
+                // @ts-ignore
                 document.getElementById(`${id}-butM`).className = styles.tdButton
 
             }else{
                 element.className = styles.hidden
+                // @ts-ignore
                 document.getElementById(`${id}-butP`).className = styles.tdButton
+                // @ts-ignore
                 document.getElementById(`${id}-butM`).className = styles.tdButtonHd
             }
         }
