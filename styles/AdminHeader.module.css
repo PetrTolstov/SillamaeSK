@@ -2,6 +2,7 @@
     width: 75%;
     display: flex;
     justify-content: center;
+    margin-top: 10px;
 }
 
 .adminHeader>* {
@@ -37,13 +38,42 @@
     position: fixed;
     right: 0;
     top: 0;
-
     display: flex;
     flex-direction: column;
 }
+.mainSidePanelContent > ul { 
+    list-style: none;
+}
+
+.sidePanelShown { 
+    animation-name: SideBarAppear;
+    animation-duration: 1s;
+}
+.sidePanelHidden { 
+    animation-name: SideBarHiding;
+    animation-duration: 1s;
+}
+@keyframes SideBarHiding {
+    0% { 
+        right: 0;
+    }
+    100% { 
+        right: -1000px;
+    }
+}
+@keyframes SideBarAppear {
+    0% { 
+        right: -1000px;
+    }
+    100% { 
+        right: 0 
+    }
+}
 
 .BurgerButton { 
-    align-self:flex-end;
+    position: fixed;
+    top: 0;
+    right: 0;
 }
 
 

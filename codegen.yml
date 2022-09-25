@@ -1,0 +1,12 @@
+overwrite: true
+schema: "https://sillamae-sk.herokuapp.com/"
+documents: "operations/**/*.graphql"
+generates:
+  graphqlGenerated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"

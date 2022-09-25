@@ -1,0 +1,6 @@
+.PricingMainContainer { 
+    font-family: 'Montserrat', sans-serif;
+    display: flex; 
+    flex-direction: column;
+    padding: 5%;
+}

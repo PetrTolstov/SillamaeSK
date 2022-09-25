@@ -1,0 +1,19 @@
+.mainContainer { 
+    display: flex;
+    align-items: center;
+}   
+.elementBody {
+    display: flex;
+    align-items: center;
+    height: 35px;
+    padding: 0px 20px;
+    border: 1px solid #DDDDDD;
+    border-radius: 5px;
+    width: 400px;
+}
+
+.btns { 
+    display: flex;
+    justify-content: center;
+    margin-left: 10px;
+}
