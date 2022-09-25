@@ -1,0 +1,26 @@
+mutation CreateNewPriceListElement($newPriceListElement: PriceListElementInput!) {
+  CreateNewPriceListElement(newPriceListElement: $newPriceListElement) {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    tickets {
+      description {
+        RUS
+        EST
+        ENG
+      }
+      duration {
+        hours
+        additionalInfo {
+          RUS
+          EST
+          ENG
+        }
+      }
+      price
+    }
+  }
+}

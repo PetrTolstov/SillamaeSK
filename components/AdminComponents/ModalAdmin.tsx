@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { PriceListElement, PriceListElementInput } from "../../graphqlGenerated/graphql";
+import {
+	PriceListElement,
+	PriceListElementInput,
+	useCreateNewPriceListElementMutation,
+    GetPriceListDocument
+} from "../../graphqlGenerated/graphql";
 import { modalTypes } from "../../pages/AdminAccess/Pricing";
 import styles from "../../styles/ModalAdmin.module.css";
 import { ButtonAdmin } from "./ButtonAdmin";
@@ -58,6 +63,7 @@ const AddingForm = () => {
 			price: 0,
 		},
 	]);
+	const [createNewPriceListElement, { error, loading, data }] = useCreateNewPriceListElementMutation();
 
 	const addTicket = () => {
 		setNewTickets((prevTickets) => [
@@ -104,9 +110,7 @@ const AddingForm = () => {
 		if (depth == 1 && property1 == properties.description) {
 			if (lang == properties.ENG || lang == properties.EST || lang == properties.RUS) {
 				TicketsCopy[id][property1][lang] = e.currentTarget.value;
-				console.log(e.currentTarget.value);
 			}
-			console.log(TicketsCopy[id][property1]);
 		} else if (property1 == properties.price) {
 			TicketsCopy[id][property1] = parseFloat(e.currentTarget.value);
 		} else if (depth == 2 && property1 == properties.duration && property2 == properties.hours) {
@@ -125,11 +129,29 @@ const AddingForm = () => {
 				onSubmit={(e) => {
 					e.preventDefault();
 					console.log(newTickets);
+                    console.log(newName);
+                    createNewPriceListElement({
+                        variables: { newPriceListElement: { name: { ...newName }, tickets: [...newTickets] } },
+                        refetchQueries: [{query: GetPriceListDocument}]
+                    });
 				}}>
-				<input type='text' placeholder='Nimi EST' />
-				<input type='text' placeholder='Nimi ENG' />
-				<input type='text' placeholder='Nimi RUS' />
-				<table>
+				<input type='text' placeholder='Nimi EST' onChange={e => { 
+                    const newNameCopy = newName; 
+                    newNameCopy.EST = e.currentTarget.value
+                    setNewName(newNameCopy);
+                }}/>
+				<input type='text' placeholder='Nimi ENG' onChange={e => { 
+                    const newNameCopy = newName; 
+                    newNameCopy.ENG = e.currentTarget.value
+                    setNewName(newNameCopy);
+                }}/>
+				<input type='text' placeholder='Nimi RUS' onChange={e => { 
+                    const newNameCopy = newName; 
+                    newNameCopy.RUS = e.currentTarget.value
+                    setNewName(newNameCopy);
+                }}/>
+                {loading ? <p>Loading...</p> : <></>}
+				<table className={styles.table}>
 					<thead>
 						<tr>
 							<th>Teenuste nimetus</th>
@@ -137,7 +159,7 @@ const AddingForm = () => {
 							<th>Uus hind</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody className={styles.tbody}>
 						{newTickets.map((ticket, id) => (
 							<tr key={id}>
 								<td>
@@ -236,7 +258,7 @@ const AddingForm = () => {
 										className={["ENG", styles.input].join(" ")}
 										type='text'
 										placeholder='Selgitus ENG'
-                                        onChange={(e) => {
+										onChange={(e) => {
 											handleChange(
 												e,
 												id,
@@ -253,7 +275,7 @@ const AddingForm = () => {
 										className={["RUS", styles.input].join(" ")}
 										type='text'
 										placeholder='Selgitus RUS'
-                                        onChange={(e) => {
+										onChange={(e) => {
 											handleChange(
 												e,
 												id,
@@ -266,17 +288,25 @@ const AddingForm = () => {
 									/>
 								</td>
 								<td>
-									<input id={`${id}`} name={`price`} type='number' step={"0.1"} onChange={e => { 
-                                        handleChange(e, id, 1, properties[e.currentTarget.name as properties]);
-                                    }} />
+									<input
+										id={`${id}`}
+										name={`price`}
+										type='number'
+										step={"0.1"}
+										onChange={(e) => {
+											handleChange(e, id, 1, properties[e.currentTarget.name as properties]);
+										}}
+									/>
 								</td>
 							</tr>
 						))}
 					</tbody>
 				</table>
-				<input type='submit' />
+				<div className={styles.formBottomBtns}>
+					<ButtonAdmin label={"Lisage teenus"} filled action={addTicket} />
+					<input className={styles.submitBtn} type='submit' />
+				</div>
 			</form>
-			<ButtonAdmin label={"Lisage teenus"} filled action={addTicket} />
 		</>
 	);
 };
@@ -284,7 +314,9 @@ const AddingForm = () => {
 const EditingForm = ({ priceListElement }: { priceListElement: PriceListElement }) => {
 	return (
 		<form className={styles.form} onSubmit={() => {}}>
-			<input type='text' />
+			<input type='text' defaultValue={priceListElement.name.EST ?? ""} />
+			<input type='text' defaultValue={priceListElement.name.ENG ?? ""} />
+			<input type='text' defaultValue={priceListElement.name.RUS ?? ""} />
 			<table>
 				<thead>
 					<tr>

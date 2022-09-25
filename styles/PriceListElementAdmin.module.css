@@ -9,7 +9,7 @@
     padding: 0px 20px;
     border: 1px solid #DDDDDD;
     border-radius: 5px;
-    width: 400px;
+    min-width: 300px;
 }
 
 .btns { 

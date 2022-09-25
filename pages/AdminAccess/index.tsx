@@ -19,7 +19,7 @@ export function AdminLayout({ children }: React.PropsWithChildren) {
 	return (
 		<>
             <Header />
-			<div>{children}</div>
+			<div style={{display: "flex", justifyContent: "center", width: "75%"}}>{children}</div>
         </>
 			
 	);
@@ -48,8 +48,7 @@ export function SidePanel() {
 				<BurgerButton togglePanel={togglePanel}/>
 				<div className={styles.mainSidePanelContent}>
                     <ul>
-                        <li><Link href={"AdminAccess/Pricing"}>Pricing</Link></li>
-                        <li>another</li>
+                        <li><Link href={"/AdminAccess/Pricing"}>Pricing</Link></li>
                     </ul>
                 </div>
 			</div>

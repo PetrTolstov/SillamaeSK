@@ -1,10 +1,14 @@
 import { ReactElement, useState } from "react";
 import { AdminLayout } from ".";
 import { NextPageWithLayout } from "../_app";
-import styles from "../../styles/Pricing.module.css";
+import styles from "../../styles/PricingAdmin.module.css";
 import { PriceListElementAdmin } from "../../components/AdminComponents/PriceListElementAdmin";
 
-import { PriceListElement, useGetPriceListQuery } from "../../graphqlGenerated/graphql";
+import {
+	PriceListElement,
+	useDeletePriceListElementByIdMutation,
+	useGetPriceListQuery,
+} from "../../graphqlGenerated/graphql";
 import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
 import { ModalAdmin } from "../../components/AdminComponents/ModalAdmin";
 
@@ -15,23 +19,29 @@ export enum modalTypes {
 
 const Pricing: NextPageWithLayout = () => {
 	const { data, loading, error } = useGetPriceListQuery();
+	
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const [currentModalType, setCurrentModalType] = useState<modalTypes>();
 	const [currentPriceListElement, setCurrentPriceListElement] = useState<PriceListElement>();
 
+    const [DeletePriceListElementById, { data: deleteData, loading: deleteLoading, error: deleteError }] =
+		useDeletePriceListElementByIdMutation();
+
 	const openEditModal = (priceListElement: PriceListElement) => {
-        setCurrentPriceListElement(priceListElement)
+		setCurrentPriceListElement(priceListElement);
 		setCurrentModalType(modalTypes.editModal);
 		setShowModal(true);
 	};
 	const closeModal = () => {
 		setShowModal(false);
 	};
-	const deleteAction = () => {};
-	const addAction = () => {
-        setCurrentModalType(modalTypes.addModal); 
-        setShowModal(true);
+	const deleteAction = (_id: string) => {
+        DeletePriceListElementById({ variables: { id: _id}})
     };
+	const addAction = () => {
+		setCurrentModalType(modalTypes.addModal);
+		setShowModal(true);
+	};
 
 	return (
 		<>
@@ -54,8 +64,12 @@ const Pricing: NextPageWithLayout = () => {
 							<PriceListElementAdmin
 								key={priceListElement?._id}
 								title={priceListElement?.name}
-								openEditModal={() => {openEditModal(priceListElement!)}}
-								deleteAction={() => {}}
+								openEditModal={() => {
+									openEditModal(priceListElement!);
+								}}
+								deleteAction={() => {
+									deleteAction(priceListElement?._id ?? "");
+								}}
 							/>
 						))
 					)}
