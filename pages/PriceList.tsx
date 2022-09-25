@@ -1,24 +1,18 @@
 import type { NextPage } from "next";
-
+import styles from '../styles/PriceList.module.css'
 import Layout from "../components/Layout";
-import AppIsBeingBuilt from "../components/Temporary/AppIsBeingBuilt";
-import { useGetPriceListQuery } from "../graphqlGenerated/graphql";
+import PriceListTableComponent from "../components/PriceList/PriceListTableComponent";
 
 const PriceList: NextPage = () => {
-	const { loading, error, data } = useGetPriceListQuery();
 	return (
 		<Layout>
-			<AppIsBeingBuilt isEst={true} />
-			<div>
-				{loading ? <p>Loading...</p> : <></>}
-				{data?.GetPriceList.map((el) => (
-					<div key={el?._id}>
-						<h1>{el?.name.ENG}</h1>
-						<h1>{el?.name.EST}</h1>
-						<h1>{el?.name.RUS}</h1>
-					</div>
-				))}
-			</div>
+			<main className={styles.main}>
+				<div className={styles.container}>
+					<h1 className={styles.h1}>Hinnakiri</h1>
+					<PriceListTableComponent/>
+				</div>
+
+			</main>
 		</Layout>
 	);
 };

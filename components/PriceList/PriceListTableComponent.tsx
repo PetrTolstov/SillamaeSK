@@ -1,25 +1,118 @@
 import styles from '../../styles/PriceListTableComponent.module.css'
+import {GetPriceListQuery, useGetPriceListQuery} from "../../graphqlGenerated/graphql";
+import Image from "next/image";
+import minus from "../../public/minus.svg"
+import plus from "../../public/plus.svg"
+import {useEffect, useState} from "react";
+
+
 
 function PriceListTableComponent(){
-    return(
-        <table>
-            <tbody className={styles.label}>
-                <tr>
-                    <td colSpan={3} className={styles.labelTd}>
-                        <span className={styles.tdHeader}>Example Price list</span>
-                        <button className={styles.tdButton}>+</button>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody className={styles.hiden}>
+    const { loading, error, data } = useGetPriceListQuery();
+
+
+
+    function showOrHideLabel(id : any, index : number){
+        Array.from(document.getElementsByClassName(styles.tdButtonHd)).forEach(function (element) {
+            if(element.id.charAt(element.id.length - 1) == "P"){
+                element.className = styles.tdButton
+            }else {
+                element.className = styles.tdButtonHd
+            }
+        });
+
+        Array.from(document.getElementsByClassName(styles.tdButton)).forEach(function (element) {
+            if(element.id.charAt(element.id.length - 1) == "P"){
+                element.className = styles.tdButton
+            }else {
+                element.className = styles.tdButtonHd
+            }
+        });
+
+
+
+
+
+
+        let element = document.getElementById(`${id}`)
+        if(element){
+            if(element.className == styles.hidden){
+                Array.from(document.getElementsByClassName(styles.showen)).forEach(function (element) {
+                    element.className = styles.hidden
+                });
+                element.className = styles.showen
+                document.getElementById(`${id}-butP`).className = styles.tdButtonHd
+                document.getElementById(`${id}-butM`).className = styles.tdButton
+
+            }else{
+                element.className = styles.hidden
+                document.getElementById(`${id}-butP`).className = styles.tdButton
+                document.getElementById(`${id}-butM`).className = styles.tdButtonHd
+            }
+        }
+
+    }
+
+
+
+    function createTableItems(date: GetPriceListQuery | undefined){
+        let data = date?.GetPriceList
+
+        return data?.map((element, index) => (
+            <tbody className={styles.label} key={element?._id}>
             <tr>
-                <td colSpan={3} className={styles.labelTd}>
-                    <span className={styles.tdHeader}>Example Price list</span>
-                    <button className={styles.tdButton}>+</button>
+                <td colSpan={3} width={"100%"} className={styles.labelTd}>
+                    <span className={styles.tdHeader}>{element?.name.EST}</span>
+                    <div className={styles.tdButton} id={`${element?._id}-butP`}  onClick={() => {showOrHideLabel(element?._id, index)}}>
+                        <Image src={plus} />
+                    </div>
+
+                    <div className={styles.tdButtonHd} id={`${element?._id}-butM`} onClick={() => {showOrHideLabel(element?._id, index)}}>
+                        <Image src={minus}  />
+                    </div>
                 </td>
             </tr>
+            <div className={styles.hidden} id={element?._id}>
+                <tr className={styles.moreHidden} key={`${element?._id}-${element?.tickets?.length}`} >
+                    <td className={styles.description}>
+                        Teenuste nimetus
+                    </td>
+                    <td className={styles.duration}>
+                        Kestvus
+                    </td>
+                    <td className={styles.price}>
+                        Uus hind
+                    </td>
+                </tr>
+                {element?.tickets?.map((el, i) => (
+                    <tr className={styles.moreHidden} key={`${element?._id}-${i}`} >
+                        <td className={styles.description}>
+                            {el?.description.EST}
+                        </td>
+                        <td className={styles.duration}>
+                            {`${el?.duration?.hours}h${el?.duration?.additionalInfo ? `; ${el?.duration?.additionalInfo.EST}` : ""}`}
+                        </td>
+                        <td className={styles.price}>
+                            {`${el?.price}h`}
+                        </td>
+                    </tr>
+                ))}
+            </div>
             </tbody>
-        </table>
+        ))
+
+    }
+
+
+    return(
+        <>
+            {loading ? <p>Loading...</p> :
+                <table className={styles.table}>
+                    {createTableItems(data)}
+                </table>
+                }
+
+        </>
     )
 }
 
