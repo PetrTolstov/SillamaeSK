@@ -1,0 +1,26 @@
+mutation ChangePriceListElementById($updatedPriceListElement: PriceListElementInput!, $id: String!) {
+  UpdatePriceListElementById(updatedPriceListElement: $updatedPriceListElement, id: $id) {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    tickets {
+      description {
+        RUS
+        EST
+        ENG
+      }
+      duration {
+        hours
+        additionalInfo {
+          RUS
+          EST
+          ENG
+        }
+      }
+      price
+    }
+  }
+}

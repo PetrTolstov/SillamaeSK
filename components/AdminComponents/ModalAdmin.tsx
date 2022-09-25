@@ -1,20 +1,52 @@
+import { useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import {
 	PriceListElement,
 	PriceListElementInput,
 	useCreateNewPriceListElementMutation,
-    GetPriceListDocument
+	GetPriceListDocument,
+	useChangePriceListElementByIdMutation,
+	Ticket,
 } from "../../graphqlGenerated/graphql";
 import { modalTypes } from "../../pages/AdminAccess/Pricing";
 import styles from "../../styles/ModalAdmin.module.css";
 import { ButtonAdmin } from "./ButtonAdmin";
+import { gql } from "@apollo/client";
 
 type ModalAdminProps = {
 	priceListElement?: PriceListElement;
 	modalType: modalTypes | undefined;
 	closeModal: () => void;
 };
-
+enum ticketProperties {
+	description = "description",
+	duration = "duration",
+	additionalInfo = "additionalInfo",
+	EST = "EST",
+	ENG = "ENG",
+	RUS = "RUS",
+	hours = "hours",
+	price = "price",
+}
+type handleChangeArgs = {
+	objToCopy: any;
+	func: (
+		TicketsCopy: {
+			description: { RUS: string; ENG: string; EST: string };
+			duration: { hours: number; additionalInfo: { RUS: string; ENG: string; EST: string } };
+			price: number;
+		}[]
+	) => void;
+	e: React.ChangeEvent<HTMLInputElement>;
+	id: number;
+	depth: number;
+	property1: ticketProperties;
+	property2?: ticketProperties;
+	lang?: ticketProperties;
+};
+type FormProps = {
+	handleChange: ({}: handleChangeArgs) => void;
+};
 // props -> priceListElement object
 export const ModalAdmin = ({ priceListElement, modalType, closeModal }: ModalAdminProps) => {
 	useEffect(() => {
@@ -25,15 +57,39 @@ export const ModalAdmin = ({ priceListElement, modalType, closeModal }: ModalAdm
 		};
 	}, []);
 
+	// depth: 1 or 2
+	const handleChange = ({ objToCopy, func, e, id, depth, property1, property2, lang }: handleChangeArgs): void => {
+		const TicketsCopy = JSON.parse(JSON.stringify(objToCopy));
+		if (depth == 1 && property1 == ticketProperties.description) {
+			if (lang == ticketProperties.ENG || lang == ticketProperties.EST || lang == ticketProperties.RUS) {
+				TicketsCopy[id][property1][lang] = e.currentTarget.value;
+			}
+		} else if (property1 == ticketProperties.price) {
+			TicketsCopy[id][property1] = parseFloat(e.currentTarget.value);
+		} else if (depth == 2 && property1 == ticketProperties.duration && property2 == ticketProperties.hours) {
+			TicketsCopy[id][property1][property2] = parseFloat(e.currentTarget.value);
+		} else if (
+			depth == 2 &&
+			property1 == ticketProperties.duration &&
+			property2 == ticketProperties.additionalInfo
+		) {
+			if (lang == ticketProperties.ENG || lang == ticketProperties.EST || lang == ticketProperties.RUS) {
+				TicketsCopy[id][property1][property2][lang] = e.currentTarget.value;
+			}
+		}
+
+		func(TicketsCopy);
+	};
+
 	return (
 		<>
 			<div className={styles.shadow}></div>
 			<div className={styles.container}>
 				<h2>Header</h2>
 				{modalType == modalTypes.editModal ? (
-					<EditingForm priceListElement={priceListElement!} />
+					<EditingForm handleChange={handleChange} priceListElement={priceListElement!} />
 				) : (
-					<AddingForm />
+					<AddingForm handleChange={handleChange} />
 				)}
 				<div>
 					<ButtonAdmin label={"CLOSE"} action={closeModal} />
@@ -43,7 +99,7 @@ export const ModalAdmin = ({ priceListElement, modalType, closeModal }: ModalAdm
 	);
 };
 
-const AddingForm = () => {
+const AddingForm = ({ handleChange }: FormProps) => {
 	const [newName, setNewName] = useState({ RUS: "", ENG: "", EST: "" });
 	const [newTickets, setNewTickets] = useState([
 		{
@@ -86,42 +142,6 @@ const AddingForm = () => {
 			},
 		]);
 	};
-
-	enum properties {
-		description = "description",
-		duration = "duration",
-		additionalInfo = "additionalInfo",
-		EST = "EST",
-		ENG = "ENG",
-		RUS = "RUS",
-		hours = "hours",
-		price = "price",
-	}
-	// depth: 1 or 2
-	const handleChange = (
-		e: React.ChangeEvent<HTMLInputElement>,
-		id: number,
-		depth: number,
-		property1: properties,
-		property2?: properties,
-		lang?: properties
-	) => {
-		const TicketsCopy = newTickets;
-		if (depth == 1 && property1 == properties.description) {
-			if (lang == properties.ENG || lang == properties.EST || lang == properties.RUS) {
-				TicketsCopy[id][property1][lang] = e.currentTarget.value;
-			}
-		} else if (property1 == properties.price) {
-			TicketsCopy[id][property1] = parseFloat(e.currentTarget.value);
-		} else if (depth == 2 && property1 == properties.duration && property2 == properties.hours) {
-			TicketsCopy[id][property1][property2] = parseFloat(e.currentTarget.value);
-		} else if (depth == 2 && property1 == properties.duration && property2 == properties.additionalInfo) {
-			if (lang == properties.ENG || lang == properties.EST || lang == properties.RUS) {
-				TicketsCopy[id][property1][property2][lang] = e.currentTarget.value;
-			}
-		}
-		setNewTickets(TicketsCopy);
-	};
 	return (
 		<>
 			<form
@@ -129,28 +149,40 @@ const AddingForm = () => {
 				onSubmit={(e) => {
 					e.preventDefault();
 					console.log(newTickets);
-                    console.log(newName);
-                    createNewPriceListElement({
-                        variables: { newPriceListElement: { name: { ...newName }, tickets: [...newTickets] } },
-                        refetchQueries: [{query: GetPriceListDocument}]
-                    });
+					console.log(newName);
+					createNewPriceListElement({
+						variables: { newPriceListElement: { name: { ...newName }, tickets: [...newTickets] } },
+						refetchQueries: [{ query: GetPriceListDocument }],
+					});
 				}}>
-				<input type='text' placeholder='Nimi EST' onChange={e => { 
-                    const newNameCopy = newName; 
-                    newNameCopy.EST = e.currentTarget.value
-                    setNewName(newNameCopy);
-                }}/>
-				<input type='text' placeholder='Nimi ENG' onChange={e => { 
-                    const newNameCopy = newName; 
-                    newNameCopy.ENG = e.currentTarget.value
-                    setNewName(newNameCopy);
-                }}/>
-				<input type='text' placeholder='Nimi RUS' onChange={e => { 
-                    const newNameCopy = newName; 
-                    newNameCopy.RUS = e.currentTarget.value
-                    setNewName(newNameCopy);
-                }}/>
-                {loading ? <p>Loading...</p> : <></>}
+				<input
+					type='text'
+					placeholder='Nimi EST'
+					onChange={(e) => {
+						const newNameCopy = newName;
+						newNameCopy.EST = e.currentTarget.value;
+						setNewName(newNameCopy);
+					}}
+				/>
+				<input
+					type='text'
+					placeholder='Nimi ENG'
+					onChange={(e) => {
+						const newNameCopy = newName;
+						newNameCopy.ENG = e.currentTarget.value;
+						setNewName(newNameCopy);
+					}}
+				/>
+				<input
+					type='text'
+					placeholder='Nimi RUS'
+					onChange={(e) => {
+						const newNameCopy = newName;
+						newNameCopy.RUS = e.currentTarget.value;
+						setNewName(newNameCopy);
+					}}
+				/>
+				{loading ? <p>Loading...</p> : <></>}
 				<table className={styles.table}>
 					<thead>
 						<tr>
@@ -174,14 +206,18 @@ const AddingForm = () => {
 											// const TicketsCopy = [...newTickets];
 											// TicketsCopy[id].description.EST = e.currentTarget.value;
 											// setNewTickets(TicketsCopy);
-											handleChange(
+											handleChange({
+												objToCopy: newTickets,
+												func: setNewTickets,
 												e,
 												id,
-												1,
-												properties[e.currentTarget.name as properties],
-												undefined,
-												properties[e.currentTarget.classList[0] as properties]
-											);
+												depth: 1,
+												property1: ticketProperties[e.currentTarget.name as ticketProperties],
+												property2: undefined,
+												lang: ticketProperties[
+													e.currentTarget.classList[0] as ticketProperties
+												],
+											});
 										}}
 									/>
 									<input
@@ -191,14 +227,18 @@ const AddingForm = () => {
 										type='text'
 										placeholder='Teenuse nimetus ENG'
 										onChange={(e) => {
-											handleChange(
+											handleChange({
+												objToCopy: newTickets,
+												func: setNewTickets,
 												e,
 												id,
-												1,
-												properties[e.currentTarget.name as properties],
-												undefined,
-												properties[e.currentTarget.classList[0] as properties]
-											);
+												depth: 1,
+												property1: ticketProperties[e.currentTarget.name as ticketProperties],
+												property2: undefined,
+												lang: ticketProperties[
+													e.currentTarget.classList[0] as ticketProperties
+												],
+											});
 										}}
 									/>
 									<input
@@ -208,14 +248,18 @@ const AddingForm = () => {
 										type='text'
 										placeholder='Teenuse nimetus RUS'
 										onChange={(e) => {
-											handleChange(
+											handleChange({
+												objToCopy: newTickets,
+												func: setNewTickets,
 												e,
 												id,
-												1,
-												properties[e.currentTarget.name as properties],
-												undefined,
-												properties[e.currentTarget.classList[0] as properties]
-											);
+												depth: 1,
+												property1: ticketProperties[e.currentTarget.name as ticketProperties],
+												property2: undefined,
+												lang: ticketProperties[
+													e.currentTarget.classList[0] as ticketProperties
+												],
+											});
 										}}
 									/>
 								</td>
@@ -226,13 +270,18 @@ const AddingForm = () => {
 										type='number'
 										step={"0.1"}
 										onChange={(e) => {
-											handleChange(
+											handleChange({
+												objToCopy: newTickets,
+												func: setNewTickets,
 												e,
 												id,
-												2,
-												properties[e.currentTarget.parentElement?.classList[0] as properties],
-												properties[e.currentTarget.name as properties]
-											);
+												depth: 2,
+												property1:
+													ticketProperties[
+														e.currentTarget.parentElement?.classList[0] as ticketProperties
+													],
+												property2: ticketProperties[e.currentTarget.name as ticketProperties],
+											});
 										}}
 									/>
 									<input
@@ -242,14 +291,21 @@ const AddingForm = () => {
 										type='text'
 										placeholder='Selgitus EST'
 										onChange={(e) => {
-											handleChange(
+											handleChange({
+												objToCopy: newTickets,
+												func: setNewTickets,
 												e,
 												id,
-												2,
-												properties[e.currentTarget.parentElement?.classList[0] as properties],
-												properties[e.currentTarget.name as properties],
-												properties[e.currentTarget.classList[0] as properties]
-											);
+												depth: 2,
+												property1:
+													ticketProperties[
+														e.currentTarget.parentElement?.classList[0] as ticketProperties
+													],
+												property2: ticketProperties[e.currentTarget.name as ticketProperties],
+												lang: ticketProperties[
+													e.currentTarget.classList[0] as ticketProperties
+												],
+											});
 										}}
 									/>
 									<input
@@ -259,14 +315,21 @@ const AddingForm = () => {
 										type='text'
 										placeholder='Selgitus ENG'
 										onChange={(e) => {
-											handleChange(
+											handleChange({
+												objToCopy: newTickets,
+												func: setNewTickets,
 												e,
 												id,
-												2,
-												properties[e.currentTarget.parentElement?.classList[0] as properties],
-												properties[e.currentTarget.name as properties],
-												properties[e.currentTarget.classList[0] as properties]
-											);
+												depth: 2,
+												property1:
+													ticketProperties[
+														e.currentTarget.parentElement?.classList[0] as ticketProperties
+													],
+												property2: ticketProperties[e.currentTarget.name as ticketProperties],
+												lang: ticketProperties[
+													e.currentTarget.classList[0] as ticketProperties
+												],
+											});
 										}}
 									/>
 									<input
@@ -276,14 +339,21 @@ const AddingForm = () => {
 										type='text'
 										placeholder='Selgitus RUS'
 										onChange={(e) => {
-											handleChange(
+											handleChange({
+												objToCopy: newTickets,
+												func: setNewTickets,
 												e,
 												id,
-												2,
-												properties[e.currentTarget.parentElement?.classList[0] as properties],
-												properties[e.currentTarget.name as properties],
-												properties[e.currentTarget.classList[0] as properties]
-											);
+												depth: 2,
+												property1:
+													ticketProperties[
+														e.currentTarget.parentElement?.classList[0] as ticketProperties
+													],
+												property2: ticketProperties[e.currentTarget.name as ticketProperties],
+												lang: ticketProperties[
+													e.currentTarget.classList[0] as ticketProperties
+												],
+											});
 										}}
 									/>
 								</td>
@@ -294,7 +364,14 @@ const AddingForm = () => {
 										type='number'
 										step={"0.1"}
 										onChange={(e) => {
-											handleChange(e, id, 1, properties[e.currentTarget.name as properties]);
+											handleChange({
+												objToCopy: newTickets,
+												func: setNewTickets,
+												e,
+												id,
+												depth: 1,
+												property1: ticketProperties[e.currentTarget.name as ticketProperties],
+											});
 										}}
 									/>
 								</td>
@@ -311,12 +388,85 @@ const AddingForm = () => {
 	);
 };
 
-const EditingForm = ({ priceListElement }: { priceListElement: PriceListElement }) => {
+const updateMutation = gql`
+	mutation UpdatePriceListElementById($updatedPriceListElement: PriceListElementInput!, $Id: String!) {
+		UpdatePriceListElementById(updatedPriceListElement: $updatedPriceListElement, id: $Id) {
+			_id
+			name {
+				RUS
+				EST
+				ENG
+			}
+		}
+	}
+`;
+const EditingForm = ({ priceListElement, handleChange }: { priceListElement: PriceListElement } & FormProps) => {
+	// const [updatePriceElement, { data, loading, error }] = useChangePriceListElementByIdMutation({
+	// 	onError(error) {
+	// 		console.log("ERROR::::");
+	// 		console.log(error);
+	// 	},
+	// });
+    const [updatePriceElement, { data, loading, error }] = useMutation(updateMutation);
+	const [name, setName] = useState({ ...priceListElement.name });
+	const [tickets, setTickets] = useState([...priceListElement.tickets!]);
 	return (
-		<form className={styles.form} onSubmit={() => {}}>
-			<input type='text' defaultValue={priceListElement.name.EST ?? ""} />
-			<input type='text' defaultValue={priceListElement.name.ENG ?? ""} />
-			<input type='text' defaultValue={priceListElement.name.RUS ?? ""} />
+		<form
+			className={styles.form}
+			onSubmit={(e) => {
+				e.preventDefault();
+				const newUpdated: PriceListElementInput = {
+					name: { ...name },
+					tickets: [...tickets],
+				};
+				updatePriceElement({
+					variables: {
+                        Id: priceListElement._id,
+						updatedPriceListElement: newUpdated,
+					},
+				}).catch(e => { 
+                    e.networkError.result.errors.map((e: { message: any; }) => { 
+                        console.log(e.message);
+                    })
+                })
+			}}>
+			{loading ? <p>Loading...</p> : <></>}
+			{error ? (
+				<p>
+					{error.graphQLErrors.map((el) => (
+						<p>{el.message}</p>
+					))}
+				</p>
+			) : (
+				<></>
+			)}
+			<input
+				type='text'
+				defaultValue={name.EST ?? ""}
+				onChange={(e) => {
+					const copyName = name;
+					copyName.EST = e.currentTarget.value;
+					setName(copyName);
+				}}
+			/>
+			<input
+				type='text'
+				defaultValue={name.ENG ?? ""}
+				onChange={(e) => {
+					const copyName = name;
+					copyName.ENG = e.currentTarget.value;
+					setName(copyName);
+				}}
+			/>
+			<input
+				type='text'
+				defaultValue={name.RUS ?? ""}
+				onChange={(e) => {
+					const copyName = name;
+					copyName.RUS = e.currentTarget.value;
+					setName(copyName);
+				}}
+			/>
 			<table>
 				<thead>
 					<tr>
@@ -326,30 +476,181 @@ const EditingForm = ({ priceListElement }: { priceListElement: PriceListElement 
 					</tr>
 				</thead>
 				<tbody>
-					{priceListElement?.tickets ? (
-						priceListElement?.tickets.map((ticket) => (
-							<tr key={ticket?.description.ENG}>
-								<td>
-									<input type='text' defaultValue={ticket?.description.RUS ?? ""} />
-									<input type='text' defaultValue={ticket?.description.EST ?? ""} />
-									<input type='text' defaultValue={ticket?.description.ENG ?? ""} />
-								</td>
-								<td>
-									<input type={"number"} step='0.1' defaultValue={ticket?.duration?.hours} />
-									<input type='text' defaultValue={ticket?.duration?.additionalInfo?.RUS ?? ""} />
-									<input type='text' defaultValue={ticket?.duration?.additionalInfo?.EST ?? ""} />
-									<input type='text' defaultValue={ticket?.duration?.additionalInfo?.ENG ?? ""} />
-								</td>
-								<td>
-									<input type='number' step={"0.1"} defaultValue={ticket?.price} />
-								</td>
-							</tr>
-						))
-					) : (
-						<></>
-					)}
+					{tickets.map((ticket, id) => (
+						<tr key={id}>
+							<td>
+								<input
+									id={`${id}`}
+									name={`description`}
+									defaultValue={tickets[id]?.description.EST ?? ""}
+									className={["EST", styles.input].join(" ")}
+									type='text'
+									placeholder='Teenuse nimetus EST'
+									onChange={(e) => {
+										handleChange({
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 1,
+											property1: ticketProperties[e.currentTarget.name as ticketProperties],
+											property2: undefined,
+											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+										});
+									}}
+								/>
+								<input
+									id={`${id}`}
+									name={`description`}
+									defaultValue={ticket?.description.ENG ?? ""}
+									className={["ENG", styles.input].join(" ")}
+									type='text'
+									placeholder='Teenuse nimetus ENG'
+									onChange={(e) => {
+										handleChange({
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 1,
+											property1: ticketProperties[e.currentTarget.name as ticketProperties],
+											property2: undefined,
+											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+										});
+									}}
+								/>
+								<input
+									id={`${id}`}
+									name={`description`}
+									defaultValue={ticket?.description.RUS ?? ""}
+									className={["RUS", styles.input].join(" ")}
+									type='text'
+									placeholder='Teenuse nimetus RUS'
+									onChange={(e) => {
+										handleChange({
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 1,
+											property1: ticketProperties[e.currentTarget.name as ticketProperties],
+											property2: undefined,
+											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+										});
+									}}
+								/>
+							</td>
+							<td>
+								<input
+									id={`${id}`}
+									name={`hours`}
+									defaultValue={ticket?.duration?.hours ?? ""}
+									type='number'
+									step={"0.1"}
+									onChange={(e) => {
+										handleChange({
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 2,
+											property1:
+												ticketProperties[
+													e.currentTarget.parentElement?.classList[0] as ticketProperties
+												],
+											property2: ticketProperties[e.currentTarget.name as ticketProperties],
+										});
+									}}
+								/>
+								<input
+									id={`${id}`}
+									name={`additionalInfo`}
+									defaultValue={ticket?.duration?.additionalInfo?.EST ?? ""}
+									className={["EST", styles.input].join(" ")}
+									type='text'
+									placeholder='Teenuse nimetus EST'
+									onChange={(e) => {
+										handleChange({
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 1,
+											property1: ticketProperties[e.currentTarget.name as ticketProperties],
+											property2: undefined,
+											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+										});
+									}}
+								/>
+								<input
+									id={`${id}`}
+									name={`additionalInfo`}
+									defaultValue={ticket?.duration?.additionalInfo?.ENG ?? ""}
+									className={["ENG", styles.input].join(" ")}
+									type='text'
+									placeholder='Teenuse nimetus ENG'
+									onChange={(e) => {
+										handleChange({
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 1,
+											property1: ticketProperties[e.currentTarget.name as ticketProperties],
+											property2: undefined,
+											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+										});
+									}}
+								/>
+								<input
+									id={`${id}`}
+									name={`additionalInfo`}
+									defaultValue={ticket?.duration?.additionalInfo?.RUS ?? ""}
+									className={["RUS", styles.input].join(" ")}
+									type='text'
+									placeholder='Teenuse nimetus RUS'
+									onChange={(e) => {
+										handleChange({
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 1,
+											property1: ticketProperties[e.currentTarget.name as ticketProperties],
+											property2: undefined,
+											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+										});
+									}}
+								/>
+							</td>
+							<td>
+								<input
+									id={`${id}`}
+									name={`price`}
+									defaultValue={ticket?.price ?? ""}
+									type='number'
+									step={"0.1"}
+									onChange={(e) => {
+										handleChange({
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 2,
+											property1:
+												ticketProperties[
+													e.currentTarget.parentElement?.classList[0] as ticketProperties
+												],
+											property2: ticketProperties[e.currentTarget.name as ticketProperties],
+										});
+									}}
+								/>
+							</td>
+						</tr>
+					))}
 				</tbody>
 			</table>
+			<input type='submit' />
 		</form>
 	);
 };

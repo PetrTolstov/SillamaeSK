@@ -30,7 +30,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   CreateNewPriceListElement?: Maybe<PriceListElement>;
   DeletePriceListElementById: Scalars['String'];
-  UpdatePriceListElementById: Scalars['String'];
+  UpdatePriceListElementById: PriceListElement;
 };
 
 
@@ -45,7 +45,7 @@ export type MutationDeletePriceListElementByIdArgs = {
 
 
 export type MutationUpdatePriceListElementByIdArgs = {
-  _id: Scalars['String'];
+  id: Scalars['String'];
   updatedPriceListElement: PriceListElementInput;
 };
 
@@ -57,6 +57,12 @@ export type PriceListElement = {
 };
 
 export type PriceListElementInput = {
+  name: TextContentInput;
+  tickets?: InputMaybe<Array<InputMaybe<TicketInput>>>;
+};
+
+export type PriceListElementInput1 = {
+  _id: Scalars['String'];
   name: TextContentInput;
   tickets?: InputMaybe<Array<InputMaybe<TicketInput>>>;
 };
@@ -105,6 +111,14 @@ export type DeletePriceListElementByIdMutationVariables = Exact<{
 
 
 export type DeletePriceListElementByIdMutation = { __typename?: 'Mutation', DeletePriceListElementById: string };
+
+export type ChangePriceListElementByIdMutationVariables = Exact<{
+  updatedPriceListElement: PriceListElementInput;
+  id: Scalars['String'];
+}>;
+
+
+export type ChangePriceListElementByIdMutation = { __typename?: 'Mutation', UpdatePriceListElementById: { __typename?: 'PriceListElement', _id: string, name: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null }, tickets?: Array<{ __typename?: 'Ticket', price: number, description: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null }, duration?: { __typename?: 'Duration', hours: number, additionalInfo?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null } | null> | null } };
 
 export type GetPriceListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -197,6 +211,64 @@ export function useDeletePriceListElementByIdMutation(baseOptions?: Apollo.Mutat
 export type DeletePriceListElementByIdMutationHookResult = ReturnType<typeof useDeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationResult = Apollo.MutationResult<DeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationOptions = Apollo.BaseMutationOptions<DeletePriceListElementByIdMutation, DeletePriceListElementByIdMutationVariables>;
+export const ChangePriceListElementByIdDocument = gql`
+    mutation ChangePriceListElementById($updatedPriceListElement: PriceListElementInput!, $id: String!) {
+  UpdatePriceListElementById(
+    updatedPriceListElement: $updatedPriceListElement
+    id: $id
+  ) {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    tickets {
+      description {
+        RUS
+        EST
+        ENG
+      }
+      duration {
+        hours
+        additionalInfo {
+          RUS
+          EST
+          ENG
+        }
+      }
+      price
+    }
+  }
+}
+    `;
+export type ChangePriceListElementByIdMutationFn = Apollo.MutationFunction<ChangePriceListElementByIdMutation, ChangePriceListElementByIdMutationVariables>;
+
+/**
+ * __useChangePriceListElementByIdMutation__
+ *
+ * To run a mutation, you first call `useChangePriceListElementByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangePriceListElementByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changePriceListElementByIdMutation, { data, loading, error }] = useChangePriceListElementByIdMutation({
+ *   variables: {
+ *      updatedPriceListElement: // value for 'updatedPriceListElement'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useChangePriceListElementByIdMutation(baseOptions?: Apollo.MutationHookOptions<ChangePriceListElementByIdMutation, ChangePriceListElementByIdMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangePriceListElementByIdMutation, ChangePriceListElementByIdMutationVariables>(ChangePriceListElementByIdDocument, options);
+      }
+export type ChangePriceListElementByIdMutationHookResult = ReturnType<typeof useChangePriceListElementByIdMutation>;
+export type ChangePriceListElementByIdMutationResult = Apollo.MutationResult<ChangePriceListElementByIdMutation>;
+export type ChangePriceListElementByIdMutationOptions = Apollo.BaseMutationOptions<ChangePriceListElementByIdMutation, ChangePriceListElementByIdMutationVariables>;
 export const GetPriceListDocument = gql`
     query GetPriceList {
   GetPriceList {

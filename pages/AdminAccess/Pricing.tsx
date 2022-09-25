@@ -5,6 +5,7 @@ import styles from "../../styles/PricingAdmin.module.css";
 import { PriceListElementAdmin } from "../../components/AdminComponents/PriceListElementAdmin";
 
 import {
+    GetPriceListDocument,
 	PriceListElement,
 	useDeletePriceListElementByIdMutation,
 	useGetPriceListQuery,
@@ -36,7 +37,10 @@ const Pricing: NextPageWithLayout = () => {
 		setShowModal(false);
 	};
 	const deleteAction = (_id: string) => {
-        DeletePriceListElementById({ variables: { id: _id}})
+        if (confirm("Are you sure you want to delete this element?")) { 
+            DeletePriceListElementById({ variables: { id: _id}, refetchQueries: [{query: GetPriceListDocument}]})
+        }
+        
     };
 	const addAction = () => {
 		setCurrentModalType(modalTypes.addModal);

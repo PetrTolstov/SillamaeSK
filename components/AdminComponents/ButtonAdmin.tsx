@@ -11,7 +11,7 @@ export const ButtonAdmin = ({ label, action, ...props }: ButtonAdminProps) => {
 	const styling = [styles.btn, props.filled ? styles.filledBtn : "", props.border ? styles.borderBtn : ""].join(" ");
 	return (
 		<div>
-			<button className={styling} onClick={action}>
+			<button type="button" className={styling} onClick={action}>
 				{label}
 			</button>
 		</div>
