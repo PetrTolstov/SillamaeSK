@@ -1,5 +1,5 @@
 @media screen and (max-width: 1300px) {
-    .changeLanguage{
+    .hiddenLang{
         display: none !important;
     }
 
@@ -14,8 +14,9 @@
 
 
 
+
     nav.mainNav{
-        position: fixed;
+        position: relative;
         flex-direction: column;
         flex-wrap: nowrap;
         justify-content: flex-start;
@@ -23,9 +24,29 @@
         left: 0;
         background: #ffffff;
         height: auto;
-        width: 75%;
+        width: fit-content;
     }
 
+    .changeLanguage{
+        position: absolute;
+        top: 80px;
+        right: 55px;
+        display: block;
+    }
+
+
+
+    nav.mainNav a{
+        border: none;
+        height: 50px;
+    }
+
+    nav.mainNav a.chosenPage{
+        border: none;
+        background: #0167FF;
+        color: white;
+        border-radius: 3px;
+    }
 
     nav.hiddenMainNav{
         display: none !important;

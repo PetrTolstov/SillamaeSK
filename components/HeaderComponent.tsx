@@ -14,14 +14,27 @@ function getWindowDimensions() {
 
 function HeaderComponent(){
     const [navStyles, setNavStyles] = useState([styles.mainNav, styles.hiddenMainNav])
+    const [langStyle, setLangStyles] = useState([styles.changeLanguage, styles.hiddenLang])
+    const [contentBut, setContentBut] = useState("☰")
 
     function openNav(){
         switch (navStyles.length){
             case 1:
                 setNavStyles([styles.mainNav, styles.hiddenMainNav])
+                setContentBut("☰")
                 break
             case 2:
                 setNavStyles([styles.mainNav])
+                setContentBut("╳")
+                break
+        }
+
+        switch (langStyle.length){
+            case 1:
+                setLangStyles([styles.changeLanguage, styles.hiddenLang])
+                break
+            case 2:
+                setLangStyles([styles.changeLanguage])
                 break
         }
 
@@ -50,8 +63,8 @@ function HeaderComponent(){
                     <a className={styles.logo}/>
                     <h1 className={styles.logoName}>SILLAMÄE SPORDIKOMPLEKS KALEV</h1>
                 </div>
-                <button className={styles.openbtn} onClick={openNav}>☰</button>
-                <a className={styles.changeLanguage}>RU</a>
+                <button className={styles.openbtn} onClick={openNav}>{contentBut}</button>
+                <a className={langStyle.join(" ")}>RU</a>
             </div>
             <nav className={navStyles.join(' ')}>
                 <Link href={`/`}>
