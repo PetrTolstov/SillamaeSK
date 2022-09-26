@@ -11,6 +11,8 @@
 .NewsFacebook h2{
     font-weight: 500;
     font-size: 32px;
+    margin-bottom: 0;
+    margin-top: 10px;
 }
 
 .NewsFacebook p{
@@ -18,6 +20,16 @@
     font-style: normal;
     font-weight: 400;
     font-size: 24px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    box-orient: vertical;
 }
 
 .NewsFacebook span{
@@ -27,14 +39,14 @@
     font-size: 20px;
 }
 
-.NewsFacebook button{
+.NewsFacebook a{
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-size: 20px;
     font-weight: 500;
 }
 
-.NewsFacebook button{
+.NewsFacebook a {
     margin-left: auto;
     border: none;
     padding: 5px 15px;
