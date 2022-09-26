@@ -15,7 +15,7 @@ export const PriceListElementAdmin = ({ title, openEditModal, deleteAction} : Pr
 	return (
 		<div className={styles.mainContainer}>
 			<div className={styles.elementBody}>
-				<p>{title?.RUS}</p>
+				<p>{title?.EST}</p>
 			</div>
 			<div className={styles.btns}>
 				<ButtonAdmin border label={<Image src={Bin} width={23} height={20}/>} action={deleteAction}/>

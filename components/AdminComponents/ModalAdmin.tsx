@@ -46,6 +46,7 @@ type handleChangeArgs = {
 };
 type FormProps = {
 	handleChange: ({}: handleChangeArgs) => void;
+	closeModal: () => void;
 };
 // props -> priceListElement object
 export const ModalAdmin = ({ priceListElement, modalType, closeModal }: ModalAdminProps) => {
@@ -87,9 +88,13 @@ export const ModalAdmin = ({ priceListElement, modalType, closeModal }: ModalAdm
 			<div className={styles.container}>
 				<h2>Header</h2>
 				{modalType == modalTypes.editModal ? (
-					<EditingForm handleChange={handleChange} priceListElement={priceListElement!} />
+					<EditingForm
+						closeModal={closeModal}
+						handleChange={handleChange}
+						priceListElement={priceListElement!}
+					/>
 				) : (
-					<AddingForm handleChange={handleChange} />
+					<AddingForm closeModal={closeModal} handleChange={handleChange} />
 				)}
 				<div>
 					<ButtonAdmin label={"CLOSE"} action={closeModal} />
@@ -99,7 +104,7 @@ export const ModalAdmin = ({ priceListElement, modalType, closeModal }: ModalAdm
 	);
 };
 
-const AddingForm = ({ handleChange }: FormProps) => {
+const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 	const [newName, setNewName] = useState({ RUS: "", ENG: "", EST: "" });
 	const [newTickets, setNewTickets] = useState([
 		{
@@ -154,6 +159,7 @@ const AddingForm = ({ handleChange }: FormProps) => {
 						variables: { newPriceListElement: { name: { ...newName }, tickets: [...newTickets] } },
 						refetchQueries: [{ query: GetPriceListDocument }],
 					});
+					closeModal();
 				}}>
 				<input
 					type='text'
@@ -195,7 +201,6 @@ const AddingForm = ({ handleChange }: FormProps) => {
 						{newTickets.map((ticket, id) => (
 							<tr key={id}>
 								<td>
-									<p>{id + 1}</p>
 									<input
 										id={`${id}`}
 										name={`description`}
@@ -400,16 +405,43 @@ const updateMutation = gql`
 		}
 	}
 `;
-const EditingForm = ({ priceListElement, handleChange }: { priceListElement: PriceListElement } & FormProps) => {
+const EditingForm = ({
+	priceListElement,
+	handleChange,
+	closeModal,
+}: { priceListElement: PriceListElement } & FormProps) => {
 	// const [updatePriceElement, { data, loading, error }] = useChangePriceListElementByIdMutation({
 	// 	onError(error) {
 	// 		console.log("ERROR::::");
 	// 		console.log(error);
 	// 	},
 	// });
-    const [updatePriceElement, { data, loading, error }] = useMutation(updateMutation);
+	const [updatePriceElement, { data, loading, error }] = useMutation(updateMutation);
 	const [name, setName] = useState({ ...priceListElement.name });
 	const [tickets, setTickets] = useState([...priceListElement.tickets!]);
+
+
+    const addTicket = () => {
+		setTickets((prevTickets) => [
+			...prevTickets,
+			{
+				description: {
+					RUS: "",
+					ENG: "",
+					EST: "",
+				},
+				duration: {
+					hours: 0,
+					additionalInfo: {
+						RUS: "",
+						ENG: "",
+						EST: "",
+					},
+				},
+				price: 0,
+			},
+		]);
+	};
 	return (
 		<form
 			className={styles.form}
@@ -419,16 +451,20 @@ const EditingForm = ({ priceListElement, handleChange }: { priceListElement: Pri
 					name: { ...name },
 					tickets: [...tickets],
 				};
+				console.log(newUpdated);
 				updatePriceElement({
 					variables: {
-                        Id: priceListElement._id,
+						Id: priceListElement._id,
 						updatedPriceListElement: newUpdated,
 					},
-				}).catch(e => { 
-                    e.networkError.result.errors.map((e: { message: any; }) => { 
-                        console.log(e.message);
-                    })
-                })
+					refetchQueries: [{ query: GetPriceListDocument }],
+				}).catch((e) => {
+					console.log(e);
+					e.networkError.result.errors.map((e: { message: any }) => {
+						console.log(e.message);
+					});
+				});
+				closeModal();
 			}}>
 			{loading ? <p>Loading...</p> : <></>}
 
@@ -532,11 +568,11 @@ const EditingForm = ({ priceListElement, handleChange }: { priceListElement: Pri
 									}}
 								/>
 							</td>
-							<td>
+							<td className='duration'>
 								<input
 									id={`${id}`}
 									name={`hours`}
-									defaultValue={ticket?.duration?.hours ?? ""}
+									defaultValue={`${ticket?.duration?.hours}` ?? ""}
 									type='number'
 									step={"0.1"}
 									onChange={(e) => {
@@ -567,9 +603,12 @@ const EditingForm = ({ priceListElement, handleChange }: { priceListElement: Pri
 											func: setTickets,
 											e,
 											id,
-											depth: 1,
-											property1: ticketProperties[e.currentTarget.name as ticketProperties],
-											property2: undefined,
+											depth: 2,
+											property1:
+												ticketProperties[
+													e.currentTarget.parentElement?.classList[0] as ticketProperties
+												],
+											property2: ticketProperties[e.currentTarget.name as ticketProperties],
 											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
 										});
 									}}
@@ -587,9 +626,12 @@ const EditingForm = ({ priceListElement, handleChange }: { priceListElement: Pri
 											func: setTickets,
 											e,
 											id,
-											depth: 1,
-											property1: ticketProperties[e.currentTarget.name as ticketProperties],
-											property2: undefined,
+											depth: 2,
+											property1:
+												ticketProperties[
+													e.currentTarget.parentElement?.classList[0] as ticketProperties
+												],
+											property2: ticketProperties[e.currentTarget.name as ticketProperties],
 											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
 										});
 									}}
@@ -607,9 +649,12 @@ const EditingForm = ({ priceListElement, handleChange }: { priceListElement: Pri
 											func: setTickets,
 											e,
 											id,
-											depth: 1,
-											property1: ticketProperties[e.currentTarget.name as ticketProperties],
-											property2: undefined,
+											depth: 2,
+											property1:
+												ticketProperties[
+													e.currentTarget.parentElement?.classList[0] as ticketProperties
+												],
+											property2: ticketProperties[e.currentTarget.name as ticketProperties],
 											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
 										});
 									}}
@@ -619,7 +664,7 @@ const EditingForm = ({ priceListElement, handleChange }: { priceListElement: Pri
 								<input
 									id={`${id}`}
 									name={`price`}
-									defaultValue={ticket?.price ?? ""}
+									defaultValue={`${ticket?.price}` ?? ""}
 									type='number'
 									step={"0.1"}
 									onChange={(e) => {
@@ -628,12 +673,8 @@ const EditingForm = ({ priceListElement, handleChange }: { priceListElement: Pri
 											func: setTickets,
 											e,
 											id,
-											depth: 2,
-											property1:
-												ticketProperties[
-													e.currentTarget.parentElement?.classList[0] as ticketProperties
-												],
-											property2: ticketProperties[e.currentTarget.name as ticketProperties],
+											depth: 1,
+											property1: ticketProperties[e.currentTarget.name as ticketProperties],
 										});
 									}}
 								/>
@@ -642,7 +683,10 @@ const EditingForm = ({ priceListElement, handleChange }: { priceListElement: Pri
 					))}
 				</tbody>
 			</table>
-			<input type='submit' />
+			<div className={styles.formBottomBtns}>
+				<ButtonAdmin label={"Lisage teenus"} filled action={addTicket} />
+				<input className={styles.submitBtn} type='submit' />
+			</div>
 		</form>
 	);
 };
