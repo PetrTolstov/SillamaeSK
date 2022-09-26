@@ -8,7 +8,7 @@
     /* width: 200px;
     height: 200px; */
     z-index: 20;
-
+    border-radius: 5px;
     padding: 10px;
 }
 
@@ -39,6 +39,7 @@
     overflow: scroll;
     display: flex;
     flex-direction: column;
+    padding: 20px;
 }
 
 .formBottomBtns { 

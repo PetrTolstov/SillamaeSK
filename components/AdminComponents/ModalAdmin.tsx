@@ -46,7 +46,7 @@ type handleChangeArgs = {
 };
 type FormProps = {
 	handleChange: ({}: handleChangeArgs) => void;
-    closeModal: () => void;
+	closeModal: () => void;
 };
 // props -> priceListElement object
 export const ModalAdmin = ({ priceListElement, modalType, closeModal }: ModalAdminProps) => {
@@ -88,7 +88,11 @@ export const ModalAdmin = ({ priceListElement, modalType, closeModal }: ModalAdm
 			<div className={styles.container}>
 				<h2>Header</h2>
 				{modalType == modalTypes.editModal ? (
-					<EditingForm closeModal={closeModal} handleChange={handleChange} priceListElement={priceListElement!} />
+					<EditingForm
+						closeModal={closeModal}
+						handleChange={handleChange}
+						priceListElement={priceListElement!}
+					/>
 				) : (
 					<AddingForm closeModal={closeModal} handleChange={handleChange} />
 				)}
@@ -155,7 +159,7 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 						variables: { newPriceListElement: { name: { ...newName }, tickets: [...newTickets] } },
 						refetchQueries: [{ query: GetPriceListDocument }],
 					});
-                    closeModal();
+					closeModal();
 				}}>
 				<input
 					type='text'
@@ -197,7 +201,6 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 						{newTickets.map((ticket, id) => (
 							<tr key={id}>
 								<td>
-									<p>{id + 1}</p>
 									<input
 										id={`${id}`}
 										name={`description`}
@@ -402,16 +405,43 @@ const updateMutation = gql`
 		}
 	}
 `;
-const EditingForm = ({ priceListElement, handleChange, closeModal }: { priceListElement: PriceListElement } & FormProps) => {
+const EditingForm = ({
+	priceListElement,
+	handleChange,
+	closeModal,
+}: { priceListElement: PriceListElement } & FormProps) => {
 	// const [updatePriceElement, { data, loading, error }] = useChangePriceListElementByIdMutation({
 	// 	onError(error) {
 	// 		console.log("ERROR::::");
 	// 		console.log(error);
 	// 	},
 	// });
-    const [updatePriceElement, { data, loading, error }] = useMutation(updateMutation);
+	const [updatePriceElement, { data, loading, error }] = useMutation(updateMutation);
 	const [name, setName] = useState({ ...priceListElement.name });
 	const [tickets, setTickets] = useState([...priceListElement.tickets!]);
+
+
+    const addTicket = () => {
+		setTickets((prevTickets) => [
+			...prevTickets,
+			{
+				description: {
+					RUS: "",
+					ENG: "",
+					EST: "",
+				},
+				duration: {
+					hours: 0,
+					additionalInfo: {
+						RUS: "",
+						ENG: "",
+						EST: "",
+					},
+				},
+				price: 0,
+			},
+		]);
+	};
 	return (
 		<form
 			className={styles.form}
@@ -421,20 +451,20 @@ const EditingForm = ({ priceListElement, handleChange, closeModal }: { priceList
 					name: { ...name },
 					tickets: [...tickets],
 				};
-                console.log(newUpdated)
+				console.log(newUpdated);
 				updatePriceElement({
 					variables: {
-                        Id: priceListElement._id,
+						Id: priceListElement._id,
 						updatedPriceListElement: newUpdated,
 					},
-                    refetchQueries: [{query: GetPriceListDocument}]
-				}).catch(e => { 
-                    console.log(e)
-                    e.networkError.result.errors.map((e: { message: any; }) => { 
-                        console.log(e.message);
-                    })
-                })
-                closeModal();
+					refetchQueries: [{ query: GetPriceListDocument }],
+				}).catch((e) => {
+					console.log(e);
+					e.networkError.result.errors.map((e: { message: any }) => {
+						console.log(e.message);
+					});
+				});
+				closeModal();
 			}}>
 			{loading ? <p>Loading...</p> : <></>}
 
@@ -538,7 +568,7 @@ const EditingForm = ({ priceListElement, handleChange, closeModal }: { priceList
 									}}
 								/>
 							</td>
-							<td className="duration">
+							<td className='duration'>
 								<input
 									id={`${id}`}
 									name={`hours`}
@@ -547,17 +577,17 @@ const EditingForm = ({ priceListElement, handleChange, closeModal }: { priceList
 									step={"0.1"}
 									onChange={(e) => {
 										handleChange({
-                                            objToCopy: tickets,
-                                            func: setTickets,
-                                            e,
-                                            id,
-                                            depth: 2,
-                                            property1:
-                                                ticketProperties[
-                                                    e.currentTarget.parentElement?.classList[0] as ticketProperties
-                                                ],
-                                            property2: ticketProperties[e.currentTarget.name as ticketProperties],
-                                        });
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 2,
+											property1:
+												ticketProperties[
+													e.currentTarget.parentElement?.classList[0] as ticketProperties
+												],
+											property2: ticketProperties[e.currentTarget.name as ticketProperties],
+										});
 									}}
 								/>
 								<input
@@ -569,20 +599,18 @@ const EditingForm = ({ priceListElement, handleChange, closeModal }: { priceList
 									placeholder='Teenuse nimetus EST'
 									onChange={(e) => {
 										handleChange({
-                                            objToCopy: tickets,
-                                            func: setTickets,
-                                            e,
-                                            id,
-                                            depth: 2,
-                                            property1:
-                                                ticketProperties[
-                                                    e.currentTarget.parentElement?.classList[0] as ticketProperties
-                                                ],
-                                            property2: ticketProperties[e.currentTarget.name as ticketProperties],
-                                            lang: ticketProperties[
-                                                e.currentTarget.classList[0] as ticketProperties
-                                            ],
-                                        });
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 2,
+											property1:
+												ticketProperties[
+													e.currentTarget.parentElement?.classList[0] as ticketProperties
+												],
+											property2: ticketProperties[e.currentTarget.name as ticketProperties],
+											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+										});
 									}}
 								/>
 								<input
@@ -594,20 +622,18 @@ const EditingForm = ({ priceListElement, handleChange, closeModal }: { priceList
 									placeholder='Teenuse nimetus ENG'
 									onChange={(e) => {
 										handleChange({
-                                            objToCopy: tickets,
-                                            func: setTickets,
-                                            e,
-                                            id,
-                                            depth: 2,
-                                            property1:
-                                                ticketProperties[
-                                                    e.currentTarget.parentElement?.classList[0] as ticketProperties
-                                                ],
-                                            property2: ticketProperties[e.currentTarget.name as ticketProperties],
-                                            lang: ticketProperties[
-                                                e.currentTarget.classList[0] as ticketProperties
-                                            ],
-                                        });
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 2,
+											property1:
+												ticketProperties[
+													e.currentTarget.parentElement?.classList[0] as ticketProperties
+												],
+											property2: ticketProperties[e.currentTarget.name as ticketProperties],
+											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+										});
 									}}
 								/>
 								<input
@@ -619,20 +645,18 @@ const EditingForm = ({ priceListElement, handleChange, closeModal }: { priceList
 									placeholder='Teenuse nimetus RUS'
 									onChange={(e) => {
 										handleChange({
-                                            objToCopy: tickets,
-                                            func: setTickets,
-                                            e,
-                                            id,
-                                            depth: 2,
-                                            property1:
-                                                ticketProperties[
-                                                    e.currentTarget.parentElement?.classList[0] as ticketProperties
-                                                ],
-                                            property2: ticketProperties[e.currentTarget.name as ticketProperties],
-                                            lang: ticketProperties[
-                                                e.currentTarget.classList[0] as ticketProperties
-                                            ],
-                                        });
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 2,
+											property1:
+												ticketProperties[
+													e.currentTarget.parentElement?.classList[0] as ticketProperties
+												],
+											property2: ticketProperties[e.currentTarget.name as ticketProperties],
+											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+										});
 									}}
 								/>
 							</td>
@@ -640,18 +664,18 @@ const EditingForm = ({ priceListElement, handleChange, closeModal }: { priceList
 								<input
 									id={`${id}`}
 									name={`price`}
-									defaultValue={ticket?.price ?? ""}
+									defaultValue={`${ticket?.price}` ?? ""}
 									type='number'
 									step={"0.1"}
 									onChange={(e) => {
 										handleChange({
-                                            objToCopy: tickets,
-                                            func: setTickets,
-                                            e,
-                                            id,
-                                            depth: 1,
-                                            property1: ticketProperties[e.currentTarget.name as ticketProperties],
-                                        });
+											objToCopy: tickets,
+											func: setTickets,
+											e,
+											id,
+											depth: 1,
+											property1: ticketProperties[e.currentTarget.name as ticketProperties],
+										});
 									}}
 								/>
 							</td>
@@ -659,7 +683,10 @@ const EditingForm = ({ priceListElement, handleChange, closeModal }: { priceList
 					))}
 				</tbody>
 			</table>
-			<input type='submit' />
+			<div className={styles.formBottomBtns}>
+				<ButtonAdmin label={"Lisage teenus"} filled action={addTicket} />
+				<input className={styles.submitBtn} type='submit' />
+			</div>
 		</form>
 	);
 };
