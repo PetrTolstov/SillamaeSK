@@ -6,11 +6,12 @@ function FooterComponent(){
             <div className={styles.footerInformation}>
                 <div className={styles.containerInformationFooter}>
                     <h3>Võta ühendust</h3>
-                    <span>+372 5487 4236</span>
-                    <span>example@gmail.com</span>
+                    <span>+372 392 4245</span>
+                    <span>+372 397 4077</span>
+                    <span>info@sillamaesk.ee</span>
                 </div>
                 <div className={styles.containerInformationFooter}>
-                    <h3>Spordikompleks kalev</h3>
+                    <h3>Spordikompleks Kalev</h3>
                     <span>Võta ühendust</span>
                     <span>Spordikompleks Kalev</span>
                     <span>Külasta meid</span>
