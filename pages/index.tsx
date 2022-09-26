@@ -11,6 +11,8 @@ import ScheduleOnMainPageComponent from "../components/MainPage/ScheduleOnMainPa
 import Layout from "../components/Layout";
 
 const Home: NextPage = () => {
+    //<ScheduleOnMainPageComponent/>
+    //after main
   return (
       <Layout>
         <main className={styles.main}>
@@ -25,7 +27,7 @@ const Home: NextPage = () => {
 
         </main>
 
-        <ScheduleOnMainPageComponent/>
+
 
       </Layout>
   )
