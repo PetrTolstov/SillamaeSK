@@ -97,7 +97,7 @@ function PriceListTableComponent(){
                             {`${el?.duration?.hours}h${el?.duration?.additionalInfo ? `; ${el?.duration?.additionalInfo.EST}` : ""}`}
                         </td>
                         <td className={styles.price}>
-                            {`${el?.price}h`}
+                            {`${el?.price}€`}
                         </td>
                     </tr>
                 ))}
