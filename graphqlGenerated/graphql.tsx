@@ -70,6 +70,12 @@ export type PriceListElementInput1 = {
 export type Query = {
   __typename?: 'Query';
   GetPriceList: Array<Maybe<PriceListElement>>;
+  GetPriceListElementById: PriceListElement;
+};
+
+
+export type QueryGetPriceListElementByIdArgs = {
+  id: Scalars['String'];
 };
 
 export type TextContent = {
@@ -123,7 +129,19 @@ export type ChangePriceListElementByIdMutation = { __typename?: 'Mutation', Upda
 export type GetPriceListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPriceListQuery = { __typename?: 'Query', GetPriceList: Array<{ __typename?: 'PriceListElement', _id: string, name: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null }, tickets?: Array<{ __typename?: 'Ticket', price: number, description: { __typename?: 'TextContent', RUS?: string | null, ENG?: string | null, EST?: string | null }, duration?: { __typename?: 'Duration', hours: number, additionalInfo?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null } | null> | null } | null> };
+export type GetPriceListQuery = { __typename?: 'Query', GetPriceList: Array<{ __typename?: 'PriceListElement', _id: string, name: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } } | null> };
+
+export type GetPriceListElementByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetPriceListElementByIdQuery = { __typename?: 'Query', GetPriceListElementById: { __typename?: 'PriceListElement', _id: string, name: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null }, tickets?: Array<{ __typename?: 'Ticket', price: number, description: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null }, duration?: { __typename?: 'Duration', hours: number, additionalInfo?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null } | null> | null } };
+
+export type GetPriceListNamesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPriceListNamesQuery = { __typename?: 'Query', GetPriceList: Array<{ __typename?: 'PriceListElement', _id: string, name: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } } | null> };
 
 
 export const CreateNewPriceListElementDocument = gql`
@@ -278,22 +296,6 @@ export const GetPriceListDocument = gql`
       EST
       ENG
     }
-    tickets {
-      description {
-        RUS
-        ENG
-        EST
-      }
-      duration {
-        hours
-        additionalInfo {
-          RUS
-          EST
-          ENG
-        }
-      }
-      price
-    }
   }
 }
     `;
@@ -324,3 +326,98 @@ export function useGetPriceListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetPriceListQueryHookResult = ReturnType<typeof useGetPriceListQuery>;
 export type GetPriceListLazyQueryHookResult = ReturnType<typeof useGetPriceListLazyQuery>;
 export type GetPriceListQueryResult = Apollo.QueryResult<GetPriceListQuery, GetPriceListQueryVariables>;
+export const GetPriceListElementByIdDocument = gql`
+    query GetPriceListElementById($id: String!) {
+  GetPriceListElementById(id: $id) {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    tickets {
+      description {
+        RUS
+        EST
+        ENG
+      }
+      duration {
+        hours
+        additionalInfo {
+          RUS
+          EST
+          ENG
+        }
+      }
+      price
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPriceListElementByIdQuery__
+ *
+ * To run a query within a React component, call `useGetPriceListElementByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPriceListElementByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPriceListElementByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPriceListElementByIdQuery(baseOptions: Apollo.QueryHookOptions<GetPriceListElementByIdQuery, GetPriceListElementByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPriceListElementByIdQuery, GetPriceListElementByIdQueryVariables>(GetPriceListElementByIdDocument, options);
+      }
+export function useGetPriceListElementByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPriceListElementByIdQuery, GetPriceListElementByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPriceListElementByIdQuery, GetPriceListElementByIdQueryVariables>(GetPriceListElementByIdDocument, options);
+        }
+export type GetPriceListElementByIdQueryHookResult = ReturnType<typeof useGetPriceListElementByIdQuery>;
+export type GetPriceListElementByIdLazyQueryHookResult = ReturnType<typeof useGetPriceListElementByIdLazyQuery>;
+export type GetPriceListElementByIdQueryResult = Apollo.QueryResult<GetPriceListElementByIdQuery, GetPriceListElementByIdQueryVariables>;
+export const GetPriceListNamesDocument = gql`
+    query GetPriceListNames {
+  GetPriceList {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPriceListNamesQuery__
+ *
+ * To run a query within a React component, call `useGetPriceListNamesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPriceListNamesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPriceListNamesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPriceListNamesQuery(baseOptions?: Apollo.QueryHookOptions<GetPriceListNamesQuery, GetPriceListNamesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPriceListNamesQuery, GetPriceListNamesQueryVariables>(GetPriceListNamesDocument, options);
+      }
+export function useGetPriceListNamesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPriceListNamesQuery, GetPriceListNamesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPriceListNamesQuery, GetPriceListNamesQueryVariables>(GetPriceListNamesDocument, options);
+        }
+export type GetPriceListNamesQueryHookResult = ReturnType<typeof useGetPriceListNamesQuery>;
+export type GetPriceListNamesLazyQueryHookResult = ReturnType<typeof useGetPriceListNamesLazyQuery>;
+export type GetPriceListNamesQueryResult = Apollo.QueryResult<GetPriceListNamesQuery, GetPriceListNamesQueryVariables>;

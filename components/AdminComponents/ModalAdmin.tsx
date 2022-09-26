@@ -7,14 +7,20 @@ import {
 	GetPriceListDocument,
 	useChangePriceListElementByIdMutation,
 	Ticket,
+	useGetPriceListElementByIdQuery,
+    GetPriceListElementByIdDocument,
+    useGetPriceListElementByIdLazyQuery,
+    MutationUpdatePriceListElementByIdArgs,
 } from "../../graphqlGenerated/graphql";
 import { modalTypes } from "../../pages/AdminAccess/Pricing";
 import styles from "../../styles/ModalAdmin.module.css";
 import { ButtonAdmin } from "./ButtonAdmin";
 import { gql } from "@apollo/client";
+import Image from "next/image";
+import Bin from "../../public/Bin.svg";
 
 type ModalAdminProps = {
-	priceListElement?: PriceListElement;
+	priceListElementId?: string;
 	modalType: modalTypes | undefined;
 	closeModal: () => void;
 };
@@ -49,7 +55,7 @@ type FormProps = {
 	closeModal: () => void;
 };
 // props -> priceListElement object
-export const ModalAdmin = ({ priceListElement, modalType, closeModal }: ModalAdminProps) => {
+export const ModalAdmin = ({ priceListElementId, modalType, closeModal }: ModalAdminProps) => {
 	useEffect(() => {
 		document.body.style.overflow = "hidden";
 
@@ -57,6 +63,14 @@ export const ModalAdmin = ({ priceListElement, modalType, closeModal }: ModalAdm
 			document.body.style.overflow = "scroll";
 		};
 	}, []);
+
+	const [priceListElement, setPriceListElement] = useState<PriceListElement>();
+    const { data, loading, error } = useGetPriceListElementByIdQuery({ variables: { id: priceListElementId! }, onCompleted(data) {
+        setPriceListElement(data.GetPriceListElementById)
+    }, });
+    const [ lazyGetPriceListElementById, {data: lazyData, error: lazyError, loading: lazyLoading} ] = useGetPriceListElementByIdLazyQuery({ variables: { id: priceListElementId!}, onCompleted(data) {
+        setPriceListElement(data.GetPriceListElementById);
+    },})
 
 	// depth: 1 or 2
 	const handleChange = ({ objToCopy, func, e, id, depth, property1, property2, lang }: handleChangeArgs): void => {
@@ -87,7 +101,9 @@ export const ModalAdmin = ({ priceListElement, modalType, closeModal }: ModalAdm
 			<div className={styles.shadow}></div>
 			<div className={styles.container}>
 				<h2>Header</h2>
-				{modalType == modalTypes.editModal ? (
+				{loading ? (
+					<p>Loading...</p>
+				) : modalType == modalTypes.editModal ? (
 					<EditingForm
 						closeModal={closeModal}
 						handleChange={handleChange}
@@ -96,6 +112,7 @@ export const ModalAdmin = ({ priceListElement, modalType, closeModal }: ModalAdm
 				) : (
 					<AddingForm closeModal={closeModal} handleChange={handleChange} />
 				)}
+
 				<div>
 					<ButtonAdmin label={"CLOSE"} action={closeModal} />
 				</div>
@@ -153,8 +170,6 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 				className={styles.form}
 				onSubmit={(e) => {
 					e.preventDefault();
-					console.log(newTickets);
-					console.log(newName);
 					createNewPriceListElement({
 						variables: { newPriceListElement: { name: { ...newName }, tickets: [...newTickets] } },
 						refetchQueries: [{ query: GetPriceListDocument }],
@@ -409,7 +424,7 @@ const EditingForm = ({
 	priceListElement,
 	handleChange,
 	closeModal,
-}: { priceListElement: PriceListElement } & FormProps) => {
+}: { priceListElement: PriceListElement } & FormProps ) => {
 	// const [updatePriceElement, { data, loading, error }] = useChangePriceListElementByIdMutation({
 	// 	onError(error) {
 	// 		console.log("ERROR::::");
@@ -419,9 +434,25 @@ const EditingForm = ({
 	const [updatePriceElement, { data, loading, error }] = useMutation(updateMutation);
 	const [name, setName] = useState({ ...priceListElement.name });
 	const [tickets, setTickets] = useState([...priceListElement.tickets!]);
+	useEffect(() => {
+		// console.log(tickets);
+	}, [tickets]);
+	const deleteTicket = (id: number) => {
+		const ticketsCopy = tickets;
+		delete ticketsCopy[id]; 
+		updatePriceElement({
+			variables: {
+				Id: priceListElement._id,
+				updatedPriceListElement: {
+					name: { ...name },
+					tickets: [...ticketsCopy],
+				},
+			},
+			refetchQueries: [{ query: GetPriceListElementByIdDocument, variables: {id: priceListElement._id} }],
+		});
+	};
 
-
-    const addTicket = () => {
+	const addTicket = () => {
 		setTickets((prevTickets) => [
 			...prevTickets,
 			{
@@ -451,13 +482,12 @@ const EditingForm = ({
 					name: { ...name },
 					tickets: [...tickets],
 				};
-				console.log(newUpdated);
 				updatePriceElement({
 					variables: {
 						Id: priceListElement._id,
 						updatedPriceListElement: newUpdated,
 					},
-					refetchQueries: [{ query: GetPriceListDocument }],
+					refetchQueries: [{ query: GetPriceListElementByIdDocument, variables: {id: priceListElement._id} }],
 				}).catch((e) => {
 					console.log(e);
 					e.networkError.result.errors.map((e: { message: any }) => {
@@ -495,7 +525,7 @@ const EditingForm = ({
 					setName(copyName);
 				}}
 			/>
-			<table>
+			<table className={styles.table}>
 				<thead>
 					<tr>
 						<th>Teenuste nimetus</th>
@@ -676,6 +706,15 @@ const EditingForm = ({
 											depth: 1,
 											property1: ticketProperties[e.currentTarget.name as ticketProperties],
 										});
+									}}
+								/>
+							</td>
+							<td className={styles.RemoveRawButton}>
+								<ButtonAdmin
+									border
+									label={<Image src={Bin} width={23} height={20} />}
+									action={() => {
+										deleteTicket(id);
 									}}
 								/>
 							</td>

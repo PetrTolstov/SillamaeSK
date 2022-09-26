@@ -1,4 +1,4 @@
-query GetPriceList {
+query GetPriceListNames {
 	GetPriceList {
 		_id
 		name {

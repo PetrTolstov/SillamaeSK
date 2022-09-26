@@ -8,6 +8,7 @@ import {
     GetPriceListDocument,
 	PriceListElement,
 	useDeletePriceListElementByIdMutation,
+	useGetPriceListNamesQuery,
 	useGetPriceListQuery,
 } from "../../graphqlGenerated/graphql";
 import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
@@ -19,17 +20,17 @@ export enum modalTypes {
 }
 
 const Pricing: NextPageWithLayout = () => {
-	const { data, loading, error } = useGetPriceListQuery();
+	const { data, loading, error } = useGetPriceListNamesQuery();
 	
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const [currentModalType, setCurrentModalType] = useState<modalTypes>();
-	const [currentPriceListElement, setCurrentPriceListElement] = useState<PriceListElement>();
+	const [currentElementID, setCurrentElementID] = useState<string>();
 
     const [DeletePriceListElementById, { data: deleteData, loading: deleteLoading, error: deleteError }] =
 		useDeletePriceListElementByIdMutation();
 
 	const openEditModal = (priceListElement: PriceListElement) => {
-		setCurrentPriceListElement(priceListElement);
+		setCurrentElementID(priceListElement._id);
 		setCurrentModalType(modalTypes.editModal);
 		setShowModal(true);
 	};
@@ -52,7 +53,7 @@ const Pricing: NextPageWithLayout = () => {
 			{showModal ? (
 				<ModalAdmin
 					modalType={currentModalType}
-					priceListElement={currentPriceListElement}
+					priceListElementId={currentElementID}
 					closeModal={closeModal}
 				/>
 			) : (
