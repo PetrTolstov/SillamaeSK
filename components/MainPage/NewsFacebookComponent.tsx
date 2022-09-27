@@ -9,12 +9,13 @@ function NewsFacebookComponent(){
     fetch('https://graph.facebook.com/v15.0/spordikompleksKalev/feed?access_token=EAAIpjZCKeTPABAFSjJpwhyn071jLWZCDewHZCcztOasoeZA9TJpZCWpbp5EZBJKp3i6pDxrnC0y5z0FtEmXvq1iNmwZCNgmtZBOTecV33LOo9Q7VXuKSEI7C56195iPNvxsGUvC9UmzoPtqmXZBIipiHk8BU08JdFXwAzUVNu3yuJN4xLcyAqmGmITzijKZB4DgnZAIjsv7PmSlRjUZBUeF28u0b')
         .then(response => response.json())
         .then(data => {
-            for (let el of data.data){
-                if(el.message){
-                   setLatestNews(el)
-                    break
-                }
-            }
+            if(data.data){
+                for (let el of data.data){
+                    if(el.message){
+                       setLatestNews(el)
+                        break
+                    }
+                }     }
         });
    return(
         <article className={styles.NewsFacebook}>
