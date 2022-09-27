@@ -129,7 +129,7 @@ export type ChangePriceListElementByIdMutation = { __typename?: 'Mutation', Upda
 export type GetPriceListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPriceListQuery = { __typename?: 'Query', GetPriceList: Array<{ __typename?: 'PriceListElement', _id: string, name: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } } | null> };
+export type GetPriceListQuery = { __typename?: 'Query', GetPriceList: Array<{ __typename?: 'PriceListElement', _id: string, name: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null }, tickets?: Array<{ __typename?: 'Ticket', price: number, description: { __typename?: 'TextContent', RUS?: string | null, ENG?: string | null, EST?: string | null }, duration?: { __typename?: 'Duration', hours: number, additionalInfo?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null } | null> | null } | null> };
 
 export type GetPriceListElementByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -295,6 +295,22 @@ export const GetPriceListDocument = gql`
       RUS
       EST
       ENG
+    }
+    tickets {
+      description {
+        RUS
+        ENG
+        EST
+      }
+      duration {
+        hours
+        additionalInfo {
+          RUS
+          EST
+          ENG
+        }
+      }
+      price
     }
   }
 }

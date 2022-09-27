@@ -1,10 +1,27 @@
 query GetPriceList {
-	GetPriceList {
-		_id
-		name {
-			RUS
-			EST
-			ENG
-		}
-	}
+  GetPriceList {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    tickets {
+      description {
+        RUS
+        ENG
+        EST
+      }
+      duration {
+        hours
+        additionalInfo {
+          RUS
+          EST
+          ENG
+        }
+      }
+      price
+    }
+    
+  }
 }
