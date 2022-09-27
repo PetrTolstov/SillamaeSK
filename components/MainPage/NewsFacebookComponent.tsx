@@ -6,7 +6,7 @@ function NewsFacebookComponent(){
     const [latestNews, setLatestNews] = useState({message: "", created_time: (new Date).toString()})
 
 
-    fetch('https://graph.facebook.com/v15.0/spordikompleksKalev/feed?access_token=EAAIpjZCKeTPABAMzJmSbO1SluWqc14HaGpObWDPF7BVY11ndjWoZCsDtkppWWZClKFhZCjV99Ue88D2729P3jGxEk30JXQTIbCk2O8ZChjZBG4ZAvZBYG4YWJWftvrEggxqoHZBcyGc3ncyLypMIHsvjE3Y36vB6A5gL9fw7pCQlXRluXWvK7hCYL')
+    fetch('https://graph.facebook.com/v15.0/spordikompleksKalev/feed?access_token=EAAVrZCSeKcAIBAP6QoLv91fVHT7VfbItJIkXIwngjcFFN6n1i7WZAdPkrA4KVD6thcJIhujXtY9q4ZAexENDMZBnJMOk7hOThR3tpP9a7sDZCLFU3LE4YIJBBOMDCEAyds04O2xIHcjHPIKqgU9BZAScLPJ0Kl1IRmG91ZBUyeTtN2N7ARyzqfLfoDL434DMl0ZD')
         .then(response => response.json())
         .then(data => {
             if(data.data){
