@@ -408,18 +408,6 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 	);
 };
 
-const updateMutation = gql`
-	mutation UpdatePriceListElementById($updatedPriceListElement: PriceListElementInput!, $Id: String!) {
-		UpdatePriceListElementById(updatedPriceListElement: $updatedPriceListElement, id: $Id) {
-			_id
-			name {
-				RUS
-				EST
-				ENG
-			}
-		}
-	}
-`;
 const EditingForm = ({
 	priceListElement,
 	handleChange,
@@ -431,7 +419,8 @@ const EditingForm = ({
 	// 		console.log(error);
 	// 	},
 	// });
-	const [updatePriceElement, { data, loading, error }] = useMutation(updateMutation);
+    
+	const [updatePriceElement, { data, loading, error }] = useChangePriceListElementByIdMutation();
 	const [name, setName] = useState({ ...priceListElement.name });
 	const [tickets, setTickets] = useState([...priceListElement.tickets!]);
 	useEffect(() => {
@@ -442,7 +431,7 @@ const EditingForm = ({
 		delete ticketsCopy[id]; 
 		updatePriceElement({
 			variables: {
-				Id: priceListElement._id,
+				id: priceListElement._id,
 				updatedPriceListElement: {
 					name: { ...name },
 					tickets: [...ticketsCopy],
@@ -484,7 +473,7 @@ const EditingForm = ({
 				};
 				updatePriceElement({
 					variables: {
-						Id: priceListElement._id,
+						id: priceListElement._id,
 						updatedPriceListElement: newUpdated,
 					},
 					refetchQueries: [{ query: GetPriceListElementByIdDocument, variables: {id: priceListElement._id} }],
@@ -496,7 +485,6 @@ const EditingForm = ({
 				});
 				closeModal();
 			}}>
-			{loading ? <p>Loading...</p> : <></>}
 
 			<input
 				type='text'
