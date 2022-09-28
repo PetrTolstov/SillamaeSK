@@ -24,5 +24,6 @@
 .container{
     max-width: 1000px;
     min-width: 60%;
+    margin-bottom: 50px;
 }
 

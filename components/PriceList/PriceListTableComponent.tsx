@@ -94,10 +94,10 @@ function PriceListTableComponent(){
                             {el?.description.EST}
                         </td>
                         <td className={styles.duration}>
-                            {`${el?.duration?.hours}h${el?.duration?.additionalInfo ? `; ${el?.duration?.additionalInfo.EST}` : ""}`}
+                            {`${el?.duration?.hours != 0 ? el?.duration?.hours + 'h; ' : ''}${el?.duration?.additionalInfo ? `${el?.duration?.additionalInfo.EST}` : ""}`}
                         </td>
                         <td className={styles.price}>
-                            {`${el?.price}€`}
+                            {`${el?.price != 0 ? el?.price + '€' : ""}`}
                         </td>
                     </tr>
                 ))}
