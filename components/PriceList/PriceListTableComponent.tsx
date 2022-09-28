@@ -3,7 +3,7 @@ import {GetPriceListQuery, useGetPriceListQuery} from "../../graphqlGenerated/gr
 import Image from "next/image";
 import minus from "../../public/minus.svg"
 import plus from "../../public/plus.svg"
-import {useEffect, useState} from "react";
+
 
 
 

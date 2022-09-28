@@ -1,0 +1,22 @@
+.sideNav{
+    margin: 15px auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.sideNav a{
+    margin: 3%;
+    color: #525252;
+    padding: 10px 20px;
+    font-family: 'Monserrat', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.sideNav a.chosenPage{
+    border-radius: 3px;
+    background: #0167FF;
+    color: #ffffff;
+}
