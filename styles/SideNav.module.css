@@ -4,12 +4,12 @@
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
+    flex: 20%;
 }
 
 .sideNav a{
-    margin: 3%;
     color: #525252;
-    padding: 10px 20px;
+    padding: 10px 5px;
     font-family: 'Monserrat', sans-serif;
     font-weight: 700;
     font-size: 24px;
@@ -20,3 +20,5 @@
     background: #0167FF;
     color: #ffffff;
 }
+
+

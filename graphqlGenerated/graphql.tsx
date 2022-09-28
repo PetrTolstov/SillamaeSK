@@ -26,10 +26,19 @@ export type DurationInput = {
   hours: Scalars['Float'];
 };
 
+export type LatestNews = {
+  __typename?: 'LatestNews';
+  _id: Scalars['ID'];
+  created_time?: Maybe<Scalars['String']>;
+  message?: Maybe<Scalars['String']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   CreateNewPriceListElement?: Maybe<PriceListElement>;
   DeletePriceListElementById: Scalars['String'];
+  EditToken?: Maybe<Scalars['String']>;
+  RefetchLatestNews: Scalars['String'];
   UpdatePriceListElementById: PriceListElement;
 };
 
@@ -44,9 +53,21 @@ export type MutationDeletePriceListElementByIdArgs = {
 };
 
 
+export type MutationEditTokenArgs = {
+  newToken?: InputMaybe<Scalars['String']>;
+};
+
+
 export type MutationUpdatePriceListElementByIdArgs = {
   id: Scalars['String'];
   updatedPriceListElement: PriceListElementInput;
+};
+
+export type NewsResponse = {
+  __typename?: 'NewsResponse';
+  data?: Maybe<LatestNews>;
+  errorMessage?: Maybe<Scalars['String']>;
+  success: Scalars['Boolean'];
 };
 
 export type PriceListElement = {
@@ -69,6 +90,7 @@ export type PriceListElementInput1 = {
 
 export type Query = {
   __typename?: 'Query';
+  GetLatestNews: NewsResponse;
   GetPriceList: Array<Maybe<PriceListElement>>;
   GetPriceListElementById: PriceListElement;
 };
@@ -76,6 +98,13 @@ export type Query = {
 
 export type QueryGetPriceListElementByIdArgs = {
   id: Scalars['String'];
+};
+
+export type ResponseData = LatestNews | StringBox;
+
+export type StringBox = {
+  __typename?: 'StringBox';
+  str?: Maybe<Scalars['String']>;
 };
 
 export type TextContent = {
@@ -118,6 +147,11 @@ export type DeletePriceListElementByIdMutationVariables = Exact<{
 
 export type DeletePriceListElementByIdMutation = { __typename?: 'Mutation', DeletePriceListElementById: string };
 
+export type RefetchLatestNewsMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RefetchLatestNewsMutation = { __typename?: 'Mutation', RefetchLatestNews: string };
+
 export type ChangePriceListElementByIdMutationVariables = Exact<{
   updatedPriceListElement: PriceListElementInput;
   id: Scalars['String'];
@@ -125,6 +159,11 @@ export type ChangePriceListElementByIdMutationVariables = Exact<{
 
 
 export type ChangePriceListElementByIdMutation = { __typename?: 'Mutation', UpdatePriceListElementById: { __typename?: 'PriceListElement', _id: string, name: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null }, tickets?: Array<{ __typename?: 'Ticket', price: number, description: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null }, duration?: { __typename?: 'Duration', hours: number, additionalInfo?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null } | null> | null } };
+
+export type GetLatestNewsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetLatestNewsQuery = { __typename?: 'Query', GetLatestNews: { __typename?: 'NewsResponse', errorMessage?: string | null, success: boolean, data?: { __typename?: 'LatestNews', _id: string, created_time?: string | null, message?: string | null } | null } };
 
 export type GetPriceListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -229,6 +268,36 @@ export function useDeletePriceListElementByIdMutation(baseOptions?: Apollo.Mutat
 export type DeletePriceListElementByIdMutationHookResult = ReturnType<typeof useDeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationResult = Apollo.MutationResult<DeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationOptions = Apollo.BaseMutationOptions<DeletePriceListElementByIdMutation, DeletePriceListElementByIdMutationVariables>;
+export const RefetchLatestNewsDocument = gql`
+    mutation RefetchLatestNews {
+  RefetchLatestNews
+}
+    `;
+export type RefetchLatestNewsMutationFn = Apollo.MutationFunction<RefetchLatestNewsMutation, RefetchLatestNewsMutationVariables>;
+
+/**
+ * __useRefetchLatestNewsMutation__
+ *
+ * To run a mutation, you first call `useRefetchLatestNewsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRefetchLatestNewsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [refetchLatestNewsMutation, { data, loading, error }] = useRefetchLatestNewsMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRefetchLatestNewsMutation(baseOptions?: Apollo.MutationHookOptions<RefetchLatestNewsMutation, RefetchLatestNewsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RefetchLatestNewsMutation, RefetchLatestNewsMutationVariables>(RefetchLatestNewsDocument, options);
+      }
+export type RefetchLatestNewsMutationHookResult = ReturnType<typeof useRefetchLatestNewsMutation>;
+export type RefetchLatestNewsMutationResult = Apollo.MutationResult<RefetchLatestNewsMutation>;
+export type RefetchLatestNewsMutationOptions = Apollo.BaseMutationOptions<RefetchLatestNewsMutation, RefetchLatestNewsMutationVariables>;
 export const ChangePriceListElementByIdDocument = gql`
     mutation ChangePriceListElementById($updatedPriceListElement: PriceListElementInput!, $id: String!) {
   UpdatePriceListElementById(
@@ -287,6 +356,46 @@ export function useChangePriceListElementByIdMutation(baseOptions?: Apollo.Mutat
 export type ChangePriceListElementByIdMutationHookResult = ReturnType<typeof useChangePriceListElementByIdMutation>;
 export type ChangePriceListElementByIdMutationResult = Apollo.MutationResult<ChangePriceListElementByIdMutation>;
 export type ChangePriceListElementByIdMutationOptions = Apollo.BaseMutationOptions<ChangePriceListElementByIdMutation, ChangePriceListElementByIdMutationVariables>;
+export const GetLatestNewsDocument = gql`
+    query GetLatestNews {
+  GetLatestNews {
+    errorMessage
+    success
+    data {
+      _id
+      created_time
+      message
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetLatestNewsQuery__
+ *
+ * To run a query within a React component, call `useGetLatestNewsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLatestNewsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLatestNewsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetLatestNewsQuery(baseOptions?: Apollo.QueryHookOptions<GetLatestNewsQuery, GetLatestNewsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLatestNewsQuery, GetLatestNewsQueryVariables>(GetLatestNewsDocument, options);
+      }
+export function useGetLatestNewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLatestNewsQuery, GetLatestNewsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLatestNewsQuery, GetLatestNewsQueryVariables>(GetLatestNewsDocument, options);
+        }
+export type GetLatestNewsQueryHookResult = ReturnType<typeof useGetLatestNewsQuery>;
+export type GetLatestNewsLazyQueryHookResult = ReturnType<typeof useGetLatestNewsLazyQuery>;
+export type GetLatestNewsQueryResult = Apollo.QueryResult<GetLatestNewsQuery, GetLatestNewsQueryVariables>;
 export const GetPriceListDocument = gql`
     query GetPriceList {
   GetPriceList {

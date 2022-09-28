@@ -1,0 +1,11 @@
+query GetLatestNews {
+  GetLatestNews {
+    errorMessage
+    success
+    data {
+      _id
+      created_time
+      message
+    }
+  }
+}

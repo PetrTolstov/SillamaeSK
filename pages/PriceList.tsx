@@ -11,7 +11,6 @@ const PriceList: NextPage = () => {
 					<h1 className={styles.h1}>Hinnakiri</h1>
 					<PriceListTableComponent/>
 				</div>
-
 			</main>
 		</Layout>
 	);

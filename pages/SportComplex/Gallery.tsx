@@ -1,16 +1,30 @@
 import type { NextPage } from 'next'
 import LayoutSportComplex from "./LayoutSportComplex";
-import styles from "../../styles/LayoutSportComplex.module.css";
+import img from "../../public/img.png"
 
 const Gallery: NextPage = () => {
     return (
         <LayoutSportComplex>
-            <article className={styles.article}>
-                <h3>2020 - 2021</h3>
+            <>
+                <h2>Galerii</h2>
+                <h3>2021 - 2022</h3>
                 <div>
+                    <img src={'https://static.tildacdn.com/tild6132-3036-4861-b537-633234353461/noroot.png'}  alt={'photo'}/>
+                    <img src={'https://static.tildacdn.com/tild6132-3036-4861-b537-633234353461/noroot.png'}  alt={'photo'}/>
+                    <img src={'https://static.tildacdn.com/tild6132-3036-4861-b537-633234353461/noroot.png'}  alt={'photo'}/>
+                    <img src={'https://static.tildacdn.com/tild6132-3036-4861-b537-633234353461/noroot.png'}  alt={'photo'}/>
 
+                    <img src={'https://static.tildacdn.com/tild6132-3036-4861-b537-633234353461/noroot.png'}  alt={'photo'}/>
+                    <img src={'https://static.tildacdn.com/tild6132-3036-4861-b537-633234353461/noroot.png'}  alt={'photo'}/>
+                    <img src={'https://static.tildacdn.com/tild6132-3036-4861-b537-633234353461/noroot.png'}  alt={'photo'}/>
+                    <img src={'https://static.tildacdn.com/tild6132-3036-4861-b537-633234353461/noroot.png'}  alt={'photo'}/>
+
+                    <img src={'https://static.tildacdn.com/tild6132-3036-4861-b537-633234353461/noroot.png'}  alt={'photo'}/>
+                    <img src={'https://static.tildacdn.com/tild6132-3036-4861-b537-633234353461/noroot.png'}  alt={'photo'}/>
+                    <img src={'https://static.tildacdn.com/tild6132-3036-4861-b537-633234353461/noroot.png'}  alt={'photo'}/>
+                    <img src={'https://static.tildacdn.com/tild6132-3036-4861-b537-633234353461/noroot.png'}  alt={'photo'}/>
                 </div>
-            </article>
+            </>
         </LayoutSportComplex>
     )
 }

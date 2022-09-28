@@ -71,10 +71,10 @@ function HeaderComponent(){
                     <a className={router.pathname == '/' ? styles.chosenPage : ""}>Avaleht</a>
                 </Link>
                 <Link href={`/SportComplex`}>
-                    <a className={router.pathname == '/SportComplex' ? styles.chosenPage : ""}>Spordikompleksist</a>
+                    <a className={router.pathname.includes('/SportComplex') ? styles.chosenPage : ""}>Spordikompleksist</a>
                 </Link>
                 <Link href={`/SportOpportunities`}>
-                    <a className={router.pathname == '/SportOpportunities' ? styles.chosenPage : ""}>Sportimisvõimalused</a>
+                    <a className={router.pathname.includes('/SportOpportunities') ? styles.chosenPage : ""}>Sportimisvõimalused</a>
                 </Link>
                 <Link href={`/Kalender`}>
                     <a className={router.pathname == '/Kalender' ? styles.chosenPage : ""}>Kalender</a>

@@ -5,8 +5,6 @@ import minus from "../../public/minus.svg"
 import plus from "../../public/plus.svg"
 
 
-
-
 function PriceListTableComponent(){
     const { loading, error, data } = useGetPriceListQuery();
 
