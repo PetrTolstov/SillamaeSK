@@ -32,7 +32,6 @@ const Contact: NextPage = () => {
     return (
         <Layout>
             <AppIsBeingBuilt isEst={true}/>
-
         </Layout>
     )
 }
