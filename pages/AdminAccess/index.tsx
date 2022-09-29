@@ -49,6 +49,7 @@ export function SidePanel() {
 				<div className={styles.mainSidePanelContent}>
                     <ul>
                         <li><Link href={"/AdminAccess/Pricing"}>Pricing</Link></li>
+                        <li><Link href={"/AdminAccess/FromSportComplex"}>Spordikompleksist</Link></li>
                     </ul>
                 </div>
 			</div>

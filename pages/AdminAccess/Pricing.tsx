@@ -79,7 +79,7 @@ const Pricing: NextPageWithLayout = () => {
 						))
 					)}
 				</div>
-				<ButtonAdmin label={"Add new +"} filled action={addAction} />
+				<ButtonAdmin label={"Lisa uus +"} filled action={addAction} />
 			</div>
 		</>
 	);

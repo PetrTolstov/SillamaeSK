@@ -1,0 +1,14 @@
+query GetSimplePages($type: Int) {
+  GetSimplePages(type: $type) {
+    _id
+    title {
+      RUS
+      EST
+    }
+    text {
+      RUS
+      EST
+    }
+    image
+  }
+}

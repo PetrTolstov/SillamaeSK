@@ -35,11 +35,19 @@ export type LatestNews = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  AddSimplePage?: Maybe<Scalars['String']>;
   CreateNewPriceListElement?: Maybe<PriceListElement>;
   DeletePriceListElementById: Scalars['String'];
+  EditSimplePage?: Maybe<Scalars['String']>;
   EditToken?: Maybe<Scalars['String']>;
   RefetchLatestNews: Scalars['String'];
   UpdatePriceListElementById: PriceListElement;
+};
+
+
+export type MutationAddSimplePageArgs = {
+  newSimplePage?: InputMaybe<SimplePageInput>;
+  type?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -50,6 +58,12 @@ export type MutationCreateNewPriceListElementArgs = {
 
 export type MutationDeletePriceListElementByIdArgs = {
   _id: Scalars['String'];
+};
+
+
+export type MutationEditSimplePageArgs = {
+  _id: Scalars['ID'];
+  updatedSimplePage?: InputMaybe<SimplePageInput>;
 };
 
 
@@ -93,6 +107,7 @@ export type Query = {
   GetLatestNews: NewsResponse;
   GetPriceList: Array<Maybe<PriceListElement>>;
   GetPriceListElementById: PriceListElement;
+  GetSimplePages?: Maybe<Array<SimplePage>>;
 };
 
 
@@ -100,7 +115,27 @@ export type QueryGetPriceListElementByIdArgs = {
   id: Scalars['String'];
 };
 
+
+export type QueryGetSimplePagesArgs = {
+  type?: InputMaybe<Scalars['Int']>;
+};
+
 export type ResponseData = LatestNews | StringBox;
+
+export type SimplePage = {
+  __typename?: 'SimplePage';
+  _id: Scalars['ID'];
+  image?: Maybe<Scalars['String']>;
+  text?: Maybe<TextContent>;
+  title?: Maybe<TextContent>;
+  type: Scalars['Int'];
+};
+
+export type SimplePageInput = {
+  image?: InputMaybe<Scalars['String']>;
+  text?: InputMaybe<TextContentInput>;
+  title?: InputMaybe<TextContentInput>;
+};
 
 export type StringBox = {
   __typename?: 'StringBox';
@@ -133,6 +168,14 @@ export type TicketInput = {
   price: Scalars['Float'];
 };
 
+export type AddSimplePageMutationVariables = Exact<{
+  type?: InputMaybe<Scalars['Int']>;
+  newSimplePage?: InputMaybe<SimplePageInput>;
+}>;
+
+
+export type AddSimplePageMutation = { __typename?: 'Mutation', AddSimplePage?: string | null };
+
 export type CreateNewPriceListElementMutationVariables = Exact<{
   newPriceListElement: PriceListElementInput;
 }>;
@@ -146,6 +189,14 @@ export type DeletePriceListElementByIdMutationVariables = Exact<{
 
 
 export type DeletePriceListElementByIdMutation = { __typename?: 'Mutation', DeletePriceListElementById: string };
+
+export type EditSimplePageMutationVariables = Exact<{
+  id: Scalars['ID'];
+  updatedSimplePage?: InputMaybe<SimplePageInput>;
+}>;
+
+
+export type EditSimplePageMutation = { __typename?: 'Mutation', EditSimplePage?: string | null };
 
 export type RefetchLatestNewsMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -182,7 +233,46 @@ export type GetPriceListNamesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetPriceListNamesQuery = { __typename?: 'Query', GetPriceList: Array<{ __typename?: 'PriceListElement', _id: string, name: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } } | null> };
 
+export type GetSimplePagesQueryVariables = Exact<{
+  type?: InputMaybe<Scalars['Int']>;
+}>;
 
+
+export type GetSimplePagesQuery = { __typename?: 'Query', GetSimplePages?: Array<{ __typename?: 'SimplePage', _id: string, image?: string | null, title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, text?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null }> | null };
+
+
+export const AddSimplePageDocument = gql`
+    mutation AddSimplePage($type: Int, $newSimplePage: SimplePageInput) {
+  AddSimplePage(type: $type, newSimplePage: $newSimplePage)
+}
+    `;
+export type AddSimplePageMutationFn = Apollo.MutationFunction<AddSimplePageMutation, AddSimplePageMutationVariables>;
+
+/**
+ * __useAddSimplePageMutation__
+ *
+ * To run a mutation, you first call `useAddSimplePageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddSimplePageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addSimplePageMutation, { data, loading, error }] = useAddSimplePageMutation({
+ *   variables: {
+ *      type: // value for 'type'
+ *      newSimplePage: // value for 'newSimplePage'
+ *   },
+ * });
+ */
+export function useAddSimplePageMutation(baseOptions?: Apollo.MutationHookOptions<AddSimplePageMutation, AddSimplePageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddSimplePageMutation, AddSimplePageMutationVariables>(AddSimplePageDocument, options);
+      }
+export type AddSimplePageMutationHookResult = ReturnType<typeof useAddSimplePageMutation>;
+export type AddSimplePageMutationResult = Apollo.MutationResult<AddSimplePageMutation>;
+export type AddSimplePageMutationOptions = Apollo.BaseMutationOptions<AddSimplePageMutation, AddSimplePageMutationVariables>;
 export const CreateNewPriceListElementDocument = gql`
     mutation CreateNewPriceListElement($newPriceListElement: PriceListElementInput!) {
   CreateNewPriceListElement(newPriceListElement: $newPriceListElement) {
@@ -268,6 +358,38 @@ export function useDeletePriceListElementByIdMutation(baseOptions?: Apollo.Mutat
 export type DeletePriceListElementByIdMutationHookResult = ReturnType<typeof useDeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationResult = Apollo.MutationResult<DeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationOptions = Apollo.BaseMutationOptions<DeletePriceListElementByIdMutation, DeletePriceListElementByIdMutationVariables>;
+export const EditSimplePageDocument = gql`
+    mutation EditSimplePage($id: ID!, $updatedSimplePage: SimplePageInput) {
+  EditSimplePage(_id: $id, updatedSimplePage: $updatedSimplePage)
+}
+    `;
+export type EditSimplePageMutationFn = Apollo.MutationFunction<EditSimplePageMutation, EditSimplePageMutationVariables>;
+
+/**
+ * __useEditSimplePageMutation__
+ *
+ * To run a mutation, you first call `useEditSimplePageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditSimplePageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editSimplePageMutation, { data, loading, error }] = useEditSimplePageMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      updatedSimplePage: // value for 'updatedSimplePage'
+ *   },
+ * });
+ */
+export function useEditSimplePageMutation(baseOptions?: Apollo.MutationHookOptions<EditSimplePageMutation, EditSimplePageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditSimplePageMutation, EditSimplePageMutationVariables>(EditSimplePageDocument, options);
+      }
+export type EditSimplePageMutationHookResult = ReturnType<typeof useEditSimplePageMutation>;
+export type EditSimplePageMutationResult = Apollo.MutationResult<EditSimplePageMutation>;
+export type EditSimplePageMutationOptions = Apollo.BaseMutationOptions<EditSimplePageMutation, EditSimplePageMutationVariables>;
 export const RefetchLatestNewsDocument = gql`
     mutation RefetchLatestNews {
   RefetchLatestNews
@@ -546,3 +668,47 @@ export function useGetPriceListNamesLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetPriceListNamesQueryHookResult = ReturnType<typeof useGetPriceListNamesQuery>;
 export type GetPriceListNamesLazyQueryHookResult = ReturnType<typeof useGetPriceListNamesLazyQuery>;
 export type GetPriceListNamesQueryResult = Apollo.QueryResult<GetPriceListNamesQuery, GetPriceListNamesQueryVariables>;
+export const GetSimplePagesDocument = gql`
+    query GetSimplePages($type: Int) {
+  GetSimplePages(type: $type) {
+    _id
+    title {
+      RUS
+      EST
+    }
+    text {
+      RUS
+      EST
+    }
+    image
+  }
+}
+    `;
+
+/**
+ * __useGetSimplePagesQuery__
+ *
+ * To run a query within a React component, call `useGetSimplePagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSimplePagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSimplePagesQuery({
+ *   variables: {
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useGetSimplePagesQuery(baseOptions?: Apollo.QueryHookOptions<GetSimplePagesQuery, GetSimplePagesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSimplePagesQuery, GetSimplePagesQueryVariables>(GetSimplePagesDocument, options);
+      }
+export function useGetSimplePagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSimplePagesQuery, GetSimplePagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSimplePagesQuery, GetSimplePagesQueryVariables>(GetSimplePagesDocument, options);
+        }
+export type GetSimplePagesQueryHookResult = ReturnType<typeof useGetSimplePagesQuery>;
+export type GetSimplePagesLazyQueryHookResult = ReturnType<typeof useGetSimplePagesLazyQuery>;
+export type GetSimplePagesQueryResult = Apollo.QueryResult<GetSimplePagesQuery, GetSimplePagesQueryVariables>;

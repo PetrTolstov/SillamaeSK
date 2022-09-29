@@ -413,13 +413,6 @@ const EditingForm = ({
 	handleChange,
 	closeModal,
 }: { priceListElement: PriceListElement } & FormProps ) => {
-	// const [updatePriceElement, { data, loading, error }] = useChangePriceListElementByIdMutation({
-	// 	onError(error) {
-	// 		console.log("ERROR::::");
-	// 		console.log(error);
-	// 	},
-	// });
-    
 	const [updatePriceElement, { data, loading, error }] = useChangePriceListElementByIdMutation();
 	const [name, setName] = useState({ ...priceListElement.name });
 	const [tickets, setTickets] = useState([...priceListElement.tickets!]);

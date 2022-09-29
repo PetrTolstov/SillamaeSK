@@ -1,0 +1,3 @@
+mutation EditSimplePage($id: ID!, $updatedSimplePage: SimplePageInput) {
+  EditSimplePage(_id: $id, updatedSimplePage: $updatedSimplePage)
+}
