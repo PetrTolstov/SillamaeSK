@@ -31,7 +31,16 @@ const Contact: NextPage = () => {
 
     return (
         <Layout>
-            <main className={styles.main}>
+            <AppIsBeingBuilt isEst={true}/>
+
+        </Layout>
+    )
+}
+
+export default Contact
+
+/*
+<main className={styles.main}>
                 <div className={styles.firstContainer}>
                     <GeneralInformation/>
                     <GoogleMapComponent/>
@@ -42,8 +51,4 @@ const Contact: NextPage = () => {
                     <SpecificContact data={data[2]}/>
                 </div>
             </main>
-        </Layout>
-    )
-}
-
-export default Contact
+ */
