@@ -1,0 +1,40 @@
+.generalInformation{
+    flex: 30%;
+    padding-right: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+.generalInformation h2{
+    margin-top: 0;
+    font-size: 32px;
+    line-height: 39px;
+    color: #002B5C;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.generalInformation h3{
+    margin-bottom: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #002B5C;
+}
+
+.generalInformation p{
+    margin-top: 5px;
+
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #002B5C;
+}
+

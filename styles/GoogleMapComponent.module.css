@@ -1,0 +1,8 @@
+.googleMap{
+    flex: 70%;
+}
+
+.googleMap iframe{
+    border-radius: 5px;
+    border: none;
+}
