@@ -9,7 +9,6 @@ import {
 	PriceListElement,
 	useDeletePriceListElementByIdMutation,
 	useGetPriceListNamesQuery,
-	useGetPriceListQuery,
 } from "../../graphqlGenerated/graphql";
 import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
 import { ModalAdmin } from "../../components/AdminComponents/ModalAdmin";
