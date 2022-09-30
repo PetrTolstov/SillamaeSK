@@ -23,7 +23,7 @@ const Home: NextPage = () => {
                 <NewsFacebookComponent/>
             </div>
 
-            <SideNavComponent/>
+
 
         </main>
 
@@ -34,3 +34,5 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+//<SideNavComponent/>
