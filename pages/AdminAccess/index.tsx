@@ -50,6 +50,7 @@ export function SidePanel() {
                     <ul>
                         <li><Link href={"/AdminAccess/Pricing"}>Pricing</Link></li>
                         <li><Link href={"/AdminAccess/FromSportComplex"}>Spordikompleksist</Link></li>
+                        <li><Link href={"/AdminAccess/SportOpportunities"}>Sportimisvõimalused</Link></li>
                     </ul>
                 </div>
 			</div>

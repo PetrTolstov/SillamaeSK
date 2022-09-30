@@ -1,13 +1,13 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import {SimplePage, useEditSimplePageMutation, GetSimplePagesDocument } from "../../../graphqlGenerated/graphql";
+import {SimplePage, useEditSimplePageMutation, GetSimplePagesDocument, useGetSimplePagesLazyQuery } from "../../../graphqlGenerated/graphql";
 
 
 export const AdminSimplePageEditForm = ({ page }: { page: SimplePage }) => {
     const [ currentPage, setCurrentPage] = useState(page); 
     const [editSimplePage, {loading, data, error}] = useEditSimplePageMutation();
     useEffect(() => {
-        console.log(page);
         setCurrentPage(page)
+        
     }, [page])
 	return (
 		<div>
@@ -26,13 +26,21 @@ export const AdminSimplePageEditForm = ({ page }: { page: SimplePage }) => {
                     },
                     image: ""
                 }}, onCompleted() {
-                    alert("success");
-                }, refetchQueries: [{query: GetSimplePagesDocument}]})
-                location.reload();
+                    alert("Success");
+                    location.reload();
+                },
+                onError(error) {
+                    console.log(error);
+                }, refetchQueries: [{query: GetSimplePagesDocument}]}).catch(e => { 
+                    e.networkError.result.errors.map((e: { message: any }) => {
+						console.log(e.message);
+					});
+                })
+                
             }}>
 				<label>
 					Title
-					<input key={currentPage?._id + " 1"} id='title' name='titleEST' placeholder='Title EST' defaultValue={page?.title?.EST ?? ""} />
+					<input key={currentPage?._id + " 1"} id='title' name='titleEST' placeholder='Title EST' defaultValue={currentPage?.title?.EST ?? ""} />
 					<input key={currentPage?._id + " 2"} id='title' name='titleRUS' placeholder='Title RUS' defaultValue={page?.title?.RUS ?? ""} />
 				</label>
 				<label style={{ display: "flex", flexDirection: "column" }}>

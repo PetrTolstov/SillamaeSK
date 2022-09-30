@@ -1,0 +1,11 @@
+.submitBtn {
+    all: unset;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20;
+    font-weight: 500;
+    background-color: #0167FF;
+    color: white;
+    border-radius: 3px;
+    padding: 5px 10px;
+}
