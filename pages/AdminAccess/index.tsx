@@ -52,6 +52,7 @@ export function SidePanel() {
                         <li><Link href={"/AdminAccess/FromSportComplex"}>Spordikompleksist</Link></li>
                         <li><Link href={"/AdminAccess/SportOpportunities"}>Sportimisvõimalused</Link></li>
                         <li><Link href={"/AdminAccess/MainPageAdmin"}>Avaleht</Link></li>
+                        <li><Link href={"/AdminAccess/ContactInfoPage"}>Kontakt</Link></li>
                     </ul>
                 </div>
 			</div>

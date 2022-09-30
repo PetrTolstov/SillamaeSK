@@ -1,0 +1,3 @@
+mutation SetGeneralContactInfo($newGeneralContactsInfo: GeneralContactsInfoInput) {
+  SetGeneralContactInfo(newGeneralContactsInfo: $newGeneralContactsInfo)
+}

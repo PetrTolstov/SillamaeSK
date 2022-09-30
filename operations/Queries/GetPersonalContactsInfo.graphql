@@ -1,0 +1,12 @@
+query GetPersonalContactsInfo {
+  GetPersonalContactsInfo {
+    _id
+    name
+    role {
+      RUS
+      EST
+    }
+    phone
+    email
+  }
+}
