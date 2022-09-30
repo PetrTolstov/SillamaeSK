@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {LINK} from "../../config/constants";
 
+// @ts-ignore
 const ImageForm = ({page} : string) => {
     //const page = '/Gallery'
 
