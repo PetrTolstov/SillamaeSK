@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import axios from "axios";
 import {LINK} from "../../config/constants";
 
-// @ts-ignore
-const ImageForm = ({page} : string) => {
+
+const ImageForm = ({page} : { page: string }) => {
     //const page = '/Gallery'
 
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState<FileList>();
     const [imgFile, setImgFile] = useState('');
 
-    const handleFileChange = (event: { target: { files: React.SetStateAction<null>; }; }) => {
-        setFile(event.target.files);
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setFile(event.currentTarget.files!);
     }
 
     useEffect(() => {
