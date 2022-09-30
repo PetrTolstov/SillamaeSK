@@ -29,7 +29,7 @@ const Gallery: NextPage = () => {
                 <div>
                     {
                         imgFile.map((el) => (
-                            <img src={`${LINK}/public/images/${page}/${el}`} />
+                            <img src={`${LINK}/public/images/${page}/${el}`} key={el} />
                             ))
                     }
 
