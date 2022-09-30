@@ -1,10 +1,31 @@
 import styles from '../../styles/ImageWithSchedule.module.css'
 import {useRouter} from "next/router";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+import {LINK} from "../../config/constants";
+
 
 function ImageWithScheduleComponent(){
     const router = useRouter()
+
+    const page = 'Karusel'
+    const [imgFile, setImgFile] = useState('');
+
+    useEffect(() => {
+        (async () => {
+            const res = await axios.get(LINK + "/getPhoto", {
+                headers: {
+                    'optional': page
+                }
+            });
+            console.log(res.data)
+            setImgFile(`${LINK}/public/images/${page}/${res.data[0]}`)
+        })()
+    }, [])
+
     return(
-        <article className={styles.ImageWithSchedule}>
+        <article className={styles.ImageWithSchedule} style={{backgroundImage: imgFile}}>
+            <img src={imgFile} className={styles.backGroundImg}/>
             <table className={styles.schedule}>
 
                     <thead className={router.pathname == '/' ? '' : styles.hidden}>
