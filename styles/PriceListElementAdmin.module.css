@@ -1,6 +1,7 @@
 .mainContainer { 
     display: flex;
     align-items: center;
+    margin-top: 5px;
 }   
 .elementBody {
     display: flex;
@@ -14,6 +15,9 @@
 
 .btns { 
     display: flex;
-    justify-content: center;
-    margin-left: 10px;
+    width: 80px;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 20px;
+    height: 35px;
 }

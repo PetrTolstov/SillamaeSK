@@ -1,0 +1,3 @@
+mutation SetSportOpportunitiesDescription($newSportOpportunitiesDescription: SportOpportunitiesDescriptionInput) {
+  SetSportOpportunitiesDescription(newSportOpportunitiesDescription: $newSportOpportunitiesDescription)
+}

@@ -1,0 +1,40 @@
+query GetTimeTable {
+  GetTimeTable {
+    title {
+      RUS
+      EST
+    }
+    SportComplex {
+      title {
+        RUS
+        EST
+      }
+      minTitle1 {
+        RUS
+        EST
+      }
+      minTitle2 {
+        RUS
+        EST
+      }
+      timeTable1
+      timeTable2
+    }
+    SwimmingPool {
+      title {
+        RUS
+        EST
+      }
+      minTitle1 {
+        RUS
+        EST
+      }
+      minTitle2 {
+        RUS
+        EST
+      }
+      timeTable1
+      timeTable2
+    }
+  }
+}

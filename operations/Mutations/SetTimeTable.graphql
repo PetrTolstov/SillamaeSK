@@ -1,0 +1,3 @@
+mutation SetTimeTable($newTimeTable: TimeTableInput) {
+  SetTimeTable(newTimeTable: $newTimeTable)
+}

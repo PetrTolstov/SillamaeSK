@@ -6,14 +6,23 @@ export type ButtonAdminProps = {
 	action: () => void;
 	filled?: boolean;
 	border?: boolean;
+    isSubmit?: boolean;
 };
 export const ButtonAdmin = ({ label, action, ...props }: ButtonAdminProps) => {
 	const styling = [styles.btn, props.filled ? styles.filledBtn : "", props.border ? styles.borderBtn : ""].join(" ");
-	return (
-		<div>
-			<button type="button" className={styling} onClick={action}>
-				{label}
-			</button>
-		</div>
-	);
+    if (props.isSubmit) { 
+        return ( 
+            <div>
+                <input className={styling} onClick={action} type="submit" value={`${label}`}/>
+            </div>
+        )
+    } else { 
+        return (
+            <div>
+                <button type="button" className={styling} onClick={action}>
+                    {label}
+                </button>
+            </div>
+        );
+    }
 };

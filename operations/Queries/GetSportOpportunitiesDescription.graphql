@@ -1,0 +1,12 @@
+query GetSportOpportunitiesDescription {
+  GetSportOpportunitiesDescription {
+    title {
+      EST
+      RUS
+    }
+    text {
+      EST
+      RUS
+    }
+  }
+}

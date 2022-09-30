@@ -41,6 +41,8 @@ export type Mutation = {
   EditSimplePage?: Maybe<Scalars['String']>;
   EditToken?: Maybe<Scalars['String']>;
   RefetchLatestNews: Scalars['String'];
+  SetSportOpportunitiesDescription?: Maybe<Scalars['String']>;
+  SetTimeTable?: Maybe<Scalars['String']>;
   UpdatePriceListElementById: PriceListElement;
 };
 
@@ -69,6 +71,16 @@ export type MutationEditSimplePageArgs = {
 
 export type MutationEditTokenArgs = {
   newToken?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationSetSportOpportunitiesDescriptionArgs = {
+  newSportOpportunitiesDescription?: InputMaybe<SportOpportunitiesDescriptionInput>;
+};
+
+
+export type MutationSetTimeTableArgs = {
+  newTimeTable?: InputMaybe<TimeTableInput>;
 };
 
 
@@ -108,6 +120,8 @@ export type Query = {
   GetPriceList: Array<Maybe<PriceListElement>>;
   GetPriceListElementById: PriceListElement;
   GetSimplePages?: Maybe<Array<SimplePage>>;
+  GetSportOpportunitiesDescription?: Maybe<SportOpportunitiesDescription>;
+  GetTimeTable?: Maybe<TimeTable>;
 };
 
 
@@ -133,6 +147,17 @@ export type SimplePage = {
 
 export type SimplePageInput = {
   image?: InputMaybe<Scalars['String']>;
+  text?: InputMaybe<TextContentInput>;
+  title?: InputMaybe<TextContentInput>;
+};
+
+export type SportOpportunitiesDescription = {
+  __typename?: 'SportOpportunitiesDescription';
+  text?: Maybe<TextContent>;
+  title?: Maybe<TextContent>;
+};
+
+export type SportOpportunitiesDescriptionInput = {
   text?: InputMaybe<TextContentInput>;
   title?: InputMaybe<TextContentInput>;
 };
@@ -166,6 +191,36 @@ export type TicketInput = {
   description: TextContentInput;
   duration?: InputMaybe<DurationInput>;
   price: Scalars['Float'];
+};
+
+export type TimeTable = {
+  __typename?: 'TimeTable';
+  SportComplex?: Maybe<TimeTableBlock>;
+  SwimmingPool?: Maybe<TimeTableBlock>;
+  title?: Maybe<TextContent>;
+};
+
+export type TimeTableBlock = {
+  __typename?: 'TimeTableBlock';
+  minTitle1?: Maybe<TextContent>;
+  minTitle2?: Maybe<TextContent>;
+  timeTable1?: Maybe<Scalars['String']>;
+  timeTable2?: Maybe<Scalars['String']>;
+  title?: Maybe<TextContent>;
+};
+
+export type TimeTableBlockInput = {
+  minTitle1?: InputMaybe<TextContentInput>;
+  minTitle2?: InputMaybe<TextContentInput>;
+  timeTable1?: InputMaybe<Scalars['String']>;
+  timeTable2?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<TextContentInput>;
+};
+
+export type TimeTableInput = {
+  SportComplex?: InputMaybe<TimeTableBlockInput>;
+  SwimmingPool?: InputMaybe<TimeTableBlockInput>;
+  title?: InputMaybe<TextContentInput>;
 };
 
 export type AddSimplePageMutationVariables = Exact<{
@@ -203,6 +258,20 @@ export type RefetchLatestNewsMutationVariables = Exact<{ [key: string]: never; }
 
 export type RefetchLatestNewsMutation = { __typename?: 'Mutation', RefetchLatestNews: string };
 
+export type SetSportOpportunitiesDescriptionMutationVariables = Exact<{
+  newSportOpportunitiesDescription?: InputMaybe<SportOpportunitiesDescriptionInput>;
+}>;
+
+
+export type SetSportOpportunitiesDescriptionMutation = { __typename?: 'Mutation', SetSportOpportunitiesDescription?: string | null };
+
+export type SetTimeTableMutationVariables = Exact<{
+  newTimeTable?: InputMaybe<TimeTableInput>;
+}>;
+
+
+export type SetTimeTableMutation = { __typename?: 'Mutation', SetTimeTable?: string | null };
+
 export type ChangePriceListElementByIdMutationVariables = Exact<{
   updatedPriceListElement: PriceListElementInput;
   id: Scalars['String'];
@@ -239,6 +308,16 @@ export type GetSimplePagesQueryVariables = Exact<{
 
 
 export type GetSimplePagesQuery = { __typename?: 'Query', GetSimplePages?: Array<{ __typename?: 'SimplePage', _id: string, image?: string | null, title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, text?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null }> | null };
+
+export type GetSportOpportunitiesDescriptionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSportOpportunitiesDescriptionQuery = { __typename?: 'Query', GetSportOpportunitiesDescription?: { __typename?: 'SportOpportunitiesDescription', title?: { __typename?: 'TextContent', EST?: string | null, RUS?: string | null } | null, text?: { __typename?: 'TextContent', EST?: string | null, RUS?: string | null } | null } | null };
+
+export type GetTimeTableQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTimeTableQuery = { __typename?: 'Query', GetTimeTable?: { __typename?: 'TimeTable', title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, SportComplex?: { __typename?: 'TimeTableBlock', timeTable1?: string | null, timeTable2?: string | null, title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, minTitle1?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, minTitle2?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null } | null, SwimmingPool?: { __typename?: 'TimeTableBlock', timeTable1?: string | null, timeTable2?: string | null, title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, minTitle1?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, minTitle2?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null } | null } | null };
 
 
 export const AddSimplePageDocument = gql`
@@ -420,6 +499,70 @@ export function useRefetchLatestNewsMutation(baseOptions?: Apollo.MutationHookOp
 export type RefetchLatestNewsMutationHookResult = ReturnType<typeof useRefetchLatestNewsMutation>;
 export type RefetchLatestNewsMutationResult = Apollo.MutationResult<RefetchLatestNewsMutation>;
 export type RefetchLatestNewsMutationOptions = Apollo.BaseMutationOptions<RefetchLatestNewsMutation, RefetchLatestNewsMutationVariables>;
+export const SetSportOpportunitiesDescriptionDocument = gql`
+    mutation SetSportOpportunitiesDescription($newSportOpportunitiesDescription: SportOpportunitiesDescriptionInput) {
+  SetSportOpportunitiesDescription(
+    newSportOpportunitiesDescription: $newSportOpportunitiesDescription
+  )
+}
+    `;
+export type SetSportOpportunitiesDescriptionMutationFn = Apollo.MutationFunction<SetSportOpportunitiesDescriptionMutation, SetSportOpportunitiesDescriptionMutationVariables>;
+
+/**
+ * __useSetSportOpportunitiesDescriptionMutation__
+ *
+ * To run a mutation, you first call `useSetSportOpportunitiesDescriptionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetSportOpportunitiesDescriptionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setSportOpportunitiesDescriptionMutation, { data, loading, error }] = useSetSportOpportunitiesDescriptionMutation({
+ *   variables: {
+ *      newSportOpportunitiesDescription: // value for 'newSportOpportunitiesDescription'
+ *   },
+ * });
+ */
+export function useSetSportOpportunitiesDescriptionMutation(baseOptions?: Apollo.MutationHookOptions<SetSportOpportunitiesDescriptionMutation, SetSportOpportunitiesDescriptionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetSportOpportunitiesDescriptionMutation, SetSportOpportunitiesDescriptionMutationVariables>(SetSportOpportunitiesDescriptionDocument, options);
+      }
+export type SetSportOpportunitiesDescriptionMutationHookResult = ReturnType<typeof useSetSportOpportunitiesDescriptionMutation>;
+export type SetSportOpportunitiesDescriptionMutationResult = Apollo.MutationResult<SetSportOpportunitiesDescriptionMutation>;
+export type SetSportOpportunitiesDescriptionMutationOptions = Apollo.BaseMutationOptions<SetSportOpportunitiesDescriptionMutation, SetSportOpportunitiesDescriptionMutationVariables>;
+export const SetTimeTableDocument = gql`
+    mutation SetTimeTable($newTimeTable: TimeTableInput) {
+  SetTimeTable(newTimeTable: $newTimeTable)
+}
+    `;
+export type SetTimeTableMutationFn = Apollo.MutationFunction<SetTimeTableMutation, SetTimeTableMutationVariables>;
+
+/**
+ * __useSetTimeTableMutation__
+ *
+ * To run a mutation, you first call `useSetTimeTableMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetTimeTableMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setTimeTableMutation, { data, loading, error }] = useSetTimeTableMutation({
+ *   variables: {
+ *      newTimeTable: // value for 'newTimeTable'
+ *   },
+ * });
+ */
+export function useSetTimeTableMutation(baseOptions?: Apollo.MutationHookOptions<SetTimeTableMutation, SetTimeTableMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetTimeTableMutation, SetTimeTableMutationVariables>(SetTimeTableDocument, options);
+      }
+export type SetTimeTableMutationHookResult = ReturnType<typeof useSetTimeTableMutation>;
+export type SetTimeTableMutationResult = Apollo.MutationResult<SetTimeTableMutation>;
+export type SetTimeTableMutationOptions = Apollo.BaseMutationOptions<SetTimeTableMutation, SetTimeTableMutationVariables>;
 export const ChangePriceListElementByIdDocument = gql`
     mutation ChangePriceListElementById($updatedPriceListElement: PriceListElementInput!, $id: String!) {
   UpdatePriceListElementById(
@@ -712,3 +855,113 @@ export function useGetSimplePagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetSimplePagesQueryHookResult = ReturnType<typeof useGetSimplePagesQuery>;
 export type GetSimplePagesLazyQueryHookResult = ReturnType<typeof useGetSimplePagesLazyQuery>;
 export type GetSimplePagesQueryResult = Apollo.QueryResult<GetSimplePagesQuery, GetSimplePagesQueryVariables>;
+export const GetSportOpportunitiesDescriptionDocument = gql`
+    query GetSportOpportunitiesDescription {
+  GetSportOpportunitiesDescription {
+    title {
+      EST
+      RUS
+    }
+    text {
+      EST
+      RUS
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSportOpportunitiesDescriptionQuery__
+ *
+ * To run a query within a React component, call `useGetSportOpportunitiesDescriptionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSportOpportunitiesDescriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSportOpportunitiesDescriptionQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSportOpportunitiesDescriptionQuery(baseOptions?: Apollo.QueryHookOptions<GetSportOpportunitiesDescriptionQuery, GetSportOpportunitiesDescriptionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSportOpportunitiesDescriptionQuery, GetSportOpportunitiesDescriptionQueryVariables>(GetSportOpportunitiesDescriptionDocument, options);
+      }
+export function useGetSportOpportunitiesDescriptionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSportOpportunitiesDescriptionQuery, GetSportOpportunitiesDescriptionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSportOpportunitiesDescriptionQuery, GetSportOpportunitiesDescriptionQueryVariables>(GetSportOpportunitiesDescriptionDocument, options);
+        }
+export type GetSportOpportunitiesDescriptionQueryHookResult = ReturnType<typeof useGetSportOpportunitiesDescriptionQuery>;
+export type GetSportOpportunitiesDescriptionLazyQueryHookResult = ReturnType<typeof useGetSportOpportunitiesDescriptionLazyQuery>;
+export type GetSportOpportunitiesDescriptionQueryResult = Apollo.QueryResult<GetSportOpportunitiesDescriptionQuery, GetSportOpportunitiesDescriptionQueryVariables>;
+export const GetTimeTableDocument = gql`
+    query GetTimeTable {
+  GetTimeTable {
+    title {
+      RUS
+      EST
+    }
+    SportComplex {
+      title {
+        RUS
+        EST
+      }
+      minTitle1 {
+        RUS
+        EST
+      }
+      minTitle2 {
+        RUS
+        EST
+      }
+      timeTable1
+      timeTable2
+    }
+    SwimmingPool {
+      title {
+        RUS
+        EST
+      }
+      minTitle1 {
+        RUS
+        EST
+      }
+      minTitle2 {
+        RUS
+        EST
+      }
+      timeTable1
+      timeTable2
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTimeTableQuery__
+ *
+ * To run a query within a React component, call `useGetTimeTableQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTimeTableQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTimeTableQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetTimeTableQuery(baseOptions?: Apollo.QueryHookOptions<GetTimeTableQuery, GetTimeTableQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTimeTableQuery, GetTimeTableQueryVariables>(GetTimeTableDocument, options);
+      }
+export function useGetTimeTableLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTimeTableQuery, GetTimeTableQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTimeTableQuery, GetTimeTableQueryVariables>(GetTimeTableDocument, options);
+        }
+export type GetTimeTableQueryHookResult = ReturnType<typeof useGetTimeTableQuery>;
+export type GetTimeTableLazyQueryHookResult = ReturnType<typeof useGetTimeTableLazyQuery>;
+export type GetTimeTableQueryResult = Apollo.QueryResult<GetTimeTableQuery, GetTimeTableQueryVariables>;
