@@ -7,12 +7,14 @@ import { NextPageWithLayout } from "../_app";
 
 const SportOpportunities: NextPageWithLayout = () => { 
     const [currentPage, setCurrentPage] = useState<SimplePage>();
+    const [pages, setPages] = useState<SimplePage[]>();
 	const { loading, data, error } = useGetSimplePagesQuery({
 		variables: { type: 1 },
 		onError(error) {
 			console.log(error.networkError?.message);
 		},
 		onCompleted(data) {
+            setPages(data?.GetSimplePages as SimplePage[]);
 			setCurrentPage(data.GetSimplePages![0] as SimplePage);
 		},
 	});
@@ -21,7 +23,7 @@ const SportOpportunities: NextPageWithLayout = () => {
             <h1>Sportimisvõimalused</h1>
 			{loading ? <p>loading...</p> : <></>}
 			<AdminDropDown
-				pages={data?.GetSimplePages as SimplePage[]}
+				pages={pages as SimplePage[]}
 				currentPage={currentPage as SimplePage}
 				updateCurrentPage={setCurrentPage}
 			/>

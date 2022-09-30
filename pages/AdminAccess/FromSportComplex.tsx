@@ -15,6 +15,7 @@ const FromSportComplex: NextPageWithLayout = () => {
 			console.log(error.networkError?.message);
 		},
 		onCompleted(data) {
+            setPages(data?.GetSimplePages as SimplePage[]);
 			setCurrentPage(data.GetSimplePages![0] as SimplePage);
 		},
 	});
@@ -30,7 +31,7 @@ const FromSportComplex: NextPageWithLayout = () => {
 			<h1>Sportkompleksist</h1>
 			{loading ? <p>loading...</p> : <></>}
 			<AdminDropDown
-				pages={data?.GetSimplePages as SimplePage[]}
+				pages={pages}
 				currentPage={currentPage as SimplePage}
 				updateCurrentPage={setCurrentPage}
 			/>

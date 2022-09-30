@@ -10,9 +10,9 @@ export const AdminDropDown = ({
 	currentPage: SimplePage;
 	updateCurrentPage: (page: SimplePage) => void;
 }) => {
-	useEffect(() => {
-		updateCurrentPage(pages[0]);
-	}, []);
+	// useEffect(() => {
+	// 	updateCurrentPage(pages[0] ?? "");
+	// }, []);
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		const newCurrentPage = pages?.find((el) => el._id == e.currentTarget.value);
 		updateCurrentPage(newCurrentPage!);
