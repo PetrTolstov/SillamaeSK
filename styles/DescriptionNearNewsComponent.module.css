@@ -3,6 +3,7 @@
 }
 
 .textSecondBlock h2{
+    margin-top: 0 !important;
     font-weight: 500;
     font-size: 32px;
 }

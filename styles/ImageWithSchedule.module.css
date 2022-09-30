@@ -1,7 +1,7 @@
 .ImageWithSchedule{
     width: 100%;
     max-width: 1300px;
-    margin-top: 50px;
+    margin-top: 10px;
     border-radius: 10px;
 
     background-image: url("../public/backgroundMainPageFirstBlock.png");
