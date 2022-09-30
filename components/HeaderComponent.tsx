@@ -60,8 +60,14 @@ function HeaderComponent(){
         <header>
             <div className={styles.aboveNav}>
                 <div className={styles.logoInformation}>
-                    <a className={styles.logo}/>
-                    <h1 className={styles.logoName}>SILLAMÄE SPORDIKOMPLEKS KALEV</h1>
+                    <Link href={`/`}>
+
+                            <a className={styles.logo}/>
+
+                    </Link>
+                            <h1 className={styles.logoName}>SILLAMÄE SPORDIKOMPLEKS KALEV</h1>
+
+
                 </div>
                 <button className={styles.openbtn} onClick={openNav}>{contentBut}</button>
                 <a className={langStyle.join(" ")}>RU</a>

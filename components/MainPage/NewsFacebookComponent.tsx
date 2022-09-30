@@ -21,7 +21,7 @@ function NewsFacebookComponent(){
 
     return(
         <article className={styles.NewsFacebook}>
-            <h2>Viimased uudised</h2>
+            <h2>VIIMASED UUDISED</h2>
             <p>{loading ? "loading..." : latestNews.message}</p>
             <span>{(new Date(latestNews.created_time)).toLocaleDateString()}</span>
             <a href={"https://www.facebook.com/spordikompleksKalev"}>Vaata rohkem ▶</a>

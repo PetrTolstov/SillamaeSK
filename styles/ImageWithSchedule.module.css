@@ -1,5 +1,7 @@
 .ImageWithSchedule{
-    margin-top: 50px;
+    width: 100%;
+    max-width: 1300px;
+    margin-top: 10px;
     border-radius: 10px;
 
     background-image: url("../public/backgroundMainPageFirstBlock.png");
@@ -49,4 +51,8 @@
 .scheduleButtons .left{
     background: #0167FF;
     border-radius: 5px 0 0 5px;
+}
+
+.hidden{
+    display: none;
 }

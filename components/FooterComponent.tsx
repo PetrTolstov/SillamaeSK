@@ -32,7 +32,7 @@ function FooterComponent(){
                     </div>
                 </div>
             </div>
-            <a>Jälgi meid sotsiaalmeedias </a>
+            <a href={"https://www.facebook.com/spordikompleksKalev"}>Jälgi meid sotsiaalmeedias </a>
         </footer>
     )
 }
