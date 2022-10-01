@@ -3,15 +3,25 @@ import { AdminLayout } from ".";
 import { NextPageWithLayout } from "../_app";
 import { TimeTableEditting } from "../../components/AdminComponents/TimeTableEditting";
 import { SportOpportunitesDesEdititng } from "../../components/AdminComponents/SportOpportunitesDesEdititng";
+import AdminStore from "../../Stores/AdminStore";
+import { observer } from "mobx-react-lite";
+import Link from "next/link";
+import { GoBackPage } from "../../components/AdminComponents/GoBackPage";
 
 const MainPageAdmin: NextPageWithLayout = () => {
-    return ( 
-        <div style={{paddingBottom: "50px"}}>
-            <h1>Avaleht</h1>
-            <TimeTableEditting/>
-            <SportOpportunitesDesEdititng />
-        </div>
-    )
+	if (AdminStore.userInfo.isLoggedIn) {
+		return (
+			<div style={{ paddingBottom: "50px" }}>
+				<h1>Avaleht</h1>
+				<TimeTableEditting />
+				<SportOpportunitesDesEdititng />
+			</div>
+		);
+	} else {
+		return (
+			<GoBackPage />
+		);
+	}
 };
 
 MainPageAdmin.getLayout = function getLayout(MainPage: ReactElement) {
@@ -22,4 +32,4 @@ MainPageAdmin.getLayout = function getLayout(MainPage: ReactElement) {
 	);
 };
 
-export default MainPageAdmin;
+export default observer(MainPageAdmin);

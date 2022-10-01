@@ -1,10 +1,46 @@
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import React, { FormEvent, ReactElement, useEffect, useRef, useState } from "react";
 import styles from "../../styles/AdminHeader.module.css";
 import { NextPageWithLayout } from "../_app";
 import Link from "next/link";
+import { observer } from "mobx-react-lite";
+import AdminStore from "../../Stores/AdminStore";
+import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
+import { useLoginMutation } from "../../graphqlGenerated/graphql";
 
 const AdminHome: NextPageWithLayout = () => {
-	return <div>Hello</div>;
+    const [Login, {data, loading, error}] = useLoginMutation();
+    const handleLogin = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget); 
+        const newObj = { 
+            login: data.get("login")?.toString()!,
+            password: data.get("password")?.toString()!,
+        }
+        Login({variables: { userData: newObj }, onCompleted(data) {
+            alert(data.Login.str);
+            AdminStore.setUserInfo(newObj.login, newObj.password, data.Login.isLoggedIn!);
+        }})
+    }
+    if (!AdminStore.userInfo.isLoggedIn) { 
+        return (
+            <div style={{display: "flex", justifyContent: "center", flexDirection: "column", height: "50vmin"}}>
+                {/* TODO Change heading to Estonia  */}
+                <h3>Login</h3>
+                <form onSubmit={handleLogin} style={{display: "flex", flexDirection: "column"}}>
+                    <input type="text" name="login" placeholder="Login" />
+                    <input type={"password"} name="password" placeholder="Password" />
+                    <ButtonAdmin isSubmit filled action={()=>{}} label={"Logima"} />
+                </form>
+            </div>
+        );
+    } else { 
+        return ( 
+            <div>
+                <h3>You are logged in</h3>
+            </div>
+        )
+    }
+    
 };
 
 AdminHome.getLayout = function getLayout(AdminHome: ReactElement) {
@@ -131,4 +167,4 @@ export function BurgerButton({ togglePanel }: { togglePanel: () => void }) {
 	);
 }
 
-export default AdminHome;
+export default observer(AdminHome);
