@@ -63,13 +63,13 @@ function PriceListTableComponent(){
         return data?.map((element, index) => (
             <tbody className={styles.label} key={element?._id}>
             <tr>
-                <td colSpan={3} width={"100%"} className={styles.labelTd}>
+                <td colSpan={3} width={"100%"} className={styles.labelTd} onClick={() => {showOrHideLabel(element?._id, index)}}>
                     <span className={styles.tdHeader}>{element?.name.EST}</span>
-                    <div className={styles.tdButton} id={`${element?._id}-butP`}  onClick={() => {showOrHideLabel(element?._id, index)}}>
+                    <div className={styles.tdButton} id={`${element?._id}-butP`}  >
                         <Image src={plus} />
                     </div>
 
-                    <div className={styles.tdButtonHd} id={`${element?._id}-butM`} onClick={() => {showOrHideLabel(element?._id, index)}}>
+                    <div className={styles.tdButtonHd} id={`${element?._id}-butM`}>
                         <Image src={minus}  />
                     </div>
                 </td>

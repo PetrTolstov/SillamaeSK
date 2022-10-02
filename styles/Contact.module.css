@@ -3,7 +3,20 @@
         min-width: 1250px;
     }
 }
+@media screen and (max-width: 1000px) {
 
+    div.specificContacts{
+
+        flex-direction: row;
+
+    }
+}
+
+@media screen and (max-width: 500px) {
+    main.main{
+        padding: 0 10px 0 10px;
+    }
+}
 
 .main{
     margin: 50px 0 50px 0 ;
@@ -36,4 +49,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
+
+    justify-content: space-evenly;
 }
