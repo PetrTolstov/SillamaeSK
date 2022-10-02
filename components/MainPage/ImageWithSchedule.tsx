@@ -5,7 +5,7 @@ import axios from "axios";
 import {LINK} from "../../config/constants";
 
 
-function ImageWithScheduleComponent(){
+function ImageWithScheduleComponent({isMain=false}){
     const router = useRouter()
 
     const page = 'Karusel'
@@ -24,33 +24,30 @@ function ImageWithScheduleComponent(){
     }, [])
 
     return(
-        <article className={styles.ImageWithSchedule} style={{backgroundImage: imgFile}}>
-            <img src={imgFile} className={styles.backGroundImg}/>
-            <table className={styles.schedule}>
+        <article className={ styles.ImageWithSchedule} style={{backgroundImage: imgFile}}>
+            <img src={imgFile} className={isMain ? styles.backGroundImg : styles.altBackGroundImg}/>
+            <div className={isMain ? styles.schedule : styles.hidden }>
+                    <div>
+                        <p>
+                        OLEME AVATUD
+                        </p>
+                    </div>
+                    <div className={styles.divSchedule}>
+                        <div>
+                            <p>Spordikompleks</p>
+                            <p>E-R: 08.00-22.00</p>
+                            <p>L-P: 09.00-21.00</p>
+                        </div>
+                        <div>
+                            <p>Ujula</p>
+                            <p>E-R: 07.00-21.00</p>
+                            <p>L-P: 09.00-17.00</p>
+                        </div>
+                    </div>
 
-                    <thead className={router.pathname == '/' ? '' : styles.hidden}>
-                    <tr>
-                        <th>OLEME AVATUD</th>
-                    </tr>
-                    </thead>
-                    <tbody className={router.pathname == '/' ? '' : styles.hidden}>
-                    <tr>
-                        <td>Spordikompleks</td>
-                        <td>Ujula</td>
-                    </tr>
-                    <tr>
-                        <td>E-R: 08.00-22.00</td>
-                        <td>E-R: 07.00-21.00</td>
-                    </tr>
-                    <tr>
-                        <td>L-P: 09.00-21.00</td>
-                        <td>L-P: 09.00-17.00</td>
-                    </tr>
-                    </tbody>
+            </div>
 
-            </table>
-
-            <div className={styles.scheduleButtons}>
+            <div className={isMain ? styles.scheduleButtons : styles.AltScheduleButtons}>
                 <button className={styles.left}>◀</button>
                 <button className={styles.right}>▶</button>
             </div>

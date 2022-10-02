@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   return (
       <Layout>
         <main className={styles.main}>
-            <ImageWithSchedule/>
+            <ImageWithSchedule isMain={true}/>
 
             <div className={styles.textAndNewsFrame}>
                 <DescriptionNearNewsComponent/>

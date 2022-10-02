@@ -1,3 +1,12 @@
+@media screen and (max-width: 500px) {
+    article.textSecondBlock h2{
+        font-size: 21px;
+    }
+
+    article.textSecondBlock p{
+        font-size: 16px;
+    }
+}
 .textSecondBlock{
     width: 40%;
 }

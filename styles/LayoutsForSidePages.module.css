@@ -4,6 +4,19 @@
     }
 }
 
+@media screen and (max-width: 800px) {
+    main.main{
+        flex-direction: column;
+        justify-content: flex-start;
+        margin: 0
+    }
+
+    main.main article{
+        flex: none;
+        margin: 0;
+    }
+}
+
 .main{
     margin: 50px 50px 0 50px;
 

@@ -1,9 +1,44 @@
+@media screen and (max-width: 900px) {
+  div.textAndNewsFrame{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  div.textAndNewsFrame article{
+    margin-bottom: 20px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  main.main{
+    padding: 0 0;
+  }
+
+  div.textAndNewsFrame article{
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  div.textAndNewsFrame{
+    margin: 30px 10px 0px 10px;
+  }
+
+
+
+}
+
+
 .textAndNewsFrame{
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   flex-direction: row;
   margin-top: 30px;
+}
+
+.textAndNewsFrame article{
+  min-width: 350px;
 }
 
 .container{
