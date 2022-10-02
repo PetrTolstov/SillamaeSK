@@ -1,0 +1,3 @@
+mutation SetPersonalContactInfo($newPersonalContactsInfo: [PersonContactInfoInput]) {
+  SetPersonalContactInfo(newPersonalContactsInfo: $newPersonalContactsInfo)
+}

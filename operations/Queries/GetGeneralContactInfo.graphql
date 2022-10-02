@@ -1,0 +1,26 @@
+query GetGeneralContactsInfo {
+  GetGeneralContactsInfo {
+    _id
+    addressField {
+      fieldTitle {
+        RUS
+        EST
+      }
+      fieldInfo
+    }
+    phoneField {
+      fieldTitle {
+        RUS
+        EST
+      }
+      fieldInfo
+    }
+    emailField {
+      fieldTitle {
+        RUS
+        EST
+      }
+      fieldInfo
+    }
+  }
+}

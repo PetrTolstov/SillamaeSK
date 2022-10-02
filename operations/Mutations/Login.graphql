@@ -1,0 +1,6 @@
+mutation Login($userData: UserInput!) {
+  Login(userData: $userData) {
+    str
+    isLoggedIn
+  }
+}

@@ -12,6 +12,10 @@ import {
 } from "../../graphqlGenerated/graphql";
 import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
 import { ModalAdmin } from "../../components/AdminComponents/ModalAdmin";
+import AdminStore from "../../Stores/AdminStore";
+import { observer } from "mobx-react-lite";
+import Link from "next/link";
+import { GoBackPage } from "../../components/AdminComponents/GoBackPage";
 
 export enum modalTypes {
 	editModal,
@@ -47,41 +51,49 @@ const Pricing: NextPageWithLayout = () => {
 		setShowModal(true);
 	};
 
-	return (
-		<>
-			{showModal ? (
-				<ModalAdmin
-					modalType={currentModalType}
-					priceListElementId={currentElementID}
-					closeModal={closeModal}
-				/>
-			) : (
-				<></>
-			)}
-			<div className={styles.PricingMainContainer}>
-				<h1>Hinnakiri</h1>
-				<div>
-					{loading ? (
-						<p>Loading...</p>
-					) : (
-						data?.GetPriceList.map((priceListElement) => (
-							<PriceListElementAdmin
-								key={priceListElement?._id}
-								title={priceListElement?.name}
-								openEditModal={() => {
-									openEditModal(priceListElement!);
-								}}
-								deleteAction={() => {
-									deleteAction(priceListElement?._id ?? "");
-								}}
-							/>
-						))
-					)}
-				</div>
-				<ButtonAdmin label={"Lisa uus +"} filled action={addAction} />
-			</div>
-		</>
-	);
+    if (AdminStore.userInfo.isLoggedIn) {
+        return (
+            <>
+                {showModal ? (
+                    <ModalAdmin
+                        modalType={currentModalType}
+                        priceListElementId={currentElementID}
+                        closeModal={closeModal}
+                    />
+                ) : (
+                    <></>
+                )}
+                <div className={styles.PricingMainContainer}>
+                    <h1>Hinnakiri</h1>
+                    <div>
+                        {loading ? (
+                            <p>Loading...</p>
+                        ) : (
+                            data?.GetPriceList.map((priceListElement) => (
+                                <PriceListElementAdmin
+                                    key={priceListElement?._id}
+                                    title={priceListElement?.name}
+                                    openEditModal={() => {
+                                        openEditModal(priceListElement!);
+                                    }}
+                                    deleteAction={() => {
+                                        deleteAction(priceListElement?._id ?? "");
+                                    }}
+                                />
+                            ))
+                        )}
+                    </div>
+                    <ButtonAdmin label={"Lisa uus +"} filled action={addAction} />
+                </div>
+            </>
+        );
+	} else { 
+        return ( 
+            <GoBackPage />
+        )
+    }
+
+
 };
 
 Pricing.getLayout = function getLayout(Pricing: ReactElement) {
@@ -92,4 +104,4 @@ Pricing.getLayout = function getLayout(Pricing: ReactElement) {
 	);
 };
 
-export default Pricing;
+export default observer(Pricing);

@@ -26,11 +26,42 @@ export type DurationInput = {
   hours: Scalars['Float'];
 };
 
+export type Field = {
+  __typename?: 'Field';
+  fieldInfo?: Maybe<Scalars['String']>;
+  fieldTitle?: Maybe<TextContent>;
+};
+
+export type FieldInput = {
+  fieldInfo?: InputMaybe<Scalars['String']>;
+  fieldTitle?: InputMaybe<TextContentInput>;
+};
+
+export type GeneralContactsInfo = {
+  __typename?: 'GeneralContactsInfo';
+  _id?: Maybe<Scalars['ID']>;
+  addressField?: Maybe<Field>;
+  emailField?: Maybe<Field>;
+  phoneField?: Maybe<Field>;
+};
+
+export type GeneralContactsInfoInput = {
+  addressField?: InputMaybe<FieldInput>;
+  emailField?: InputMaybe<FieldInput>;
+  phoneField?: InputMaybe<FieldInput>;
+};
+
 export type LatestNews = {
   __typename?: 'LatestNews';
   _id: Scalars['ID'];
   created_time?: Maybe<Scalars['String']>;
   message?: Maybe<Scalars['String']>;
+};
+
+export type LoginResponse = {
+  __typename?: 'LoginResponse';
+  isLoggedIn?: Maybe<Scalars['Boolean']>;
+  str?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -40,10 +71,14 @@ export type Mutation = {
   DeletePriceListElementById: Scalars['String'];
   EditSimplePage?: Maybe<Scalars['String']>;
   EditToken?: Maybe<Scalars['String']>;
+  Login: LoginResponse;
   RefetchLatestNews: Scalars['String'];
+  SetGeneralContactInfo?: Maybe<Scalars['String']>;
+  SetPersonalContactInfo?: Maybe<Scalars['String']>;
   SetSportOpportunitiesDescription?: Maybe<Scalars['String']>;
   SetTimeTable?: Maybe<Scalars['String']>;
   UpdatePriceListElementById: PriceListElement;
+  UpdateUser: Scalars['String'];
 };
 
 
@@ -74,6 +109,21 @@ export type MutationEditTokenArgs = {
 };
 
 
+export type MutationLoginArgs = {
+  userData: UserInput;
+};
+
+
+export type MutationSetGeneralContactInfoArgs = {
+  newGeneralContactsInfo?: InputMaybe<GeneralContactsInfoInput>;
+};
+
+
+export type MutationSetPersonalContactInfoArgs = {
+  newPersonalContactsInfo?: InputMaybe<Array<InputMaybe<PersonContactInfoInput>>>;
+};
+
+
 export type MutationSetSportOpportunitiesDescriptionArgs = {
   newSportOpportunitiesDescription?: InputMaybe<SportOpportunitiesDescriptionInput>;
 };
@@ -89,11 +139,32 @@ export type MutationUpdatePriceListElementByIdArgs = {
   updatedPriceListElement: PriceListElementInput;
 };
 
+
+export type MutationUpdateUserArgs = {
+  updatedUser: UserInput;
+};
+
 export type NewsResponse = {
   __typename?: 'NewsResponse';
   data?: Maybe<LatestNews>;
   errorMessage?: Maybe<Scalars['String']>;
   success: Scalars['Boolean'];
+};
+
+export type PersonContactInfo = {
+  __typename?: 'PersonContactInfo';
+  _id?: Maybe<Scalars['ID']>;
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  role?: Maybe<TextContent>;
+};
+
+export type PersonContactInfoInput = {
+  email?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<TextContentInput>;
 };
 
 export type PriceListElement = {
@@ -116,7 +187,9 @@ export type PriceListElementInput1 = {
 
 export type Query = {
   __typename?: 'Query';
+  GetGeneralContactsInfo?: Maybe<GeneralContactsInfo>;
   GetLatestNews: NewsResponse;
+  GetPersonalContactsInfo?: Maybe<Array<Maybe<PersonContactInfo>>>;
   GetPriceList: Array<Maybe<PriceListElement>>;
   GetPriceListElementById: PriceListElement;
   GetSimplePages?: Maybe<Array<SimplePage>>;
@@ -223,6 +296,18 @@ export type TimeTableInput = {
   title?: InputMaybe<TextContentInput>;
 };
 
+export type User = {
+  __typename?: 'User';
+  _id: Scalars['ID'];
+  login: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type UserInput = {
+  login: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type AddSimplePageMutationVariables = Exact<{
   type?: InputMaybe<Scalars['Int']>;
   newSimplePage?: InputMaybe<SimplePageInput>;
@@ -253,10 +338,31 @@ export type EditSimplePageMutationVariables = Exact<{
 
 export type EditSimplePageMutation = { __typename?: 'Mutation', EditSimplePage?: string | null };
 
+export type LoginMutationVariables = Exact<{
+  userData: UserInput;
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', Login: { __typename?: 'LoginResponse', str?: string | null, isLoggedIn?: boolean | null } };
+
 export type RefetchLatestNewsMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RefetchLatestNewsMutation = { __typename?: 'Mutation', RefetchLatestNews: string };
+
+export type SetGeneralContactInfoMutationVariables = Exact<{
+  newGeneralContactsInfo?: InputMaybe<GeneralContactsInfoInput>;
+}>;
+
+
+export type SetGeneralContactInfoMutation = { __typename?: 'Mutation', SetGeneralContactInfo?: string | null };
+
+export type SetPersonalContactInfoMutationVariables = Exact<{
+  newPersonalContactsInfo?: InputMaybe<Array<InputMaybe<PersonContactInfoInput>> | InputMaybe<PersonContactInfoInput>>;
+}>;
+
+
+export type SetPersonalContactInfoMutation = { __typename?: 'Mutation', SetPersonalContactInfo?: string | null };
 
 export type SetSportOpportunitiesDescriptionMutationVariables = Exact<{
   newSportOpportunitiesDescription?: InputMaybe<SportOpportunitiesDescriptionInput>;
@@ -280,10 +386,27 @@ export type ChangePriceListElementByIdMutationVariables = Exact<{
 
 export type ChangePriceListElementByIdMutation = { __typename?: 'Mutation', UpdatePriceListElementById: { __typename?: 'PriceListElement', _id: string, name: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null }, tickets?: Array<{ __typename?: 'Ticket', price: number, description: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null }, duration?: { __typename?: 'Duration', hours: number, additionalInfo?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null } | null> | null } };
 
+export type UpdateUserMutationVariables = Exact<{
+  updatedUser: UserInput;
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'Mutation', UpdateUser: string };
+
+export type GetGeneralContactsInfoQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetGeneralContactsInfoQuery = { __typename?: 'Query', GetGeneralContactsInfo?: { __typename?: 'GeneralContactsInfo', _id?: string | null, addressField?: { __typename?: 'Field', fieldInfo?: string | null, fieldTitle?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null } | null, phoneField?: { __typename?: 'Field', fieldInfo?: string | null, fieldTitle?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null } | null, emailField?: { __typename?: 'Field', fieldInfo?: string | null, fieldTitle?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null } | null } | null };
+
 export type GetLatestNewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetLatestNewsQuery = { __typename?: 'Query', GetLatestNews: { __typename?: 'NewsResponse', errorMessage?: string | null, success: boolean, data?: { __typename?: 'LatestNews', _id: string, created_time?: string | null, message?: string | null } | null } };
+
+export type GetPersonalContactsInfoQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPersonalContactsInfoQuery = { __typename?: 'Query', GetPersonalContactsInfo?: Array<{ __typename?: 'PersonContactInfo', _id?: string | null, name?: string | null, phone?: string | null, email?: string | null, role?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null } | null> | null };
 
 export type GetPriceListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -469,6 +592,40 @@ export function useEditSimplePageMutation(baseOptions?: Apollo.MutationHookOptio
 export type EditSimplePageMutationHookResult = ReturnType<typeof useEditSimplePageMutation>;
 export type EditSimplePageMutationResult = Apollo.MutationResult<EditSimplePageMutation>;
 export type EditSimplePageMutationOptions = Apollo.BaseMutationOptions<EditSimplePageMutation, EditSimplePageMutationVariables>;
+export const LoginDocument = gql`
+    mutation Login($userData: UserInput!) {
+  Login(userData: $userData) {
+    str
+    isLoggedIn
+  }
+}
+    `;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      userData: // value for 'userData'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const RefetchLatestNewsDocument = gql`
     mutation RefetchLatestNews {
   RefetchLatestNews
@@ -499,6 +656,68 @@ export function useRefetchLatestNewsMutation(baseOptions?: Apollo.MutationHookOp
 export type RefetchLatestNewsMutationHookResult = ReturnType<typeof useRefetchLatestNewsMutation>;
 export type RefetchLatestNewsMutationResult = Apollo.MutationResult<RefetchLatestNewsMutation>;
 export type RefetchLatestNewsMutationOptions = Apollo.BaseMutationOptions<RefetchLatestNewsMutation, RefetchLatestNewsMutationVariables>;
+export const SetGeneralContactInfoDocument = gql`
+    mutation SetGeneralContactInfo($newGeneralContactsInfo: GeneralContactsInfoInput) {
+  SetGeneralContactInfo(newGeneralContactsInfo: $newGeneralContactsInfo)
+}
+    `;
+export type SetGeneralContactInfoMutationFn = Apollo.MutationFunction<SetGeneralContactInfoMutation, SetGeneralContactInfoMutationVariables>;
+
+/**
+ * __useSetGeneralContactInfoMutation__
+ *
+ * To run a mutation, you first call `useSetGeneralContactInfoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetGeneralContactInfoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setGeneralContactInfoMutation, { data, loading, error }] = useSetGeneralContactInfoMutation({
+ *   variables: {
+ *      newGeneralContactsInfo: // value for 'newGeneralContactsInfo'
+ *   },
+ * });
+ */
+export function useSetGeneralContactInfoMutation(baseOptions?: Apollo.MutationHookOptions<SetGeneralContactInfoMutation, SetGeneralContactInfoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetGeneralContactInfoMutation, SetGeneralContactInfoMutationVariables>(SetGeneralContactInfoDocument, options);
+      }
+export type SetGeneralContactInfoMutationHookResult = ReturnType<typeof useSetGeneralContactInfoMutation>;
+export type SetGeneralContactInfoMutationResult = Apollo.MutationResult<SetGeneralContactInfoMutation>;
+export type SetGeneralContactInfoMutationOptions = Apollo.BaseMutationOptions<SetGeneralContactInfoMutation, SetGeneralContactInfoMutationVariables>;
+export const SetPersonalContactInfoDocument = gql`
+    mutation SetPersonalContactInfo($newPersonalContactsInfo: [PersonContactInfoInput]) {
+  SetPersonalContactInfo(newPersonalContactsInfo: $newPersonalContactsInfo)
+}
+    `;
+export type SetPersonalContactInfoMutationFn = Apollo.MutationFunction<SetPersonalContactInfoMutation, SetPersonalContactInfoMutationVariables>;
+
+/**
+ * __useSetPersonalContactInfoMutation__
+ *
+ * To run a mutation, you first call `useSetPersonalContactInfoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetPersonalContactInfoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setPersonalContactInfoMutation, { data, loading, error }] = useSetPersonalContactInfoMutation({
+ *   variables: {
+ *      newPersonalContactsInfo: // value for 'newPersonalContactsInfo'
+ *   },
+ * });
+ */
+export function useSetPersonalContactInfoMutation(baseOptions?: Apollo.MutationHookOptions<SetPersonalContactInfoMutation, SetPersonalContactInfoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetPersonalContactInfoMutation, SetPersonalContactInfoMutationVariables>(SetPersonalContactInfoDocument, options);
+      }
+export type SetPersonalContactInfoMutationHookResult = ReturnType<typeof useSetPersonalContactInfoMutation>;
+export type SetPersonalContactInfoMutationResult = Apollo.MutationResult<SetPersonalContactInfoMutation>;
+export type SetPersonalContactInfoMutationOptions = Apollo.BaseMutationOptions<SetPersonalContactInfoMutation, SetPersonalContactInfoMutationVariables>;
 export const SetSportOpportunitiesDescriptionDocument = gql`
     mutation SetSportOpportunitiesDescription($newSportOpportunitiesDescription: SportOpportunitiesDescriptionInput) {
   SetSportOpportunitiesDescription(
@@ -621,6 +840,92 @@ export function useChangePriceListElementByIdMutation(baseOptions?: Apollo.Mutat
 export type ChangePriceListElementByIdMutationHookResult = ReturnType<typeof useChangePriceListElementByIdMutation>;
 export type ChangePriceListElementByIdMutationResult = Apollo.MutationResult<ChangePriceListElementByIdMutation>;
 export type ChangePriceListElementByIdMutationOptions = Apollo.BaseMutationOptions<ChangePriceListElementByIdMutation, ChangePriceListElementByIdMutationVariables>;
+export const UpdateUserDocument = gql`
+    mutation UpdateUser($updatedUser: UserInput!) {
+  UpdateUser(updatedUser: $updatedUser)
+}
+    `;
+export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>;
+
+/**
+ * __useUpdateUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
+ *   variables: {
+ *      updatedUser: // value for 'updatedUser'
+ *   },
+ * });
+ */
+export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserMutation, UpdateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, options);
+      }
+export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
+export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
+export const GetGeneralContactsInfoDocument = gql`
+    query GetGeneralContactsInfo {
+  GetGeneralContactsInfo {
+    _id
+    addressField {
+      fieldTitle {
+        RUS
+        EST
+      }
+      fieldInfo
+    }
+    phoneField {
+      fieldTitle {
+        RUS
+        EST
+      }
+      fieldInfo
+    }
+    emailField {
+      fieldTitle {
+        RUS
+        EST
+      }
+      fieldInfo
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetGeneralContactsInfoQuery__
+ *
+ * To run a query within a React component, call `useGetGeneralContactsInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetGeneralContactsInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetGeneralContactsInfoQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetGeneralContactsInfoQuery(baseOptions?: Apollo.QueryHookOptions<GetGeneralContactsInfoQuery, GetGeneralContactsInfoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetGeneralContactsInfoQuery, GetGeneralContactsInfoQueryVariables>(GetGeneralContactsInfoDocument, options);
+      }
+export function useGetGeneralContactsInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetGeneralContactsInfoQuery, GetGeneralContactsInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetGeneralContactsInfoQuery, GetGeneralContactsInfoQueryVariables>(GetGeneralContactsInfoDocument, options);
+        }
+export type GetGeneralContactsInfoQueryHookResult = ReturnType<typeof useGetGeneralContactsInfoQuery>;
+export type GetGeneralContactsInfoLazyQueryHookResult = ReturnType<typeof useGetGeneralContactsInfoLazyQuery>;
+export type GetGeneralContactsInfoQueryResult = Apollo.QueryResult<GetGeneralContactsInfoQuery, GetGeneralContactsInfoQueryVariables>;
 export const GetLatestNewsDocument = gql`
     query GetLatestNews {
   GetLatestNews {
@@ -661,6 +966,47 @@ export function useGetLatestNewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetLatestNewsQueryHookResult = ReturnType<typeof useGetLatestNewsQuery>;
 export type GetLatestNewsLazyQueryHookResult = ReturnType<typeof useGetLatestNewsLazyQuery>;
 export type GetLatestNewsQueryResult = Apollo.QueryResult<GetLatestNewsQuery, GetLatestNewsQueryVariables>;
+export const GetPersonalContactsInfoDocument = gql`
+    query GetPersonalContactsInfo {
+  GetPersonalContactsInfo {
+    _id
+    name
+    role {
+      RUS
+      EST
+    }
+    phone
+    email
+  }
+}
+    `;
+
+/**
+ * __useGetPersonalContactsInfoQuery__
+ *
+ * To run a query within a React component, call `useGetPersonalContactsInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPersonalContactsInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPersonalContactsInfoQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPersonalContactsInfoQuery(baseOptions?: Apollo.QueryHookOptions<GetPersonalContactsInfoQuery, GetPersonalContactsInfoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPersonalContactsInfoQuery, GetPersonalContactsInfoQueryVariables>(GetPersonalContactsInfoDocument, options);
+      }
+export function useGetPersonalContactsInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPersonalContactsInfoQuery, GetPersonalContactsInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPersonalContactsInfoQuery, GetPersonalContactsInfoQueryVariables>(GetPersonalContactsInfoDocument, options);
+        }
+export type GetPersonalContactsInfoQueryHookResult = ReturnType<typeof useGetPersonalContactsInfoQuery>;
+export type GetPersonalContactsInfoLazyQueryHookResult = ReturnType<typeof useGetPersonalContactsInfoLazyQuery>;
+export type GetPersonalContactsInfoQueryResult = Apollo.QueryResult<GetPersonalContactsInfoQuery, GetPersonalContactsInfoQueryVariables>;
 export const GetPriceListDocument = gql`
     query GetPriceList {
   GetPriceList {
