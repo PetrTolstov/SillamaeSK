@@ -25,8 +25,7 @@ const AdminHome: NextPageWithLayout = () => {
     if (!AdminStore.userInfo.isLoggedIn) { 
         return (
             <div style={{display: "flex", justifyContent: "center", flexDirection: "column", height: "50vmin"}}>
-                {/* TODO Change heading to Estonia  */}
-                <h3>Login</h3>
+                <h3>Logi sisse</h3>
                 <form onSubmit={handleLogin} style={{display: "flex", flexDirection: "column"}}>
 
 					<div className={frameStyles.flexCon} style={{marginBottom: "15px"}}>

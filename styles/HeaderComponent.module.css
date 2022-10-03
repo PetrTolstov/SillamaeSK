@@ -28,13 +28,12 @@
     }
 
     .changeLanguage{
+        cursor: pointer;
         position: absolute;
         top: 80px;
         right: 55px;
         display: block;
     }
-
-
 
     nav.mainNav a{
         border: none;
@@ -101,6 +100,7 @@
 }
 
 .changeLanguage{
+    cursor: pointer;
     color: #525252;
 
     font-weight: 600;
