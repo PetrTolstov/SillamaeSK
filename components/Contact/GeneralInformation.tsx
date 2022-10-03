@@ -1,15 +1,22 @@
 import styles from '../../styles/GeneralInformation.module.css'
+import {useGetGeneralContactsInfoQuery} from "../../graphqlGenerated/graphql";
 
 function GeneralInformation(){
+    const {data, loading, error} = useGetGeneralContactsInfoQuery()
+
     return(
         <article className={styles.generalInformation}>
-            <h2>Kontakt</h2>
-            <h3>Aadress:</h3>
-            <p>Kesk 30, Sillamäe, 40232 Ida-Viru maakond</p>
-            <h3>Telefon:</h3>
-            <p>+372 392 42 45</p>
-            <h3>E-mail:</h3>
-            <p>info@sillamaesk.ee</p>
+            {loading ? <p>Loading...</p> :
+                <>
+                    <h2>Kontakt</h2>
+                    <h3>{data?.GetGeneralContactsInfo?.addressField?.fieldTitle?.EST}</h3>
+                    <p>{data?.GetGeneralContactsInfo?.addressField?.fieldInfo}</p>
+                    <h3>{data?.GetGeneralContactsInfo?.phoneField?.fieldTitle?.EST}</h3>
+                    <p>{data?.GetGeneralContactsInfo?.phoneField?.fieldInfo}</p>
+                    <h3>{data?.GetGeneralContactsInfo?.emailField?.fieldTitle?.EST}</h3>
+                    <p>{data?.GetGeneralContactsInfo?.emailField?.fieldInfo}</p>
+                </>
+                }
         </article>
     )
 }

@@ -1,24 +1,14 @@
 import styles from '../../styles/SpecificContact.module.css'
+import {PersonContactInfo} from "../../graphqlGenerated/graphql";
 
-type SpecificContactProps = {
-    data :{
-        imgUrl : string,
-        position : string,
-        name : string,
-        telefon : string,
-        email : string
-    }
-    }
-
-function SpecificContact({data} : SpecificContactProps){
+function SpecificContact({data} : { data: PersonContactInfo | null | undefined}){
     return(
         <article className={styles.SpecificContact}>
-            <img src={data.imgUrl} alt={'Personal Photo'}/>
             <div className={styles.textContainer}>
-                <p><b>{data.position}</b></p>
-                <p>{data.name}</p>
-                <p>Telefon: {data.telefon}</p>
-                <p>E-mail: {data.email}</p>
+                <p><b>{data?.role?.EST}</b></p>
+                <p>{data?.name}</p>
+                <p>Telefon: {data?.phone}</p>
+                <p>E-mail: {data?.email}</p>
             </div>
         </article>
     )

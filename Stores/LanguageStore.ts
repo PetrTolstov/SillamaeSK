@@ -18,32 +18,32 @@ class LanguageStore {
 		},
 		tabs: {
 			homePageTab: {
-				EST: "Avaleht",
-				RUS: "Главная",
+				EST: "AVALEHT",
+				RUS: "ГЛАВНАЯ",
 			},
 			FromSportComplexPageTab: {
-				EST: "Spordikompleksist",
-				RUS: "Из Спорткомплекса",
+				EST: "SPORDIKOMPLEKSIST",
+				RUS: "ИЗ СПОРТКОМПЛЕКСА",
 			},
 			SportOpportunitiesPageTab: {
-				EST: "Sportimisvõimalused",
-				RUS: "Спорт-сооружения",
+				EST: "SPORTIMISVÕIMALUSED",
+				RUS: "СПОРТ-СООРУЖЕНИЯ",
 			},
 			CalendarPageTab: {
-				EST: "Kalender",
-				RUS: "Календарь",
+				EST: "KALENDER",
+				RUS: "КАЛЕНДАРЬ",
 			},
 			PriceListPageTab: {
-				EST: "Hinnakiri",
-				RUS: "Расценки",
+				EST: "HINNAKIRI",
+				RUS: "РАСЦЕНКИ",
 			},
 			HostelPageTab: {
-				EST: "Hostel",
-				RUS: "Хостел",
+				EST: "HOSTEL",
+				RUS: "ХОСТЕЛ",
 			},
 			ContactPageTab: {
-				EST: "Kontakt",
-				RUS: "Контакт",
+				EST: "KONTAKT",
+				RUS: "КОНТАКТ",
 			},
 		},
 	};

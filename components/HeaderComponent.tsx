@@ -97,7 +97,10 @@ function HeaderComponent() {
 					<Link href={`/`}>
 						<a className={styles.logo} />
 					</Link>
-					<h1 className={styles.logoName}>{lang.headerTitle}</h1>
+					<Link href={`/`}>
+						<h1 className={styles.logoName}>{lang.headerTitle}</h1>
+					</Link>
+
 				</div>
 				<button className={styles.openbtn} onClick={openNav}>
 					{contentBut}

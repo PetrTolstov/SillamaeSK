@@ -5,33 +5,34 @@ import styles from "../styles/Contact.module.css"
 import GeneralInformation from "../components/Contact/GeneralInformation";
 import GoogleMapComponent from "../components/Contact/GoogleMapComponent";
 import SpecificContact from "../components/Contact/SpecificContact";
+import {
+    GetPersonalContactsInfoQuery,
+    PersonContactInfo,
+    useGetGeneralContactsInfoQuery,
+    useGetPersonalContactsInfoQuery
+} from "../graphqlGenerated/graphql";
 
 const Contact: NextPage = () => {
-    const data = [{
-        imgUrl : 'personalPhoto.svg',
-        position : "Juhataja",
-        name : "Maidu Laht",
-        telefon : "+372 111 11 11",
-        email : "example@sillamaesk.ee"
-    },
-        {
-            imgUrl : 'personalPhoto.svg',
-            position : "Spordispetsialist/ Teenindusjuht",
-            name : "Jelena Verzilova ",
-            telefon : "+372 111 11 11",
-            email : "example@sillamaesk.ee"
-        },
-        {
-            imgUrl : 'personalPhoto.svg',
-            position : "Majandusspetsialist",
-            name : "Svetlana Denissenkova ",
-            telefon : "+372 111 11 11",
-            email : "example@sillamaesk.ee"
-        }]
+
+    const {data, loading, error} = useGetPersonalContactsInfoQuery()
+
 
     return (
         <Layout>
-            <AppIsBeingBuilt isEst={true}/>
+            <main className={styles.main}>
+                <div className={styles.firstContainer}>
+                    <GeneralInformation/>
+                    <GoogleMapComponent/>
+                </div>
+                <div className={styles.specificContacts}>
+                    {loading ? <p>Loading</p> : <>
+                        <SpecificContact data={data!.GetPersonalContactsInfo![0]}/>
+                        <SpecificContact data={data!.GetPersonalContactsInfo![0]}/>
+                        <SpecificContact data={data!.GetPersonalContactsInfo![0]}/>
+                    </>
+                        }
+                </div>
+            </main>
         </Layout>
     )
 }
