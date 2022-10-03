@@ -4,7 +4,7 @@ import { ButtonAdmin } from "../ButtonAdmin";
 import UploadFile from "../UploadFile";
 import frameStyles from "../../../styles/FormStyles.module.css"
 
-function getPage(str: string) { 
+export function getPage(str: string) { 
     switch(str) { 
         case "Ujula": 
             return "/Ujula"
