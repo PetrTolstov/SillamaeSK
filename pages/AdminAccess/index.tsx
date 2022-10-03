@@ -6,6 +6,7 @@ import { observer } from "mobx-react-lite";
 import AdminStore from "../../Stores/AdminStore";
 import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
 import { useLoginMutation } from "../../graphqlGenerated/graphql";
+import frameStyles from "../../styles/FormStyles.module.css"
 
 const AdminHome: NextPageWithLayout = () => {
     const [Login, {data, loading, error}] = useLoginMutation();
@@ -27,8 +28,15 @@ const AdminHome: NextPageWithLayout = () => {
                 {/* TODO Change heading to Estonia  */}
                 <h3>Login</h3>
                 <form onSubmit={handleLogin} style={{display: "flex", flexDirection: "column"}}>
-                    <input type="text" name="login" placeholder="Login" />
-                    <input type={"password"} name="password" placeholder="Password" />
+
+					<div className={frameStyles.flexCon} style={{marginBottom: "15px"}}>
+                    	<input type="text" name="login" placeholder="Login"  className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
+					<div className={frameStyles.flexCon} style={{marginBottom: "25px"}}>
+                    	<input type={"password"} name="password" placeholder="Password" className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
                     <ButtonAdmin isSubmit filled action={()=>{}} label={"Logima"} />
                 </form>
             </div>

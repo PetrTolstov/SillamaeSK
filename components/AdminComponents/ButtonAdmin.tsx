@@ -12,13 +12,13 @@ export const ButtonAdmin = ({ label, action, ...props }: ButtonAdminProps) => {
 	const styling = [styles.btn, props.filled ? styles.filledBtn : "", props.border ? styles.borderBtn : ""].join(" ");
     if (props.isSubmit) { 
         return ( 
-            <div>
+            <div className={styles.buttonFrame}>
                 <input className={styling} onClick={action} type="submit" value={`${label}`}/>
             </div>
         )
     } else { 
         return (
-            <div>
+            <div className={styles.buttonFrame}>
                 <button type="button" className={styling} onClick={action}>
                     {label}
                 </button>

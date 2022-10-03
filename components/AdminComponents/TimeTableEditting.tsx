@@ -2,8 +2,9 @@ import { FormEvent } from "react";
 import { GetTimeTableDocument, TimeTableInput, useGetTimeTableQuery, useSetTimeTableMutation } from "../../graphqlGenerated/graphql";
 import { ButtonAdmin } from "./ButtonAdmin";
 import styles from '../../styles/TimeTableEditting.module.css'; 
+import frameStyles from "../../styles/FormStyles.module.css"
 
-export function TimeTableEditting() { 
+export function TimeTableEditting() {
     const { data: dataTimeTable, loading: loadingTimeTable } = useGetTimeTableQuery();
 	const [updateTimeTable, { data: updatedData, loading: updatedLoading }] = useSetTimeTableMutation();
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -63,61 +64,115 @@ export function TimeTableEditting() {
 			<h3>Ajakava</h3>
 			<div>
                 {loadingTimeTable ? <p>Loading...</p> : <></>}
-				<form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", width: "400px" }}>
+				<form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }} >
 					<label >
 						Title
-						<div style={{ display: "flex", flexDirection: "column" }}>
-							<input type='text' name='title-EST' placeholder="EST" defaultValue={dataTimeTable?.GetTimeTable?.title?.EST ?? ""}/>
-							<input type='text' name='title-RUS' placeholder="RUS" defaultValue={dataTimeTable?.GetTimeTable?.title?.RUS ?? ""} />
+						<div style={{ display: "flex", flexDirection: "column" }} >
+							<div className={frameStyles.flexCon}>
+								<input type='text' name='title-EST' placeholder="EST" defaultValue={dataTimeTable?.GetTimeTable?.title?.EST ?? ""} className={frameStyles.input}/>
+								<span className={frameStyles.focusBorder}></span>
+							</div>
+							<div className={frameStyles.flexCon}>
+								<input type='text' name='title-RUS' placeholder="RUS" defaultValue={dataTimeTable?.GetTimeTable?.title?.RUS ?? ""} className={frameStyles.input}/>
+								<span className={frameStyles.focusBorder}></span>
+							</div>
 						</div>
 					</label>
 					<div style={{ display: "flex", width: "100%", marginTop: "20px", justifyContent: "space-between" }}>
 						<label style={{ display: "flex", flexDirection: "column" }}>
 							<label style={{ display: "flex", flexDirection: "column" }}>
 								<label>
-									<input type='text' name='1-title-EST' placeholder="EST title: 'Spordikompleks'" defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.title?.EST ?? ""}/>
+									<div className={frameStyles.flexCon}>
+										<input type='text' name='1-title-EST' placeholder="EST title: 'Spordikompleks'" defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.title?.EST ?? ""} className={frameStyles.input}/>
+										<span className={frameStyles.focusBorder}></span>
+									</div>
 								</label>
 								<label>
-									<input type='text' name='1-title-RUS' placeholder="RUS title: 'Спорткомплекс'" defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.title?.RUS ?? ""}/>
+									<div className={frameStyles.flexCon}>
+										<input type='text' name='1-title-RUS' placeholder="RUS title: 'Спорткомплекс'" defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.title?.RUS ?? ""} className={frameStyles.input}/>
+										<span className={frameStyles.focusBorder}></span>
+									</div>
 								</label>
 							</label>
 							<div>
                                 <div>
-								    <input style={{ width: "50px" }} type='text' name='1-minTitle1-EST' placeholder='EST E-R' defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.minTitle1?.EST ?? ""}/>
-								    <input style={{ width: "50px", marginLeft: "10px"}} type='text' name='1-minTitle1-RUS' placeholder='RUS E-R' defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.minTitle1?.RUS ?? ""}/>
-                                </div>
-								<input type='text' name='1-timeTable1' defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.timeTable1 ?? ""} />
+									<div className={frameStyles.flexCon}>
+								    	<input type='text' name='1-minTitle1-EST' placeholder='EST E-R' defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.minTitle1?.EST ?? ""} className={frameStyles.input}/>
+										<span className={frameStyles.focusBorder}></span>
+									</div>
+										<div className={frameStyles.flexCon}>
+										<input type='text' name='1-minTitle1-RUS' placeholder='RUS E-R' defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.minTitle1?.RUS ?? ""} className={frameStyles.input}/>
+										<span className={frameStyles.focusBorder}></span>
+									</div>
+								</div>
+								<div className={frameStyles.flexCon}>
+									<input type='text' name='1-timeTable1' defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.timeTable1 ?? ""} className={frameStyles.input}/>
+									<span className={frameStyles.focusBorder}></span>
+								</div>
 							</div>
 							<div>
                                 <div>
-								    <input style={{ width: "50px" }} type='text' name='1-minTitle2-EST' placeholder='EST E-R' defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.minTitle2?.EST ?? ""}/>
-								    <input style={{ width: "50px", marginLeft: "10px"}} type='text' name='1-minTitle2-RUS' placeholder='RUS E-R' defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.minTitle2?.RUS ?? ""}/>
-                                </div>
-								<input type='text' name='1-timeTable2' defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.timeTable2 ?? ""}/>
+									<div className={frameStyles.flexCon}>
+								    	<input  type='text' name='1-minTitle2-EST' placeholder='EST E-R' defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.minTitle2?.EST ?? ""} className={frameStyles.input}/>
+										<span className={frameStyles.focusBorder}></span>
+									</div>
+									<div className={frameStyles.flexCon}>
+											<input  type='text' name='1-minTitle2-RUS' placeholder='RUS E-R' defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.minTitle2?.RUS ?? ""} className={frameStyles.input}/>
+									<span className={frameStyles.focusBorder}></span>
+									</div>
+								</div>
+								<div className={frameStyles.flexCon}>
+									<input type='text' name='1-timeTable2' defaultValue={dataTimeTable?.GetTimeTable?.SportComplex?.timeTable2 ?? ""} className={frameStyles.input}/>
+									<span className={frameStyles.focusBorder}></span>
+								</div>
 							</div>
 						</label>
                         <label style={{ display: "flex", flexDirection: "column" }}>
 							<label style={{ display: "flex", flexDirection: "column" }}>
 								<label>
-									<input type='text' name='2-title-EST' placeholder="EST title: 'Ujula'" defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.title?.EST ?? ""}/>
+									<div className={frameStyles.flexCon}>
+										<input type='text' name='2-title-EST' placeholder="EST title: 'Ujula'" defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.title?.EST ?? ""} className={frameStyles.input}/>
+										<span className={frameStyles.focusBorder}></span>
+									</div>
 								</label>
 								<label>
-									<input type='text' name='2-title-RUS' placeholder="RUS title: 'Бассейн'" defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.title?.RUS ?? ""}/>
+									<div className={frameStyles.flexCon}>
+										<input type='text' name='2-title-RUS' placeholder="RUS title: 'Бассейн'" defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.title?.RUS ?? ""} className={frameStyles.input}/>
+										<span className={frameStyles.focusBorder}></span>
+									</div>
 								</label>
 							</label>
 							<div>
                                 <div>
-								    <input style={{ width: "50px" }} type='text' name='2-minTitle1-EST' placeholder='EST E-R' defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.minTitle1?.EST ?? ""}/>
-								    <input style={{ width: "50px", marginLeft: "10px"}} type='text' name='2-minTitle1-RUS' placeholder='RUS E-R' defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.minTitle1?.RUS ?? ""}/>
-                                </div>
-								<input type='text' name='2-timeTable1' defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.timeTable1 ?? ""} />
+									<div className={frameStyles.flexCon}>
+								    <input type='text' name='2-minTitle1-EST' placeholder='EST E-R' defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.minTitle1?.EST ?? ""} className={frameStyles.input}/>
+									<span className={frameStyles.focusBorder}></span>
+									</div>
+									<div className={frameStyles.flexCon}>
+								    <input type='text' name='2-minTitle1-RUS' placeholder='RUS E-R' defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.minTitle1?.RUS ?? ""} className={frameStyles.input}/>
+									<span className={frameStyles.focusBorder}></span>
+									</div>
+								</div>
+								<div className={frameStyles.flexCon}>
+								<input type='text' name='2-timeTable1' defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.timeTable1 ?? ""} className={frameStyles.input}/>
+								<span className={frameStyles.focusBorder}></span>
+								</div>
 							</div>
 							<div>
                                 <div>
-								    <input style={{ width: "50px" }} type='text' name='2-minTitle2-EST' placeholder='EST E-R' defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.minTitle2?.EST ?? ""}/>
-								    <input style={{ width: "50px", marginLeft: "10px"}} type='text' name='2-minTitle2-RUS' placeholder='RUS E-R' defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.minTitle2?.RUS ?? ""}/>
-                                </div>
-								<input type='text' name='2-timeTable2' defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.timeTable2 ?? ""}/>
+									<div className={frameStyles.flexCon}>
+								    <input  type='text' name='2-minTitle2-EST' placeholder='EST E-R' defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.minTitle2?.EST ?? ""} className={frameStyles.input}/>
+									<span className={frameStyles.focusBorder}></span>
+									</div>
+									<div className={frameStyles.flexCon}>
+									<input  type='text' name='2-minTitle2-RUS' placeholder='RUS E-R' defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.minTitle2?.RUS ?? ""} className={frameStyles.input}/>
+									<span className={frameStyles.focusBorder}></span>
+									</div>
+								</div>
+								<div className={frameStyles.flexCon}>
+								<input type='text' name='2-timeTable2' defaultValue={dataTimeTable?.GetTimeTable?.SwimmingPool?.timeTable2 ?? ""} className={frameStyles.input}/>
+								<span className={frameStyles.focusBorder}></span>
+								</div>
 							</div>
 						</label>
 					</div>

@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import {SimplePage, useEditSimplePageMutation, GetSimplePagesDocument, useGetSimplePagesLazyQuery } from "../../../graphqlGenerated/graphql";
 import { ButtonAdmin } from "../ButtonAdmin";
 import UploadFile from "../UploadFile";
+import frameStyles from "../../../styles/FormStyles.module.css"
 
 function getPage(str: string) { 
     switch(str) { 
@@ -37,9 +38,9 @@ export const AdminSimplePageEditForm = ({ page }: { page: SimplePage }) => {
         setCurrentPage(page)
     }, [page])
 	return (
-		<div>
+		<div className={frameStyles.container}>
 			<h3>{page?.title?.EST ?? ""}</h3>
-			<form style={{ display: "flex", flexDirection: "column" }} onSubmit={(e) => {
+			<form style={{ display: "flex", flexDirection: "column", marginBottom: '50px' }} onSubmit={(e) => {
                 e.preventDefault();
                 const formData = new FormData(e.currentTarget); 
                 editSimplePage({variables: {id: page._id, updatedSimplePage: { 
@@ -66,13 +67,25 @@ export const AdminSimplePageEditForm = ({ page }: { page: SimplePage }) => {
             }}>
 				<label>
 					Title
-					<input key={currentPage?._id + " 1"} id='title' name='titleEST' placeholder='Title EST' defaultValue={currentPage?.title?.EST ?? ""} />
-					<input key={currentPage?._id + " 2"} id='title' name='titleRUS' placeholder='Title RUS' defaultValue={page?.title?.RUS ?? ""} />
-				</label>
-				<label style={{ display: "flex", flexDirection: "column" }}>
+                    <div className={frameStyles.flexCon}>
+					    <input key={currentPage?._id + " 1"} id='title' name='titleEST' placeholder='Title EST' defaultValue={currentPage?.title?.EST ?? ""} className={frameStyles.input}/>
+                        <span className={frameStyles.focusBorder}></span>
+                    </div>
+                    <div className={frameStyles.flexCon}>
+					    <input key={currentPage?._id + " 2"} id='title' name='titleRUS' placeholder='Title RUS' defaultValue={page?.title?.RUS ?? ""} className={frameStyles.input}/>
+                        <span className={frameStyles.focusBorder}></span>
+                    </div>
+                    </label>
+				<label style={{ display: "flex", flexDirection: "column" , marginTop: '20px'}}>
 					Text
-					<textarea placeholder='Text EST' name="textEST" cols={30} rows={10} defaultValue={page?.text?.EST ?? ""} ></textarea>
-					<textarea placeholder='Text RUS' name="textRUS" cols={30} rows={10} defaultValue={page?.text?.RUS ?? ""} ></textarea>
+                    <div className={frameStyles.flexCon}>
+					    <textarea placeholder='Text EST' name="textEST" cols={30} rows={10} defaultValue={page?.text?.EST ?? ""} className={frameStyles.input}></textarea>
+                        <span className={frameStyles.focusBorder}></span>
+                    </div>
+                    <div className={frameStyles.flexCon}>
+					    <textarea placeholder='Text RUS' name="textRUS" cols={30} rows={10} defaultValue={page?.text?.RUS ?? ""} className={frameStyles.input}></textarea>
+                            <span className={frameStyles.focusBorder}></span>
+                    </div>
 				</label>
                 <UploadFile page={getPage(currentPage?.title?.EST ?? "") ?? ""} show={showUploadFile} closeModal={() => setShowUploadFile(false)} />
                 <ButtonAdmin border action={() => setShowUploadFile(true)} label={"Add image"} />

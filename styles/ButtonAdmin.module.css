@@ -17,11 +17,16 @@
 
 .filledBtn {
     font-family: "Montserrat", sans-serif;
-    font-size: 20;
+    font-size: 20px;
     font-weight: 500;
     background-color: #0167FF; 
     color: white;
     border-radius: 3px;
     padding: 5px 10px;
     margin-top: 10px;
+}
+
+.buttonFrame{
+    display: flex;
+    justify-content: space-around;
 }
