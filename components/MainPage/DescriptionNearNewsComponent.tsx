@@ -1,12 +1,18 @@
 import styles from '../../styles/DescriptionNearNewsComponent.module.css'
+import {
+    GetSportOpportunitiesDescriptionDocument,
+    useGetSportOpportunitiesDescriptionQuery
+} from "../../graphqlGenerated/graphql";
 
 function DescriptionNearNewsComponent(){
+    const {data, loading, error} = useGetSportOpportunitiesDescriptionQuery()
     return(
         <article className={styles.textSecondBlock}>
-            <h2>SPORTIMISVÕIMALUSED</h2>
-            <p>Pakume oma klientidele Sillamäel väga erinevaid spordialasid!</p>
-            <p>Spordikompleks Kalev on kõigile kättesaadav! Lastelt täiskasvanutele!
-                Koht on kõigile!</p>
+            {loading ? <h2>Loading</h2> :
+                <>
+                    <h2>{data!.GetSportOpportunitiesDescription!.title!.EST}</h2>
+                    <p>{data!.GetSportOpportunitiesDescription!.text!.EST}</p>
+                </>}
         </article>
     )
 }
