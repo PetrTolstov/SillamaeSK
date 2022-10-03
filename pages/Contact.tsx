@@ -27,8 +27,8 @@ const Contact: NextPage = () => {
                 <div className={styles.specificContacts}>
                     {loading ? <p>Loading</p> : <>
                         <SpecificContact data={data!.GetPersonalContactsInfo![0]}/>
-                        <SpecificContact data={data!.GetPersonalContactsInfo![0]}/>
-                        <SpecificContact data={data!.GetPersonalContactsInfo![0]}/>
+                        <SpecificContact data={data!.GetPersonalContactsInfo![1]}/>
+                        <SpecificContact data={data!.GetPersonalContactsInfo![2]}/>
                     </>
                         }
                 </div>
