@@ -8,6 +8,12 @@
 
 }
 
+@media screen and (max-width: 500px) {
+    main.main {
+        padding: 0 0;
+    }
+}
+
 .main{
     font-family: 'Montserrat', sans-serif;
     font-style: normal;
@@ -19,6 +25,8 @@
     flex-direction: column;
     align-items: center;
     max-width: 1600px;
+
+    padding: 0 50px;
 }
 
 .h1{
@@ -29,7 +37,7 @@
 
 .container{
     max-width: 1300px;
-    min-width: 90%;
+    min-width: 100%;
     margin-bottom: 50px;
 }
 

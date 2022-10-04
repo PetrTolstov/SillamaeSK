@@ -5,41 +5,28 @@ import { useRouter } from "next/router";
 import LanguageStore from "../Stores/LanguageStore";
 import { observer } from "mobx-react-lite";
 import { action } from "mobx";
-
-function getWindowDimensions() {
-	const { innerWidth: width, innerHeight: height } = window;
-	return {
-		width,
-		height,
-	};
-}
+import cross from '../public/cross.svg'
+import threeScticks from  '../public/threeSticks.svg'
+import Image from "next/image";
 
 function HeaderComponent() {
 	const [navStyles, setNavStyles] = useState([styles.mainNav]); //, styles.hiddenMainNav
 	const [langStyle, setLangStyles] = useState([styles.changeLanguage]); //, styles.hiddenLang
-	const [contentBut, setContentBut] = useState("╳");
+	const [contentBut, setContentBut] = useState(cross);
 	const [isEstLanguage, setIsEstLanguage] = useState(LanguageStore.currentLanguage.isEst);
 
 	function openNav() {
 		switch (navStyles.length) {
 			case 1:
 				setNavStyles([styles.mainNav, styles.hiddenMainNav]);
-				setContentBut("☰");
+				setContentBut(threeScticks);
 				break;
 			case 2:
 				setNavStyles([styles.mainNav]);
-				setContentBut("╳");
+				setContentBut(cross);
 				break;
 		}
 
-		switch (langStyle.length) {
-			case 1:
-				setLangStyles([styles.changeLanguage, styles.hiddenLang]);
-				break;
-			case 2:
-				setLangStyles([styles.changeLanguage]);
-				break;
-		}
 	}
 
 	const changeLang = () => {
@@ -103,12 +90,15 @@ function HeaderComponent() {
 					</Link>
 
 				</div>
-				<button className={styles.openbtn} onClick={openNav}>
-					{contentBut}
-				</button>
-				<a className={langStyle.join(" ")} onClick={changeLang}>
-					{isEstLanguage ? "RU" : "ET"}
-				</a>
+				<div className={styles.switchButtons}>
+					<a className={langStyle.join(" ")} onClick={changeLang}>
+						{isEstLanguage ? "RU" : "ET"}
+					</a>
+					<button className={styles.openbtn} onClick={openNav}>
+						<Image src={contentBut} alt={'☰'}/>
+					</button>
+				</div>
+
 			</div>
 			<nav className={navStyles.join(" ")}>
 				<Link href={`/`}>
