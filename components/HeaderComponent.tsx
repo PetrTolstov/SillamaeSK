@@ -15,9 +15,9 @@ function getWindowDimensions() {
 }
 
 function HeaderComponent() {
-	const [navStyles, setNavStyles] = useState([styles.mainNav, styles.hiddenMainNav]);
-	const [langStyle, setLangStyles] = useState([styles.changeLanguage, styles.hiddenLang]);
-	const [contentBut, setContentBut] = useState("☰");
+	const [navStyles, setNavStyles] = useState([styles.mainNav]); //, styles.hiddenMainNav
+	const [langStyle, setLangStyles] = useState([styles.changeLanguage]); //, styles.hiddenLang
+	const [contentBut, setContentBut] = useState("╳");
 	const [isEstLanguage, setIsEstLanguage] = useState(LanguageStore.currentLanguage.isEst);
 
 	function openNav() {
@@ -90,6 +90,7 @@ function HeaderComponent() {
 
 	const router = useRouter();
 	const navRef = useRef(null);
+
 	return (
 		<header>
 			<div className={styles.aboveNav}>

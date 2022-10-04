@@ -528,24 +528,36 @@ const EditingForm = ({
 				closeModal();
 			}}>
 
-			<input
-				type='text'
-				defaultValue={name.EST ?? ""}
-				onChange={(e) => {
-					const copyName = name;
-					copyName.EST = e.currentTarget.value;
-					setName(copyName);
-				}}
-			/>
-			<input
-				type='text'
-				defaultValue={name.ENG ?? ""}
-				onChange={(e) => {
-					const copyName = name;
-					copyName.ENG = e.currentTarget.value;
-					setName(copyName);
-				}}
-			/>
+			<div className={frameStyles.flexCon} style={{width: "50%"}}>
+				<input
+					type='text'
+					defaultValue={name.EST ?? ""}
+					onChange={(e) => {
+						const copyName = name;
+						copyName.EST = e.currentTarget.value;
+						setName(copyName);
+					}}
+					className={frameStyles.input}
+				/>
+				<span className={frameStyles.focusBorder}></span>
+			</div>
+
+
+			<div className={frameStyles.flexCon} style={{width: "50%"}}>
+				<input
+					type='text'
+					defaultValue={name.ENG ?? ""}
+					onChange={(e) => {
+						const copyName = name;
+						copyName.ENG = e.currentTarget.value;
+						setName(copyName);
+					}}
+					className={frameStyles.input}
+				/>
+				<span className={frameStyles.focusBorder}></span>
+			</div>
+
+			<div className={frameStyles.flexCon} style={{width: "50%"}}>
 			<input
 				type='text'
 				defaultValue={name.RUS ?? ""}
@@ -554,130 +566,156 @@ const EditingForm = ({
 					copyName.RUS = e.currentTarget.value;
 					setName(copyName);
 				}}
+				className={frameStyles.input}
 			/>
+				<span className={frameStyles.focusBorder}></span>
+			</div>
+
 			<table className={styles.table}>
 				<thead>
 					<tr>
 						<th>Teenuste nimetus</th>
 						<th>Kestvus</th>
 						<th>Uus hind</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					{tickets.map((ticket, id) => (
 						<tr key={id}>
 							<td>
-								<input
-									id={`${id}`}
-									name={`description`}
-									defaultValue={tickets[id]?.description.EST ?? ""}
-									className={["EST", styles.input].join(" ")}
-									type='text'
-									placeholder='Teenuse nimetus EST'
-									onChange={(e) => {
-										handleChange({
-											objToCopy: tickets,
-											func: setTickets,
-											e,
-											id,
-											depth: 1,
-											property1: ticketProperties[e.currentTarget.name as ticketProperties],
-											property2: undefined,
-											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
-										});
-									}}
-								/>
-								<input
-									id={`${id}`}
-									name={`description`}
-									defaultValue={ticket?.description.ENG ?? ""}
-									className={["ENG", styles.input].join(" ")}
-									type='text'
-									placeholder='Teenuse nimetus ENG'
-									onChange={(e) => {
-										handleChange({
-											objToCopy: tickets,
-											func: setTickets,
-											e,
-											id,
-											depth: 1,
-											property1: ticketProperties[e.currentTarget.name as ticketProperties],
-											property2: undefined,
-											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
-										});
-									}}
-								/>
-								<input
-									id={`${id}`}
-									name={`description`}
-									defaultValue={ticket?.description.RUS ?? ""}
-									className={["RUS", styles.input].join(" ")}
-									type='text'
-									placeholder='Teenuse nimetus RUS'
-									onChange={(e) => {
-										handleChange({
-											objToCopy: tickets,
-											func: setTickets,
-											e,
-											id,
-											depth: 1,
-											property1: ticketProperties[e.currentTarget.name as ticketProperties],
-											property2: undefined,
-											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
-										});
-									}}
-								/>
+								<div className={frameStyles.flexCon}>
+									<input
+										id={`${id}`}
+										name={`description`}
+										defaultValue={tickets[id]?.description.EST ?? ""}
+										className={["EST", styles.input].join(" ") && frameStyles.input}
+										type='text'
+										placeholder='Teenuse nimetus EST'
+										onChange={(e) => {
+											handleChange({
+												objToCopy: tickets,
+												func: setTickets,
+												e,
+												id,
+												depth: 1,
+												property1: ticketProperties[e.currentTarget.name as ticketProperties],
+												property2: undefined,
+												lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+											});
+										}}
+									/>
+									<span className={frameStyles.focusBorder}></span>
+								</div>
+								<div className={frameStyles.flexCon}>
+									<input
+										id={`${id}`}
+										name={`description`}
+										defaultValue={ticket?.description.ENG ?? ""}
+										className={["ENG", styles.input].join(" ")  && frameStyles.input}
+										type='text'
+										placeholder='Teenuse nimetus ENG'
+										onChange={(e) => {
+											handleChange({
+												objToCopy: tickets,
+												func: setTickets,
+												e,
+												id,
+												depth: 1,
+												property1: ticketProperties[e.currentTarget.name as ticketProperties],
+												property2: undefined,
+												lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+											});
+										}}
+									/>
+									<span className={frameStyles.focusBorder}></span>
+								</div>
+
+								<div className={frameStyles.flexCon}>
+									<input
+										id={`${id}`}
+										name={`description`}
+										defaultValue={ticket?.description.RUS ?? ""}
+										className={["RUS", styles.input].join(" ") && frameStyles.input}
+										type='text'
+										placeholder='Teenuse nimetus RUS'
+										onChange={(e) => {
+											handleChange({
+												objToCopy: tickets,
+												func: setTickets,
+												e,
+												id,
+												depth: 1,
+												property1: ticketProperties[e.currentTarget.name as ticketProperties],
+												property2: undefined,
+												lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+											});
+										}}
+									/>
+									<span className={frameStyles.focusBorder}></span>
+								</div>
 							</td>
 							<td className='duration'>
-								<input
-									id={`${id}`}
-									name={`hours`}
-									defaultValue={`${ticket?.duration?.hours}` ?? ""}
-									type='number'
-									step={"0.1"}
-									onChange={(e) => {
-										handleChange({
-											objToCopy: tickets,
-											func: setTickets,
-											e,
-											id,
-											depth: 2,
-											property1:
-												ticketProperties[
-													e.currentTarget.parentElement?.classList[0] as ticketProperties
-												],
-											property2: ticketProperties[e.currentTarget.name as ticketProperties],
-										});
-									}}
-								/>
-								<input
-									id={`${id}`}
-									name={`additionalInfo`}
-									defaultValue={ticket?.duration?.additionalInfo?.EST ?? ""}
-									className={["EST", styles.input].join(" ")}
-									type='text'
-									placeholder='Teenuse nimetus EST'
-									onChange={(e) => {
-										handleChange({
-											objToCopy: tickets,
-											func: setTickets,
-											e,
-											id,
-											depth: 2,
-											property1:
-												ticketProperties[
-													e.currentTarget.parentElement?.classList[0] as ticketProperties
-												],
-											property2: ticketProperties[e.currentTarget.name as ticketProperties],
-											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
-										});
-									}}
-								/>
+								<div className={frameStyles.flexCon}>
+									<input
+										id={`${id}`}
+										name={`hours`}
+										defaultValue={`${ticket?.duration?.hours}` ?? ""}
+										type='number'
+										step={"0.1"}
+										onChange={(e) => {
+											handleChange({
+												objToCopy: tickets,
+												func: setTickets,
+												e,
+												id,
+												depth: 2,
+												property1:
+													ticketProperties[
+														e.currentTarget.parentElement?.classList[0] as ticketProperties
+													],
+												property2: ticketProperties[e.currentTarget.name as ticketProperties],
+											});
+										}}
+										className={frameStyles.input}
+									/>
+									<span className={frameStyles.focusBorder}></span>
+								</div>
+
+								<div className={frameStyles.flexCon}>
+									<input
+										id={`${id}`}
+										name={`additionalInfo`}
+										defaultValue={ticket?.duration?.additionalInfo?.EST ?? ""}
+										className={["EST", styles.input].join(" ") && frameStyles.input}
+										type='text'
+										placeholder='Teenuse nimetus EST'
+										onChange={(e) => {
+											handleChange({
+												objToCopy: tickets,
+												func: setTickets,
+												e,
+												id,
+												depth: 2,
+												property1:
+													ticketProperties[
+														e.currentTarget.parentElement?.classList[0] as ticketProperties
+													],
+												property2: ticketProperties[e.currentTarget.name as ticketProperties],
+												lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+											});
+										}}
+
+									/>
+									<span className={frameStyles.focusBorder}></span>
+								</div>
+
+								<div className={frameStyles.flexCon}>
 								<input
 									id={`${id}`}
 									name={`additionalInfo`}
 									defaultValue={ticket?.duration?.additionalInfo?.ENG ?? ""}
-									className={["ENG", styles.input].join(" ")}
+									className={["ENG", styles.input].join(" ") && frameStyles.input}
 									type='text'
 									placeholder='Teenuse nimetus ENG'
 									onChange={(e) => {
@@ -696,48 +734,58 @@ const EditingForm = ({
 										});
 									}}
 								/>
-								<input
-									id={`${id}`}
-									name={`additionalInfo`}
-									defaultValue={ticket?.duration?.additionalInfo?.RUS ?? ""}
-									className={["RUS", styles.input].join(" ")}
-									type='text'
-									placeholder='Teenuse nimetus RUS'
-									onChange={(e) => {
-										handleChange({
-											objToCopy: tickets,
-											func: setTickets,
-											e,
-											id,
-											depth: 2,
-											property1:
-												ticketProperties[
-													e.currentTarget.parentElement?.classList[0] as ticketProperties
-												],
-											property2: ticketProperties[e.currentTarget.name as ticketProperties],
-											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
-										});
-									}}
-								/>
+									<span className={frameStyles.focusBorder}></span>
+								</div>
+								<div className={frameStyles.flexCon}>
+									<input
+										id={`${id}`}
+										name={`additionalInfo`}
+										defaultValue={ticket?.duration?.additionalInfo?.RUS ?? ""}
+										className={["RUS", styles.input].join(" ") && frameStyles.input}
+										type='text'
+										placeholder='Teenuse nimetus RUS'
+										onChange={(e) => {
+											handleChange({
+												objToCopy: tickets,
+												func: setTickets,
+												e,
+												id,
+												depth: 2,
+												property1:
+													ticketProperties[
+														e.currentTarget.parentElement?.classList[0] as ticketProperties
+													],
+												property2: ticketProperties[e.currentTarget.name as ticketProperties],
+												lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+											});
+										}}
+									/>
+									<span className={frameStyles.focusBorder}></span>
+								</div>
 							</td>
 							<td>
-								<input
-									id={`${id}`}
-									name={`price`}
-									defaultValue={`${ticket?.price}` ?? ""}
-									type='number'
-									step={"0.1"}
-									onChange={(e) => {
-										handleChange({
-											objToCopy: tickets,
-											func: setTickets,
-											e,
-											id,
-											depth: 1,
-											property1: ticketProperties[e.currentTarget.name as ticketProperties],
-										});
-									}}
-								/>
+								<div className={frameStyles.flexCon}>
+									<input
+										id={`${id}`}
+										name={`price`}
+										defaultValue={`${ticket?.price}` ?? ""}
+										type='number'
+										step={"0.1"}
+										onChange={(e) => {
+											handleChange({
+												objToCopy: tickets,
+												func: setTickets,
+												e,
+												id,
+												depth: 1,
+												property1: ticketProperties[e.currentTarget.name as ticketProperties],
+											});
+										}}
+
+										className={frameStyles.input}
+									/>
+									<span className={frameStyles.focusBorder}></span>
+								</div>
 							</td>
 							<td className={styles.RemoveRawButton}>
 								<ButtonAdmin

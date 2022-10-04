@@ -25,6 +25,7 @@
         background: #ffffff;
         height: auto;
         width: fit-content;
+        padding-top: 10px;
     }
 
     .changeLanguage{
@@ -37,7 +38,7 @@
 
     nav.mainNav a{
         border: none;
-        height: 50px;
+        height: 30px;
     }
 
     nav.mainNav a.chosenPage{
@@ -49,6 +50,12 @@
 
     nav.hiddenMainNav{
         display: none !important;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    nav.mainNav a{
+        padding: 0 40px;
     }
 }
 
@@ -128,7 +135,7 @@
     height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 30px;
+    padding: 0 44px;
 
     color: #525252;
     font-style: normal;
