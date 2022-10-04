@@ -1,6 +1,14 @@
 @media screen and (min-width: 1400px) {
     main.main{
-        min-width: 1250px;
+        min-width: 1300px;
+
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    main.main{
+        padding: 0;
+
     }
 }
 
