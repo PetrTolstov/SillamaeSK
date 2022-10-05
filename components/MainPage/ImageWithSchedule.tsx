@@ -25,7 +25,7 @@ function ImageWithScheduleComponent({isMain=false}){
 
     return(
         <article className={ styles.ImageWithSchedule} style={{backgroundImage: `url(${imgFile})`}}>
-            <img src={imgFile} className={isMain ? styles.backGroundImg : styles.altBackGroundImg}/>
+            {/*<img src={imgFile} className={isMain ? styles.backGroundImg : styles.altBackGroundImg}/>*/}
             <div className={isMain ? styles.schedule : styles.hidden }>
                     <div>
                         <p>
