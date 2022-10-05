@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import LanguageStore from "../Stores/LanguageStore";
 import { observer } from "mobx-react-lite";
-import { action } from "mobx";
 import cross from '../public/cross.svg'
 import threeScticks from  '../public/threeSticks.svg'
 import Image from "next/image";
