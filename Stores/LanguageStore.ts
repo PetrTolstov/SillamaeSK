@@ -1,8 +1,12 @@
 import { prototype } from "events";
-import { action, observable } from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 import { makeObservable } from "mobx";
 import { lazy } from "react";
 class LanguageStore {
+
+    constructor() { 
+        makeAutoObservable(this)
+    }
 	switchLanguage() {
 		this.currentLanguage.isEst = !this.currentLanguage.isEst;
 	}
@@ -58,15 +62,6 @@ class LanguageStore {
 	mainPage = {
 		latestNews: this.currentLanguage.isEst ? "VIIMASED UUDISED" : "ПОЛЕДНИЕ НОВОСТИ",
 	};
-
-	constructor() {
-		makeObservable(this, {
-			header: observable,
-			footer: observable,
-			mainPage: observable,
-			switchLanguage: action,
-		});
-	}
 }
 
 export default new LanguageStore();

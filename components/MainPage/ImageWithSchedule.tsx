@@ -18,7 +18,7 @@ function ImageWithScheduleComponent({isMain=false}){
                     'optional': page
                 }
             });
-            console.log(res.data)
+            // console.log(res.data)
             setImgFile(`${LINK}/public/images/${page}/${res.data[0]}`)
         })()
     }, [])

@@ -4,14 +4,13 @@ import LanguageStore from '../Stores/LanguageStore'
 import { useEffect, useState } from 'react'
 import { autorun } from 'mobx';
 
-function FooterComponent(){
-    const [isEstLanguage, setIsEstLang] = useState(LanguageStore.currentLanguage.isEst); 
+function FooterComponent() {
 
     const lang = { 
-        contactUs: isEstLanguage ? LanguageStore.footer.ContactUs.EST : LanguageStore.footer.ContactUs.RUS,
-        sportComplex: isEstLanguage ? LanguageStore.footer.SportComplex.EST : LanguageStore.footer.SportComplex.RUS,
-        visitUs: isEstLanguage ? LanguageStore.footer.VisitUs.EST : LanguageStore.footer.VisitUs.RUS, 
-        folowUs: isEstLanguage ? LanguageStore.footer.FollowOnSocialMedia.EST : LanguageStore.footer.FollowOnSocialMedia.RUS
+        contactUs: LanguageStore.currentLanguage.isEst ? LanguageStore.footer.ContactUs.EST : LanguageStore.footer.ContactUs.RUS,
+        sportComplex: LanguageStore.currentLanguage.isEst ? LanguageStore.footer.SportComplex.EST : LanguageStore.footer.SportComplex.RUS,
+        visitUs: LanguageStore.currentLanguage.isEst ? LanguageStore.footer.VisitUs.EST : LanguageStore.footer.VisitUs.RUS, 
+        folowUs: LanguageStore.currentLanguage.isEst ? LanguageStore.footer.FollowOnSocialMedia.EST : LanguageStore.footer.FollowOnSocialMedia.RUS
     }
 
     return(
@@ -30,10 +29,10 @@ function FooterComponent(){
                     <span>Külasta meid</span>
                 </div>
                 <div className={styles.containerInformationFooter}>
-                    <h3>Külasta meid</h3>
+                    <h3>{lang.visitUs}</h3>
                     <div className={styles.containerScheduleFooter}>
                         <div>
-                            <span>{lang.sportComplex}:</span>
+                            <span>Spordikompleks:</span>
                             <span>E-R: 08.00-22.00</span>
                             <span>L-P: 09.00-21.00</span>
                         </div>

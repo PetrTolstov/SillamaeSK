@@ -62,6 +62,7 @@ export function SportOpportunitesDesEdititng() {
 								name='text-EST'
 								cols={30}
 								rows={10}
+                                // wrap={"hard"}
 								defaultValue={getData?.GetSportOpportunitiesDescription?.text?.EST ?? ""} className={frameStyles.input}></textarea>
 							<span className={frameStyles.focusBorder}></span>
 						</div>
@@ -73,6 +74,7 @@ export function SportOpportunitesDesEdititng() {
 								name='text-RUS'
 								cols={30}
 								rows={10}
+                                // wrap={"hard"}
 								defaultValue={getData?.GetSportOpportunitiesDescription?.text?.RUS ?? ""}  className={frameStyles.input}></textarea>
 							<span className={frameStyles.focusBorder}></span>
 						</div>

@@ -1,5 +1,7 @@
 import styles from '../../styles/GeneralInformation.module.css'
 import {useGetGeneralContactsInfoQuery} from "../../graphqlGenerated/graphql";
+import { observer } from 'mobx-react-lite';
+import LanguageStore from '../../Stores/LanguageStore';
 
 function GeneralInformation(){
     const {data, loading, error} = useGetGeneralContactsInfoQuery()
@@ -8,12 +10,12 @@ function GeneralInformation(){
         <article className={styles.generalInformation}>
             {loading ? <p>Loading...</p> :
                 <>
-                    <h2>Kontakt</h2>
-                    <h3>{data?.GetGeneralContactsInfo?.addressField?.fieldTitle?.EST}</h3>
+                    <h2>{LanguageStore.currentLanguage.isEst ? "Kontakt" : "Контакт"}</h2>
+                    <h3>{LanguageStore.currentLanguage.isEst ? data?.GetGeneralContactsInfo?.addressField?.fieldTitle?.EST : data?.GetGeneralContactsInfo?.addressField?.fieldTitle?.RUS }</h3>
                     <p>{data?.GetGeneralContactsInfo?.addressField?.fieldInfo}</p>
-                    <h3>{data?.GetGeneralContactsInfo?.phoneField?.fieldTitle?.EST}</h3>
+                    <h3>{LanguageStore.currentLanguage.isEst ? data?.GetGeneralContactsInfo?.phoneField?.fieldTitle?.EST : data?.GetGeneralContactsInfo?.phoneField?.fieldTitle?.RUS}</h3>
                     <p>{data?.GetGeneralContactsInfo?.phoneField?.fieldInfo}</p>
-                    <h3>{data?.GetGeneralContactsInfo?.emailField?.fieldTitle?.EST}</h3>
+                    <h3>{LanguageStore.currentLanguage.isEst ? data?.GetGeneralContactsInfo?.emailField?.fieldTitle?.EST : data?.GetGeneralContactsInfo?.emailField?.fieldTitle?.RUS}</h3>
                     <p>{data?.GetGeneralContactsInfo?.emailField?.fieldInfo}</p>
                 </>
                 }
@@ -21,4 +23,4 @@ function GeneralInformation(){
     )
 }
 
-export default GeneralInformation
+export default observer(GeneralInformation)

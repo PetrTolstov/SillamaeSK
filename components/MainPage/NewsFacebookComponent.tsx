@@ -13,7 +13,7 @@ function NewsFacebookComponent(){
         }});
 
     const [refeatch, {}] = useRefetchLatestNewsMutation({onCompleted(data){
-        console.log(data)
+        // console.log(data)
         }});
     useEffect(() => {
         refeatch().then(r => console.log(r))

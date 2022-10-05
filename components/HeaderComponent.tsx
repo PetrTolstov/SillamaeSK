@@ -99,7 +99,7 @@ function HeaderComponent() {
 						<a className={styles.logo} />
 					</Link>
 					<Link href={`/`}>
-						<h1 className={styles.logoName}>{lang.headerTitle}</h1>
+						<h1 className={styles.logoName}>SILLAMÄE SPORDIKOMPLEKS KALEV</h1>
 					</Link>
 
 				</div>
