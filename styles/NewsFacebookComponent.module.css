@@ -45,10 +45,11 @@
     display: -moz-box;
     -moz-box-orient: vertical;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
-    line-clamp: 3;
+    line-clamp: 5;
     box-orient: vertical;
+
 }
 
 .NewsFacebook span{
@@ -72,4 +73,10 @@
     color: #ffffff;
     background: #0167FF;
     border-radius: 3px;
+}
+
+.NewsFacebook div{
+    display: flex;
+    align-items: center;
+    width: 100%;
 }

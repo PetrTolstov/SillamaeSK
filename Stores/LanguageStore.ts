@@ -27,7 +27,7 @@ class LanguageStore {
 			},
 			FromSportComplexPageTab: {
 				EST: "SPORDIKOMPLEKSIST",
-				RUS: "ИЗ СПОРТКОМПЛЕКСА",
+				RUS: "СПОРТКОМПЛЕКС",
 			},
 			SportOpportunitiesPageTab: {
 				EST: "SPORTIMISVÕIMALUSED",

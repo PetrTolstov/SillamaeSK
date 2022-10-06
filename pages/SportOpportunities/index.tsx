@@ -6,6 +6,8 @@ import AppIsBeingBuilt from "../../components/Temporary/AppIsBeingBuilt";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {LINK} from "../../config/constants";
+import languageStore from "../../Stores/LanguageStore";
+import {observer} from "mobx-react-lite";
 
 
 const Index: NextPage = () => {
@@ -26,7 +28,7 @@ const Index: NextPage = () => {
 
     return (
         <Layout>
-            <AppIsBeingBuilt isEst={true}/>
+            <AppIsBeingBuilt isEst={languageStore.currentLanguage.isEst}/>
         </Layout>
     )
 }

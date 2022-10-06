@@ -1,6 +1,7 @@
-import { FormEvent } from "react";
+import React, { FormEvent } from "react";
 import { useAddCalendarEventMutation } from "../../../graphqlGenerated/graphql";
 import { ButtonAdmin } from "../ButtonAdmin";
+import frameStyles from "../../../styles/FormStyles.module.css";
 
 const AddEventForm = ({closeModal, refetch} : {closeModal: () => void, refetch: () => void}) => {
 
@@ -45,53 +46,83 @@ const AddEventForm = ({closeModal, refetch} : {closeModal: () => void, refetch: 
 			<form onSubmit={handleSubmit} style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap" }}>
 				<div style={{ display: "flex", flexDirection: "column", paddingBottom: "30px" }}>
 					<h4>Title</h4>
-					<label htmlFor='name-EST'>EST</label>
-					<input type='text' name={"name-EST"} placeholder={"Title EST"} />
-					<label htmlFor='name-RUS'>RUS</label>
-					<input type='text' name={"name-RUS"} placeholder={"Title RUS"} />
-					<label htmlFor='name-RUS'>ENG</label>
-					<input type='text' name={"name-ENG"} placeholder={"Title ENG"} />
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<label htmlFor='name-EST'>EST</label>
+						<input type='text' name={"name-EST"} placeholder={"Title EST"} className={frameStyles.input}
+						/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
+
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<label htmlFor='name-RUS'>RUS</label>
+						<input type='text' name={"name-RUS"} placeholder={"Title RUS"} className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
+
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<label htmlFor='name-RUS'>ENG</label>
+						<input type='text' name={"name-ENG"} placeholder={"Title ENG"}  className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
 					<h4>Kuupäev ja kellaaeg</h4>
-					<input type='date' name={"date"} />
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<input type='date' name={"date"} className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
 					<div>
 						<input type={"time"} name={"startTime"} />
 						-
 						<input type={"time"} name={"endTime"} />
 					</div>
 					<h4>Aadress</h4>
-					<input type='text' name={"address"} placeholder='Aadress' />
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<input type='text' name={"address"} placeholder='Aadress' className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
 					<h4>Link</h4>
-					<input type='link' name={"link"} placeholder='Link' />
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<input type='link' name={"link"} placeholder='Link' className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
 					<div style={{ marginTop: "30px", alignSelf: "flex-start" }}>
 						<ButtonAdmin isSubmit filled action={() => {}} label={"Submit"} />
 					</div>
 				</div>
 				<div style={{ display: "flex", flexDirection: "column", paddingBottom: "30px" }}>
 					<h4>Kirjeldus</h4>
-					<label htmlFor='description-EST'>EST</label>
-					<textarea
-						style={{ resize: "none" }}
-						cols={20}
-						rows={5}
-						name={"description-EST"}
-						placeholder={"Kirjeldus EST"}
-					/>
-					<label htmlFor='description-RUS'>RUS</label>
-					<textarea
-						style={{ resize: "none" }}
-						cols={20}
-						rows={5}
-						name={"description-RUS"}
-						placeholder={"Описание RUS"}
-					/>
-					<label htmlFor='description-ENG'>ENG</label>
-					<textarea
-						style={{ resize: "none" }}
-						cols={20}
-						rows={5}
-						name={"description-ENG"}
-						placeholder={"Description ENG"}
-					/>
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<label htmlFor='description-EST'>EST</label>
+						<textarea
+							style={{ resize: "none" }}
+							cols={20}
+							rows={5}
+							name={"description-EST"}
+							placeholder={"Kirjeldus EST"}
+							className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<label htmlFor='description-RUS'>RUS</label>
+						<textarea
+							style={{ resize: "none" }}
+							cols={20}
+							rows={5}
+							name={"description-RUS"}
+							placeholder={"Описание RUS"}
+							className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<label htmlFor='description-ENG'>ENG</label>
+						<textarea
+							style={{ resize: "none" }}
+							cols={20}
+							rows={5}
+							name={"description-ENG"}
+							placeholder={"Description ENG"}
+							className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
 				</div>
 			</form>
 		</div>
