@@ -137,3 +137,8 @@
 .form>input {
     width: fit-content;
 }
+
+.cont{
+    flex-direction: column;
+    align-items: center;
+}

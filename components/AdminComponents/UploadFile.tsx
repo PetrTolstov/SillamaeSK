@@ -4,6 +4,7 @@ import { LINK } from "../../config/constants";
 import styles from "../../styles/ModalAdmin.module.css";
 import { ButtonAdmin } from "./ButtonAdmin";
 import kalender from "../../pages/Kalender";
+import stylesBut from "../../styles/ButtonAdmin.module.css";
 
 const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, closeModal: ()=>void }) => {
 	//const page = '/Gallery'
@@ -44,8 +45,8 @@ const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, clo
 				data.append("file", file[x]);
 			}
 		}
-		axios.post(LINK + "/upload", data);
-        closeModal();
+		console.log(data)
+		axios.post(LINK + "/upload", data).then((r) => closeModal());
 	};
 	if (show) {
 		return (
@@ -53,8 +54,8 @@ const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, clo
                 <div className={styles.shadow}></div>
 				<div className={styles.container}>
                     <ButtonAdmin border action={closeModal} label={"Close modal"} />
-					<form onSubmit={handleSubmit} style={{marginBottom: "50px", marginTop: "50px"}}>
-						<div className='form-group' >
+					<form style={{marginBottom: "50px", marginTop: "50px"}}>
+						<div className={styles.cont} >
 							<label htmlFor='file'>Upload File:</label>
 							<br/>
 							<input
@@ -65,8 +66,7 @@ const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, clo
 								onChange={handleFileChange}
 
 							/>
-							<ButtonAdmin filled isSubmit label={"Upload"} action={() => {}}/>
-
+							<button onClick={handleSubmit} className={stylesBut.filledBtn} style={{border : "none"}}>Upload</button>
 						</div>
 					</form>
 					{imgFile ? <img src={imgFile} alt='img' style={page == "Karusel" ? {width: "100%", height: "300px",  backgroundSize: '100% 100%', borderRadius: "10px"} : {} }/> : <p>Eelvaate nägemiseks lisage foto</p> }
