@@ -58,6 +58,15 @@ const Kalender: NextPage = () => {
 
     return (
         <Layout>
+            <AppIsBeingBuilt isEst={languageStore.currentLanguage.isEst}/>
+        </Layout>
+    )
+}
+
+export default Kalender
+
+/*
+
             <main className={styles.main}>
                 <ImageWithSchedule/>
 
@@ -86,13 +95,4 @@ const Kalender: NextPage = () => {
                     </ol>
                 </div>
             </main>
-        </Layout>
-    )
-}
-
-export default Kalender
-
-/*
-
-
  */
