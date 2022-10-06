@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ReactElement, useEffect, useState } from "react";
 import { AdminLayout } from ".";
 import { AdminDropDown } from "../../components/AdminComponents/AdminDropDown";
-import { GoBackPage } from "../../components/AdminComponents/GoBackPage";
+import GoBackPage  from "../../components/AdminComponents/GoBackPage";
 import { AdminSimplePageEditForm } from "../../components/AdminComponents/SimplePage/AdminSimplePageEditForm";
 import { SimplePage, useGetSimplePagesLazyQuery, useGetSimplePagesQuery } from "../../graphqlGenerated/graphql";
 import AdminStore from "../../Stores/AdminStore";

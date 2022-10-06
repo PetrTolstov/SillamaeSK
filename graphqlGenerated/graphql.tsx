@@ -15,6 +15,28 @@ export type Scalars = {
   Float: number;
 };
 
+export type CalendarEvent = {
+  __typename?: 'CalendarEvent';
+  _id: Scalars['ID'];
+  date?: Maybe<Scalars['String']>;
+  endTime?: Maybe<Scalars['String']>;
+  eventDescription?: Maybe<TextContent>;
+  link?: Maybe<Scalars['String']>;
+  name?: Maybe<TextContent>;
+  place?: Maybe<Scalars['String']>;
+  startTime?: Maybe<Scalars['String']>;
+};
+
+export type CalendarEventInput = {
+  date?: InputMaybe<Scalars['String']>;
+  endTime?: InputMaybe<Scalars['String']>;
+  eventDescription?: InputMaybe<TextContentInput>;
+  link?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<TextContentInput>;
+  place?: InputMaybe<Scalars['String']>;
+  startTime?: InputMaybe<Scalars['String']>;
+};
+
 export type Duration = {
   __typename?: 'Duration';
   additionalInfo?: Maybe<TextContent>;
@@ -66,8 +88,10 @@ export type LoginResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  AddCalendarEvent?: Maybe<Scalars['String']>;
   AddSimplePage?: Maybe<Scalars['String']>;
   CreateNewPriceListElement?: Maybe<PriceListElement>;
+  DeleteCalendarEvent?: Maybe<Scalars['String']>;
   DeletePriceListElementById: Scalars['String'];
   EditSimplePage?: Maybe<Scalars['String']>;
   EditToken?: Maybe<Scalars['String']>;
@@ -77,8 +101,14 @@ export type Mutation = {
   SetPersonalContactInfo?: Maybe<Scalars['String']>;
   SetSportOpportunitiesDescription?: Maybe<Scalars['String']>;
   SetTimeTable?: Maybe<Scalars['String']>;
+  UpdateCalendarEvent?: Maybe<Scalars['String']>;
   UpdatePriceListElementById: PriceListElement;
   UpdateUser: Scalars['String'];
+};
+
+
+export type MutationAddCalendarEventArgs = {
+  newEvent?: InputMaybe<CalendarEventInput>;
 };
 
 
@@ -90,6 +120,11 @@ export type MutationAddSimplePageArgs = {
 
 export type MutationCreateNewPriceListElementArgs = {
   newPriceListElement: PriceListElementInput;
+};
+
+
+export type MutationDeleteCalendarEventArgs = {
+  _id?: InputMaybe<Scalars['ID']>;
 };
 
 
@@ -134,6 +169,12 @@ export type MutationSetTimeTableArgs = {
 };
 
 
+export type MutationUpdateCalendarEventArgs = {
+  _id?: InputMaybe<Scalars['ID']>;
+  newContent?: InputMaybe<CalendarEventInput>;
+};
+
+
 export type MutationUpdatePriceListElementByIdArgs = {
   id: Scalars['String'];
   updatedPriceListElement: PriceListElementInput;
@@ -149,6 +190,11 @@ export type NewsResponse = {
   data?: Maybe<LatestNews>;
   errorMessage?: Maybe<Scalars['String']>;
   success: Scalars['Boolean'];
+};
+
+export type Options = {
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
 };
 
 export type PersonContactInfo = {
@@ -187,6 +233,8 @@ export type PriceListElementInput1 = {
 
 export type Query = {
   __typename?: 'Query';
+  GetCalendarEventById?: Maybe<CalendarEvent>;
+  GetCalendarEvents?: Maybe<Array<Maybe<CalendarEvent>>>;
   GetGeneralContactsInfo?: Maybe<GeneralContactsInfo>;
   GetLatestNews: NewsResponse;
   GetPersonalContactsInfo?: Maybe<Array<Maybe<PersonContactInfo>>>;
@@ -195,6 +243,16 @@ export type Query = {
   GetSimplePages?: Maybe<Array<SimplePage>>;
   GetSportOpportunitiesDescription?: Maybe<SportOpportunitiesDescription>;
   GetTimeTable?: Maybe<TimeTable>;
+};
+
+
+export type QueryGetCalendarEventByIdArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetCalendarEventsArgs = {
+  options?: InputMaybe<Options>;
 };
 
 
@@ -308,6 +366,13 @@ export type UserInput = {
   password: Scalars['String'];
 };
 
+export type AddCalendarEventMutationVariables = Exact<{
+  newEvent?: InputMaybe<CalendarEventInput>;
+}>;
+
+
+export type AddCalendarEventMutation = { __typename?: 'Mutation', AddCalendarEvent?: string | null };
+
 export type AddSimplePageMutationVariables = Exact<{
   type?: InputMaybe<Scalars['Int']>;
   newSimplePage?: InputMaybe<SimplePageInput>;
@@ -322,6 +387,13 @@ export type CreateNewPriceListElementMutationVariables = Exact<{
 
 
 export type CreateNewPriceListElementMutation = { __typename?: 'Mutation', CreateNewPriceListElement?: { __typename?: 'PriceListElement', _id: string, name: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null }, tickets?: Array<{ __typename?: 'Ticket', price: number, description: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null }, duration?: { __typename?: 'Duration', hours: number, additionalInfo?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null } | null> | null } | null };
+
+export type DeleteCalendarEventMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type DeleteCalendarEventMutation = { __typename?: 'Mutation', DeleteCalendarEvent?: string | null };
 
 export type DeletePriceListElementByIdMutationVariables = Exact<{
   id: Scalars['String'];
@@ -378,6 +450,14 @@ export type SetTimeTableMutationVariables = Exact<{
 
 export type SetTimeTableMutation = { __typename?: 'Mutation', SetTimeTable?: string | null };
 
+export type UpdateCalendarEventMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  newContent?: InputMaybe<CalendarEventInput>;
+}>;
+
+
+export type UpdateCalendarEventMutation = { __typename?: 'Mutation', UpdateCalendarEvent?: string | null };
+
 export type ChangePriceListElementByIdMutationVariables = Exact<{
   updatedPriceListElement: PriceListElementInput;
   id: Scalars['String'];
@@ -392,6 +472,20 @@ export type UpdateUserMutationVariables = Exact<{
 
 
 export type UpdateUserMutation = { __typename?: 'Mutation', UpdateUser: string };
+
+export type GetCalendarEventByIdQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetCalendarEventByIdQuery = { __typename?: 'Query', GetCalendarEventById?: { __typename?: 'CalendarEvent', _id: string, link?: string | null, date?: string | null, place?: string | null, startTime?: string | null, endTime?: string | null, name?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, eventDescription?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null };
+
+export type GetCalendarEventsQueryVariables = Exact<{
+  options?: InputMaybe<Options>;
+}>;
+
+
+export type GetCalendarEventsQuery = { __typename?: 'Query', GetCalendarEvents?: Array<{ __typename?: 'CalendarEvent', _id: string, link?: string | null, place?: string | null, date?: string | null, startTime?: string | null, endTime?: string | null, name?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, eventDescription?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null };
 
 export type GetGeneralContactsInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -443,6 +537,37 @@ export type GetTimeTableQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetTimeTableQuery = { __typename?: 'Query', GetTimeTable?: { __typename?: 'TimeTable', title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, SportComplex?: { __typename?: 'TimeTableBlock', timeTable1?: string | null, timeTable2?: string | null, title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, minTitle1?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, minTitle2?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null } | null, SwimmingPool?: { __typename?: 'TimeTableBlock', timeTable1?: string | null, timeTable2?: string | null, title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, minTitle1?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, minTitle2?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null } | null } | null };
 
 
+export const AddCalendarEventDocument = gql`
+    mutation AddCalendarEvent($newEvent: CalendarEventInput) {
+  AddCalendarEvent(newEvent: $newEvent)
+}
+    `;
+export type AddCalendarEventMutationFn = Apollo.MutationFunction<AddCalendarEventMutation, AddCalendarEventMutationVariables>;
+
+/**
+ * __useAddCalendarEventMutation__
+ *
+ * To run a mutation, you first call `useAddCalendarEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCalendarEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCalendarEventMutation, { data, loading, error }] = useAddCalendarEventMutation({
+ *   variables: {
+ *      newEvent: // value for 'newEvent'
+ *   },
+ * });
+ */
+export function useAddCalendarEventMutation(baseOptions?: Apollo.MutationHookOptions<AddCalendarEventMutation, AddCalendarEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddCalendarEventMutation, AddCalendarEventMutationVariables>(AddCalendarEventDocument, options);
+      }
+export type AddCalendarEventMutationHookResult = ReturnType<typeof useAddCalendarEventMutation>;
+export type AddCalendarEventMutationResult = Apollo.MutationResult<AddCalendarEventMutation>;
+export type AddCalendarEventMutationOptions = Apollo.BaseMutationOptions<AddCalendarEventMutation, AddCalendarEventMutationVariables>;
 export const AddSimplePageDocument = gql`
     mutation AddSimplePage($type: Int, $newSimplePage: SimplePageInput) {
   AddSimplePage(type: $type, newSimplePage: $newSimplePage)
@@ -529,6 +654,37 @@ export function useCreateNewPriceListElementMutation(baseOptions?: Apollo.Mutati
 export type CreateNewPriceListElementMutationHookResult = ReturnType<typeof useCreateNewPriceListElementMutation>;
 export type CreateNewPriceListElementMutationResult = Apollo.MutationResult<CreateNewPriceListElementMutation>;
 export type CreateNewPriceListElementMutationOptions = Apollo.BaseMutationOptions<CreateNewPriceListElementMutation, CreateNewPriceListElementMutationVariables>;
+export const DeleteCalendarEventDocument = gql`
+    mutation DeleteCalendarEvent($id: ID) {
+  DeleteCalendarEvent(_id: $id)
+}
+    `;
+export type DeleteCalendarEventMutationFn = Apollo.MutationFunction<DeleteCalendarEventMutation, DeleteCalendarEventMutationVariables>;
+
+/**
+ * __useDeleteCalendarEventMutation__
+ *
+ * To run a mutation, you first call `useDeleteCalendarEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCalendarEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCalendarEventMutation, { data, loading, error }] = useDeleteCalendarEventMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteCalendarEventMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCalendarEventMutation, DeleteCalendarEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCalendarEventMutation, DeleteCalendarEventMutationVariables>(DeleteCalendarEventDocument, options);
+      }
+export type DeleteCalendarEventMutationHookResult = ReturnType<typeof useDeleteCalendarEventMutation>;
+export type DeleteCalendarEventMutationResult = Apollo.MutationResult<DeleteCalendarEventMutation>;
+export type DeleteCalendarEventMutationOptions = Apollo.BaseMutationOptions<DeleteCalendarEventMutation, DeleteCalendarEventMutationVariables>;
 export const DeletePriceListElementByIdDocument = gql`
     mutation DeletePriceListElementById($id: String!) {
   DeletePriceListElementById(_id: $id)
@@ -782,6 +938,38 @@ export function useSetTimeTableMutation(baseOptions?: Apollo.MutationHookOptions
 export type SetTimeTableMutationHookResult = ReturnType<typeof useSetTimeTableMutation>;
 export type SetTimeTableMutationResult = Apollo.MutationResult<SetTimeTableMutation>;
 export type SetTimeTableMutationOptions = Apollo.BaseMutationOptions<SetTimeTableMutation, SetTimeTableMutationVariables>;
+export const UpdateCalendarEventDocument = gql`
+    mutation UpdateCalendarEvent($id: ID, $newContent: CalendarEventInput) {
+  UpdateCalendarEvent(_id: $id, newContent: $newContent)
+}
+    `;
+export type UpdateCalendarEventMutationFn = Apollo.MutationFunction<UpdateCalendarEventMutation, UpdateCalendarEventMutationVariables>;
+
+/**
+ * __useUpdateCalendarEventMutation__
+ *
+ * To run a mutation, you first call `useUpdateCalendarEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCalendarEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCalendarEventMutation, { data, loading, error }] = useUpdateCalendarEventMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      newContent: // value for 'newContent'
+ *   },
+ * });
+ */
+export function useUpdateCalendarEventMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCalendarEventMutation, UpdateCalendarEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCalendarEventMutation, UpdateCalendarEventMutationVariables>(UpdateCalendarEventDocument, options);
+      }
+export type UpdateCalendarEventMutationHookResult = ReturnType<typeof useUpdateCalendarEventMutation>;
+export type UpdateCalendarEventMutationResult = Apollo.MutationResult<UpdateCalendarEventMutation>;
+export type UpdateCalendarEventMutationOptions = Apollo.BaseMutationOptions<UpdateCalendarEventMutation, UpdateCalendarEventMutationVariables>;
 export const ChangePriceListElementByIdDocument = gql`
     mutation ChangePriceListElementById($updatedPriceListElement: PriceListElementInput!, $id: String!) {
   UpdatePriceListElementById(
@@ -871,6 +1059,106 @@ export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
 export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
 export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
+export const GetCalendarEventByIdDocument = gql`
+    query GetCalendarEventById($id: ID!) {
+  GetCalendarEventById(id: $id) {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    eventDescription {
+      RUS
+      EST
+      ENG
+    }
+    link
+    date
+    place
+    startTime
+    endTime
+  }
+}
+    `;
+
+/**
+ * __useGetCalendarEventByIdQuery__
+ *
+ * To run a query within a React component, call `useGetCalendarEventByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCalendarEventByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCalendarEventByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCalendarEventByIdQuery(baseOptions: Apollo.QueryHookOptions<GetCalendarEventByIdQuery, GetCalendarEventByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCalendarEventByIdQuery, GetCalendarEventByIdQueryVariables>(GetCalendarEventByIdDocument, options);
+      }
+export function useGetCalendarEventByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCalendarEventByIdQuery, GetCalendarEventByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCalendarEventByIdQuery, GetCalendarEventByIdQueryVariables>(GetCalendarEventByIdDocument, options);
+        }
+export type GetCalendarEventByIdQueryHookResult = ReturnType<typeof useGetCalendarEventByIdQuery>;
+export type GetCalendarEventByIdLazyQueryHookResult = ReturnType<typeof useGetCalendarEventByIdLazyQuery>;
+export type GetCalendarEventByIdQueryResult = Apollo.QueryResult<GetCalendarEventByIdQuery, GetCalendarEventByIdQueryVariables>;
+export const GetCalendarEventsDocument = gql`
+    query GetCalendarEvents($options: Options) {
+  GetCalendarEvents(options: $options) {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    eventDescription {
+      RUS
+      EST
+      ENG
+    }
+    link
+    place
+    date
+    startTime
+    endTime
+  }
+}
+    `;
+
+/**
+ * __useGetCalendarEventsQuery__
+ *
+ * To run a query within a React component, call `useGetCalendarEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCalendarEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCalendarEventsQuery({
+ *   variables: {
+ *      options: // value for 'options'
+ *   },
+ * });
+ */
+export function useGetCalendarEventsQuery(baseOptions?: Apollo.QueryHookOptions<GetCalendarEventsQuery, GetCalendarEventsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCalendarEventsQuery, GetCalendarEventsQueryVariables>(GetCalendarEventsDocument, options);
+      }
+export function useGetCalendarEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCalendarEventsQuery, GetCalendarEventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCalendarEventsQuery, GetCalendarEventsQueryVariables>(GetCalendarEventsDocument, options);
+        }
+export type GetCalendarEventsQueryHookResult = ReturnType<typeof useGetCalendarEventsQuery>;
+export type GetCalendarEventsLazyQueryHookResult = ReturnType<typeof useGetCalendarEventsLazyQuery>;
+export type GetCalendarEventsQueryResult = Apollo.QueryResult<GetCalendarEventsQuery, GetCalendarEventsQueryVariables>;
 export const GetGeneralContactsInfoDocument = gql`
     query GetGeneralContactsInfo {
   GetGeneralContactsInfo {

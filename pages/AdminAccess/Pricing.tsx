@@ -11,11 +11,11 @@ import {
 	useGetPriceListNamesQuery,
 } from "../../graphqlGenerated/graphql";
 import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
-import { ModalAdmin } from "../../components/AdminComponents/ModalAdmin";
+import { TicketModal } from "../../components/AdminComponents/TicketModal";
 import AdminStore from "../../Stores/AdminStore";
 import { observer } from "mobx-react-lite";
 import Link from "next/link";
-import { GoBackPage } from "../../components/AdminComponents/GoBackPage";
+import GoBackPage from "../../components/AdminComponents/GoBackPage";
 
 export enum modalTypes {
 	editModal,
@@ -55,7 +55,7 @@ const Pricing: NextPageWithLayout = () => {
         return (
             <>
                 {showModal ? (
-                    <ModalAdmin
+                    <TicketModal
                         modalType={currentModalType}
                         priceListElementId={currentElementID}
                         closeModal={closeModal}

@@ -17,11 +17,27 @@ const AdminHome: NextPageWithLayout = () => {
             login: data.get("login")?.toString()!,
             password: data.get("password")?.toString()!,
         }
+        localStorage.setItem("login", newObj.login);
+        localStorage.setItem("password", newObj.password);
         Login({variables: { userData: newObj }, onCompleted(data) {
             alert(data.Login.str);
             AdminStore.setUserInfo(newObj.login, newObj.password, data.Login.isLoggedIn!);
         }})
     }
+
+    useEffect(() => { 
+        const loginFromLocalStorage = localStorage.getItem("login");
+        const passwordFromLocalStorage = localStorage.getItem("password");
+        Login({ variables: { 
+            userData: { 
+                login: loginFromLocalStorage ?? "", 
+                password: passwordFromLocalStorage ?? ""
+            }
+        }, onCompleted(data) { 
+            AdminStore.setUserInfo(loginFromLocalStorage!, passwordFromLocalStorage!, data.Login.isLoggedIn!);
+        } })
+    }, [])
+
     if (!AdminStore.userInfo.isLoggedIn) { 
         return (
             <div style={{display: "flex", justifyContent: "center", flexDirection: "column", height: "50vmin"}}>
@@ -96,6 +112,7 @@ export function SidePanel() {
                         <li><Link href={"/AdminAccess/SportOpportunities"}>Sportimisvõimalused</Link></li>
                         <li><Link href={"/AdminAccess/MainPageAdmin"}>Avaleht</Link></li>
                         <li><Link href={"/AdminAccess/ContactInfoPage"}>Kontakt</Link></li>
+                        <li><Link href={"/AdminAccess/Calendar"}>Kalendar</Link></li>
                     </ul>
                 </div>
 			</div>

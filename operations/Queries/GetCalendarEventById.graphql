@@ -1,0 +1,20 @@
+query GetCalendarEventById($id: ID!) {
+  GetCalendarEventById(id: $id) {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    eventDescription {
+      RUS
+      EST
+      ENG
+    }
+    link
+    date
+    place
+    startTime
+    endTime
+  }
+}

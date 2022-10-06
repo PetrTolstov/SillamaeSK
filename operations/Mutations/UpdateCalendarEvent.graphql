@@ -1,0 +1,3 @@
+mutation UpdateCalendarEvent($id: ID, $newContent: CalendarEventInput) {
+	UpdateCalendarEvent(_id: $id, newContent: $newContent)
+}

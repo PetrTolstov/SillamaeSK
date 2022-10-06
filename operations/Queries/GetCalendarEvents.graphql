@@ -1,0 +1,20 @@
+query GetCalendarEvents($options: Options) {
+	GetCalendarEvents(options: $options) {
+		_id
+		name {
+			RUS
+			EST
+			ENG
+		}
+		eventDescription {
+			RUS
+			EST
+			ENG
+		}
+		link
+		place
+		date
+		startTime
+		endTime
+	}
+}

@@ -12,6 +12,7 @@
     padding: 10px;
     width: 80%;
     height: 80%;
+    overflow-y: scroll;
 }
 
 .shadow {

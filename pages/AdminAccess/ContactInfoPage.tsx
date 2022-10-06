@@ -5,8 +5,7 @@ import { GeneralContactInfoEditting } from "../../components/AdminComponents/Gen
 import { PersonalContactInfoEditting } from "../../components/AdminComponents/PersonalContactInfoEditting";
 import { NextPageWithLayout } from "../_app";
 import AdminStore from "../../Stores/AdminStore";
-import Link from "next/link";
-import { GoBackPage } from "../../components/AdminComponents/GoBackPage";
+import GoBackPage from "../../components/AdminComponents/GoBackPage";
 
 const ContactInfoPage: NextPageWithLayout = () => {
 	if (AdminStore.userInfo.isLoggedIn) {

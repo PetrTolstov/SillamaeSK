@@ -6,7 +6,7 @@ import { SportOpportunitesDesEdititng } from "../../components/AdminComponents/S
 import AdminStore from "../../Stores/AdminStore";
 import { observer } from "mobx-react-lite";
 import Link from "next/link";
-import { GoBackPage } from "../../components/AdminComponents/GoBackPage";
+import GoBackPage from "../../components/AdminComponents/GoBackPage";
 import ImageForm from "../../components/AdminComponents/UploadFile";
 import {ButtonAdmin} from "../../components/AdminComponents/ButtonAdmin";
 
@@ -22,7 +22,6 @@ const MainPageAdmin: NextPageWithLayout = () => {
 				<h3>Lisa foto</h3>
 				<ImageForm page={"Karusel"} show={isShow} closeModal={() => {setIsShow(false)}}/>
 				<ButtonAdmin border label={'Lisa'} action={() => {setIsShow(true)}}/>
-
 			</div>
 		);
 	} else {
