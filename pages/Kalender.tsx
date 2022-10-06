@@ -13,6 +13,7 @@ import {offset} from "@popperjs/core";
 const Kalender: NextPage = () => {
     let newDate = new Date()
     const [value, setValue] = useState(newDate);
+    const [currentMonthAndYear, setCurrentMonthAndYear] = useState(`${newDate.getMonth() + 1}-${newDate.getFullYear()}`)
     const monthNames = ["Jaanuar", "Veebruar", "Märts", "Aprill", "Mai", "Juuni",
         "Juuli", "August", "September", "Oktoober", "November", "Detsember"
     ]
@@ -35,18 +36,59 @@ const Kalender: NextPage = () => {
 
     }
 
-    
-    useEffect(() => {
-        let list : HTMLElement[] = Array.from(document.querySelectorAll(`.${styles.calendar} > div:nth-child(2) button `))
+    function handleNavigationCLick( event: Event){
+        let date = document.querySelectorAll(`.${styles.calendar} > div:nth-child(1) > button`)[2].textContent!
+        date = date.charAt(0).toUpperCase() + date.slice(1)
+        let dateList = date.split(' ')
+        setCurrentMonthAndYear(`${dateList[0]}-${dateList[1]}`)
+        setTimeout(correctCalendar, 1)
+        correctCalendar()
+    }
+
+
+    function correctCalendar(){
         let max = 1
+        let buttons = document.querySelectorAll(`.${styles.calendar} > div:nth-child(1) > button`)
+
+
+        buttons[1].removeEventListener('click', handleNavigationCLick)
+        buttons[1].addEventListener('click', handleNavigationCLick)
+
+        buttons[3].removeEventListener('click', handleNavigationCLick)
+        buttons[3].addEventListener('click', handleNavigationCLick)
+
+        let list : HTMLElement[] = Array.from(document.querySelectorAll(`.${styles.tileCalendar}`))
+
+        list.forEach((el) => {
+            el.style.background = "#F2F2F2"
+            el.style.color = "#000000"
+        })
+
+
         for(let i = 0; i < list.length; i++){
             if( parseInt(list[i].textContent!) > i + 1 || max > parseInt(list[i].textContent!)){
                 list[i].style.background = "#FFFFFF"
                 list[i].style.color = "#afafaf"
             }else if(parseInt(list[i].textContent!) > max){
-                if((new Date).getDate() == parseInt(list[i].textContent!)){
+                let date = document.querySelectorAll(`.${styles.calendar} > div:nth-child(1) > button`)[2].textContent!
+                date = date.charAt(0).toUpperCase() + date.slice(1)
+                let dateList = date.split(' ')
+
+                if(`${value.getDate()}-${value.getMonth() + 1}-${value.getFullYear()}` == `${list[i].textContent!}-${monthNames.indexOf(dateList[0]) + 1}-${dateList[1]}`){
+
+
+
+                    document.getElementsByClassName(styles.chosenLi)[0]?.classList.remove(styles.chosenLi)
+
+
+
                     list[i].style.background = "#0167FF"
                     list[i].style.color = "#FFFFFF"
+                }
+                let el = document.getElementById(`${list[i].textContent!}-${monthNames.indexOf(dateList[0]) + 1}-${dateList[1]}`)
+                if (el){
+                    list[i].style.background = "#6ca4fa"
+                    list[i].style.color = "#f3f3f3"
                 }
 
 
@@ -54,7 +96,15 @@ const Kalender: NextPage = () => {
             }
         }
 
-    }, [Calendar])
+
+    }
+
+    useEffect(() => {
+        correctCalendar()
+
+    }, [])
+
+
 
     return (
         <Layout>
@@ -62,7 +112,7 @@ const Kalender: NextPage = () => {
                 <ImageWithSchedule/>
 
                 <div className={styles.container}>
-                    <Calendar onChange={setValue} onClickDay={(value, event) => {handleCLick(value, event)}} value={value} locale={"et-EE"} className={styles.calendar} tileClassName={styles.tileCalendar}/>
+                    <Calendar onChange={setValue} onViewChange={(action) => {console.log(action)}} onClickDay={(value, event) => {handleCLick(value, event)}} value={value} locale={"et-EE"} className={styles.calendar} tileClassName={styles.tileCalendar}/>
                     <ol className={styles.calenderAsList}>
                         {loading ? <p>Loading...</p> : data!.GetCalendarEvents!.map((el, i) => {
                             let date = new Date(el!.date ?? "")
