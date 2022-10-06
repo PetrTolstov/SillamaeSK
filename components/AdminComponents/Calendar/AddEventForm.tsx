@@ -31,7 +31,6 @@ const AddEventForm = ({closeModal, refetch} : {closeModal: () => void, refetch: 
         }
 
 
-        // TODO: add refetch query
         addEvent({variables: { 
             newEvent: newObj
         }, onCompleted(data) {
