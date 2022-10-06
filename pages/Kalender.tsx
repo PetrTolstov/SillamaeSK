@@ -78,15 +78,13 @@ const Kalender: NextPage = () => {
 
 
 
-                    document.getElementsByClassName(styles.chosenLi)[0]?.classList.remove(styles.chosenLi)
-
-
-
                     list[i].style.background = "#0167FF"
                     list[i].style.color = "#FFFFFF"
                 }
                 let el = document.getElementById(`${list[i].textContent!}-${monthNames.indexOf(dateList[0]) + 1}-${dateList[1]}`)
+
                 if (el){
+
                     list[i].style.background = "#6ca4fa"
                     list[i].style.color = "#f3f3f3"
                 }
@@ -99,11 +97,12 @@ const Kalender: NextPage = () => {
 
     }
 
+
+
     useEffect(() => {
         correctCalendar()
 
-    }, [])
-
+    }, [loading])
 
 
     return (
@@ -116,7 +115,7 @@ const Kalender: NextPage = () => {
                     <ol className={styles.calenderAsList}>
                         {loading ? <p>Loading...</p> : data!.GetCalendarEvents!.map((el, i) => {
                             let date = new Date(el!.date ?? "")
-                            return <li className={i == 0 ?styles.chosenLi : ''} id={`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`} key={`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`}>
+                            return <li className={i == 0 ?styles.chosenLi : ''} id={`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`} key={`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}--${i}`}>
                                 <div>
                                     <span>{date.getDate()}</span>
                                     <span>{monthNames[date.getUTCMonth()]}</span>
