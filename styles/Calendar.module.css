@@ -95,6 +95,7 @@
 
 .tileCalendar{
     all: unset;
+    cursor: pointer;
     flex-basis: 13% !important;
     display: flex;
     align-items: center;
