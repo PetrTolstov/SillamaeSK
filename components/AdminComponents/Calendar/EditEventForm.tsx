@@ -30,8 +30,6 @@ const EditEventForm = ({CalendarEvent, refetch, closeModal}: {CalendarEvent: Cal
             place: data.get("address")?.toString(),
         }
 
-
-        // TODO: add refetch query
         editEvent({variables: { 
             id: CalendarEvent?._id ?? "",
             newContent: newObj
