@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
-import { FormEvent, ReactElement, useState } from "react";
+import { FormEvent, ReactElement, useEffect, useState } from "react";
+import { InView } from "react-intersection-observer";
 import { AdminLayout } from ".";
 import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
 import AddEventForm from "../../components/AdminComponents/Calendar/AddEventForm";
@@ -18,12 +19,18 @@ import { NextPageWithLayout } from "../_app";
 import { modalTypes } from "./Pricing";
 
 const Calendar: NextPageWithLayout = () => {
+	// limit for event elements to fetch
+	const [limit, setLimit] = useState(2);
 	const [currentCalendarEvent, setCurrentCalendarEvent] = useState<CalendarEvent>();
 	const [modalType, setModalType] = useState<modalTypes>();
 	const [showModal, setShowModal] = useState<boolean>(false);
+	const [eventList, setEventList] = useState<CalendarEvent[]>([]);
 
-	const { data, loading, error, refetch } = useGetCalendarEventsQuery({
+	const { data, loading, error, refetch, fetchMore } = useGetCalendarEventsQuery({
 		variables: { options: { offset: 0, limit: 10 } },
+		// onCompleted(data) {
+		// 	pushToEventList(data.GetCalendarEvents as CalendarEvent[]);
+		// },
 	});
 	const [deleteEvent, { data: deleteData, loading: deleteLoading, error: deleteError }] =
 		useDeleteCalendarEventMutation();
@@ -44,12 +51,20 @@ const Calendar: NextPageWithLayout = () => {
 		setShowModal(false);
 	};
 
+	const pushToEventList = (dataToPush: CalendarEvent[] | null) => {
+		const copyList = eventList;
+		copyList.push(...(dataToPush ?? []));
+		setEventList(copyList);
+	};
+
 	if (!AdminStore.userInfo.isLoggedIn) {
 		return <GoBackPage />;
 	}
 
-	const refetchQuery = () => {
-		refetch();
+	const refetchQuery = async () => {
+        const currentLength = data?.GetCalendarEvents?.length || 0;
+        refetch({ options: { offset: 0, limit: 10}});
+	    await fetchMore({variables : { options: { offset: 0, limit: currentLength * 2}}})
 	};
 
 	return (
@@ -72,7 +87,7 @@ const Calendar: NextPageWithLayout = () => {
 				{loading ? (
 					<p>Loading...</p>
 				) : (
-					data?.GetCalendarEvents?.map((element) => (
+					data?.GetCalendarEvents?.map((element, index) => (
 						<EventAdminListElement
 							key={element?._id}
 							name={element?.name!}
@@ -86,14 +101,21 @@ const Calendar: NextPageWithLayout = () => {
 											id: element?._id,
 										},
 										onCompleted() {
-                                            refetch()
-                                        },
+											refetchQuery();
+										},
 									});
 								}
 							}}
 						/>
 					))
 				)}
+				<InView
+					onChange={async (inView) => {
+						
+						if (inView) {
+                            refetchQuery()
+						}
+					}}></InView>
 				<ButtonAdmin filled label={"Lisa"} action={openAddModal} />
 			</div>
 		</>

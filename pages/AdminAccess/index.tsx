@@ -6,64 +6,69 @@ import { observer } from "mobx-react-lite";
 import AdminStore from "../../Stores/AdminStore";
 import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
 import { useLoginMutation } from "../../graphqlGenerated/graphql";
-import frameStyles from "../../styles/FormStyles.module.css"
+import frameStyles from "../../styles/FormStyles.module.css";
+import { NextRouter, useRouter } from "next/router";
 
 const AdminHome: NextPageWithLayout = () => {
-    const [Login, {data, loading, error}] = useLoginMutation();
-    const handleLogin = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const data = new FormData(e.currentTarget); 
-        const newObj = { 
-            login: data.get("login")?.toString()!,
-            password: data.get("password")?.toString()!,
-        }
-        localStorage.setItem("login", newObj.login);
-        localStorage.setItem("password", newObj.password);
-        Login({variables: { userData: newObj }, onCompleted(data) {
-            alert(data.Login.str);
-            AdminStore.setUserInfo(newObj.login, newObj.password, data.Login.isLoggedIn!);
-        }})
-    }
+	const [Login, { data, loading, error }] = useLoginMutation();
+	const handleLogin = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const data = new FormData(e.currentTarget);
+		const newObj = {
+			login: data.get("login")?.toString()!,
+			password: data.get("password")?.toString()!,
+		};
+		localStorage.setItem("login", newObj.login);
+		localStorage.setItem("password", newObj.password);
+		Login({
+			variables: { userData: newObj },
+			onCompleted(data) {
+				alert(data.Login.str);
+				AdminStore.setUserInfo(newObj.login, newObj.password, data.Login.isLoggedIn!);
+			},
+		});
+	};
 
-    useEffect(() => { 
-        const loginFromLocalStorage = localStorage.getItem("login");
-        const passwordFromLocalStorage = localStorage.getItem("password");
-        Login({ variables: { 
-            userData: { 
-                login: loginFromLocalStorage ?? "", 
-                password: passwordFromLocalStorage ?? ""
-            }
-        }, onCompleted(data) { 
-            AdminStore.setUserInfo(loginFromLocalStorage!, passwordFromLocalStorage!, data.Login.isLoggedIn!);
-        } })
-    }, [])
+	useEffect(() => {
+		const loginFromLocalStorage = localStorage.getItem("login");
+		const passwordFromLocalStorage = localStorage.getItem("password");
+		Login({
+			variables: {
+				userData: {
+					login: loginFromLocalStorage ?? "",
+					password: passwordFromLocalStorage ?? "",
+				},
+			},
+			onCompleted(data) {
+				AdminStore.setUserInfo(loginFromLocalStorage!, passwordFromLocalStorage!, data.Login.isLoggedIn!);
+			},
+		});
+	}, []);
 
-    if (!AdminStore.userInfo.isLoggedIn) { 
-        return (
-            <div style={{display: "flex", justifyContent: "center", flexDirection: "column", height: "50vmin"}}>
-                <h3>Logi sisse</h3>
-                <form onSubmit={handleLogin} style={{display: "flex", flexDirection: "column"}}>
-
-					<div className={frameStyles.flexCon} style={{marginBottom: "15px"}}>
-                    	<input type="text" name="login" placeholder="Login"  className={frameStyles.input}/>
+	if (!AdminStore.userInfo.isLoggedIn) {
+		return (
+			<div style={{ display: "flex", justifyContent: "center", flexDirection: "column", height: "50vmin" }}>
+				<h3>Logi sisse</h3>
+				<form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column" }}>
+					<div className={frameStyles.flexCon} style={{ marginBottom: "15px" }}>
+						<input type='text' name='login' placeholder='Login' className={frameStyles.input} />
 						<span className={frameStyles.focusBorder}></span>
 					</div>
-					<div className={frameStyles.flexCon} style={{marginBottom: "25px"}}>
-                    	<input type={"password"} name="password" placeholder="Password" className={frameStyles.input}/>
+					<div className={frameStyles.flexCon} style={{ marginBottom: "25px" }}>
+						<input type={"password"} name='password' placeholder='Password' className={frameStyles.input} />
 						<span className={frameStyles.focusBorder}></span>
 					</div>
-                    <ButtonAdmin isSubmit filled action={()=>{}} label={"Logima"} />
-                </form>
-            </div>
-        );
-    } else { 
-        return ( 
-            <div>
-                <h3>You are logged in</h3>
-            </div>
-        )
-    }
-    
+					<ButtonAdmin isSubmit filled action={() => {}} label={"Logima"} />
+				</form>
+			</div>
+		);
+	} else {
+		return (
+			<div>
+				<h3>You are logged in</h3>
+			</div>
+		);
+	}
 };
 
 AdminHome.getLayout = function getLayout(AdminHome: ReactElement) {
@@ -77,51 +82,60 @@ AdminHome.getLayout = function getLayout(AdminHome: ReactElement) {
 export function AdminLayout({ children }: React.PropsWithChildren) {
 	return (
 		<>
-            <Header />
-			<div style={{display: "flex", justifyContent: "center", width: "75%"}}>{children}</div>
-        </>
-			
+			<Header />
+			<div style={{ display: "flex", justifyContent: "center", width: "75%" }}>{children}</div>
+		</>
 	);
 }
 
-export function SidePanel() {
-    const sidePanel = useRef<HTMLDivElement>(null);
+export function SidePanel({router}: {router: NextRouter}) {
+	const sidePanel = useRef<HTMLDivElement>(null);
 	const [isShown, setIsShown] = useState(true);
-    const togglePanel = () => setIsShown(!isShown);
-    
-    useEffect(() => {
-        if (isShown) { 
-            sidePanel.current?.classList.add("sidePanelShown")
-            sidePanel.current?.classList.remove("sidePanelHidden")
-        } else { 
-            sidePanel.current?.classList.remove("sidePanelShown")
-            sidePanel.current?.classList.add("sidePanelHidden")
-        }
-        
-    }, [isShown])
-    
+	const togglePanel = () => setIsShown(!isShown);
+	
+	useEffect(() => {
+		if (isShown) {
+			sidePanel.current?.classList.add("sidePanelShown");
+			sidePanel.current?.classList.remove("sidePanelHidden");
+		} else {
+			sidePanel.current?.classList.remove("sidePanelShown");
+			sidePanel.current?.classList.add("sidePanelHidden");
+		}
+	}, [isShown]);
+
+	const listOfPages = [
+		{ href: "/AdminAccess/FromSportComplex", label: "Pricing" },
+		{ href: "/AdminAccess/SportOpportunities", label: "Spordikompleksist" },
+		{ href: "/AdminAccess/MainPageAdmin", label: "Avaleht" },
+		{ href: "/AdminAccess/ContactInfoPage", label: "Kontakt" },
+		{ href: "/AdminAccess/Calendar", label: "Kalendar" },
+	];
 
 	if (isShown) {
 		return (
 			<div ref={sidePanel} className={styles.sidePanel}>
-				<BurgerButton togglePanel={togglePanel}/>
+				<BurgerButton togglePanel={togglePanel} />
 				<div className={styles.mainSidePanelContent}>
-                    <ul>
-                        <li><Link href={"/AdminAccess/Pricing"}>Pricing</Link></li>
-                        <li><Link href={"/AdminAccess/FromSportComplex"}>Spordikompleksist</Link></li>
-                        <li><Link href={"/AdminAccess/SportOpportunities"}>Sportimisvõimalused</Link></li>
-                        <li><Link href={"/AdminAccess/MainPageAdmin"}>Avaleht</Link></li>
-                        <li><Link href={"/AdminAccess/ContactInfoPage"}>Kontakt</Link></li>
-                        <li><Link href={"/AdminAccess/Calendar"}>Kalendar</Link></li>
-                    </ul>
-                </div>
+					<ul>
+						{listOfPages.map((page) => (
+							<li
+								key={page.href}
+                                className={[page.href == router.asPath ? styles.mainSidePanelContentSelected : styles.mainSidePanelContentNonSelected].join(" ")}
+                                >
+								<Link href={page.href} >{page.label}</Link>
+							</li>
+						))}
+					</ul>
+				</div>
 			</div>
 		);
 	} else {
 		return <BurgerButton togglePanel={togglePanel} />;
 	}
 }
+
 export function Header() {
+    const router = useRouter();
 	return (
 		<>
 			<div className={styles.adminHeader}>
@@ -129,19 +143,18 @@ export function Header() {
 				<p>SILLAMÄE SPORDIKOMPLEKS KALEV</p>
 				<p>ADMIN</p>
 			</div>
-            <SidePanel />
+			<SidePanel router={router}/>
 		</>
 	);
 }
 
 export function BurgerButton({ togglePanel }: { togglePanel: () => void }) {
-
 	return (
 		<div
 			className={[styles.container, styles.BurgerButton].join(" ")}
 			onClick={(e) => {
 				e.currentTarget.classList.toggle("active");
-                togglePanel(); 
+				togglePanel();
 			}}>
 			<svg className={styles.svg} xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 200 200'>
 				<g strokeWidth='6.5' strokeLinecap='round'>

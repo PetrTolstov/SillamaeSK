@@ -23,8 +23,6 @@ const Home: NextPage = () => {
                 <NewsFacebookComponent/>
             </div>
 
-
-
         </main>
 
 
