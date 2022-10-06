@@ -1,11 +1,13 @@
 import { observer } from 'mobx-react-lite'
 import styles from '../styles/FooterComponent.module.css'
 import LanguageStore from '../Stores/LanguageStore'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { autorun } from 'mobx';
+import {useGetTimeTableQuery} from "../graphqlGenerated/graphql";
+import languageStore from "../Stores/LanguageStore";
 
 function FooterComponent() {
-
+    const {data, loading, error} = useGetTimeTableQuery()
     const lang = { 
         contactUs: LanguageStore.currentLanguage.isEst ? LanguageStore.footer.ContactUs.EST : LanguageStore.footer.ContactUs.RUS,
         sportComplex: LanguageStore.currentLanguage.isEst ? LanguageStore.footer.SportComplex.EST : LanguageStore.footer.SportComplex.RUS,
@@ -31,20 +33,25 @@ function FooterComponent() {
                 <div className={styles.containerInformationFooter}>
                     <h3>{lang.visitUs}</h3>
                     <div className={styles.containerScheduleFooter}>
+                        { loading ? <p>Loading...</p> :
+                            <>
                         <div>
-                            <span>Spordikompleks:</span>
-                            <span>E-R: 08.00-22.00</span>
-                            <span>L-P: 09.00-21.00</span>
+                            <span>{languageStore.currentLanguage.isEst ? data!.GetTimeTable?.SportComplex?.title?.EST :  data!.GetTimeTable?.SportComplex?.title?.RUS }</span>
+                            <span>{languageStore.currentLanguage.isEst ? data!.GetTimeTable?.SportComplex?.minTitle1?.EST :  data!.GetTimeTable?.SportComplex?.minTitle1?.RUS}: {data!.GetTimeTable?.SportComplex?.timeTable1}</span>
+                            <span>{languageStore.currentLanguage.isEst ? data!.GetTimeTable?.SportComplex?.minTitle2?.EST :  data!.GetTimeTable?.SportComplex?.minTitle2?.RUS}: {data!.GetTimeTable?.SportComplex?.timeTable2 }</span>
                         </div>
                         <div>
-                            <span>Ujula:</span>
-                            <span>E-R: 07.00-21.00</span>
-                            <span>L-P: 09.00-17.00</span>
+                            <span>{languageStore.currentLanguage.isEst ? data!.GetTimeTable?.SwimmingPool?.title?.EST :  data!.GetTimeTable?.SwimmingPool?.title?.RUS }</span>
+                            <span>{languageStore.currentLanguage.isEst ? data!.GetTimeTable?.SwimmingPool?.minTitle1?.EST :  data!.GetTimeTable?.SwimmingPool?.minTitle1?.RUS}: {data!.GetTimeTable?.SwimmingPool?.timeTable1}</span>
+                            <span>{languageStore.currentLanguage.isEst ? data!.GetTimeTable?.SwimmingPool?.minTitle2?.EST :  data!.GetTimeTable?.SwimmingPool?.minTitle2?.RUS}: {data!.GetTimeTable?.SwimmingPool?.timeTable2 }</span>
                         </div>
+
+                            </>
+                        }
                     </div>
                 </div>
             </div>
-            <a href={"https://www.facebook.com/spordikompleksKalev"}>Jälgi meid sotsiaalmeedias </a>
+            <a href={"https://www.facebook.com/spordikompleksKalev"}></a>
         </footer>
     )
 }

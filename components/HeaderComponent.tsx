@@ -78,7 +78,7 @@ function HeaderComponent() {
 	const navRef = useRef(null);
 
 	return (
-		<header>
+		<header className={styles.header}>
 			<div className={styles.aboveNav}>
 				<div className={styles.logoInformation}>
 					<Link href={`/`}>
@@ -90,8 +90,11 @@ function HeaderComponent() {
 
 				</div>
 				<div className={styles.switchButtons}>
-					<a className={langStyle.join(" ")} onClick={changeLang}>
+					<a className={styles.changeLanguage} onClick={changeLang}>
 						{isEstLanguage ? "RU" : "ET"}
+					</a>
+					<a className={styles.optionalLang}>
+						EN
 					</a>
 					<button className={styles.openbtn} onClick={openNav}>
 						<Image src={contentBut} alt={'☰'}/>

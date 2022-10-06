@@ -1,0 +1,245 @@
+@media screen and (max-width: 500px) {
+    main.main{
+        padding: 0 0;
+    }
+
+
+}
+
+
+.container{
+    max-width: 1300px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 50px 0 0 0;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    flex-wrap: wrap;
+}
+
+.main{
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1600px;
+    padding: 0 50px;
+
+
+}
+
+
+.calendar{
+    width: 330px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+
+.calendar > div:nth-child(1) button:nth-child(1), .calendar > div:nth-child(1) button:nth-child(5){
+    display: none;
+
+}
+
+.calendar > div:nth-child(1) button{
+    all: unset;
+    padding: 15px;
+}
+
+.calendar > div:nth-child(2) > div > div > div{
+    box-shadow: 0px 10px 10px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+
+}
+
+.calendar > div:nth-child(2) > div > div > div > div:nth-child(2){
+
+    display: flex;
+    padding: 5px;
+    justify-content: space-around;
+}
+
+.calendar > div:nth-child(2) > div > div > div > div:nth-child(1) div{
+    display: flex;
+    justify-content: space-around;
+    padding: 2px;
+
+}
+
+.calendar > div:nth-child(2) > div > div > div > div:nth-child(1){
+    padding: 5px;
+}
+
+
+
+.calendar  > div:nth-child(2) > div > div > div > div:nth-child(1) > div >abbr{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: #0167FF;
+    text-decoration: none;
+    color: white;
+}
+
+.tileCalendar{
+    all: unset;
+    flex-basis: 13% !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    background: #F2F2F2;
+    margin: 2px 0;
+    width: 40px;
+    height: 40px;
+}
+
+.calenderAsList{
+    width: 550px;
+    background: #FFFFFF;
+    box-shadow: 0px 10px 10px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 5px;
+    margin: 50px 0 0 0;
+
+    max-height: 60vh;
+    overflow-y: scroll;
+}
+
+.calenderAsList::-webkit-scrollbar {
+
+    width: 5px;
+}
+
+/* Track */
+.calenderAsList::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+.calenderAsList::-webkit-scrollbar-thumb {
+    background: #0167FF;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.calenderAsList::-webkit-scrollbar-thumb:hover {
+    background: #0158e5;
+}
+
+
+.calenderAsList *{
+    all: unset;
+}
+
+.calenderAsList li {
+    border-radius: 1px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.calenderAsList li > div{
+    display: flex;
+    flex-direction: column;
+}
+
+.calenderAsList li > div:nth-child(1){
+
+    padding: 20px;
+    margin-top: 15px;
+    border-right:  1px solid rgba(0, 0, 0, 0.19);
+}
+
+.calenderAsList li > div:nth-child(1) span:nth-child(1){
+    font-size: 25px;
+    display: flex;
+    justify-content: space-around;
+}
+
+ .calenderAsList li > div:nth-child(3){
+     display: flex;
+     justify-content: flex-end;
+    flex-basis: 50%;
+}
+
+.calenderAsList li > div:nth-child(2){
+    flex-basis: 60%;
+    margin: 15px;
+}
+
+.calenderAsList li > div:nth-child(2) h3{
+    font-size: 20px;
+}
+
+.calenderAsList li > div:nth-child(2) span:nth-child(2):before{
+    margin-right: 8px;
+    background-image: url('../public/placeMarker.png');
+    background-size: 8px 10px;
+    display: inline-block;
+    width: 8px;
+    height: 10px;
+    content:"";
+
+}
+
+.calenderAsList li > div:nth-child(2) span{
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.calenderAsList li > div:nth-child(2) span:nth-child(3):before{
+    margin-right: 8px;
+    background-image: url('../public/timeClock.png');
+    background-size: 10px 10px;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    content:"";
+}
+
+.calenderAsList li > div:nth-child(3) > a{
+
+    font-size: 14px;
+    margin-left: auto;
+    border: none;
+    padding: 5px 15px;
+    color: #ffffff;
+    background: #0167FF;
+    border-radius: 3px;
+}
+
+li.chosenLi{
+    background: #0167FF;
+    color: #FFFFFF;
+}
+
+li.chosenLi > div:nth-child(3) > a{
+    color: #0167FF;
+    background: #FFFFFF;
+}
+
+.calenderAsList li.chosenLi > div:nth-child(2) span:nth-child(2):before{
+    background-image: url('../public/placeMarkerWhite.png');
+
+}
+
+.calenderAsList li.chosenLi > div:nth-child(2) span:nth-child(3):before{
+    background-image: url('../public/timeClockWhite.png');
+
+}

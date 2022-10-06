@@ -1,6 +1,7 @@
-import { FormEvent } from "react";
+import React, { FormEvent } from "react";
 import { CalendarEvent, GetCalendarEventsDocument, useAddCalendarEventMutation, useGetCalendarEventByIdQuery, useGetCalendarEventsQuery, useUpdateCalendarEventMutation } from "../../../graphqlGenerated/graphql";
 import { ButtonAdmin } from "../ButtonAdmin";
+import frameStyles from "../../../styles/FormStyles.module.css";
 
 const EditEventForm = ({CalendarEvent, refetch, closeModal}: {CalendarEvent: CalendarEvent | undefined, refetch: ()=>void, closeModal: ()=>void}) =>  {
 
@@ -47,56 +48,83 @@ const EditEventForm = ({CalendarEvent, refetch, closeModal}: {CalendarEvent: Cal
 			<form onSubmit={handleSubmit} style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap" }}>
 				<div style={{ display: "flex", flexDirection: "column", paddingBottom: "30px" }}>
 					<h4>Title</h4>
-					<label htmlFor='name-EST'>EST</label>
-					<input type='text' name={"name-EST"} placeholder={"Title EST"} defaultValue={CalendarEvent?.name?.EST ?? ""}/>
-					<label htmlFor='name-RUS'>RUS</label>
-					<input type='text' name={"name-RUS"} placeholder={"Title RUS"} defaultValue={CalendarEvent?.name?.RUS ?? ""}/>
-					<label htmlFor='name-RUS'>ENG</label>
-					<input type='text' name={"name-ENG"} placeholder={"Title ENG"} defaultValue={CalendarEvent?.name?.ENG ?? ""}/>
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<label htmlFor='name-EST'>EST</label>
+						<input type='text' name={"name-EST"} placeholder={"Title EST"} defaultValue={CalendarEvent?.name?.EST ?? ""} className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<label htmlFor='name-RUS'>RUS</label>
+						<input type='text' name={"name-RUS"} placeholder={"Title RUS"} defaultValue={CalendarEvent?.name?.RUS ?? ""} className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<label htmlFor='name-RUS'>ENG</label>
+						<input type='text' name={"name-ENG"} placeholder={"Title ENG"} defaultValue={CalendarEvent?.name?.ENG ?? ""} className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
 					<h4>Kuupäev ja kellaaeg</h4>
-					<input type='date' name={"date"} defaultValue={CalendarEvent?.date ?? new Date().toLocaleDateString()}/>
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<input type='date' name={"date"} defaultValue={CalendarEvent?.date ?? new Date().toLocaleDateString()} className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
 					<div>
 						<input type={"time"} name={"startTime"} defaultValue={CalendarEvent?.startTime ?? ""} />
 						-
 						<input type={"time"} name={"endTime"} defaultValue={CalendarEvent?.endTime ?? ""}/>
 					</div>
 					<h4>Aadress</h4>
-					<input type='text' name={"address"} placeholder='Aadress' defaultValue={CalendarEvent?.place ?? ""} />
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<input type='text' name={"address"} placeholder='Aadress' defaultValue={CalendarEvent?.place ?? ""} className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
 					<h4>Link</h4>
-					<input type='link' name={"link"} placeholder='Link' defaultValue={CalendarEvent?.link ?? ""}/>
+					<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+						<input type='link' name={"link"} placeholder='Link' defaultValue={CalendarEvent?.link ?? ""} className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
 					<div style={{ marginTop: "30px", alignSelf: "flex-start" }}>
 						<ButtonAdmin isSubmit filled action={() => {}} label={"Submit"} />
 					</div>
 				</div>
 				<div style={{ display: "flex", flexDirection: "column", paddingBottom: "30px" }}>
 					<h4>Kirjeldus</h4>
-					<label htmlFor='description-EST'>EST</label>
-					<textarea
+					<div style={{ marginTop: "30px", alignSelf: "flex-start" }}>
+						<label htmlFor='description-EST'>EST</label>
+						<textarea
 						style={{ resize: "none" }}
 						cols={20}
 						rows={5}
 						name={"description-EST"}
 						placeholder={"Kirjeldus EST"}
                         defaultValue={CalendarEvent?.eventDescription?.EST ?? ""}
-					/>
-					<label htmlFor='description-RUS'>RUS</label>
-					<textarea
+						className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
+					<div style={{ marginTop: "30px", alignSelf: "flex-start" }}>
+						<label htmlFor='description-RUS'>RUS</label>
+						<textarea
 						style={{ resize: "none" }}
 						cols={20}
 						rows={5}
 						name={"description-RUS"}
 						placeholder={"Описание RUS"}
                         defaultValue={CalendarEvent?.eventDescription?.RUS ?? ""}
-					/>
-					<label htmlFor='description-ENG'>ENG</label>
-					<textarea
+						className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
+					<div style={{ marginTop: "30px", alignSelf: "flex-start" }}>
+						<label htmlFor='description-ENG'>ENG</label>
+						<textarea
 						style={{ resize: "none" }}
 						cols={20}
 						rows={5}
 						name={"description-ENG"}
 						placeholder={"Description ENG"}
                         defaultValue={CalendarEvent?.eventDescription?.ENG ?? ""}
-					/>
+						className={frameStyles.input}/>
+						<span className={frameStyles.focusBorder}></span>
+					</div>
 				</div>
 			</form>
 		</div>
