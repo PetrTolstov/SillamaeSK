@@ -104,11 +104,13 @@ export function SidePanel({router}: {router: NextRouter}) {
 	}, [isShown]);
 
 	const listOfPages = [
-		{ href: "/AdminAccess/FromSportComplex", label: "Pricing" },
-		{ href: "/AdminAccess/SportOpportunities", label: "Spordikompleksist" },
+		{ href: "/AdminAccess/Pricing", label: "Hinnakiri" },
+		{ href: "/AdminAccess/FromSportComplex", label: "Spordikompleksist" },
+		{ href: "/AdminAccess/SportOpportunities", label: "Spordivõimalused" },
 		{ href: "/AdminAccess/MainPageAdmin", label: "Avaleht" },
 		{ href: "/AdminAccess/ContactInfoPage", label: "Kontakt" },
 		{ href: "/AdminAccess/Calendar", label: "Kalendar" },
+		// { href: "/AdminAccess/Gallery", label: "Galerii" },
 	];
 
 	if (isShown) {

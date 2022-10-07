@@ -12,6 +12,7 @@ import {
 	CalendarEvent,
 	useAddCalendarEventMutation,
 	useDeleteCalendarEventMutation,
+	useGetCalendarEventsLazyQuery,
 	useGetCalendarEventsQuery,
 } from "../../graphqlGenerated/graphql";
 import AdminStore from "../../Stores/AdminStore";
@@ -20,18 +21,33 @@ import { modalTypes } from "./Pricing";
 
 const Calendar: NextPageWithLayout = () => {
 	// limit for event elements to fetch
-	const [limit, setLimit] = useState(2);
+	const [limit, setLimit] = useState(10);
+	const [offset, setOffset] = useState(0);
 	const [currentCalendarEvent, setCurrentCalendarEvent] = useState<CalendarEvent>();
 	const [modalType, setModalType] = useState<modalTypes>();
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const [eventList, setEventList] = useState<CalendarEvent[]>([]);
 
-	const { data, loading, error, refetch, fetchMore } = useGetCalendarEventsQuery({
-		variables: { options: { offset: 0, limit: 10 } },
-		// onCompleted(data) {
-		// 	pushToEventList(data.GetCalendarEvents as CalendarEvent[]);
-		// },
-	});
+	// const { data, loading, error, refetch } = useGetCalendarEventsQuery({
+	// 	variables: { options: { offset: 0, limit: 10 } },
+	// 	onCompleted(data) {
+	// 		pushToEventList(data.GetCalendarEvents as CalendarEvent[]);
+	// 	},
+	// });
+    const pushToEventList = (dataToPush: CalendarEvent[] | null) => {
+        console.log("object");
+		const copyList = eventList;
+		copyList.push(...(dataToPush ?? []));
+		setEventList(copyList);
+	};
+    const [ queryAgain, {data: queryData, loading: queryLoading, error: queryError}] = useGetCalendarEventsLazyQuery({ onCompleted(data) {
+        pushToEventList(data.GetCalendarEvents as CalendarEvent[]);
+    },});
+
+    useEffect(() => { 
+        queryAgain({ variables: {options: { offset: offset, limit: limit}}})
+    }, [eventList])
+
 	const [deleteEvent, { data: deleteData, loading: deleteLoading, error: deleteError }] =
 		useDeleteCalendarEventMutation();
 
@@ -51,20 +67,16 @@ const Calendar: NextPageWithLayout = () => {
 		setShowModal(false);
 	};
 
-	const pushToEventList = (dataToPush: CalendarEvent[] | null) => {
-		const copyList = eventList;
-		copyList.push(...(dataToPush ?? []));
-		setEventList(copyList);
-	};
+	
 
 	if (!AdminStore.userInfo.isLoggedIn) {
 		return <GoBackPage />;
 	}
 
 	const refetchQuery = async () => {
-        const currentLength = data?.GetCalendarEvents?.length || 0;
-        refetch({ options: { offset: 0, limit: 10}});
-	    await fetchMore({variables : { options: { offset: 0, limit: currentLength * 2}}})
+        // const currentLength = data?.GetCalendarEvents?.length || 0;
+        // refetch({ options: { offset: 0, limit: 10}});
+	    // await fetchMore({variables : { options: { offset: 0, limit: currentLength * 2}}})
 	};
 
 	return (
@@ -84,10 +96,10 @@ const Calendar: NextPageWithLayout = () => {
 			</ModalAdmin>
 			<div>
 				<h1>Kalendar</h1>
-				{loading ? (
+				{false ? (
 					<p>Loading...</p>
 				) : (
-					data?.GetCalendarEvents?.map((element, index) => (
+					eventList.map((element, index) => (
 						<EventAdminListElement
 							key={element?._id}
 							name={element?.name!}
@@ -113,7 +125,13 @@ const Calendar: NextPageWithLayout = () => {
 					onChange={async (inView) => {
 						
 						if (inView) {
-                            refetchQuery()
+                            setOffset(eventList.length);
+                            console.log(offset);
+                            queryAgain({ variables: {options: { offset: eventList.length, limit: limit}}, onCompleted(data) {
+                                console.log("SOME");
+                                console.log(data.GetCalendarEvents as CalendarEvent[]);
+                                pushToEventList(data.GetCalendarEvents as CalendarEvent[])
+                            },})
 						}
 					}}></InView>
 				<ButtonAdmin filled label={"Lisa"} action={openAddModal} />
