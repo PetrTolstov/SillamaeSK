@@ -106,7 +106,7 @@ function HeaderComponent() {
 				<Link href={`/`}>
 					<a className={router.pathname == "/" ? styles.chosenPage : ""}>{lang.homePageTab}</a>
 				</Link>
-				<Link href={`/SportComplex`}>
+				<Link href={`/SportComplex/Regulations`}>
 					<a className={router.pathname.includes("/SportComplex") ? styles.chosenPage : ""}>
 						{lang.fromSportComplexPageTab}
 					</a>

@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {LINK} from "../../config/constants";
 
+
 const Regulations: NextPage = () => {
     const page = 'Kodukord'
     const [imgFile, setImgFile] = useState('');
@@ -21,6 +22,8 @@ const Regulations: NextPage = () => {
             setImgFile(`${LINK}/public/images/${page}/${res.data[0]}`)
         })()
     }, [])
+
+
     return (
         <LayoutSportComplex>
             <>

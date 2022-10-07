@@ -8,8 +8,8 @@ type LayoutSportComplexProps = {
 }
 
 const LayoutSportComplex = ({children} : LayoutSportComplexProps) => {
-    const labels = ['Arengukava', 'Kodukord', 'Galerii']
-    const paths = ['/SportComplex','/SportComplex/Regulations','/SportComplex/Gallery']
+    const labels = [ 'Kodukord', 'Galerii']//'Arengukava',
+    const paths = ['/SportComplex/Regulations','/SportComplex/Gallery']//'/SportComplex'
     return (
         <Layout>
             <main className={styles.main}>
