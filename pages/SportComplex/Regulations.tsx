@@ -5,11 +5,23 @@ import styles from '../../styles/LayoutsForSidePages.module.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {LINK} from "../../config/constants";
+import {SimplePage, useGetSimplePagesQuery} from "../../graphqlGenerated/graphql";
+import {observer} from "mobx-react-lite";
+import languageStore from "../../Stores/LanguageStore";
 
 
 const Regulations: NextPage = () => {
     const page = 'Kodukord'
     const [imgFile, setImgFile] = useState('');
+    const [ title, setTitle ] = useState("");
+    const [ text, setText ] = useState("")
+    // @ts-ignore
+    const [ currentPage, setCurrentPage ] = useState<SimplePage>([])
+    const {loading, data, error} = useGetSimplePagesQuery({variables: {type: 0}, onCompleted(data) {
+        setCurrentPage(data.GetSimplePages![1] as SimplePage);
+        }})
+
+
 
     useEffect(() => {
         (async () => {
@@ -21,19 +33,32 @@ const Regulations: NextPage = () => {
             console.log(res.data)
             setImgFile(`${LINK}/public/images/${page}/${res.data[0]}`)
         })()
+
+
     }, [])
+
+
+    useEffect(()=>{
+        console.log(data?.GetSimplePages)
+    }, [loading])
 
 
     return (
         <LayoutSportComplex>
             <>
+
                 <img src={imgFile} className={styles.titlePhoto}/>
-                <h2>Kodukord</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non sed id cras vulputate nunc eu. Tristique sollicitudin faucibus purus viverra cum. Sed etiam mauris, in sollicitudin metus orci, sed amet. Integer fringilla a enim morbi cras.
-                    Vivamus commodo cursus viverra lectus et. Feugiat urna condimentum elit nec aliquet pharetra porttitor. Nulla volutpat pellentesque mauris volutpat morbi. Enim pharetra enim quis at aliquet pharetra eros. Porttitor sed morbi tortor aliquam. A arcu.</p>
-            </>
+
+                {loading ? <p>Loading</p> :
+                    <>
+                        <h2>{languageStore.currentLanguage.isEst ? currentPage?.title?.EST  : currentPage?.title?.RUS}</h2>
+                        <p style={{whiteSpace : "pre-line"}}>{languageStore.currentLanguage.isEst ? currentPage?.text?.EST  : currentPage?.text?.RUS}</p>
+
+                    </>
+                }
+                </>
         </LayoutSportComplex>
     )
 }
 
-export default Regulations
+export default observer(Regulations)
