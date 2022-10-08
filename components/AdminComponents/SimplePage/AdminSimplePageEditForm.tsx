@@ -87,7 +87,7 @@ export const AdminSimplePageEditForm = ({ page }: { page: SimplePage }) => {
                             <span className={frameStyles.focusBorder}></span>
                     </div>
 				</label>
-                <UploadFile page={getPage(currentPage?.title?.EST ?? "") ?? ""} show={showUploadFile} closeModal={() => setShowUploadFile(false)} />
+                <UploadFile page={getPage(currentPage?.pageName ?? "") ?? ""} show={showUploadFile} closeModal={() => setShowUploadFile(false)} />
                 <ButtonAdmin border action={() => setShowUploadFile(true)} label={"Add image"} />
                 <input style={{width: "fit-content"}} type="submit" />
 			</form>

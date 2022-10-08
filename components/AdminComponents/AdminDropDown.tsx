@@ -22,7 +22,7 @@ export const AdminDropDown = ({
 			<select value={currentPage?._id} onChange={handleChange}>
 				{pages?.map((el) => (
 					<option key={el._id} value={el._id}>
-						{el.title?.EST}
+						{el.pageName}
 					</option>
 				))}
 			</select>

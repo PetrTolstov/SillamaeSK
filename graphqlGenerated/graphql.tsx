@@ -271,6 +271,7 @@ export type SimplePage = {
   __typename?: 'SimplePage';
   _id: Scalars['ID'];
   image?: Maybe<Scalars['String']>;
+  pageName?: Maybe<Scalars['String']>;
   text?: Maybe<TextContent>;
   title?: Maybe<TextContent>;
   type: Scalars['Int'];
@@ -278,6 +279,7 @@ export type SimplePage = {
 
 export type SimplePageInput = {
   image?: InputMaybe<Scalars['String']>;
+  pageName?: InputMaybe<Scalars['String']>;
   text?: InputMaybe<TextContentInput>;
   title?: InputMaybe<TextContentInput>;
 };
@@ -524,7 +526,7 @@ export type GetSimplePagesQueryVariables = Exact<{
 }>;
 
 
-export type GetSimplePagesQuery = { __typename?: 'Query', GetSimplePages?: Array<{ __typename?: 'SimplePage', _id: string, image?: string | null, title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, text?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null }> | null };
+export type GetSimplePagesQuery = { __typename?: 'Query', GetSimplePages?: Array<{ __typename?: 'SimplePage', _id: string, image?: string | null, pageName?: string | null, title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, text?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null }> | null };
 
 export type GetSportOpportunitiesDescriptionQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1458,6 +1460,7 @@ export const GetSimplePagesDocument = gql`
       EST
     }
     image
+    pageName
   }
 }
     `;
