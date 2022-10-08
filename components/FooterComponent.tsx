@@ -30,7 +30,7 @@ function FooterComponent() {
                     <span>Spordikompleks Kalev</span>
                     <span>Külasta meid</span>
                 </div>
-                <div className={styles.containerInformationFooter}>
+                <div className={styles.containerInformfationFooter}>
                     <h3>{lang.visitUs}</h3>
                     <div className={styles.containerScheduleFooter}>
                         { loading ? <p>Loading...</p> :
@@ -51,7 +51,7 @@ function FooterComponent() {
                     </div>
                 </div>
             </div>
-            <a href={"https://www.facebook.com/spordikompleksKalev"}></a>
+            <a href={"https://www.facebook.com/spordikompleksKalev"} className={styles.facebookIcon}></a>
         </footer>
     )
 }
