@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite";
+import { useRouter } from "next/router";
 import { FormEvent, ReactElement, useEffect, useState } from "react";
 import { InView } from "react-intersection-observer";
 import { AdminLayout } from ".";
@@ -10,7 +11,6 @@ import GoBackPage from "../../components/AdminComponents/GoBackPage";
 import ModalAdmin from "../../components/AdminComponents/ModalAdmin";
 import {
 	CalendarEvent,
-	useAddCalendarEventMutation,
 	useDeleteCalendarEventMutation,
 	useGetCalendarEventsLazyQuery,
 	useGetCalendarEventsQuery,
@@ -27,26 +27,36 @@ const Calendar: NextPageWithLayout = () => {
 	const [modalType, setModalType] = useState<modalTypes>();
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const [eventList, setEventList] = useState<CalendarEvent[]>([]);
-
-	// const { data, loading, error, refetch } = useGetCalendarEventsQuery({
-	// 	variables: { options: { offset: 0, limit: 10 } },
-	// 	onCompleted(data) {
-	// 		pushToEventList(data.GetCalendarEvents as CalendarEvent[]);
-	// 	},
-	// });
-    const pushToEventList = (dataToPush: CalendarEvent[] | null) => {
-        console.log("object");
+	const router = useRouter();
+	const { data, loading, error, fetchMore, refetch } = useGetCalendarEventsQuery({
+		variables: { options: { offset: 0, limit: limit } },
+	});
+	const pushToEventList = (dataToPush: CalendarEvent[] | null) => {
 		const copyList = eventList;
 		copyList.push(...(dataToPush ?? []));
-		setEventList(copyList);
+		setEventList([...(dataToPush ?? [])]);
 	};
-    const [ queryAgain, {data: queryData, loading: queryLoading, error: queryError}] = useGetCalendarEventsLazyQuery({ onCompleted(data) {
-        pushToEventList(data.GetCalendarEvents as CalendarEvent[]);
-    },});
+	const [queryAgain, { data: queryData, loading: queryLoading, error: queryError }] = useGetCalendarEventsLazyQuery({
+		onCompleted(data) {
+			pushToEventList(data.GetCalendarEvents as CalendarEvent[]);
+			setOffset(eventList.length);
+		},
+	});
 
-    useEffect(() => { 
-        queryAgain({ variables: {options: { offset: offset, limit: limit}}})
-    }, [eventList])
+	useEffect(() => {
+		const length = data?.GetCalendarEvents?.length || 0;
+		if (length > 0) {
+			console.log("length  " + length);
+			fetchMore({
+				variables: {
+					options: {
+						offset: length,
+						limit: limit,
+					},
+				},
+			});
+		}
+	}, [data?.GetCalendarEvents?.length]);
 
 	const [deleteEvent, { data: deleteData, loading: deleteLoading, error: deleteError }] =
 		useDeleteCalendarEventMutation();
@@ -67,27 +77,19 @@ const Calendar: NextPageWithLayout = () => {
 		setShowModal(false);
 	};
 
-	
-
 	if (!AdminStore.userInfo.isLoggedIn) {
 		return <GoBackPage />;
 	}
-
-	const refetchQuery = async () => {
-        // const currentLength = data?.GetCalendarEvents?.length || 0;
-        // refetch({ options: { offset: 0, limit: 10}});
-	    // await fetchMore({variables : { options: { offset: 0, limit: currentLength * 2}}})
-	};
 
 	return (
 		<>
 			<ModalAdmin isShowing={showModal} onClose={closeModal}>
 				{modalType == modalTypes.addModal ? (
-					<AddEventForm closeModal={closeModal} refetch={refetchQuery} />
+					<AddEventForm closeModal={closeModal} refetch={refetch} />
 				) : modalType == modalTypes.editModal ? (
 					<EditEventForm
 						closeModal={closeModal}
-						refetch={refetchQuery}
+						refetch={refetch}
 						CalendarEvent={currentCalendarEvent}
 					/>
 				) : (
@@ -99,7 +101,7 @@ const Calendar: NextPageWithLayout = () => {
 				{false ? (
 					<p>Loading...</p>
 				) : (
-					eventList.map((element, index) => (
+					data?.GetCalendarEvents?.map((element, index) => (
 						<EventAdminListElement
 							key={element?._id}
 							name={element?.name!}
@@ -113,7 +115,7 @@ const Calendar: NextPageWithLayout = () => {
 											id: element?._id,
 										},
 										onCompleted() {
-											refetchQuery();
+											refetch();
 										},
 									});
 								}
@@ -123,16 +125,13 @@ const Calendar: NextPageWithLayout = () => {
 				)}
 				<InView
 					onChange={async (inView) => {
-						
-						if (inView) {
-                            setOffset(eventList.length);
-                            console.log(offset);
-                            queryAgain({ variables: {options: { offset: eventList.length, limit: limit}}, onCompleted(data) {
-                                console.log("SOME");
-                                console.log(data.GetCalendarEvents as CalendarEvent[]);
-                                pushToEventList(data.GetCalendarEvents as CalendarEvent[])
-                            },})
-						}
+						// if (inView) {
+						//     queryAgain({ variables: {options: { offset: eventList.length, limit: limit}}, onCompleted(data) {
+						//         console.log("SOME");
+						//         pushToEventList(data.GetCalendarEvents as CalendarEvent[])
+						//         setOffset(eventList.length);
+						//     },})
+						// }
 					}}></InView>
 				<ButtonAdmin filled label={"Lisa"} action={openAddModal} />
 			</div>

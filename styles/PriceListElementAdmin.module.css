@@ -10,7 +10,15 @@
     padding: 0px 20px;
     border: 1px solid #DDDDDD;
     border-radius: 5px;
-    min-width: 300px;
+    width: 400px;
+
+}
+
+.elementBody > p { 
+    overflow: hidden;
+    direction: ltr;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .btns { 

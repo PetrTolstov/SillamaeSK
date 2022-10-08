@@ -5,12 +5,18 @@ export const client = new ApolloClient({
 	// uri: "http://localhost:4000",
 	cache: new InMemoryCache({
 		addTypename: false,
-        // typePolicies: { 
-        //     Query: { 
-        //         fields: { 
-        //             GetCalendarEvents: offsetLimitPagination()
-        //         }
-        //     }
-        // }
+        typePolicies: { 
+            Query: { 
+                fields: { 
+                    GetCalendarEvents: { 
+                        keyArgs: false, 
+
+                        merge(existing = [], incoming, ) { 
+                            return [...existing, ...incoming]
+                        }
+                    }
+                }
+            }
+        }
 	}),
 });
