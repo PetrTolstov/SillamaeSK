@@ -1,0 +1,57 @@
+.contForPhotos{
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.contForPhotos > div{
+    flex-direction: row;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    background: #e1e1e1;
+    align-items: center;
+    border-radius: 2px;
+}
+
+img.imgFix{
+    position: fixed;
+    width: 50vw;
+    left: 25vw;
+    z-index: 10;
+}
+
+button.blockBut{
+    display: block;
+}
+
+.closeBut{
+    z-index: 10;
+    position: fixed;
+    right: 0;
+    top: 0;
+    display: none;
+    border: none;
+    background: url("../public/cross.svg");
+    background-repeat: no-repeat;
+    font-weight: 700;
+    font-size: 32px;
+    height: 44px;
+    width: 44px;
+
+}
+.imgNotFix{}
+
+.backBlack{
+    z-index: 5;
+    display: none;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0, 0.4);
+}

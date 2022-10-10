@@ -54,7 +54,7 @@
 
 .article img{
     width: 200px;
-    height: 200px;
+
     margin: 5px;
     border-radius: 2px;
 }
@@ -69,12 +69,13 @@
     color: #002B5C;
 }
 
-.article div{
+.article > div{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-around;
     margin-bottom: 30px;
+    align-items: center;
 }
 
 .article h3{

@@ -29,7 +29,7 @@
     all: unset;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
-    font-size: 20;
+    font-size: 20px;
     font-weight: 500;
     background-color: #0167FF;
     color: white;
@@ -141,4 +141,37 @@
 .cont{
     flex-direction: column;
     align-items: center;
+}
+
+.hidden{
+    display: none;
+}
+
+.shown{
+    display: block;
+}
+
+.imgCont{
+    padding: 10px;
+}
+
+.chosen{
+    -webkit-filter: blur(5px) brightness(0.4);
+    filter: blur(1px) brightness(0.4);
+}
+
+.img{}
+
+.butCon{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titleCon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
