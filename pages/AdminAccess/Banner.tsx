@@ -1,7 +1,8 @@
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { AdminLayout } from ".";
 import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
 import { NextPageWithLayout } from "../_app";
+import frameStyles from "../../styles/FormStyles.module.css";
 
 const Banner: NextPageWithLayout = () => {
 	return (
@@ -12,9 +13,18 @@ const Banner: NextPageWithLayout = () => {
 				<div style={{ display: "flex", flexDirection: "column" }}>
 					<h5>Title</h5>
 					<div style={{ display: "flex", flexDirection: "column" }}>
-						<input type='text' name={"title-EST"} placeholder={"Title EST"} />
-						<input type='text' name={"title-RUS"} placeholder={"Title RUS"} />
-						<input type='text' name={"title-ENG"} placeholder={"Title ENG"} />
+						<div className={frameStyles.flexCon} style={{marginBottom: "20px", width: "fit-content"}}>
+							<input type='text' name={"title-EST"} placeholder={"Title EST"} className={frameStyles.input}/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+						<div className={frameStyles.flexCon} style={{marginBottom: "20px", width: "fit-content"}}>
+							<input type='text' name={"title-RUS"} placeholder={"Title RUS"} className={frameStyles.input}/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+						<div className={frameStyles.flexCon} style={{marginBottom: "20px", width: "fit-content"}}>
+							<input type='text' name={"title-ENG"} placeholder={"Title ENG"} className={frameStyles.input}/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
 					</div>
 					<div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
 						<h6>Show title</h6>
@@ -24,9 +34,18 @@ const Banner: NextPageWithLayout = () => {
                 <div style={{ display: "flex", flexDirection: "column", marginTop: "10px" }}>
 					<h5>Centered Text</h5>
                     <div style={{ display: "flex", flexDirection: "column" }}>
-						<textarea cols={10} rows={5} name={"centerText-EST"} placeholder={"centerText EST"} />
-						<textarea cols={10} rows={5} name={"centerText-RUS"} placeholder={"centerText RUS"} />
-						<textarea cols={10} rows={5} name={"centerText-ENG"} placeholder={"centerText ENG"} />
+						<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+							<textarea cols={10} rows={5} name={"centerText-EST"} placeholder={"centerText EST"} className={frameStyles.input}/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+						<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+							<textarea cols={10} rows={5} name={"centerText-RUS"} placeholder={"centerText RUS"} className={frameStyles.input}/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+						<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+							<textarea cols={10} rows={5} name={"centerText-ENG"} placeholder={"centerText ENG"} className={frameStyles.input}/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
 					</div>
 					<div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
 						<h6>Show centered text</h6>
@@ -36,9 +55,18 @@ const Banner: NextPageWithLayout = () => {
                 <div style={{ display: "flex", flexDirection: "column", marginTop: "10px" }}>
 					<h5>Main text body</h5>
                     <div style={{ display: "flex", flexDirection: "column" }}>
-						<textarea cols={10} rows={5} name={"body-EST"} placeholder={"body EST"} />
-						<textarea cols={10} rows={5} name={"body-RUS"} placeholder={"body RUS"} />
-						<textarea cols={10} rows={5} name={"body-ENG"} placeholder={"body ENG"} />
+						<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+							<textarea cols={10} rows={5} name={"body-EST"} placeholder={"body EST"} className={frameStyles.input}/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+						<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+							<textarea cols={10} rows={5} name={"body-RUS"} placeholder={"body RUS"} className={frameStyles.input}/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+						<div className={frameStyles.flexCon} style={{marginBottom: "20px"}}>
+							<textarea cols={10} rows={5} name={"body-ENG"} placeholder={"body ENG"} className={frameStyles.input}/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
 					</div>
 					<div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
 						<h6>Show main text body</h6>
@@ -48,7 +76,10 @@ const Banner: NextPageWithLayout = () => {
                 <div style={{ display: "flex", flexDirection: "column", marginTop: "10px" }}>
 					<h5>Link</h5>
                     <div style={{ display: "flex", flexDirection: "column" }}>
-						<input type={"url"} name={"link"} placeholder={"Link"} />
+						<div className={frameStyles.flexCon} style={{marginBottom: "20px", width: "fit-content"}}>
+							<input type={"url"} name={"link"} placeholder={"Link"} className={frameStyles.input}/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
 					</div>
 					<div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
 						<h6>Show link</h6>

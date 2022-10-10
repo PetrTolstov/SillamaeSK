@@ -12,7 +12,7 @@ function DescriptionNearNewsComponent(){
 
     return(
 
-        <article className={styles.textSecondBlock} data-aos="fade-right">
+        <article className={styles.textSecondBlock} data-aos="fade-right" data-aos-once={'true'}>
             {loading ? <h2>Loading</h2> :
                 <>
                     <h2>{ LanguageStore.currentLanguage.isEst ? data!.GetSportOpportunitiesDescription!.title!.EST : data!.GetSportOpportunitiesDescription!.title!.RUS}</h2>

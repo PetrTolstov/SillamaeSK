@@ -14,7 +14,7 @@ const LayoutSportComplexOpportunities = ({children} : LayoutSportComplexOpportun
         <Layout>
             <main className={styles.main}>
                 <BigSideNavComponent labels={labels} paths={paths}/>
-                <article className={styles.article} data-aos={'fade-left'}>
+                <article className={styles.article} data-aos={'fade-left'} data-aos-once={'true'}>
                 {children}
                 </article>
             </main>

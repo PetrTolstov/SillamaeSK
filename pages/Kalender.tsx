@@ -111,10 +111,10 @@ const Kalender: NextPage = () => {
                 <ImageWithSchedule/>
 
                 <div className={styles.container} >
-                    <div  data-aos="fade-right">
+                    <div  data-aos="fade-right" data-aos-once={'true'}>
                         <Calendar onChange={setValue} onViewChange={(action) => {console.log(action)}} onClickDay={(value, event) => {handleCLick(value, event)}} value={value} locale={"et-EE"} className={styles.calendar} tileClassName={styles.tileCalendar}/>
                     </div>
-                    <ol className={styles.calenderAsList} data-aos="fade-left">
+                    <ol className={styles.calenderAsList} data-aos="fade-left" data-aos-once={'true'}>
                         {loading ? <p>Loading...</p> : data!.GetCalendarEvents!.map((el, i) => {
                             let date = new Date(el!.date ?? "")
                             return <li className={i == 0 ?styles.chosenLi : ''} id={`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`} key={`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}--${i}`}>
