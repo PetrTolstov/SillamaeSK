@@ -10,16 +10,25 @@ import SideNavComponent from "../components/MainPage/SideNavComponent";
 import ScheduleOnMainPageComponent from "../components/MainPage/ScheduleOnMainPageComponent";
 import Layout from "../components/Layout";
 
+import {useEffect, useState} from "react";
+
+
 const Home: NextPage = () => {
+
     //<ScheduleOnMainPageComponent/>
     //after main
-  return (
-      <Layout>
-        <main className={styles.main}>
-            <ImageWithSchedule isMain={true}/>
 
-            <div className={styles.textAndNewsFrame}>
-                <DescriptionNearNewsComponent/>
+
+  return (
+
+      <Layout>
+
+        <main className={styles.main}>
+
+                <ImageWithSchedule isMain={true} />
+
+            <div className={styles.textAndNewsFrame} >
+                <DescriptionNearNewsComponent  />
                 <NewsFacebookComponent/>
             </div>
 
@@ -28,6 +37,7 @@ const Home: NextPage = () => {
 
 
       </Layout>
+
   )
 }
 

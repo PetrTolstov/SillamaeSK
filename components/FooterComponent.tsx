@@ -51,7 +51,7 @@ function FooterComponent() {
                     </div>
                 </div>
             </div>
-            <a href={"https://www.facebook.com/spordikompleksKalev"} className={styles.facebookIcon}></a>
+            <a href={"https://www.facebook.com/spordikompleksKalev"} className={styles.facebookIcon} ></a>
         </footer>
     )
 }

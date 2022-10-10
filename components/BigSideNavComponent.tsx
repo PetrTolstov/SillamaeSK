@@ -13,7 +13,7 @@ function BigSideNavComponent({paths, labels} : SideNavProps){
     const router = useRouter()
     console.log(router.pathname)
     return(
-            <nav className={styles.sideNav}>
+            <nav className={styles.sideNav} data-aos={'fade-right'}>
                 {paths.map((el, i) => (
                     <Link href={el}  key={`link-${i}`}>
                         <a className={router.pathname == el ? styles.chosenPage : ""}>{labels[i]}</a>

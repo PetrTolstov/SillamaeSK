@@ -6,6 +6,9 @@ import {LINK} from "../../config/constants";
 import {useGetTimeTableQuery} from "../../graphqlGenerated/graphql";
 import {observer} from "mobx-react-lite";
 import languageStore from "../../Stores/LanguageStore";
+import {any} from "prop-types";
+
+
 
 function ImageWithScheduleComponent({isMain=false}){
     const {data, loading, error} = useGetTimeTableQuery()
@@ -26,7 +29,7 @@ function ImageWithScheduleComponent({isMain=false}){
     }, [])
 
     return(
-        <article className={ styles.ImageWithSchedule} style={{backgroundImage: `url(${imgFile})`}}>
+        <article className={ styles.ImageWithSchedule} style={{backgroundImage: `url(${imgFile})`}} data-aos="zoom-in-right">
             {/*<img src={imgFile} className={isMain ? styles.backGroundImg : styles.altBackGroundImg}/>*/}
             <div className={isMain ? styles.schedule : styles.hidden }>
                 { loading ? <p>Loading...</p> :

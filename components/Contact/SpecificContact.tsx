@@ -5,7 +5,7 @@ import LanguageStore from '../../Stores/LanguageStore';
 
 function SpecificContact({data} : { data: PersonContactInfo | null | undefined}){
     return(
-        <article className={styles.SpecificContact}>
+        <article className={styles.SpecificContact} data-aos="zoom-in-up">
             <div className={styles.textContainer}>
                 <p><b>{LanguageStore.currentLanguage.isEst ? data?.role?.EST : data?.role?.RUS}</b></p>
                 <p>{data?.name}</p>

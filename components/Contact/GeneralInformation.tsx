@@ -7,7 +7,7 @@ function GeneralInformation(){
     const {data, loading, error} = useGetGeneralContactsInfoQuery()
 
     return(
-        <article className={styles.generalInformation}>
+        <article className={styles.generalInformation}  data-aos="fade-right">
             {loading ? <p>Loading...</p> :
                 <>
                     <h2>{LanguageStore.currentLanguage.isEst ? "Kontakt" : "Контакт"}</h2>

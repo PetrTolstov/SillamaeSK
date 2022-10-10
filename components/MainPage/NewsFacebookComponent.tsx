@@ -46,7 +46,7 @@ function NewsFacebookComponent(){
     }
 
     return(
-        <article className={styles.NewsFacebook}>
+        <article className={styles.NewsFacebook} data-aos="fade-left">
             <h2>{languageStore.currentLanguage.isEst ? "VIIMASED UUDISED" : "ПОСЛЕДНИЕ НОВОСТИ"}</h2>
             <p>{languageStore.currentLanguage.isEst ? estFacebookNews : rusFacebookNews}</p>
 

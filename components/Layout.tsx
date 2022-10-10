@@ -2,10 +2,14 @@ import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
-import React from "react";
-
+import React, {useEffect} from "react";
+import Aos from 'aos'
+import 'aos/dist/aos.css'
 
 function Layout({ children }: React.PropsWithChildren){
+    useEffect(()=>{
+        Aos.init({duration: 1000})
+    }, [])
     return(
         <div className={styles.container}>
             <Head>

@@ -9,7 +9,7 @@ const PriceList: NextPage = () => {
 		<Layout>
 			<main className={styles.main}>
 				<ImageWithSchedule/>
-				<div className={styles.container}>
+				<div className={styles.container}  data-aos="fade-up">
 					<h1 className={styles.h1}>Hinnakiri</h1>
 					<PriceListTableComponent/>
 				</div>
