@@ -1,23 +1,50 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, {ChangeEvent, LegacyRef, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import { LINK } from "../../config/constants";
 import styles from "../../styles/ModalAdmin.module.css";
 import { ButtonAdmin } from "./ButtonAdmin";
 import kalender from "../../pages/Kalender";
 import stylesBut from "../../styles/ButtonAdmin.module.css";
+import frameStyles from "../../styles/FormStyles.module.css";
 
 const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, closeModal: ()=>void }) => {
 	//const page = '/Gallery'
 
 	const [file, setFile] = useState<FileList>();
 	const [imgFile, setImgFile] = useState("");
+	const [imgFileName, setImgFileName] = useState([]);
+	const [title, setTitle] = useState("")
+	const [date, setDate] = useState('')
+
 
 	const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setFile(event.currentTarget.files!);
 		setImgFile(URL.createObjectURL(event.currentTarget.files![0]))
 	};
 
+	const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		if(event.currentTarget.value){
+			setTitle(event.currentTarget.value)
+			console.log(event.currentTarget.value)
+		}
+	};
 
+	const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+		if(event.currentTarget.value){
+			setDate(event.currentTarget.value)
+			console.log(event.currentTarget.value)
+		}
+	};
+
+	const handleTitleSelectChange= (event: any) => {
+		if(event.currentTarget.value){
+			let l = event.currentTarget.value.split("-")
+			setTitle(l[3])
+			setDate(l.slice(0,3).join('-'))
+			console.log(event.currentTarget.value)
+
+		}
+	};
 
 	useEffect(() => {
 		(async () => {
@@ -26,9 +53,12 @@ const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, clo
 					optional: page,
 				},
 			});
-			//setImgFile(`${LINK}/public/images/${page}/${res.data[0]}`);
+			setImgFileName(res.data);
 		})();
 	}, []);
+
+
+
 
 	const handleSubmit = (event: { preventDefault: () => void }) => {
 		if(!file){
@@ -37,6 +67,12 @@ const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, clo
 
 		event.preventDefault();
 		const data = new FormData();
+
+		if(date && title){
+			data.append("title", title);
+			data.append("date", date);
+		}
+
 		data.append("optional", page);
 		console.log(file)
 		if (file) {
@@ -52,9 +88,39 @@ const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, clo
 		return (
 			<>
                 <div className={styles.shadow}></div>
-				<div className={styles.container}>
+				<div className={styles.container} style={{padding : "10px 50px 50px 50px "}}>
                     <ButtonAdmin border action={closeModal} label={"Close modal"} />
-					<form style={{marginBottom: "50px", marginTop: "50px"}}>
+					<form >
+
+						{page == "Gallery" ?
+							<>
+								<div className={styles.titleCon}>
+									<div className={frameStyles.flexCon} style={{marginBottom: "20px", width: "fit-content"}}>
+										<label htmlFor='text-EST'>Title</label>
+										<input type={'text'} className={frameStyles.input} onChange={handleTitleChange} id={"title"} value={title}></input>
+										<span className={frameStyles.focusBorder}></span>
+									</div>
+									<select name="listOfEvents" onChange={handleTitleSelectChange} id={'select'}>
+										<option disabled selected > -- select an option -- </option>
+										{
+											imgFileName.map((el) => (
+												<>
+													<option value={`${Object.keys(el)[0]}`} key={`${Object.keys(el)[0]}`}>{Object.keys(el)[0]}</option>
+												</>
+
+											))
+										}
+									</select>
+								</div>
+								<div className={frameStyles.flexCon} style={{marginBottom: "20px",  width: "fit-content"}}>
+									<label htmlFor='text-EST'>Date</label>
+									<input type={'date'} className={frameStyles.input}  onChange={handleDateChange} value={date}></input>
+									<span className={frameStyles.focusBorder}></span>
+								</div>
+							</>
+							:
+							<></>
+						}
 						<div className={styles.cont} >
 							<label htmlFor='file'>Upload File:</label>
 							<br/>
