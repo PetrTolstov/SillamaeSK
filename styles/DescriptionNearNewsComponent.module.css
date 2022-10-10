@@ -8,6 +8,7 @@
     }
 }
 .textSecondBlock{
+    flex-basis: 45%;
     width: 40%;
 }
 
