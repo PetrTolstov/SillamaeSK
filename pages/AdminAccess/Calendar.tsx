@@ -12,8 +12,10 @@ import ModalAdmin from "../../components/AdminComponents/ModalAdmin";
 import {
 	CalendarEvent,
 	useDeleteCalendarEventMutation,
+	useEditPageConfigMutation,
 	useGetCalendarEventsLazyQuery,
 	useGetCalendarEventsQuery,
+    useGetPageConfigQuery,
 } from "../../graphqlGenerated/graphql";
 import AdminStore from "../../Stores/AdminStore";
 import { NextPageWithLayout } from "../_app";
@@ -27,6 +29,10 @@ const Calendar: NextPageWithLayout = () => {
 	const [modalType, setModalType] = useState<modalTypes>();
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const [eventList, setEventList] = useState<CalendarEvent[]>([]);
+    const {data: configData, refetch: refetchConfig} = useGetPageConfigQuery({ variables: { 
+        pageName: "Calendar"
+    }})
+    const [editConfig, {}] = useEditPageConfigMutation();
 	const router = useRouter();
 	const { data, loading, error, fetchMore, refetch } = useGetCalendarEventsQuery({
 		variables: { options: { offset: 0, limit: limit } },
@@ -123,6 +129,18 @@ const Calendar: NextPageWithLayout = () => {
 						/>
 					))
 				)}
+                <input type="checkbox" defaultChecked={configData?.GetPageConfig?.showBanner ?? false} onChange={e => { 
+                    console.log(e.target.checked);
+                    editConfig({ variables: { 
+                        pageName: "Calendar", 
+                        newConfig: { 
+                            pageName: "Calendar", 
+                            showBanner: e.target.checked
+                        }
+                    }, onCompleted(data) {
+                        refetchConfig()
+                    },})
+                }} />
 				<InView
 					onChange={async (inView) => {
 						// if (inView) {

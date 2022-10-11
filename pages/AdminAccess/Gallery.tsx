@@ -11,7 +11,9 @@ import {
 	CalendarEvent,
 	useAddCalendarEventMutation,
 	useDeleteCalendarEventMutation,
+	useEditPageConfigMutation,
 	useGetCalendarEventsQuery,
+    useGetPageConfigQuery,
 } from "../../graphqlGenerated/graphql";
 import AdminStore from "../../Stores/AdminStore";
 import { NextPageWithLayout } from "../_app";
@@ -23,6 +25,10 @@ import DeleteFile from "../../components/AdminComponents/deleteFile";
 const Gallery: NextPageWithLayout = () => {
 	const [ showUploadFile, setShowUploadFile ] = useState(false);
 	const [ showDeleteFile, setShowDeleteFile ] = useState(false);
+    const {data: configData, refetch: refetchConfig} = useGetPageConfigQuery({ variables: { 
+        pageName: "Gallery"
+    }})
+    const [editConfig, {}] = useEditPageConfigMutation();
 
     if(!AdminStore.userInfo.isLoggedIn) return <GoBackPage/>
 	return (
@@ -32,6 +38,19 @@ const Gallery: NextPageWithLayout = () => {
 
 			<DeleteFile page={"Gallery"} show={showDeleteFile} closeModal={() => setShowDeleteFile(false)} />
 			<ButtonAdmin border action={() => setShowDeleteFile(true)} label={"Delete images"} />
+            <h6>Show banner</h6>
+            <input type="checkbox" defaultChecked={configData?.GetPageConfig?.showBanner ?? false} onChange={e => { 
+                    console.log(e.target.checked);
+                    editConfig({ variables: { 
+                        pageName: "Gallery", 
+                        newConfig: { 
+                            pageName: "Gallery", 
+                            showBanner: e.target.checked
+                        }
+                    }, onCompleted(data) {
+                        refetchConfig()
+                    },})
+                }} />
 		</>
 	);
 };

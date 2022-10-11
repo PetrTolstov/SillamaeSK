@@ -6,14 +6,33 @@ import { PersonalContactInfoEditting } from "../../components/AdminComponents/Pe
 import { NextPageWithLayout } from "../_app";
 import AdminStore from "../../Stores/AdminStore";
 import GoBackPage from "../../components/AdminComponents/GoBackPage";
+import { useEditPageConfigMutation, useGetPageConfigQuery } from "../../graphqlGenerated/graphql";
 
 const ContactInfoPage: NextPageWithLayout = () => {
+    const {data: configData, refetch: refetchConfig} = useGetPageConfigQuery({ variables: { 
+        pageName: "Contacts"
+    }})
+    const [editConfig, {}] = useEditPageConfigMutation();
 	if (AdminStore.userInfo.isLoggedIn) {
 		return (
 			<div>
 				<h1>Kontakt</h1>
 				<GeneralContactInfoEditting />
 				<PersonalContactInfoEditting />
+
+                <h6>Show Banner</h6>
+                <input type="checkbox" defaultChecked={configData?.GetPageConfig?.showBanner ?? false} onChange={e => { 
+                    console.log(e.target.checked);
+                    editConfig({ variables: { 
+                        pageName: "Contacts", 
+                        newConfig: { 
+                            pageName: "Contacts", 
+                            showBanner: e.target.checked
+                        }
+                    }, onCompleted(data) {
+                        refetchConfig()
+                    },})
+                }} />
 			</div>
 		);
 	} else {

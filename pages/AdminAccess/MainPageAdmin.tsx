@@ -1,4 +1,4 @@
-import {ReactElement, useState} from "react";
+import { ReactElement, useState } from "react";
 import { AdminLayout } from ".";
 import { NextPageWithLayout } from "../_app";
 import { TimeTableEditting } from "../../components/AdminComponents/TimeTableEditting";
@@ -8,10 +8,18 @@ import { observer } from "mobx-react-lite";
 import Link from "next/link";
 import GoBackPage from "../../components/AdminComponents/GoBackPage";
 import ImageForm from "../../components/AdminComponents/UploadFile";
-import {ButtonAdmin} from "../../components/AdminComponents/ButtonAdmin";
+import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
+import { useEditPageConfigMutation, useGetPageConfigQuery } from "../../graphqlGenerated/graphql";
 
 const MainPageAdmin: NextPageWithLayout = () => {
-	const [isShow, setIsShow] = useState(false)
+	const [isShow, setIsShow] = useState(false);
+
+	const { data: configData, refetch: refetchConfig } = useGetPageConfigQuery({
+		variables: {
+			pageName: "MainPage",
+		},
+	});
+	const [editConfig, {}] = useEditPageConfigMutation();
 
 	if (AdminStore.userInfo.isLoggedIn) {
 		return (
@@ -20,14 +28,44 @@ const MainPageAdmin: NextPageWithLayout = () => {
 				<TimeTableEditting />
 				<SportOpportunitesDesEdititng />
 				<h3>Lisa foto</h3>
-				<ImageForm page={"Karusel"} show={isShow} closeModal={() => {setIsShow(false)}}/>
-				<ButtonAdmin border label={'Lisa'} action={() => {setIsShow(true)}}/>
+				<ImageForm
+					page={"Karusel"}
+					show={isShow}
+					closeModal={() => {
+						setIsShow(false);
+					}}
+				/>
+				<ButtonAdmin
+					border
+					label={"Lisa"}
+					action={() => {
+						setIsShow(true);
+					}}
+				/>
+				<h6>Show banner</h6>
+				<input
+					type='checkbox'
+					defaultChecked={configData?.GetPageConfig?.showBanner ?? false}
+					onChange={(e) => {
+						console.log(e.target.checked);
+						editConfig({
+							variables: {
+								pageName: "MainPage",
+								newConfig: {
+									pageName: "MainPage",
+									showBanner: e.target.checked,
+								},
+							},
+							onCompleted(data) {
+								refetchConfig();
+							},
+						});
+					}}
+				/>
 			</div>
 		);
 	} else {
-		return (
-			<GoBackPage />
-		);
+		return <GoBackPage />;
 	}
 };
 
