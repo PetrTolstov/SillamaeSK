@@ -5,6 +5,9 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {LINK} from "../../config/constants";
 import styles from '../../styles/galleyPhotoContainer.module.css'
+import AppIsBeingBuilt from "../../components/Temporary/AppIsBeingBuilt";
+import LanguageStore from "../../Stores/LanguageStore";
+import {useGetPageConfigQuery} from "../../graphqlGenerated/graphql";
 
 const Gallery: NextPage = () => {
     const page = 'Gallery'
@@ -38,8 +41,17 @@ const Gallery: NextPage = () => {
         Array.from(document.getElementsByClassName(styles.backBlack) as HTMLCollectionOf<HTMLElement>)[0].style.display = "none"
     }
 
+    const { data: configData } = useGetPageConfigQuery({
+        variables: {
+            pageName: "Gallery",
+        },
+    });
+
     return (
         <LayoutSportComplex>
+            {configData?.GetPageConfig?.showBanner ? (
+                <AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
+            ) : (
             <>
                 <h2>Galerii</h2>
                 <button className={styles.closeBut} onClick={closePhoto}></button>
@@ -69,6 +81,7 @@ const Gallery: NextPage = () => {
 
                 </div>
             </>
+                )}
         </LayoutSportComplex>
     )
 }

@@ -6,11 +6,20 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {LINK} from "../../config/constants";
 import languageStore from "../../Stores/LanguageStore";
+import {inspect} from "util";
+import styles from '../../styles/LayoutsForSidePages.module.css'
+import LanguageStore from "../../Stores/LanguageStore";
+import {SimplePage, useGetPageConfigQuery, useGetSimplePagesQuery} from "../../graphqlGenerated/graphql";
 
 
 const SportComplex: NextPage = () => {
     const page = 'Arengukava'
     const [imgFile, setImgFile] = useState('');
+    // @ts-ignore
+    const [ currentPage, setCurrentPage ] = useState<SimplePage>([])
+    const {loading, data, error} = useGetSimplePagesQuery({variables: {type: 0}, onCompleted(data) {
+            setCurrentPage(data.GetSimplePages![0] as SimplePage);
+        }})
 
     useEffect(() => {
         (async () => {
@@ -24,21 +33,33 @@ const SportComplex: NextPage = () => {
         })()
     }, [])
 
+    const { data: configData } = useGetPageConfigQuery({
+        variables: {
+            pageName: page,
+        },
+    });
+
     return (
-        <Layout>
-            <AppIsBeingBuilt isEst={languageStore.currentLanguage.isEst}/>
-        </Layout>
+        <LayoutSportComplex>
+            {configData?.GetPageConfig?.showBanner ? (
+                <AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
+            ) : (
+            <>
+                <img src={imgFile} className={styles.titlePhoto}/>
+                {loading ? <p>Loading</p> :
+                    <>
+                        <h2>{languageStore.currentLanguage.isEst ? currentPage?.title?.EST  : currentPage?.title?.RUS}</h2>
+                        <p style={{whiteSpace : "pre-line"}}>{languageStore.currentLanguage.isEst ? currentPage?.text?.EST  : currentPage?.text?.RUS}</p>
+
+                    </>
+                }
+                 </>
+                )}
+        </LayoutSportComplex>
     )
 }
 
 export default SportComplex
 /*
-<LayoutSportComplex>
-            <>
-                <img src={imgFile} className={styles.titlePhoto}/>
-                <h2>Arengukava</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non sed id cras vulputate nunc eu. Tristique sollicitudin faucibus purus viverra cum. Sed etiam mauris, in sollicitudin metus orci, sed amet. Integer fringilla a enim morbi cras.
-                    Vivamus commodo cursus viverra lectus et. Feugiat urna condimentum elit nec aliquet pharetra porttitor. Nulla volutpat pellentesque mauris volutpat morbi. Enim pharetra enim quis at aliquet pharetra eros. Porttitor sed morbi tortor aliquam. A arcu.</p>
-            </>
-        </LayoutSportComplex>
+
  */

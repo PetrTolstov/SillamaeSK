@@ -5,9 +5,11 @@ import styles from '../../styles/LayoutsForSidePages.module.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {LINK} from "../../config/constants";
-import {SimplePage, useGetSimplePagesQuery} from "../../graphqlGenerated/graphql";
+import {SimplePage, useGetPageConfigQuery, useGetSimplePagesQuery} from "../../graphqlGenerated/graphql";
 import {observer} from "mobx-react-lite";
 import languageStore from "../../Stores/LanguageStore";
+import AppIsBeingBuilt from "../../components/Temporary/AppIsBeingBuilt";
+import LanguageStore from "../../Stores/LanguageStore";
 
 
 const Regulations: NextPage = () => {
@@ -43,8 +45,17 @@ const Regulations: NextPage = () => {
     }, [loading])
 
 
+    const { data: configData } = useGetPageConfigQuery({
+        variables: {
+            pageName: page,
+        },
+    });
+
     return (
         <LayoutSportComplex>
+            {configData?.GetPageConfig?.showBanner ? (
+                <AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
+            ) : (
             <>
 
                 <img src={imgFile} className={styles.titlePhoto}/>
@@ -57,6 +68,7 @@ const Regulations: NextPage = () => {
                     </>
                 }
                 </>
+                )}
         </LayoutSportComplex>
     )
 }

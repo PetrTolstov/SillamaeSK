@@ -8,12 +8,18 @@ import axios from "axios";
 import {LINK} from "../../config/constants";
 import languageStore from "../../Stores/LanguageStore";
 import {observer} from "mobx-react-lite";
+import {SimplePage, useGetPageConfigQuery, useGetSimplePagesQuery} from "../../graphqlGenerated/graphql";
+import LanguageStore from "../../Stores/LanguageStore";
 
 
 const Index: NextPage = () => {
     const page = 'Ujula'
     const [imgFile, setImgFile] = useState('');
-
+// @ts-ignore
+    const [ currentPage, setCurrentPage ] = useState<SimplePage>([])
+    const {loading, data, error} = useGetSimplePagesQuery({variables: {type: 1}, onCompleted(data) {
+            setCurrentPage(data.GetSimplePages![0] as SimplePage);
+        }})
     useEffect(() => {
         (async () => {
             const res = await axios.get(LINK + "/getPhoto", {
@@ -26,10 +32,29 @@ const Index: NextPage = () => {
         })()
     }, [])
 
+    const { data: configData } = useGetPageConfigQuery({
+        variables: {
+            pageName: page,
+        },
+    });
+
     return (
-        <Layout>
-            <AppIsBeingBuilt isEst={languageStore.currentLanguage.isEst}/>
-        </Layout>
+        <LayoutSportComplexOpportunities>
+            {configData?.GetPageConfig?.showBanner ? (
+                <AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
+            ) : (
+            <>
+                <img src={imgFile} className={styles.titlePhoto}/>
+                {loading ? <p>Loading</p> :
+                    <>
+                        <h2>{languageStore.currentLanguage.isEst ? currentPage?.title?.EST  : currentPage?.title?.RUS}</h2>
+                        <p style={{whiteSpace : "pre-line"}}>{languageStore.currentLanguage.isEst ? currentPage?.text?.EST  : currentPage?.text?.RUS}</p>
+
+                    </>
+                }
+            </>
+            )}
+        </LayoutSportComplexOpportunities>
     )
 }
 
