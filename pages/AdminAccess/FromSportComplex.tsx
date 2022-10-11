@@ -5,7 +5,7 @@ import { AdminLayout } from ".";
 import { AdminDropDown } from "../../components/AdminComponents/AdminDropDown";
 import GoBackPage  from "../../components/AdminComponents/GoBackPage";
 import { AdminSimplePageEditForm } from "../../components/AdminComponents/SimplePage/AdminSimplePageEditForm";
-import { SimplePage, useGetSimplePagesLazyQuery, useGetSimplePagesQuery } from "../../graphqlGenerated/graphql";
+import { SimplePage, useGetPageConfigLazyQuery, useGetSimplePagesLazyQuery, useGetSimplePagesQuery, PageConfig } from "../../graphqlGenerated/graphql";
 import AdminStore from "../../Stores/AdminStore";
 import { NextPageWithLayout } from "../_app";
 
@@ -13,6 +13,7 @@ const FromSportComplex: NextPageWithLayout = () => {
 	const [currentPage, setCurrentPage] = useState<SimplePage>();
 	const [pages, setPages] = useState<SimplePage[]>([]);
 	const [getSimplePages, {}] = useGetSimplePagesLazyQuery();
+    const [fetchConfig, {data: configData, loading: configLoading}] = useGetPageConfigLazyQuery()
 	const { loading, data, error } = useGetSimplePagesQuery({
 		variables: { type: 0 },
 		onError(error) {
@@ -21,13 +22,28 @@ const FromSportComplex: NextPageWithLayout = () => {
 		onCompleted(data) {
 			setPages(data?.GetSimplePages as SimplePage[]);
 			setCurrentPage(data.GetSimplePages![0] as SimplePage);
+
 		},
 	});
-	// useEffect(() => {
-	//     getSimplePages({variables: { type: 0}, onCompleted(data) {
-	//         setPages([...data.GetSimplePages as SimplePage[]]);
-	//     }});
-	// },[currentPage])
+    useEffect(() => {
+        console.log("current page " + currentPage);
+        if (currentPage) { 
+            fetchConfig({variables: { 
+                pageName: currentPage?.pageName
+            }, onCompleted(data) {
+                // console.log(data.GetPageConfig);
+            },})
+        }
+       
+	},[currentPage])
+    useEffect(() => {
+        console.log("current page " + currentPage);
+        fetchConfig({variables: { 
+            pageName: data?.GetSimplePages![0].pageName
+        }, onCompleted(data) {
+            // console.log(data.GetPageConfig);
+        },})
+	},[])
 
 	if (AdminStore.userInfo.isLoggedIn) {
 		return (
@@ -39,7 +55,7 @@ const FromSportComplex: NextPageWithLayout = () => {
 					currentPage={currentPage as SimplePage}
 					updateCurrentPage={setCurrentPage}
 				/>
-				<AdminSimplePageEditForm page={currentPage as SimplePage} />
+				{configData ? <AdminSimplePageEditForm page={currentPage as SimplePage} pageConfig={configData?.GetPageConfig as PageConfig}/> : <></>}
 			</div>
 		);
 	} else {

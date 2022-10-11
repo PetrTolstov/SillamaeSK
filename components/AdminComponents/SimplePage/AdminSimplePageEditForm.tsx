@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import {SimplePage, useEditSimplePageMutation, GetSimplePagesDocument, useGetSimplePagesLazyQuery } from "../../../graphqlGenerated/graphql";
+import {SimplePage, useEditSimplePageMutation, GetSimplePagesDocument, useGetSimplePagesLazyQuery, useGetPageConfigQuery, useEditPageConfigMutation, useGetPageConfigLazyQuery, PageConfig } from "../../../graphqlGenerated/graphql";
 import { ButtonAdmin } from "../ButtonAdmin";
 import UploadFile from "../UploadFile";
 import frameStyles from "../../../styles/FormStyles.module.css"
@@ -30,8 +30,9 @@ export function getPage(str: string) {
             break
     }  
 }
-export const AdminSimplePageEditForm = ({ page }: { page: SimplePage }) => {
+export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage, pageConfig: PageConfig }) => {
     const [ currentPage, setCurrentPage] = useState(page); 
+    const [editPageConfigs, {data: editConfigData}] = useEditPageConfigMutation();
     const [editSimplePage, {loading, data, error}] = useEditSimplePageMutation();
     const [ showUploadFile, setShowUploadFile ] = useState(false); 
     useEffect(() => {
@@ -63,7 +64,14 @@ export const AdminSimplePageEditForm = ({ page }: { page: SimplePage }) => {
                     e.networkError.result.errors.map((e: { message: any }) => {
 						console.log(e.message);
 					});
-                })
+                });
+                editPageConfigs({variables: { 
+                    pageName: currentPage.pageName,
+                    newConfig: { 
+                        pageName: currentPage.pageName, 
+                        showBanner: formData.get("show-banner") === "on"
+                    }
+                }})
             }}>
 				<label>
 					Title
@@ -86,6 +94,10 @@ export const AdminSimplePageEditForm = ({ page }: { page: SimplePage }) => {
 					    <textarea placeholder='Text RUS' name="textRUS" cols={30} rows={10} defaultValue={page?.text?.RUS ?? ""} className={frameStyles.input}></textarea>
                             <span className={frameStyles.focusBorder}></span>
                     </div>
+				</label>
+                <label style={{ display: "flex", flexDirection: "column" , marginTop: '20px'}}>
+                    Asenda bänneriga
+                    <input type={"checkbox"} name={"show-banner"} defaultChecked={pageConfig.showBanner ?? false}/>
 				</label>
                 <UploadFile page={getPage(currentPage?.pageName ?? "") ?? ""} show={showUploadFile} closeModal={() => setShowUploadFile(false)} />
                 <ButtonAdmin border action={() => setShowUploadFile(true)} label={"Add image"} />

@@ -1,0 +1,3 @@
+mutation EditPageConfig($pageName: String, $newConfig: PageConfigInput) {
+  EditPageConfig(pageName: $pageName, newConfig: $newConfig)
+}

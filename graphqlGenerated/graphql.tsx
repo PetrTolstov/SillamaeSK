@@ -486,6 +486,14 @@ export type DeletePriceListElementByIdMutationVariables = Exact<{
 
 export type DeletePriceListElementByIdMutation = { __typename?: 'Mutation', DeletePriceListElementById: string };
 
+export type EditPageConfigMutationVariables = Exact<{
+  pageName?: InputMaybe<Scalars['String']>;
+  newConfig?: InputMaybe<PageConfigInput>;
+}>;
+
+
+export type EditPageConfigMutation = { __typename?: 'Mutation', EditPageConfig?: string | null };
+
 export type EditPageNotWorkingBannerMutationVariables = Exact<{
   newBanner?: InputMaybe<PageNotWorkingBannerInput>;
 }>;
@@ -819,6 +827,38 @@ export function useDeletePriceListElementByIdMutation(baseOptions?: Apollo.Mutat
 export type DeletePriceListElementByIdMutationHookResult = ReturnType<typeof useDeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationResult = Apollo.MutationResult<DeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationOptions = Apollo.BaseMutationOptions<DeletePriceListElementByIdMutation, DeletePriceListElementByIdMutationVariables>;
+export const EditPageConfigDocument = gql`
+    mutation EditPageConfig($pageName: String, $newConfig: PageConfigInput) {
+  EditPageConfig(pageName: $pageName, newConfig: $newConfig)
+}
+    `;
+export type EditPageConfigMutationFn = Apollo.MutationFunction<EditPageConfigMutation, EditPageConfigMutationVariables>;
+
+/**
+ * __useEditPageConfigMutation__
+ *
+ * To run a mutation, you first call `useEditPageConfigMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditPageConfigMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editPageConfigMutation, { data, loading, error }] = useEditPageConfigMutation({
+ *   variables: {
+ *      pageName: // value for 'pageName'
+ *      newConfig: // value for 'newConfig'
+ *   },
+ * });
+ */
+export function useEditPageConfigMutation(baseOptions?: Apollo.MutationHookOptions<EditPageConfigMutation, EditPageConfigMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditPageConfigMutation, EditPageConfigMutationVariables>(EditPageConfigDocument, options);
+      }
+export type EditPageConfigMutationHookResult = ReturnType<typeof useEditPageConfigMutation>;
+export type EditPageConfigMutationResult = Apollo.MutationResult<EditPageConfigMutation>;
+export type EditPageConfigMutationOptions = Apollo.BaseMutationOptions<EditPageConfigMutation, EditPageConfigMutationVariables>;
 export const EditPageNotWorkingBannerDocument = gql`
     mutation EditPageNotWorkingBanner($newBanner: PageNotWorkingBannerInput) {
   EditPageNotWorkingBanner(newBanner: $newBanner)
