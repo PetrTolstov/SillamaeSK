@@ -83,7 +83,7 @@ function PriceListTableComponent(){
                         Kestvus
                     </td>
                     <td className={styles.price}>
-                        Uus hind
+                        Hind €
                     </td>
                 </tr>
                 {element?.tickets?.map((el, i) => (
@@ -92,10 +92,10 @@ function PriceListTableComponent(){
                             {el?.description.EST}
                         </td>
                         <td className={styles.duration}>
-                            {`${el?.duration?.hours != 0 ? el?.duration?.hours + 'h ' : ''}${el?.duration?.additionalInfo ? `${el?.duration?.additionalInfo.EST}` : ""}`}
+                            {`${el?.duration?.hours != 0 ? el?.duration?.hours + ' h ' : ''}${el?.duration?.additionalInfo ? `${el?.duration?.additionalInfo.EST}` : ""}`}
                         </td>
                         <td className={styles.price}>
-                            {`${el?.price != 0 ? el?.price + '€' : ""}`}
+                            {`${el?.price != 0 ? el?.price + '' : ""}`}
                         </td>
                     </tr>
                 ))}
