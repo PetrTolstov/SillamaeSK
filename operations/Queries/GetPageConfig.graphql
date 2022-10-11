@@ -1,0 +1,6 @@
+query GetPageConfig($pageName: String) {
+  GetPageConfig(pageName: $pageName) {
+    pageName
+    showBanner
+  }
+}

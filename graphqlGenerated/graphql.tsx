@@ -89,10 +89,14 @@ export type LoginResponse = {
 export type Mutation = {
   __typename?: 'Mutation';
   AddCalendarEvent?: Maybe<Scalars['String']>;
+  AddPageConfig?: Maybe<Scalars['String']>;
+  AddPageNotWorkingBanner?: Maybe<Scalars['String']>;
   AddSimplePage?: Maybe<Scalars['String']>;
   CreateNewPriceListElement?: Maybe<PriceListElement>;
   DeleteCalendarEvent?: Maybe<Scalars['String']>;
   DeletePriceListElementById: Scalars['String'];
+  EditPageConfig?: Maybe<Scalars['String']>;
+  EditPageNotWorkingBanner?: Maybe<Scalars['String']>;
   EditSimplePage?: Maybe<Scalars['String']>;
   EditToken?: Maybe<Scalars['String']>;
   Login: LoginResponse;
@@ -109,6 +113,16 @@ export type Mutation = {
 
 export type MutationAddCalendarEventArgs = {
   newEvent?: InputMaybe<CalendarEventInput>;
+};
+
+
+export type MutationAddPageConfigArgs = {
+  newPageConfig?: InputMaybe<PageConfigInput>;
+};
+
+
+export type MutationAddPageNotWorkingBannerArgs = {
+  newBanner?: InputMaybe<PageNotWorkingBannerInput>;
 };
 
 
@@ -130,6 +144,17 @@ export type MutationDeleteCalendarEventArgs = {
 
 export type MutationDeletePriceListElementByIdArgs = {
   _id: Scalars['String'];
+};
+
+
+export type MutationEditPageConfigArgs = {
+  newConfig?: InputMaybe<PageConfigInput>;
+  pageName?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationEditPageNotWorkingBannerArgs = {
+  newBanner?: InputMaybe<PageNotWorkingBannerInput>;
 };
 
 
@@ -192,9 +217,59 @@ export type NewsResponse = {
   success: Scalars['Boolean'];
 };
 
+export type OptionalSingleStr = {
+  __typename?: 'OptionalSingleStr';
+  body?: Maybe<Scalars['String']>;
+  show?: Maybe<Scalars['Boolean']>;
+};
+
+export type OptionalSingleStrInput = {
+  body?: InputMaybe<Scalars['String']>;
+  show?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type OptionalText = {
+  __typename?: 'OptionalText';
+  show?: Maybe<Scalars['Boolean']>;
+  text?: Maybe<TextContent>;
+};
+
+export type OptionalTextInput = {
+  show?: InputMaybe<Scalars['Boolean']>;
+  text?: InputMaybe<TextContentInput>;
+};
+
 export type Options = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+};
+
+export type PageConfig = {
+  __typename?: 'PageConfig';
+  pageName?: Maybe<Scalars['String']>;
+  showBanner?: Maybe<Scalars['Boolean']>;
+};
+
+export type PageConfigInput = {
+  pageName?: InputMaybe<Scalars['String']>;
+  showBanner?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type PageNotWorkingBanner = {
+  __typename?: 'PageNotWorkingBanner';
+  body?: Maybe<OptionalText>;
+  centeredText?: Maybe<OptionalText>;
+  link?: Maybe<OptionalSingleStr>;
+  showContacts?: Maybe<Scalars['Boolean']>;
+  title?: Maybe<OptionalText>;
+};
+
+export type PageNotWorkingBannerInput = {
+  body?: InputMaybe<OptionalTextInput>;
+  centeredText?: InputMaybe<OptionalTextInput>;
+  link?: InputMaybe<OptionalSingleStrInput>;
+  showContacts?: InputMaybe<Scalars['Boolean']>;
+  title?: InputMaybe<OptionalTextInput>;
 };
 
 export type PersonContactInfo = {
@@ -237,6 +312,8 @@ export type Query = {
   GetCalendarEvents?: Maybe<Array<Maybe<CalendarEvent>>>;
   GetGeneralContactsInfo?: Maybe<GeneralContactsInfo>;
   GetLatestNews: NewsResponse;
+  GetPageConfig?: Maybe<PageConfig>;
+  GetPageNotWorkingBanner?: Maybe<PageNotWorkingBanner>;
   GetPersonalContactsInfo?: Maybe<Array<Maybe<PersonContactInfo>>>;
   GetPriceList: Array<Maybe<PriceListElement>>;
   GetPriceListElementById: PriceListElement;
@@ -253,6 +330,11 @@ export type QueryGetCalendarEventByIdArgs = {
 
 export type QueryGetCalendarEventsArgs = {
   options?: InputMaybe<Options>;
+};
+
+
+export type QueryGetPageConfigArgs = {
+  pageName?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -404,6 +486,13 @@ export type DeletePriceListElementByIdMutationVariables = Exact<{
 
 export type DeletePriceListElementByIdMutation = { __typename?: 'Mutation', DeletePriceListElementById: string };
 
+export type EditPageNotWorkingBannerMutationVariables = Exact<{
+  newBanner?: InputMaybe<PageNotWorkingBannerInput>;
+}>;
+
+
+export type EditPageNotWorkingBannerMutation = { __typename?: 'Mutation', EditPageNotWorkingBanner?: string | null };
+
 export type EditSimplePageMutationVariables = Exact<{
   id: Scalars['ID'];
   updatedSimplePage?: InputMaybe<SimplePageInput>;
@@ -498,6 +587,18 @@ export type GetLatestNewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetLatestNewsQuery = { __typename?: 'Query', GetLatestNews: { __typename?: 'NewsResponse', errorMessage?: string | null, success: boolean, data?: { __typename?: 'LatestNews', _id: string, created_time?: string | null, message?: string | null } | null } };
+
+export type GetPageConfigQueryVariables = Exact<{
+  pageName?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetPageConfigQuery = { __typename?: 'Query', GetPageConfig?: { __typename?: 'PageConfig', pageName?: string | null, showBanner?: boolean | null } | null };
+
+export type GetPageNotWorkingBannerQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPageNotWorkingBannerQuery = { __typename?: 'Query', GetPageNotWorkingBanner?: { __typename?: 'PageNotWorkingBanner', showContacts?: boolean | null, title?: { __typename?: 'OptionalText', show?: boolean | null, text?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null, body?: { __typename?: 'OptionalText', show?: boolean | null, text?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null, link?: { __typename?: 'OptionalSingleStr', show?: boolean | null, body?: string | null } | null, centeredText?: { __typename?: 'OptionalText', show?: boolean | null, text?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null } | null };
 
 export type GetPersonalContactsInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -718,6 +819,37 @@ export function useDeletePriceListElementByIdMutation(baseOptions?: Apollo.Mutat
 export type DeletePriceListElementByIdMutationHookResult = ReturnType<typeof useDeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationResult = Apollo.MutationResult<DeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationOptions = Apollo.BaseMutationOptions<DeletePriceListElementByIdMutation, DeletePriceListElementByIdMutationVariables>;
+export const EditPageNotWorkingBannerDocument = gql`
+    mutation EditPageNotWorkingBanner($newBanner: PageNotWorkingBannerInput) {
+  EditPageNotWorkingBanner(newBanner: $newBanner)
+}
+    `;
+export type EditPageNotWorkingBannerMutationFn = Apollo.MutationFunction<EditPageNotWorkingBannerMutation, EditPageNotWorkingBannerMutationVariables>;
+
+/**
+ * __useEditPageNotWorkingBannerMutation__
+ *
+ * To run a mutation, you first call `useEditPageNotWorkingBannerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditPageNotWorkingBannerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editPageNotWorkingBannerMutation, { data, loading, error }] = useEditPageNotWorkingBannerMutation({
+ *   variables: {
+ *      newBanner: // value for 'newBanner'
+ *   },
+ * });
+ */
+export function useEditPageNotWorkingBannerMutation(baseOptions?: Apollo.MutationHookOptions<EditPageNotWorkingBannerMutation, EditPageNotWorkingBannerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditPageNotWorkingBannerMutation, EditPageNotWorkingBannerMutationVariables>(EditPageNotWorkingBannerDocument, options);
+      }
+export type EditPageNotWorkingBannerMutationHookResult = ReturnType<typeof useEditPageNotWorkingBannerMutation>;
+export type EditPageNotWorkingBannerMutationResult = Apollo.MutationResult<EditPageNotWorkingBannerMutation>;
+export type EditPageNotWorkingBannerMutationOptions = Apollo.BaseMutationOptions<EditPageNotWorkingBannerMutation, EditPageNotWorkingBannerMutationVariables>;
 export const EditSimplePageDocument = gql`
     mutation EditSimplePage($id: ID!, $updatedSimplePage: SimplePageInput) {
   EditSimplePage(_id: $id, updatedSimplePage: $updatedSimplePage)
@@ -1256,6 +1388,104 @@ export function useGetLatestNewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetLatestNewsQueryHookResult = ReturnType<typeof useGetLatestNewsQuery>;
 export type GetLatestNewsLazyQueryHookResult = ReturnType<typeof useGetLatestNewsLazyQuery>;
 export type GetLatestNewsQueryResult = Apollo.QueryResult<GetLatestNewsQuery, GetLatestNewsQueryVariables>;
+export const GetPageConfigDocument = gql`
+    query GetPageConfig($pageName: String) {
+  GetPageConfig(pageName: $pageName) {
+    pageName
+    showBanner
+  }
+}
+    `;
+
+/**
+ * __useGetPageConfigQuery__
+ *
+ * To run a query within a React component, call `useGetPageConfigQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPageConfigQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPageConfigQuery({
+ *   variables: {
+ *      pageName: // value for 'pageName'
+ *   },
+ * });
+ */
+export function useGetPageConfigQuery(baseOptions?: Apollo.QueryHookOptions<GetPageConfigQuery, GetPageConfigQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPageConfigQuery, GetPageConfigQueryVariables>(GetPageConfigDocument, options);
+      }
+export function useGetPageConfigLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPageConfigQuery, GetPageConfigQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPageConfigQuery, GetPageConfigQueryVariables>(GetPageConfigDocument, options);
+        }
+export type GetPageConfigQueryHookResult = ReturnType<typeof useGetPageConfigQuery>;
+export type GetPageConfigLazyQueryHookResult = ReturnType<typeof useGetPageConfigLazyQuery>;
+export type GetPageConfigQueryResult = Apollo.QueryResult<GetPageConfigQuery, GetPageConfigQueryVariables>;
+export const GetPageNotWorkingBannerDocument = gql`
+    query GetPageNotWorkingBanner {
+  GetPageNotWorkingBanner {
+    title {
+      show
+      text {
+        RUS
+        EST
+        ENG
+      }
+    }
+    body {
+      show
+      text {
+        RUS
+        EST
+        ENG
+      }
+    }
+    link {
+      show
+      body
+    }
+    showContacts
+    centeredText {
+      show
+      text {
+        RUS
+        EST
+        ENG
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPageNotWorkingBannerQuery__
+ *
+ * To run a query within a React component, call `useGetPageNotWorkingBannerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPageNotWorkingBannerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPageNotWorkingBannerQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPageNotWorkingBannerQuery(baseOptions?: Apollo.QueryHookOptions<GetPageNotWorkingBannerQuery, GetPageNotWorkingBannerQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPageNotWorkingBannerQuery, GetPageNotWorkingBannerQueryVariables>(GetPageNotWorkingBannerDocument, options);
+      }
+export function useGetPageNotWorkingBannerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPageNotWorkingBannerQuery, GetPageNotWorkingBannerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPageNotWorkingBannerQuery, GetPageNotWorkingBannerQueryVariables>(GetPageNotWorkingBannerDocument, options);
+        }
+export type GetPageNotWorkingBannerQueryHookResult = ReturnType<typeof useGetPageNotWorkingBannerQuery>;
+export type GetPageNotWorkingBannerLazyQueryHookResult = ReturnType<typeof useGetPageNotWorkingBannerLazyQuery>;
+export type GetPageNotWorkingBannerQueryResult = Apollo.QueryResult<GetPageNotWorkingBannerQuery, GetPageNotWorkingBannerQueryVariables>;
 export const GetPersonalContactsInfoDocument = gql`
     query GetPersonalContactsInfo {
   GetPersonalContactsInfo {

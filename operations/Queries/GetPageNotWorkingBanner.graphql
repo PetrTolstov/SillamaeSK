@@ -1,0 +1,33 @@
+query GetPageNotWorkingBanner {
+  GetPageNotWorkingBanner {
+    title {
+      show
+      text {
+        RUS
+        EST
+        ENG
+      }
+    }
+    body {
+      show
+      text {
+        RUS
+        EST
+        ENG
+      }
+    }
+    link {
+      show
+      body
+    }
+    showContacts
+    centeredText {
+      show
+      text {
+        RUS
+        EST
+        ENG
+      }
+    }
+  }
+}

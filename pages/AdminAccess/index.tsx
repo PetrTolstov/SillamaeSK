@@ -110,8 +110,8 @@ export function SidePanel({router}: {router: NextRouter}) {
 		{ href: "/AdminAccess/MainPageAdmin", label: "Avaleht" },
 		{ href: "/AdminAccess/ContactInfoPage", label: "Kontakt" },
 		{ href: "/AdminAccess/Calendar", label: "Kalendar" },
-		 { href: "/AdminAccess/Gallery", label: "Galerii" },
-		{href: "AdminAccess/Banner", label: "Banner"}
+		{ href: "/AdminAccess/Gallery", label: "Galerii" },
+		{ href: "/AdminAccess/Banner", label: "Banner" }
 
 	];
 

@@ -1,0 +1,3 @@
+mutation EditPageNotWorkingBanner($newBanner: PageNotWorkingBannerInput) {
+  EditPageNotWorkingBanner(newBanner: $newBanner)
+}

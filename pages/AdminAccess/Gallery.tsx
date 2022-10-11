@@ -23,6 +23,8 @@ import DeleteFile from "../../components/AdminComponents/deleteFile";
 const Gallery: NextPageWithLayout = () => {
 	const [ showUploadFile, setShowUploadFile ] = useState(false);
 	const [ showDeleteFile, setShowDeleteFile ] = useState(false);
+
+    if(!AdminStore.userInfo.isLoggedIn) return <GoBackPage/>
 	return (
 		<>
 			<UploadFile page={"Gallery"} show={showUploadFile} closeModal={() => setShowUploadFile(false)} />
