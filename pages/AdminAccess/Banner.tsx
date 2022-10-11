@@ -1,25 +1,34 @@
-import React, { FormEvent, ReactElement } from "react";
+import React, { FormEvent, ReactElement, useEffect, useState } from "react";
 import { AdminLayout } from ".";
 import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
 import { NextPageWithLayout } from "../_app";
 import frameStyles from "../../styles/FormStyles.module.css";
-import { PageNotWorkingBanner, useEditPageNotWorkingBannerMutation, useGetPageNotWorkingBannerQuery } from "../../graphqlGenerated/graphql";
+import { PageNotWorkingBanner, PageNotWorkingBannerInput, useEditPageNotWorkingBannerMutation, useGetPageNotWorkingBannerQuery } from "../../graphqlGenerated/graphql";
 import { observer } from "mobx-react-lite";
 import AdminStore from "../../Stores/AdminStore";
 import GoBackPage from "../../components/AdminComponents/GoBackPage";
 
 const Banner: NextPageWithLayout = () => {
-    const {data, loading, error} = useGetPageNotWorkingBannerQuery();
+    const {data, loading, error} = useGetPageNotWorkingBannerQuery({ onCompleted(data) {
+        setShowBody(data.GetPageNotWorkingBanner?.body?.show);
+        setShowTitle(data.GetPageNotWorkingBanner?.title?.show);
+        setShowCenteredText(data.GetPageNotWorkingBanner?.centeredText?.show);
+        setShowLink(data.GetPageNotWorkingBanner?.title?.show);
+        setShowContacts(data.GetPageNotWorkingBanner?.showContacts);
+    },});
     const [EditBanner, {data: BannerData, loading: BannerLoading, error: BannerError}] = useEditPageNotWorkingBannerMutation();
 
-
+    const [showTitle, setShowTitle] = useState(data?.GetPageNotWorkingBanner?.title?.show);
+    const [showBody, setShowBody] = useState(data?.GetPageNotWorkingBanner?.body?.show);
+    const [showCenteredText, setShowCenteredText] = useState(data?.GetPageNotWorkingBanner?.centeredText?.show);
+    const [showLink, setShowLink] = useState(data?.GetPageNotWorkingBanner?.link?.show);
+    const [showContacts, setShowContacts] = useState(data?.GetPageNotWorkingBanner?.link?.show);
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => { 
         e.preventDefault();
         const data = new FormData(e.currentTarget)
-
-        const newObj: PageNotWorkingBanner = { 
+        const newObj: PageNotWorkingBannerInput = { 
             title: { 
-                show: data.get("show-title") === "true" , 
+                show: showTitle, 
                 text: { 
                     RUS: data.get("title-RUS")?.toString(),
                     EST: data.get("title-EST")?.toString(),
@@ -27,7 +36,7 @@ const Banner: NextPageWithLayout = () => {
                 }
             },
             body: { 
-                show: data.get("show-body") === "true" , 
+                show: showBody, 
                 text: { 
                     RUS: data.get("body-RUS")?.toString(),
                     EST: data.get("body-EST")?.toString(),
@@ -35,7 +44,7 @@ const Banner: NextPageWithLayout = () => {
                 }
             },
             centeredText: { 
-                show: data.get("show-centerText") === "true" , 
+                show: showCenteredText , 
                 text: { 
                     RUS: data.get("centerText-RUS")?.toString(),
                     EST: data.get("centerText-EST")?.toString(),
@@ -43,10 +52,10 @@ const Banner: NextPageWithLayout = () => {
                 }
             },
             link: { 
-                show: data.get("show-link") === "true", 
+                show: showLink, 
                 body: data.get("link")?.toString()
             }, 
-            showContacts: data.get("show-contacts") === "true"
+            showContacts: showContacts
         };
 
         EditBanner({variables: { newBanner: newObj}, onCompleted(data) {
@@ -55,7 +64,8 @@ const Banner: NextPageWithLayout = () => {
     }
     if(!AdminStore.userInfo.isLoggedIn) return <GoBackPage/>
 	return (
-		<div>
+        <>
+            {loading ? <p>Loading</p> : (<div>
 			{/* TODO tranlsate to Estonian */}
 			<h1>Banner eiditing</h1>
             {loading ? <p>Loading...</p> : (
@@ -78,7 +88,9 @@ const Banner: NextPageWithLayout = () => {
 					</div>
 					<div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
 						<h6>Show title</h6>
-						<input type='checkbox' name="show-title" defaultChecked={data?.GetPageNotWorkingBanner?.title?.show ?? false} />
+						<input type='checkbox' name="show-title" defaultChecked={showTitle ?? false} onChange={e => {
+                            setShowTitle(e.currentTarget.checked);
+                        } } />
 					</div>
 				</div>
                 <div style={{ display: "flex", flexDirection: "column", marginTop: "10px" }}>
@@ -99,7 +111,9 @@ const Banner: NextPageWithLayout = () => {
 					</div>
 					<div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
 						<h6>Show centered text</h6>
-						<input type='checkbox' name="show-centerText" defaultChecked={data?.GetPageNotWorkingBanner?.centeredText?.show ?? false}/>
+						<input type='checkbox' name="show-centerText" defaultChecked={showCenteredText ?? false} onChange={e => {
+                            setShowCenteredText(e.currentTarget.checked);
+                        } }/>
 					</div>
 				</div>
                 <div style={{ display: "flex", flexDirection: "column", marginTop: "10px" }}>
@@ -120,7 +134,9 @@ const Banner: NextPageWithLayout = () => {
 					</div>
 					<div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
 						<h6>Show main text body</h6>
-						<input type='checkbox' name="show-body" defaultChecked={data?.GetPageNotWorkingBanner?.body?.show ?? false}/>
+						<input type='checkbox' name="show-body" defaultChecked={showBody ?? false} onChange={e => {
+                            setShowBody(e.currentTarget.checked);
+                        } }/>
 					</div>
 				</div>
                 <div style={{ display: "flex", flexDirection: "column", marginTop: "10px" }}>
@@ -133,17 +149,23 @@ const Banner: NextPageWithLayout = () => {
 					</div>
 					<div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
 						<h6>Show link</h6>
-						<input type='checkbox' name="show-link" defaultChecked={data?.GetPageNotWorkingBanner?.link?.show ?? false}/>
+						<input type='checkbox' name="show-link" defaultChecked={showLink ?? false} onChange={e => {
+                            setShowLink(e.currentTarget.checked);
+                        } }/>
 					</div>
 				</div>
                 <div style={{ display: "flex", flexDirection: "column", marginTop: "10px" }}>
 					<h5>Show Contacts</h5>
-						<input type='checkbox' name="show-contacts" defaultChecked={data?.GetPageNotWorkingBanner?.showContacts ?? false}/>
+						<input type='checkbox' name="show-contacts" defaultChecked={showContacts ?? false} onChange={e => {
+                            setShowContacts(e.currentTarget.checked);
+                        } }/>
 				</div>
                 <ButtonAdmin isSubmit filled action={()=>{}} label={"Submit"} />
 			</form>
             )}
-		</div>
+		</div>)}
+        </>
+		
 	);
 };
 
