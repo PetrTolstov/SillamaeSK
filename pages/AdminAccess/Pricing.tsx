@@ -31,7 +31,7 @@ const Pricing: NextPageWithLayout = () => {
 	const [currentModalType, setCurrentModalType] = useState<modalTypes>();
 	const [currentElementID, setCurrentElementID] = useState<string>();
 
-    const { data: configData, refetch: refetchConfig } = useGetPageConfigQuery({
+	const { data: configData, refetch: refetchConfig } = useGetPageConfigQuery({
 		variables: {
 			pageName: "PriceList",
 		},
@@ -92,26 +92,28 @@ const Pricing: NextPageWithLayout = () => {
 						)}
 					</div>
 					<ButtonAdmin label={"Lisa uus +"} filled action={addAction} />
-					<h6>Show banner</h6>
-					<input
-						type='checkbox'
-						defaultChecked={configData?.GetPageConfig?.showBanner ?? false}
-						onChange={(e) => {
-							console.log(e.target.checked);
-							editConfig({
-								variables: {
-									pageName: "PriceList",
-									newConfig: {
+					<div>
+						<h6>Show banner</h6>
+						<input
+							type='checkbox'
+							defaultChecked={configData?.GetPageConfig?.showBanner ?? false}
+							onChange={(e) => {
+								console.log(e.target.checked);
+								editConfig({
+									variables: {
 										pageName: "PriceList",
-										showBanner: e.target.checked,
+										newConfig: {
+											pageName: "PriceList",
+											showBanner: e.target.checked,
+										},
 									},
-								},
-								onCompleted(data) {
-									refetchConfig();
-								},
-							});
-						}}
-					/>
+									onCompleted(data) {
+										refetchConfig();
+									},
+								});
+							}}
+						/>
+					</div>
 				</div>
 			</>
 		);

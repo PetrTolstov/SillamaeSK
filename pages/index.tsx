@@ -1,7 +1,7 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import type { NextPage } from "next";
+import Head from "next/head";
 
-import styles from '../styles/Home.module.css'
+import styles from "../styles/Home.module.css";
 import HeaderComponent from "../components/HeaderComponent";
 import ImageWithSchedule from "../components/MainPage/ImageWithSchedule";
 import DescriptionNearNewsComponent from "../components/MainPage/DescriptionNearNewsComponent";
@@ -10,41 +10,40 @@ import SideNavComponent from "../components/MainPage/SideNavComponent";
 import ScheduleOnMainPageComponent from "../components/MainPage/ScheduleOnMainPageComponent";
 import Layout from "../components/Layout";
 
-import {useEffect, useState} from "react";
-
+import { useEffect, useState } from "react";
+import { useGetPageConfigQuery } from "../graphqlGenerated/graphql";
+import AppIsBeingBuilt from "../components/Temporary/AppIsBeingBuilt";
+import { observer } from "mobx-react-lite";
+import LanguageStore from "../Stores/LanguageStore";
 
 const Home: NextPage = () => {
+	//<ScheduleOnMainPageComponent/>
+	//after main
 
-    //<ScheduleOnMainPageComponent/>
-    //after main
+	const { data: configData } = useGetPageConfigQuery({
+		variables: {
+			pageName: "MainPage",
+		},
+	});
 
+	return (
+		<Layout>
+			{configData?.GetPageConfig?.showBanner ? (
+				<AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
+			) : (
+				<main className={styles.main}>
+					<ImageWithSchedule isMain={true} />
 
-  return (
+					<div className={styles.textAndNewsFrame}>
+						<DescriptionNearNewsComponent />
+						<NewsFacebookComponent />
+					</div>
+				</main>
+			)}
+		</Layout>
+	);
+};
 
-      <Layout>
-
-        <main className={styles.main}>
-
-                <ImageWithSchedule isMain={true} />
-
-            <div className={styles.textAndNewsFrame} >
-                <DescriptionNearNewsComponent  />
-                <NewsFacebookComponent/>
-            </div>
-
-        </main>
-
-
-
-      </Layout>
-
-  )
-}
-
-export default Home
-
-
-
-
+export default observer(Home);
 
 //<SideNavComponent/>
