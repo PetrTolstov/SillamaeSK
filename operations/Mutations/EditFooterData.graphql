@@ -1,0 +1,3 @@
+mutation EditFooterData($updatedFooter: FooterInput) {
+  EditFooterData(updatedFooter: $updatedFooter)
+}

@@ -24,22 +24,22 @@ const SportOpportunities: NextPageWithLayout = () => {
 		},
 	});
     useEffect(() => {
-        console.log("current page " + currentPage);
+        // console.log("current page " + currentPage);
         if (currentPage) { 
             fetchConfig({variables: { 
                 pageName: currentPage?.pageName
             }, onCompleted(data) {
-                console.log(data.GetPageConfig);
+                // console.log(data.GetPageConfig);
             },})
         }
        
 	},[currentPage])
     useEffect(() => {
-        console.log("current page " + currentPage);
+        // console.log("current page " + currentPage);
         fetchConfig({variables: { 
             pageName: data?.GetSimplePages![0].pageName
         }, onCompleted(data) {
-            console.log(data.GetPageConfig);
+            // console.log(data.GetPageConfig);
         },})
 	},[])
     if (AdminStore.userInfo.isLoggedIn) {

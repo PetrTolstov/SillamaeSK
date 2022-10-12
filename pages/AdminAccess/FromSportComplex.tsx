@@ -26,7 +26,7 @@ const FromSportComplex: NextPageWithLayout = () => {
 		},
 	});
     useEffect(() => {
-        console.log("current page " + currentPage);
+        // console.log("current page " + currentPage);
         if (currentPage) { 
             fetchConfig({variables: { 
                 pageName: currentPage?.pageName

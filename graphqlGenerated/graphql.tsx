@@ -59,6 +59,37 @@ export type FieldInput = {
   fieldTitle?: InputMaybe<TextContentInput>;
 };
 
+export type Footer = {
+  __typename?: 'Footer';
+  _id: Scalars['ID'];
+  firstSection?: Maybe<FooterSection>;
+  secondSection?: Maybe<FooterSection>;
+  showContacts?: Maybe<Scalars['Boolean']>;
+  thirdSection?: Maybe<FooterSection>;
+};
+
+export type FooterInput = {
+  firstSection?: InputMaybe<FooterSectionInput>;
+  secondSection?: InputMaybe<FooterSectionInput>;
+  showContacts?: InputMaybe<Scalars['Boolean']>;
+  thirdSection?: InputMaybe<FooterSectionInput>;
+};
+
+export type FooterSection = {
+  __typename?: 'FooterSection';
+  body?: Maybe<TextContent>;
+  header?: Maybe<TextContent>;
+  showBody?: Maybe<Scalars['Boolean']>;
+  showHeader?: Maybe<Scalars['Boolean']>;
+};
+
+export type FooterSectionInput = {
+  body?: InputMaybe<TextContentInput>;
+  header?: InputMaybe<TextContentInput>;
+  showBody?: InputMaybe<Scalars['Boolean']>;
+  showHeader?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type GeneralContactsInfo = {
   __typename?: 'GeneralContactsInfo';
   _id?: Maybe<Scalars['ID']>;
@@ -89,12 +120,14 @@ export type LoginResponse = {
 export type Mutation = {
   __typename?: 'Mutation';
   AddCalendarEvent?: Maybe<Scalars['String']>;
+  AddFooterData?: Maybe<Scalars['String']>;
   AddPageConfig?: Maybe<Scalars['String']>;
   AddPageNotWorkingBanner?: Maybe<Scalars['String']>;
   AddSimplePage?: Maybe<Scalars['String']>;
   CreateNewPriceListElement?: Maybe<PriceListElement>;
   DeleteCalendarEvent?: Maybe<Scalars['String']>;
   DeletePriceListElementById: Scalars['String'];
+  EditFooterData?: Maybe<Scalars['String']>;
   EditPageConfig?: Maybe<Scalars['String']>;
   EditPageNotWorkingBanner?: Maybe<Scalars['String']>;
   EditSimplePage?: Maybe<Scalars['String']>;
@@ -113,6 +146,11 @@ export type Mutation = {
 
 export type MutationAddCalendarEventArgs = {
   newEvent?: InputMaybe<CalendarEventInput>;
+};
+
+
+export type MutationAddFooterDataArgs = {
+  newFooter?: InputMaybe<FooterInput>;
 };
 
 
@@ -144,6 +182,11 @@ export type MutationDeleteCalendarEventArgs = {
 
 export type MutationDeletePriceListElementByIdArgs = {
   _id: Scalars['String'];
+};
+
+
+export type MutationEditFooterDataArgs = {
+  updatedFooter?: InputMaybe<FooterInput>;
 };
 
 
@@ -310,6 +353,7 @@ export type Query = {
   __typename?: 'Query';
   GetCalendarEventById?: Maybe<CalendarEvent>;
   GetCalendarEvents?: Maybe<Array<Maybe<CalendarEvent>>>;
+  GetFooter?: Maybe<Footer>;
   GetGeneralContactsInfo?: Maybe<GeneralContactsInfo>;
   GetLatestNews: NewsResponse;
   GetPageConfig?: Maybe<PageConfig>;
@@ -486,6 +530,13 @@ export type DeletePriceListElementByIdMutationVariables = Exact<{
 
 export type DeletePriceListElementByIdMutation = { __typename?: 'Mutation', DeletePriceListElementById: string };
 
+export type EditFooterDataMutationVariables = Exact<{
+  updatedFooter?: InputMaybe<FooterInput>;
+}>;
+
+
+export type EditFooterDataMutation = { __typename?: 'Mutation', EditFooterData?: string | null };
+
 export type EditPageConfigMutationVariables = Exact<{
   pageName?: InputMaybe<Scalars['String']>;
   newConfig?: InputMaybe<PageConfigInput>;
@@ -585,6 +636,11 @@ export type GetCalendarEventsQueryVariables = Exact<{
 
 
 export type GetCalendarEventsQuery = { __typename?: 'Query', GetCalendarEvents?: Array<{ __typename?: 'CalendarEvent', _id: string, link?: string | null, place?: string | null, date?: string | null, startTime?: string | null, endTime?: string | null, name?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, eventDescription?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null };
+
+export type GetFooterQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFooterQuery = { __typename?: 'Query', GetFooter?: { __typename?: 'Footer', _id: string, showContacts?: boolean | null, firstSection?: { __typename?: 'FooterSection', showHeader?: boolean | null, showBody?: boolean | null, header?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, body?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null, secondSection?: { __typename?: 'FooterSection', showHeader?: boolean | null, showBody?: boolean | null, header?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, body?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null, thirdSection?: { __typename?: 'FooterSection', showHeader?: boolean | null, showBody?: boolean | null, header?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, body?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null } | null };
 
 export type GetGeneralContactsInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -827,6 +883,37 @@ export function useDeletePriceListElementByIdMutation(baseOptions?: Apollo.Mutat
 export type DeletePriceListElementByIdMutationHookResult = ReturnType<typeof useDeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationResult = Apollo.MutationResult<DeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationOptions = Apollo.BaseMutationOptions<DeletePriceListElementByIdMutation, DeletePriceListElementByIdMutationVariables>;
+export const EditFooterDataDocument = gql`
+    mutation EditFooterData($updatedFooter: FooterInput) {
+  EditFooterData(updatedFooter: $updatedFooter)
+}
+    `;
+export type EditFooterDataMutationFn = Apollo.MutationFunction<EditFooterDataMutation, EditFooterDataMutationVariables>;
+
+/**
+ * __useEditFooterDataMutation__
+ *
+ * To run a mutation, you first call `useEditFooterDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditFooterDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editFooterDataMutation, { data, loading, error }] = useEditFooterDataMutation({
+ *   variables: {
+ *      updatedFooter: // value for 'updatedFooter'
+ *   },
+ * });
+ */
+export function useEditFooterDataMutation(baseOptions?: Apollo.MutationHookOptions<EditFooterDataMutation, EditFooterDataMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditFooterDataMutation, EditFooterDataMutationVariables>(EditFooterDataDocument, options);
+      }
+export type EditFooterDataMutationHookResult = ReturnType<typeof useEditFooterDataMutation>;
+export type EditFooterDataMutationResult = Apollo.MutationResult<EditFooterDataMutation>;
+export type EditFooterDataMutationOptions = Apollo.BaseMutationOptions<EditFooterDataMutation, EditFooterDataMutationVariables>;
 export const EditPageConfigDocument = gql`
     mutation EditPageConfig($pageName: String, $newConfig: PageConfigInput) {
   EditPageConfig(pageName: $pageName, newConfig: $newConfig)
@@ -1333,6 +1420,83 @@ export function useGetCalendarEventsLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetCalendarEventsQueryHookResult = ReturnType<typeof useGetCalendarEventsQuery>;
 export type GetCalendarEventsLazyQueryHookResult = ReturnType<typeof useGetCalendarEventsLazyQuery>;
 export type GetCalendarEventsQueryResult = Apollo.QueryResult<GetCalendarEventsQuery, GetCalendarEventsQueryVariables>;
+export const GetFooterDocument = gql`
+    query GetFooter {
+  GetFooter {
+    _id
+    firstSection {
+      header {
+        RUS
+        EST
+        ENG
+      }
+      showHeader
+      body {
+        RUS
+        EST
+        ENG
+      }
+      showBody
+    }
+    secondSection {
+      header {
+        RUS
+        EST
+        ENG
+      }
+      showHeader
+      body {
+        RUS
+        EST
+        ENG
+      }
+      showBody
+    }
+    thirdSection {
+      header {
+        RUS
+        EST
+        ENG
+      }
+      showHeader
+      body {
+        RUS
+        EST
+        ENG
+      }
+      showBody
+    }
+    showContacts
+  }
+}
+    `;
+
+/**
+ * __useGetFooterQuery__
+ *
+ * To run a query within a React component, call `useGetFooterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFooterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFooterQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetFooterQuery(baseOptions?: Apollo.QueryHookOptions<GetFooterQuery, GetFooterQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFooterQuery, GetFooterQueryVariables>(GetFooterDocument, options);
+      }
+export function useGetFooterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFooterQuery, GetFooterQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFooterQuery, GetFooterQueryVariables>(GetFooterDocument, options);
+        }
+export type GetFooterQueryHookResult = ReturnType<typeof useGetFooterQuery>;
+export type GetFooterLazyQueryHookResult = ReturnType<typeof useGetFooterLazyQuery>;
+export type GetFooterQueryResult = Apollo.QueryResult<GetFooterQuery, GetFooterQueryVariables>;
 export const GetGeneralContactsInfoDocument = gql`
     query GetGeneralContactsInfo {
   GetGeneralContactsInfo {
