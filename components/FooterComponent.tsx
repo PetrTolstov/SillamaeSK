@@ -30,7 +30,7 @@ function FooterComponent() {
                     <span>Spordikompleks Kalev</span>
                     <span>Külasta meid</span>
                 </div>
-                <div className={styles.containerInformfationFooter}>
+                <div className={styles.containerInformationFooter}>
                     <h3>{lang.visitUs}</h3>
                     <div className={styles.containerScheduleFooter}>
                         { loading ? <p>Loading...</p> :
