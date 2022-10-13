@@ -7,6 +7,7 @@ import {
 } from "../../graphqlGenerated/graphql";
 import languageStore from "../../Stores/LanguageStore";
 import {observer} from "mobx-react-lite";
+import LanguageStoreV2 from '../../Stores/LanguageStoreV2';
 
 function NewsFacebookComponent(){
     const [latestNews, setLatestNews] = useState({message: "", created_time: (new Date).toString()})
@@ -49,7 +50,7 @@ function NewsFacebookComponent(){
 
     return(
         <article className={styles.NewsFacebook} data-aos="fade-left" data-aos-once={'true'}>
-            <h2>{languageStore.currentLanguage.isEst ? "VIIMASED UUDISED" : "ПОСЛЕДНИЕ НОВОСТИ"}</h2>
+            <h2>{LanguageStoreV2.mainPage.latestNews.title[LanguageStoreV2.currentLanguage]}</h2>
             <p>{languageStore.currentLanguage.isEst ? estFacebookNews : rusFacebookNews}</p>
 
             <div>
