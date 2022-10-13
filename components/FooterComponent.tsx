@@ -10,20 +10,6 @@ import LanguageStoreV2 from "../Stores/LanguageStoreV2";
 function FooterComponent() {
 	const { data, loading, error } = useGetTimeTableQuery();
 	const { data: footerData, loading: loadinfFooter } = useGetFooterQuery();
-	const lang = {
-		contactUs: LanguageStore.currentLanguage.isEst
-			? LanguageStore.footer.ContactUs.EST
-			: LanguageStore.footer.ContactUs.RUS,
-		sportComplex: LanguageStore.currentLanguage.isEst
-			? LanguageStore.footer.SportComplex.EST
-			: LanguageStore.footer.SportComplex.RUS,
-		visitUs: LanguageStore.currentLanguage.isEst
-			? LanguageStore.footer.VisitUs.EST
-			: LanguageStore.footer.VisitUs.RUS,
-		folowUs: LanguageStore.currentLanguage.isEst
-			? LanguageStore.footer.FollowOnSocialMedia.EST
-			: LanguageStore.footer.FollowOnSocialMedia.RUS,
-	};
 	const TimeTable = () => (
 		<div className={styles.containerScheduleFooter}>
 			{loading ? (

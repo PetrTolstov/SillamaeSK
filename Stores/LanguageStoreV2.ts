@@ -64,7 +64,10 @@ class LanguageStore {
 	};
 
 	mainPage = {
-		latestNews: { EST: "VIIMASED UUDISED", RUS: "ПОЛЕДНИЕ НОВОСТИ", ENG: "LATEST NEWS" },
+		latestNews: {
+            title: new TranslatableElement("VIIMASED UUDISED", "ПОЛЕДНИЕ НОВОСТИ", "LATEST NEWS"),
+            // button: new TranslatableElement("Vaata Rohkem", "Пока")
+        } 
 	};
 }
 
