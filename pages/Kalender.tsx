@@ -10,6 +10,7 @@ import { useGetCalendarEventsQuery, useGetPageConfigQuery } from "../graphqlGene
 import { offset } from "@popperjs/core";
 import LanguageStore from "../Stores/LanguageStore";
 import { observer } from "mobx-react-lite";
+import LanguageStoreV2 from "../Stores/LanguageStoreV2";
 
 const Kalender: NextPage = () => {
 	let newDate = new Date();
@@ -35,7 +36,7 @@ const Kalender: NextPage = () => {
 		variables: {
 			options: {
 				offset: 0,
-				limit: 20,
+				limit: 30,
 			},
 		},
 	});
@@ -133,7 +134,7 @@ const Kalender: NextPage = () => {
 									handleCLick(value, event);
 								}}
 								value={value}
-								locale={"et-EE"}
+								locale={LanguageStoreV2.calendar.locale[LanguageStoreV2.currentLanguage]}
 								className={styles.calendar}
 								tileClassName={styles.tileCalendar}
 							/>
@@ -154,14 +155,14 @@ const Kalender: NextPage = () => {
 												<span>{monthNames[date.getUTCMonth()]}</span>
 											</div>
 											<div>
-												<h3>{el!.name?.EST}</h3>
+												<h3>{el!.name![LanguageStoreV2.currentLanguage] == "" ? el?.name?.EST : el!.name![LanguageStoreV2.currentLanguage]}</h3>
 												<span>{el!.place}</span>
 												<span>
 													{el!.startTime} - {el!.endTime}
 												</span>
 											</div>
 											<div>
-												<a href={el!.link ?? ""}>Vaata rohkem</a>
+												<a href={el!.link ?? ""}>{LanguageStoreV2.mainPage.latestNews.button[LanguageStoreV2.currentLanguage]}</a>
 											</div>
 										</li>
 									);

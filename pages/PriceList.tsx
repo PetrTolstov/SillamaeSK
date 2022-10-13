@@ -7,6 +7,7 @@ import { useGetPageConfigQuery } from "../graphqlGenerated/graphql";
 import AppIsBeingBuilt from "../components/Temporary/AppIsBeingBuilt";
 import LanguageStore from "../Stores/LanguageStore";
 import { observer } from "mobx-react-lite";
+import LanguageStoreV2 from "../Stores/LanguageStoreV2";
 
 const PriceList: NextPage = () => {
     const { data: configData } = useGetPageConfigQuery({
@@ -19,7 +20,7 @@ const PriceList: NextPage = () => {
             {configData?.GetPageConfig?.showBanner ? <AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} /> : <main className={styles.main}>
 				<ImageWithSchedule/>
 				<div className={styles.container}  data-aos="fade-up" data-aos-once={'true'}>
-					<h1 className={styles.h1}>Hinnakiri</h1>
+					<h1 className={styles.h1}>{LanguageStoreV2.header.tabs.PriceListPageTab[LanguageStoreV2.currentLanguage]}</h1>
 					<PriceListTableComponent/>
 				</div>
 			</main>}

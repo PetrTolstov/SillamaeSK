@@ -66,9 +66,20 @@ class LanguageStore {
 	mainPage = {
 		latestNews: {
             title: new TranslatableElement("VIIMASED UUDISED", "ПОЛЕДНИЕ НОВОСТИ", "LATEST NEWS"),
-            // button: new TranslatableElement("Vaata Rohkem", "Пока")
+            button: new TranslatableElement("Vaata Rohkem", "Показать больше", "See more"),
         } 
 	};
+    calendar = { 
+        locale: new TranslatableElement("et-EE", "ru-RU", "en-EN")
+    };
+
+    priceList = { 
+        propertyTitles: { 
+            price : new TranslatableElement("Hind", "Цена", "Price"),
+            duration : new TranslatableElement("Kestvus", "Длительность", "Duration"),
+            serviceDescription : new TranslatableElement("Teenuste nimetus", "Наименование услуг", "Service name"),
+        }
+    }
 }
 
 export default new LanguageStore();
