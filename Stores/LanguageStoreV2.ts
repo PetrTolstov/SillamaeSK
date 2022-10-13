@@ -79,6 +79,21 @@ class LanguageStore {
             duration : new TranslatableElement("Kestvus", "Длительность", "Duration"),
             serviceDescription : new TranslatableElement("Teenuste nimetus", "Наименование услуг", "Service name"),
         }
+    }; 
+
+    simplePages = { 
+        Ujula: new TranslatableElement("Ujula", "Плавательный бассейн", "Swimming pool"), 
+        Kodukord: new TranslatableElement("Kodukord", "Внутренний распорядок", "Internal rules"), 
+        FitnessiSaal: new TranslatableElement("Fitnessi saal", "Фитнес зал", "Fintness Hall"), 
+        Gallery: new TranslatableElement("Galerii", "Галерея", "Gallery"), 
+        Arengukava: new TranslatableElement("Arengukava", "План развития", "Development plan"), 
+        Staadion: new TranslatableElement("Staadion", "Стадион", "Stadium"), 
+        Kunstmurustaadion: new TranslatableElement("Kunstmurustaadion", "Стадион с искусственным покрытием", "Turf"), 
+        SuurSaal: new TranslatableElement("Suur saal", "Большой зал", "Big Hall"), 
+        Jousaal: new TranslatableElement("Jõusaal", "Тренажерный зал", "Gym"), 
+        VaikeSaal: new TranslatableElement("Väike saal", "Малый зал", "Small Hall"), 
+        Maleruum: new TranslatableElement("Maleruum", "Шахматная комната", "Chess room"), 
+        Kergejoustikumaneez: new TranslatableElement("Kergejoustikumaneez", "Легкоатлетический манеж", "Athletics"), 
     }
 }
 

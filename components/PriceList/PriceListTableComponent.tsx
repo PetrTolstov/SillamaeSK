@@ -3,6 +3,7 @@ import {GetPriceListQuery, useGetPriceListQuery} from "../../graphqlGenerated/gr
 import Image from "next/image";
 import minus from "../../public/minus.svg"
 import plus from "../../public/plus.svg"
+import LanguageStoreV2 from '../../Stores/LanguageStoreV2';
 
 
 function PriceListTableComponent(){
@@ -64,7 +65,7 @@ function PriceListTableComponent(){
             <tbody className={styles.label} key={element?._id}>
             <tr>
                 <td colSpan={3} width={"100%"} className={styles.labelTd} onClick={() => {showOrHideLabel(element?._id, index)}}>
-                    <span className={styles.tdHeader}>{element?.name.EST}</span>
+                    <span className={styles.tdHeader}>{element?.name[LanguageStoreV2.currentLanguage]}</span>
                     <div className={styles.tdButton} id={`${element?._id}-butP`}  >
                         <Image src={plus} />
                     </div>
@@ -77,19 +78,19 @@ function PriceListTableComponent(){
             <div className={styles.hidden} id={element?._id}>
                 <tr className={styles.moreHidden} key={`${element?._id}-${element?.tickets?.length}`} >
                     <td className={styles.description}>
-                        Teenuste nimetus
+                        {LanguageStoreV2.priceList.propertyTitles.serviceDescription[LanguageStoreV2.currentLanguage]}
                     </td>
                     <td className={styles.duration}>
-                        Kestvus
+                        {LanguageStoreV2.priceList.propertyTitles.duration[LanguageStoreV2.currentLanguage]}
                     </td>
                     <td className={styles.price}>
-                        Hind €
+                        {`${LanguageStoreV2.priceList.propertyTitles.price[LanguageStoreV2.currentLanguage]} €`}
                     </td>
                 </tr>
                 {element?.tickets?.map((el, i) => (
                     <tr className={styles.moreHidden} key={`${element?._id}-${i}`} >
                         <td className={styles.description}>
-                            {el?.description.EST}
+                            {el?.description[LanguageStoreV2.currentLanguage]}
                         </td>
                         <td className={styles.duration}>
                             {`${el?.duration?.hours != 0 ? el?.duration?.hours + ' h ' : ''}${el?.duration?.additionalInfo ? `${el?.duration?.additionalInfo.EST}` : ""}`}
