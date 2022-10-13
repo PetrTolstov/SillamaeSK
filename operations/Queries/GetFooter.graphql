@@ -1,0 +1,48 @@
+query GetFooter {
+  GetFooter {
+    _id
+    firstSection {
+      header {
+        RUS
+        EST
+        ENG
+      }
+      showHeader
+      body {
+        RUS
+        EST
+        ENG
+      }
+      showBody
+    }
+    secondSection {
+      header {
+        RUS
+        EST
+        ENG
+      }
+      showHeader
+      body {
+        RUS
+        EST
+        ENG
+      }
+      showBody
+    }
+    thirdSection {
+      header {
+        RUS
+        EST
+        ENG
+      }
+      showHeader
+      body {
+        RUS
+        EST
+        ENG
+      }
+      showBody
+    }
+    showContacts
+  }
+}
