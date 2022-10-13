@@ -13,7 +13,7 @@ body {
   font-weight: 500;
   padding: 0;
   width: 100%;
-
+  overscroll-behavior: none;
 }
 
 #__next{
