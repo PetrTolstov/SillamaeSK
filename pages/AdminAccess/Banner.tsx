@@ -9,20 +9,20 @@ import AdminStore from "../../Stores/AdminStore";
 import GoBackPage from "../../components/AdminComponents/GoBackPage";
 
 const Banner: NextPageWithLayout = () => {
-    const {data, loading, error} = useGetPageNotWorkingBannerQuery({ onCompleted(data) {
-        setShowBody(data.GetPageNotWorkingBanner?.body?.show);
-        setShowTitle(data.GetPageNotWorkingBanner?.title?.show);
-        setShowCenteredText(data.GetPageNotWorkingBanner?.centeredText?.show);
-        setShowLink(data.GetPageNotWorkingBanner?.title?.show);
-        setShowContacts(data.GetPageNotWorkingBanner?.showContacts);
-    },});
     const [EditBanner, {data: BannerData, loading: BannerLoading, error: BannerError}] = useEditPageNotWorkingBannerMutation();
 
-    const [showTitle, setShowTitle] = useState(data?.GetPageNotWorkingBanner?.title?.show);
-    const [showBody, setShowBody] = useState(data?.GetPageNotWorkingBanner?.body?.show);
-    const [showCenteredText, setShowCenteredText] = useState(data?.GetPageNotWorkingBanner?.centeredText?.show);
-    const [showLink, setShowLink] = useState(data?.GetPageNotWorkingBanner?.link?.show);
-    const [showContacts, setShowContacts] = useState(data?.GetPageNotWorkingBanner?.link?.show);
+    const [showTitle, setShowTitle] = useState<boolean>();
+    const [showBody, setShowBody] = useState<boolean>();
+    const [showCenteredText, setShowCenteredText] = useState<boolean>();
+    const [showLink, setShowLink] = useState<boolean>();
+    const [showContacts, setShowContacts] = useState<boolean>();
+    const {data, loading, error} = useGetPageNotWorkingBannerQuery({ onCompleted(data) {
+        setShowBody(data.GetPageNotWorkingBanner?.body?.show ?? false);
+        setShowTitle(data.GetPageNotWorkingBanner?.title?.show ?? false);
+        setShowCenteredText(data.GetPageNotWorkingBanner?.centeredText?.show ?? false);
+        setShowLink(data.GetPageNotWorkingBanner?.title?.show ?? false);
+        setShowContacts(data.GetPageNotWorkingBanner?.showContacts ?? false);
+    },});
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => { 
         e.preventDefault();
         const data = new FormData(e.currentTarget)
@@ -65,7 +65,7 @@ const Banner: NextPageWithLayout = () => {
     if(!AdminStore.userInfo.isLoggedIn) return <GoBackPage/>
 	return (
         <>
-            {loading ? <p>Loading</p> : (<div>
+            <div>
 			{/* TODO tranlsate to Estonian */}
 			<h1>Banner eiditing</h1>
             {loading ? <p>Loading...</p> : (
@@ -163,7 +163,7 @@ const Banner: NextPageWithLayout = () => {
                 <ButtonAdmin isSubmit filled action={()=>{}} label={"Submit"} />
 			</form>
             )}
-		</div>)}
+		</div>
         </>
 		
 	);
