@@ -19,7 +19,9 @@ function NewsFacebookComponent(){
         // console.log(data)
         }});
     useEffect(() => {
-        refeatch().then(r => console.log(r))
+        refeatch().then(r => {
+            // console.log(r)
+        })
     }, [])
 
     useEffect(() => {
@@ -37,9 +39,9 @@ function NewsFacebookComponent(){
             }
             estStr += str[i]
         }
-        console.log(estStr)
-        console.log(ruStr)
-        console.log(languageStore.currentLanguage.isEst)
+        // console.log(estStr)
+        // console.log(ruStr)
+        // console.log(languageStore.currentLanguage.isEst)
 
         setEstFacebookNews(estStr)
         setRusFacebookNews(ruStr)

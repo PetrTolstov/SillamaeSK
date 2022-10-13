@@ -7,6 +7,7 @@ import { observer } from "mobx-react-lite";
 import cross from '../public/cross.svg'
 import threeScticks from  '../public/threeSticks.svg'
 import Image from "next/image";
+import LanguageStoreV2, { language } from "../Stores/LanguageStoreV2";
 
 function HeaderComponent() {
 	const [navStyles, setNavStyles] = useState([styles.mainNav]); //, styles.hiddenMainNav
@@ -29,24 +30,14 @@ function HeaderComponent() {
 	}
 
 	const changeLang = () => {
+        if (isEstLanguage) { 
+            LanguageStoreV2.switchToLanguage(language.RUS);
+        } else { 
+            LanguageStoreV2.switchToLanguage(language.EST)
+        }
 		LanguageStore.switchLanguage();
 		setIsEstLanguage(LanguageStore.currentLanguage.isEst);
 	};
-	/*
-    const [isEst, setLang] = useState(true);
-    const handleLanguageChange = () => {
-        if (isEst) {
-            setLang(false);
-        } else {
-            setLang(true)
-        }
-    }
-    <div onClick={handleLanguageChange} className={styles.lang}>
-        {isEst ? "RU" : "EE"}
-    </div>
-    </div>
-
-     */
 
 	// Languages
 	const lang = {
@@ -93,7 +84,7 @@ function HeaderComponent() {
 					<a className={styles.changeLanguage} onClick={changeLang}>
 						{isEstLanguage ? "RU" : "ET"}
 					</a>
-					<a className={styles.optionalLang}>
+					<a className={styles.optionalLang} onClick={() => { LanguageStoreV2.switchToLanguage(language.ENG)}}>
 						EN
 					</a>
 					<button className={styles.openbtn} onClick={openNav}>
@@ -104,29 +95,29 @@ function HeaderComponent() {
 			</div>
 			<nav className={navStyles.join(" ")}>
 				<Link href={`/`}>
-					<a className={router.pathname == "/" ? styles.chosenPage : ""}>{lang.homePageTab}</a>
+					<a className={router.pathname == "/" ? styles.chosenPage : ""}>{LanguageStoreV2.header.tabs.homePageTab.getTranslation(LanguageStoreV2.currentLanguage)}</a>
 				</Link>
 				<Link href={`/SportComplex/Regulations`}>
 					<a className={router.pathname.includes("/SportComplex") ? styles.chosenPage : ""}>
-						{lang.fromSportComplexPageTab}
+						{LanguageStoreV2.header.tabs.FromSportComplexPageTab.getTranslation(LanguageStoreV2.currentLanguage)}
 					</a>
 				</Link>
 				<Link href={`/SportOpportunities`}>
 					<a className={router.pathname.includes("/SportOpportunities") ? styles.chosenPage : ""}>
-						{lang.sportOpportunitiesPageTab}
+						{LanguageStoreV2.header.tabs.SportOpportunitiesPageTab.getTranslation(LanguageStoreV2.currentLanguage)}
 					</a>
 				</Link>
 				<Link href={`/Kalender`}>
-					<a className={router.pathname == "/Kalender" ? styles.chosenPage : ""}>{lang.calendarPageTab}</a>
+					<a className={router.pathname == "/Kalender" ? styles.chosenPage : ""}>{LanguageStoreV2.header.tabs.CalendarPageTab.getTranslation(LanguageStoreV2.currentLanguage)}</a>
 				</Link>
 				<Link href={`/PriceList`}>
-					<a className={router.pathname == "/PriceList" ? styles.chosenPage : ""}>{lang.priceListPageTab}</a>
+					<a className={router.pathname == "/PriceList" ? styles.chosenPage : ""}>{LanguageStoreV2.header.tabs.PriceListPageTab.getTranslation(LanguageStoreV2.currentLanguage)}</a>
 				</Link>
 				<Link href={`/Hostel`}>
-					<a className={router.pathname == "/Hostel" ? styles.chosenPage : ""}>{lang.hostelPageTab}</a>
+					<a className={router.pathname == "/Hostel" ? styles.chosenPage : ""}>{LanguageStoreV2.header.tabs.HostelPageTab.getTranslation(LanguageStoreV2.currentLanguage)}</a>
 				</Link>
 				<Link href={`/Contact`}>
-					<a className={router.pathname == "/Contact" ? styles.chosenPage : ""}>{lang.contactPageTab}</a>
+					<a className={router.pathname == "/Contact" ? styles.chosenPage : ""}>{LanguageStoreV2.header.tabs.ContactPageTab.getTranslation(LanguageStoreV2.currentLanguage)}</a>
 				</Link>
 			</nav>
 		</header>
