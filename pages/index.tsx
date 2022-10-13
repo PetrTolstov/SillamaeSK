@@ -38,6 +38,7 @@ const Home: NextPage = () => {
 						<DescriptionNearNewsComponent />
 						<NewsFacebookComponent />
 					</div>
+					<SideNavComponent/>
 				</main>
 			)}
 		</Layout>
