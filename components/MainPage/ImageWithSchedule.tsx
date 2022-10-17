@@ -7,6 +7,7 @@ import {useGetTimeTableQuery} from "../../graphqlGenerated/graphql";
 import {observer} from "mobx-react-lite";
 import languageStore from "../../Stores/LanguageStore";
 import {any} from "prop-types";
+import LanguageStoreV2 from '../../Stores/LanguageStoreV2';
 
 
 
@@ -36,20 +37,20 @@ function ImageWithScheduleComponent({isMain=false}){
                     <>
                     <div>
                         <p>
-                            {languageStore.currentLanguage.isEst ? data?.GetTimeTable?.title?.EST : data?.GetTimeTable?.title?.RUS}
+                            {data?.GetTimeTable?.title![LanguageStoreV2.currentLanguage == "ENG" ? "EST" : LanguageStoreV2.currentLanguage]}
                         </p>
                     </div>
                     <div className={styles.divSchedule}>
 
                         <div>
-                            <p>{languageStore.currentLanguage.isEst ? data?.GetTimeTable?.SportComplex?.title?.EST :  data?.GetTimeTable?.SportComplex?.title?.RUS }</p>
-                            <p>{languageStore.currentLanguage.isEst ? data?.GetTimeTable?.SportComplex?.minTitle1?.EST :  data?.GetTimeTable?.SportComplex?.minTitle1?.RUS}: {data?.GetTimeTable?.SportComplex?.timeTable1}</p>
-                            <p>{languageStore.currentLanguage.isEst ? data?.GetTimeTable?.SportComplex?.minTitle2?.EST :  data?.GetTimeTable?.SportComplex?.minTitle2?.RUS}: {data?.GetTimeTable?.SportComplex?.timeTable2 }</p>
+                            <p>{data?.GetTimeTable?.SportComplex?.title![LanguageStoreV2.currentLanguage == "ENG" ? "EST" : LanguageStoreV2.currentLanguage]}</p>
+                            <p>{data?.GetTimeTable?.SportComplex?.minTitle1![LanguageStoreV2.currentLanguage == "ENG" ? "EST" : LanguageStoreV2.currentLanguage]}: {data?.GetTimeTable?.SportComplex?.timeTable1}</p>
+                            <p>{data?.GetTimeTable?.SportComplex?.minTitle2![LanguageStoreV2.currentLanguage == "ENG" ? "EST" : LanguageStoreV2.currentLanguage]}: {data?.GetTimeTable?.SportComplex?.timeTable2}</p>
                         </div>
                         <div>
-                            <p>{languageStore.currentLanguage.isEst ? data?.GetTimeTable?.SwimmingPool?.title?.EST :  data?.GetTimeTable?.SwimmingPool?.title?.RUS }</p>
-                            <p>{languageStore.currentLanguage.isEst ? data?.GetTimeTable?.SwimmingPool?.minTitle1?.EST :  data?.GetTimeTable?.SwimmingPool?.minTitle1?.RUS}: {data?.GetTimeTable?.SwimmingPool?.timeTable1}</p>
-                            <p>{languageStore.currentLanguage.isEst ? data?.GetTimeTable?.SwimmingPool?.minTitle2?.EST :  data?.GetTimeTable?.SwimmingPool?.minTitle2?.RUS}: {data?.GetTimeTable?.SwimmingPool?.timeTable2 }</p>
+                            <p>{data?.GetTimeTable?.SwimmingPool?.title![LanguageStoreV2.currentLanguage == "ENG" ? "EST" : LanguageStoreV2.currentLanguage] }</p>
+                            <p>{data?.GetTimeTable?.SwimmingPool?.minTitle1![LanguageStoreV2.currentLanguage == "ENG" ? "EST" : LanguageStoreV2.currentLanguage]}: {data?.GetTimeTable?.SwimmingPool?.timeTable1}</p>
+                            <p>{data?.GetTimeTable?.SwimmingPool?.minTitle2![LanguageStoreV2.currentLanguage == "ENG" ? "EST" : LanguageStoreV2.currentLanguage]}: {data?.GetTimeTable?.SwimmingPool?.timeTable2 }</p>
                         </div>
                     </div>
                     </>

@@ -691,7 +691,7 @@ export type GetSimplePagesQueryVariables = Exact<{
 }>;
 
 
-export type GetSimplePagesQuery = { __typename?: 'Query', GetSimplePages?: Array<{ __typename?: 'SimplePage', _id: string, image?: string | null, pageName?: string | null, title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null, text?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null } | null }> | null };
+export type GetSimplePagesQuery = { __typename?: 'Query', GetSimplePages?: Array<{ __typename?: 'SimplePage', _id: string, image?: string | null, pageName?: string | null, title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, text?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null }> | null };
 
 export type GetSportOpportunitiesDescriptionQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1888,10 +1888,12 @@ export const GetSimplePagesDocument = gql`
     title {
       RUS
       EST
+      ENG
     }
     text {
       RUS
       EST
+      ENG
     }
     image
     pageName

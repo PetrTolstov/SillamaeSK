@@ -4,10 +4,12 @@ query GetSimplePages($type: Int) {
     title {
       RUS
       EST
+      ENG
     }
     text {
       RUS
       EST
+      ENG
     }
     image
     pageName

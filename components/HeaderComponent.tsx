@@ -31,7 +31,7 @@ function HeaderComponent() {
 
 	const changeLang = () => {
         if (isEstLanguage) { 
-            LanguageStoreV2.switchToLanguage(language.RUS);
+            LanguageStoreV2.switchToLanguage(language.ENG);
         } else { 
             LanguageStoreV2.switchToLanguage(language.EST)
         }
@@ -82,10 +82,10 @@ function HeaderComponent() {
 				</div>
 				<div className={styles.switchButtons}>
 					<a className={styles.changeLanguage} onClick={changeLang}>
-						{isEstLanguage ? "RU" : "ET"}
+						{isEstLanguage ? "EN" : "ET"}
 					</a>
-					<a className={styles.optionalLang} onClick={() => { LanguageStoreV2.switchToLanguage(language.ENG)}}>
-						EN
+					<a className={styles.optionalLang} onClick={() => { LanguageStoreV2.switchToLanguage(language.RUS)}}>
+						RU
 					</a>
 					<button className={styles.openbtn} onClick={openNav}>
 						<Image src={contentBut} alt={'☰'}/>

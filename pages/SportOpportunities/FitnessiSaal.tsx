@@ -8,6 +8,7 @@ import AppIsBeingBuilt from "../../components/Temporary/AppIsBeingBuilt";
 import LanguageStore from "../../Stores/LanguageStore";
 import {SimplePage, useGetPageConfigQuery, useGetSimplePagesQuery} from "../../graphqlGenerated/graphql";
 import languageStore from "../../Stores/LanguageStore";
+import LanguageStoreV2 from '../../Stores/LanguageStoreV2';
 
 
 const FitnessiSaal: NextPage = () => {
@@ -46,9 +47,20 @@ const FitnessiSaal: NextPage = () => {
                 <img src={imgFile} className={styles.titlePhoto}/>
                 {loading ? <p>Loading</p> :
                     <>
-                        <h2>{languageStore.currentLanguage.isEst ? currentPage?.title?.EST  : currentPage?.title?.RUS}</h2>
-                        <p style={{whiteSpace : "pre-line"}}>{languageStore.currentLanguage.isEst ? currentPage?.text?.EST  : currentPage?.text?.RUS}</p>
-
+                        <h2>
+                            {LanguageStoreV2.currentLanguage == "ENG"
+									? currentPage.title?.ENG
+									: LanguageStoreV2.currentLanguage == "EST"
+									? currentPage.title?.EST
+									: currentPage.title?.RUS}
+							</h2>
+							<p style={{ whiteSpace: "pre-line" }}>
+								{LanguageStoreV2.currentLanguage == "ENG"
+									? currentPage.text?.ENG
+									: LanguageStoreV2.currentLanguage == "EST"
+									? currentPage.text?.EST
+									: currentPage.text?.RUS}
+							</p>
                     </>
                 }</>
                 )}

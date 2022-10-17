@@ -47,10 +47,12 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
                 editSimplePage({variables: {id: page._id, updatedSimplePage: { 
                     title: {
                         EST: formData.get("titleEST")?.toString(), 
+                        ENG: formData.get("titleENG")?.toString(), 
                         RUS: formData.get("titleRUS")?.toString(), 
                     },
                     text: { 
                         EST: formData.get("textEST")?.toString(), 
+                        ENG: formData.get("textENG")?.toString(), 
                         RUS: formData.get("textRUS")?.toString(), 
                     },
                     image: ""
@@ -80,6 +82,10 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
                         <span className={frameStyles.focusBorder}></span>
                     </div>
                     <div className={frameStyles.flexCon}>
+					    <input key={currentPage?._id + " 1"} id='title' name='titleENG' placeholder='Title ENG' defaultValue={currentPage?.title?.ENG ?? ""} className={frameStyles.input}/>
+                        <span className={frameStyles.focusBorder}></span>
+                    </div>
+                    <div className={frameStyles.flexCon}>
 					    <input key={currentPage?._id + " 2"} id='title' name='titleRUS' placeholder='Title RUS' defaultValue={page?.title?.RUS ?? ""} className={frameStyles.input}/>
                         <span className={frameStyles.focusBorder}></span>
                     </div>
@@ -90,6 +96,10 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
 					    <textarea placeholder='Text EST' name="textEST" cols={30} rows={10} defaultValue={page?.text?.EST ?? ""} className={frameStyles.input}></textarea>
                         <span className={frameStyles.focusBorder}></span>
                     </div>
+                    <div className={frameStyles.flexCon}>
+					    <textarea placeholder='Text ENG' name="textENG" cols={30} rows={10} defaultValue={page?.text?.ENG ?? ""} className={frameStyles.input}></textarea>
+                            <span className={frameStyles.focusBorder}></span>
+                    </div> 
                     <div className={frameStyles.flexCon}>
 					    <textarea placeholder='Text RUS' name="textRUS" cols={30} rows={10} defaultValue={page?.text?.RUS ?? ""} className={frameStyles.input}></textarea>
                             <span className={frameStyles.focusBorder}></span>

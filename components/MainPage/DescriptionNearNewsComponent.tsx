@@ -5,6 +5,7 @@ import {
 } from "../../graphqlGenerated/graphql";
 import { observer } from 'mobx-react-lite';
 import LanguageStore from '../../Stores/LanguageStore';
+import LanguageStoreV2 from '../../Stores/LanguageStoreV2';
 
 
 function DescriptionNearNewsComponent(){
@@ -15,9 +16,9 @@ function DescriptionNearNewsComponent(){
         <article className={styles.textSecondBlock} data-aos="fade-right" data-aos-once={'true'}>
             {loading ? <h2>Loading</h2> :
                 <>
-                    <h2>{ LanguageStore.currentLanguage.isEst ? data!.GetSportOpportunitiesDescription!.title!.EST : data!.GetSportOpportunitiesDescription!.title!.RUS}</h2>
+                    <h2>{data?.GetSportOpportunitiesDescription?.title![LanguageStoreV2.currentLanguage == "ENG" ? "EST" : LanguageStoreV2.currentLanguage]}</h2>
 
-                    <p>{LanguageStore.currentLanguage.isEst ? data!.GetSportOpportunitiesDescription!.text!.EST : data!.GetSportOpportunitiesDescription!.text!.RUS}</p>
+                    <p>{data?.GetSportOpportunitiesDescription?.text![LanguageStoreV2.currentLanguage == "ENG" ? "EST" : LanguageStoreV2.currentLanguage]}</p>
                 </>}
         </article>
 

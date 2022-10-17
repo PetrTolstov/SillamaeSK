@@ -7,9 +7,10 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {LINK} from "../../config/constants";
 import languageStore from "../../Stores/LanguageStore";
-import {observer} from "mobx-react-lite";
+import {Observer, observer} from "mobx-react-lite";
 import {SimplePage, useGetPageConfigQuery, useGetSimplePagesQuery} from "../../graphqlGenerated/graphql";
 import LanguageStore from "../../Stores/LanguageStore";
+import LanguageStoreV2 from '../../Stores/LanguageStoreV2';
 
 
 const Index: NextPage = () => {
@@ -47,9 +48,20 @@ const Index: NextPage = () => {
                 <img src={imgFile} className={styles.titlePhoto}/>
                 {loading ? <p>Loading</p> :
                     <>
-                        <h2>{languageStore.currentLanguage.isEst ? currentPage?.title?.EST  : currentPage?.title?.RUS}</h2>
-                        <p style={{whiteSpace : "pre-line"}}>{languageStore.currentLanguage.isEst ? currentPage?.text?.EST  : currentPage?.text?.RUS}</p>
-
+                        <h2>
+                            {LanguageStoreV2.currentLanguage == "ENG"
+									? currentPage.title?.ENG
+									: LanguageStoreV2.currentLanguage == "EST"
+									? currentPage.title?.EST
+									: currentPage.title?.RUS}
+							</h2>
+							<p style={{ whiteSpace: "pre-line" }}>
+								{LanguageStoreV2.currentLanguage == "ENG"
+									? currentPage.text?.ENG
+									: LanguageStoreV2.currentLanguage == "EST"
+									? currentPage.text?.EST
+									: currentPage.text?.RUS}
+							</p>
                     </>
                 }
             </>
@@ -58,7 +70,7 @@ const Index: NextPage = () => {
     )
 }
 
-export default Index
+export default observer(Index)
 /*
 <LayoutSportComplexOpportunities>
             <>
