@@ -17,6 +17,7 @@ export const AdminDropDown = ({
 		const newCurrentPage = pages?.find((el) => el._id == e.currentTarget.value);
 		updateCurrentPage(newCurrentPage!);
 	};
+	
 	return (
 		<>
 			<select value={currentPage?._id} onChange={handleChange}>

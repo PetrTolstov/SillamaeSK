@@ -9,7 +9,7 @@ import frameStyles from "../../styles/FormStyles.module.css";
 
 const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, closeModal: ()=>void }) => {
 	//const page = '/Gallery'
-
+	console.log(page)
 	const [file, setFile] = useState<FileList>();
 	const [imgFile, setImgFile] = useState("");
 	const [imgFileName, setImgFileName] = useState([]);

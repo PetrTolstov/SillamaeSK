@@ -124,7 +124,7 @@ const Kalender: NextPage = () => {
 					<ImageWithSchedule />
 
 					<div className={styles.container}>
-						<div data-aos='fade-right' data-aos-once={"true"}>
+						<div data-aos='fade-right' data-aos-once={"true"} className={styles.calCon}>
 							<Calendar
 								onChange={setValue}
 								onViewChange={(action) => {

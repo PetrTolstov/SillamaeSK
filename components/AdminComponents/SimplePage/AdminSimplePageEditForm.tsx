@@ -3,6 +3,7 @@ import {SimplePage, useEditSimplePageMutation, GetSimplePagesDocument, useGetSim
 import { ButtonAdmin } from "../ButtonAdmin";
 import UploadFile from "../UploadFile";
 import frameStyles from "../../../styles/FormStyles.module.css"
+import {clearParseAndGenerateServicesCalls} from "@typescript-eslint/typescript-estree/dist/parser";
 
 export function getPage(str: string) { 
     switch(str) { 
@@ -14,6 +15,8 @@ export function getPage(str: string) {
             return "/Kunstmurustaadion"
         case "Suur saal": 
             return "/SuurSaal"
+        case "Väike saal":
+            return "/VaikeSaal"
         case "Fitnessi saal": 
             return "/FitnessiSaal"
         case "Jõusaal": 
@@ -36,6 +39,7 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
     const [editSimplePage, {loading, data, error}] = useEditSimplePageMutation();
     const [ showUploadFile, setShowUploadFile ] = useState(false); 
     useEffect(() => {
+        console.log(currentPage)
         setCurrentPage(page)
     }, [page])
 	return (
