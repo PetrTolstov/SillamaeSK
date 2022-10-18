@@ -60,7 +60,6 @@ const Kalender: NextPage = () => {
 
 	function handleCLick(value: Date, event: React.MouseEvent<HTMLButtonElement>) {
 		let el = document.getElementById(`${value.getDate()}-${value.getMonth() + 1}-${value.getFullYear()}`);
-		console.log(el);
 
 		document.getElementsByClassName(styles.chosenLi)[0]?.classList.remove(styles.chosenLi);
 		el?.classList.add(styles.chosenLi);
@@ -68,12 +67,16 @@ const Kalender: NextPage = () => {
 	}
 
 	function handleNavigationCLick(event: Event) {
+		Array.from(document.getElementsByClassName(styles.hidden)).forEach((el) => {
+			el?.classList.remove(styles.hidden)
+		})
+		document.getElementsByClassName(styles.hiddenB)[0]?.classList.remove(styles.hiddenB)
 		setTimeout(() => {
 			let date = document.querySelectorAll(`.${styles.calendar} > div:nth-child(1) > button`)[2].textContent!;
 			date = date.charAt(0).toUpperCase() + date.slice(1);
 			let dateList = date.split(" ");
-			console.log(event)
-			console.log(`${dateList[1]}-${monthNames.indexOf(dateList[0])+1}`)
+
+
 			setCurrentMonthAndYear(`${dateList[1]}-${monthNames.indexOf(dateList[0])+1}`);
 			setTimeout(correctCalendar, 1);
 			correctCalendar();
@@ -133,8 +136,9 @@ const Kalender: NextPage = () => {
 
 	useEffect(() => {
 		correctCalendar();
-		document.getElementsByClassName(styles.chosenLi)[0]?.scrollIntoView();
-		window.scroll(0,0)
+		//document.getElementsByClassName(styles.chosenLi)[0]?.scrollIntoView();
+		//window.scroll(0,0)
+
 	}, [loading]);
 
 
@@ -162,19 +166,38 @@ const Kalender: NextPage = () => {
 							/>
 						</div>
 						<ol className={styles.calenderAsList} data-aos='fade-left' data-aos-once={"true"}>
+							<button onClick={() => {
+								if (document.getElementsByClassName(styles.hidden)[0]){
+									Array.from(document.getElementsByClassName(styles.hidden)).forEach((e) => e?.classList.remove(styles.hidden))
+									document.getElementsByClassName(styles.moreLi)[0]?.classList.add(styles.hiddenB)
+								}
+
+
+							}} className={styles.moreLi}>{LanguageStoreV2.mainPage.latestNews.button[LanguageStoreV2.currentLanguage]}</button>
 							{loading ? (
 								<p>Loading...</p>
 							) : (
+
 								data?.GetCalendarEventsByMonth!.map((el, i) => {
 									let date = new Date(el!.date ?? "");
+									// @ts-ignore
+									let d = data.GetCalendarEventsByMonth[0]
 
+									if ((new Date(d?.date ?? "")).getTime() < newDate.getTime()){
+										document.getElementsByClassName(styles.moreLi)[0]?.classList.remove(styles.hiddenB)
+										console.log(document.getElementsByClassName(styles.hidden)[0])
+									}else{
+										document.getElementsByClassName(styles.moreLi)[0]?.classList.add(styles.hiddenB)
+										console.log(1)
+									}
 									return (
 										<li
-											className={(date.getTime() >= newDate.getTime() && isNotChoosen) ? (() => {
-												isNotChoosen = false
-												console.log(isNotChoosen)
-												return styles.chosenLi
-											})() : ""}
+											className={(date.getTime() >= newDate.getTime()) ? (() => {
+												if(isNotChoosen){
+													isNotChoosen = false
+													return styles.chosenLi
+												}
+											})() : styles.hidden}
 											id={`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}
 											key={`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}--${i}`}>
 											<div>
