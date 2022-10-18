@@ -39,6 +39,15 @@
     nav.hiddenMainNav{
         display: none !important;
     }
+
+    a.changeLanguage{
+        position: absolute;
+        top: 70px;
+    }
+
+    a.changeLanguage:hover ~ a.optionalLang, .optionalLang:hover{
+        top: 100px;
+    }
 }
 
 

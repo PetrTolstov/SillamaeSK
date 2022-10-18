@@ -23,6 +23,7 @@ function HeaderComponent() {
 				break;
 			case 2:
 				setNavStyles([styles.mainNav]);
+				setLangStyles([styles.changeLanguage, styles.hiddenLang])
 				setContentBut(cross);
 				break;
 		}
@@ -81,7 +82,7 @@ function HeaderComponent() {
 
 				</div>
 				<div className={styles.switchButtons}>
-					<a className={styles.changeLanguage} onClick={changeLang}>
+					<a className={langStyle.join("")} onClick={changeLang}>
 						{isEstLanguage ? "EN" : "ET"}
 					</a>
 					<a className={styles.optionalLang} onClick={() => { LanguageStoreV2.switchToLanguage(language.RUS)}}>
