@@ -5,6 +5,20 @@
 
 
 }
+@media screen and (max-width: 900px) {
+    div.container{
+        flex-direction: column;
+    }
+
+    button.tileCalendar{
+        height: calc(100vw / 7.85);
+    }
+
+    ol.calenderAsList li{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
 
 
 .container{
