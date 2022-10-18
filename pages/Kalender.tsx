@@ -6,7 +6,12 @@ import Calendar from "react-calendar";
 import { useEffect, useState } from "react";
 import styles from "../styles/Calendar.module.css";
 import ImageWithSchedule from "../components/MainPage/ImageWithSchedule";
-import { useGetCalendarEventsQuery, useGetPageConfigQuery } from "../graphqlGenerated/graphql";
+import {
+	useGetCalendarEventsByMonthLazyQuery,
+	useGetCalendarEventsByMonthQuery,
+	useGetCalendarEventsQuery,
+	useGetPageConfigQuery
+} from "../graphqlGenerated/graphql";
 import { offset } from "@popperjs/core";
 import LanguageStore from "../Stores/LanguageStore";
 import { observer } from "mobx-react-lite";
@@ -16,8 +21,10 @@ const Kalender: NextPage = () => {
 	let newDate = new Date();
 	const [value, setValue] = useState(newDate);
 	const [currentMonthAndYear, setCurrentMonthAndYear] = useState(
-		`${newDate.getMonth() + 1}-${newDate.getFullYear()}`
+		`${newDate.getFullYear()}-${newDate.getMonth() + 1}`
 	);
+	let isNotChoosen = true
+
 	const monthNames = [
 		"Jaanuar",
 		"Veebruar",
@@ -32,14 +39,16 @@ const Kalender: NextPage = () => {
 		"November",
 		"Detsember",
 	];
-	const { loading, data, error } = useGetCalendarEventsQuery({
-		variables: {
-			options: {
-				offset: 0,
-				limit: 30,
+	const [getEventsByMonth, { loading, data, error }] = useGetCalendarEventsByMonthLazyQuery();
+
+	useEffect(() => {
+		getEventsByMonth({
+			variables: {
+				monthStr: currentMonthAndYear,
 			},
-		},
-	});
+		})
+
+	}, [currentMonthAndYear])
 
 	const { data: configData } = useGetPageConfigQuery({
 		variables: {
@@ -59,12 +68,18 @@ const Kalender: NextPage = () => {
 	}
 
 	function handleNavigationCLick(event: Event) {
-		let date = document.querySelectorAll(`.${styles.calendar} > div:nth-child(1) > button`)[2].textContent!;
-		date = date.charAt(0).toUpperCase() + date.slice(1);
-		let dateList = date.split(" ");
-		setCurrentMonthAndYear(`${dateList[0]}-${dateList[1]}`);
-		setTimeout(correctCalendar, 1);
-		correctCalendar();
+		setTimeout(() => {
+			let date = document.querySelectorAll(`.${styles.calendar} > div:nth-child(1) > button`)[2].textContent!;
+			date = date.charAt(0).toUpperCase() + date.slice(1);
+			let dateList = date.split(" ");
+			console.log(event)
+			console.log(`${dateList[1]}-${monthNames.indexOf(dateList[0])+1}`)
+			setCurrentMonthAndYear(`${dateList[1]}-${monthNames.indexOf(dateList[0])+1}`);
+			setTimeout(correctCalendar, 1);
+			correctCalendar();
+
+		}, 1)
+
 	}
 
 	function correctCalendar() {
@@ -114,9 +129,18 @@ const Kalender: NextPage = () => {
 		}
 	}
 
+
+
 	useEffect(() => {
 		correctCalendar();
+		document.getElementsByClassName(styles.chosenLi)[0]?.scrollIntoView();
+		window.scroll(0,0)
 	}, [loading]);
+
+
+	function onChangeCalender(value:any){
+		console.log(value)
+	}
 
 	return (
 		<Layout>
@@ -126,10 +150,8 @@ const Kalender: NextPage = () => {
 					<div className={styles.container}>
 						<div data-aos='fade-right' data-aos-once={"true"} className={styles.calCon}>
 							<Calendar
-								onChange={setValue}
-								onViewChange={(action) => {
-									console.log(action);
-								}}
+								onChange={onChangeCalender}
+
 								onClickDay={(value, event) => {
 									handleCLick(value, event);
 								}}
@@ -143,11 +165,16 @@ const Kalender: NextPage = () => {
 							{loading ? (
 								<p>Loading...</p>
 							) : (
-								data!.GetCalendarEvents!.map((el, i) => {
+								data?.GetCalendarEventsByMonth!.map((el, i) => {
 									let date = new Date(el!.date ?? "");
+
 									return (
 										<li
-											className={i == 0 ? styles.chosenLi : ""}
+											className={(date.getTime() >= newDate.getTime() && isNotChoosen) ? (() => {
+												isNotChoosen = false
+												console.log(isNotChoosen)
+												return styles.chosenLi
+											})() : ""}
 											id={`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}
 											key={`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}--${i}`}>
 											<div>

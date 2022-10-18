@@ -353,6 +353,7 @@ export type Query = {
   __typename?: 'Query';
   GetCalendarEventById?: Maybe<CalendarEvent>;
   GetCalendarEvents?: Maybe<Array<Maybe<CalendarEvent>>>;
+  GetCalendarEventsByMonth?: Maybe<Array<Maybe<CalendarEvent>>>;
   GetFooter?: Maybe<Footer>;
   GetGeneralContactsInfo?: Maybe<GeneralContactsInfo>;
   GetLatestNews: NewsResponse;
@@ -374,6 +375,11 @@ export type QueryGetCalendarEventByIdArgs = {
 
 export type QueryGetCalendarEventsArgs = {
   options?: InputMaybe<Options>;
+};
+
+
+export type QueryGetCalendarEventsByMonthArgs = {
+  monthStr?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -636,6 +642,13 @@ export type GetCalendarEventsQueryVariables = Exact<{
 
 
 export type GetCalendarEventsQuery = { __typename?: 'Query', GetCalendarEvents?: Array<{ __typename?: 'CalendarEvent', _id: string, link?: string | null, place?: string | null, date?: string | null, startTime?: string | null, endTime?: string | null, name?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, eventDescription?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null };
+
+export type GetCalendarEventsByMonthQueryVariables = Exact<{
+  monthStr?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetCalendarEventsByMonthQuery = { __typename?: 'Query', GetCalendarEventsByMonth?: Array<{ __typename?: 'CalendarEvent', _id: string, link?: string | null, date?: string | null, place?: string | null, startTime?: string | null, endTime?: string | null, name?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, eventDescription?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null };
 
 export type GetFooterQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1420,6 +1433,56 @@ export function useGetCalendarEventsLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetCalendarEventsQueryHookResult = ReturnType<typeof useGetCalendarEventsQuery>;
 export type GetCalendarEventsLazyQueryHookResult = ReturnType<typeof useGetCalendarEventsLazyQuery>;
 export type GetCalendarEventsQueryResult = Apollo.QueryResult<GetCalendarEventsQuery, GetCalendarEventsQueryVariables>;
+export const GetCalendarEventsByMonthDocument = gql`
+    query GetCalendarEventsByMonth($monthStr: String) {
+  GetCalendarEventsByMonth(monthStr: $monthStr) {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    eventDescription {
+      RUS
+      EST
+      ENG
+    }
+    link
+    date
+    place
+    startTime
+    endTime
+  }
+}
+    `;
+
+/**
+ * __useGetCalendarEventsByMonthQuery__
+ *
+ * To run a query within a React component, call `useGetCalendarEventsByMonthQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCalendarEventsByMonthQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCalendarEventsByMonthQuery({
+ *   variables: {
+ *      monthStr: // value for 'monthStr'
+ *   },
+ * });
+ */
+export function useGetCalendarEventsByMonthQuery(baseOptions?: Apollo.QueryHookOptions<GetCalendarEventsByMonthQuery, GetCalendarEventsByMonthQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCalendarEventsByMonthQuery, GetCalendarEventsByMonthQueryVariables>(GetCalendarEventsByMonthDocument, options);
+      }
+export function useGetCalendarEventsByMonthLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCalendarEventsByMonthQuery, GetCalendarEventsByMonthQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCalendarEventsByMonthQuery, GetCalendarEventsByMonthQueryVariables>(GetCalendarEventsByMonthDocument, options);
+        }
+export type GetCalendarEventsByMonthQueryHookResult = ReturnType<typeof useGetCalendarEventsByMonthQuery>;
+export type GetCalendarEventsByMonthLazyQueryHookResult = ReturnType<typeof useGetCalendarEventsByMonthLazyQuery>;
+export type GetCalendarEventsByMonthQueryResult = Apollo.QueryResult<GetCalendarEventsByMonthQuery, GetCalendarEventsByMonthQueryVariables>;
 export const GetFooterDocument = gql`
     query GetFooter {
   GetFooter {

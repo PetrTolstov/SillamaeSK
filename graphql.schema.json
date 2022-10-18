@@ -2299,6 +2299,35 @@
             "deprecationReason": null
           },
           {
+            "name": "GetCalendarEventsByMonth",
+            "description": null,
+            "args": [
+              {
+                "name": "monthStr",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CalendarEvent",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "GetFooter",
             "description": null,
             "args": [],
