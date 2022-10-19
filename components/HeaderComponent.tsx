@@ -82,6 +82,15 @@ function HeaderComponent() {
 	const router = useRouter();
 	const navRef = useRef(null);
 
+
+	setTimeout(()=>{
+		window.addEventListener('scroll', () => {
+			if(document.getElementsByClassName(styles.mainNav)[0].classList.length == 1) {
+				openNav()
+			}
+		})
+	}, 100)
+
 	return (
 		<header className={styles.header}>
 			<div className={styles.aboveNav}>
