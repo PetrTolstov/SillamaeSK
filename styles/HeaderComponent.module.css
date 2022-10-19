@@ -10,16 +10,21 @@
     }
 
     nav.mainNav{
-        position: relative;
+        position: fixed;
+        z-index: 1;
+        width: 100%;
+        padding-left: 50px;
         flex-direction: column;
         flex-wrap: nowrap;
         justify-content: flex-start;
-        top: 0;
+        top: 75px;
         left: 0;
         background: #ffffff;
         height: auto;
-        width: fit-content;
+
         padding-top: 10px;
+        padding-bottom: 20px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
     }
 
     nav.mainNav a{
@@ -34,6 +39,7 @@
         background: #0167FF;
         color: white;
         border-radius: 3px;
+        width: fit-content;
     }
 
     nav.hiddenMainNav{
@@ -41,13 +47,49 @@
     }
 
     a.changeLanguage{
-        position: absolute;
+        position: fixed;
+        z-index: 2;
         top: 70px;
     }
 
     a.changeLanguage:hover ~ a.optionalLang, .optionalLang:hover{
         top: 100px;
+        z-index: 2;
     }
+
+    a.hiddenLang{
+        display: none;
+    }
+
+
+
+    .SportOpportunitiesLink:hover ~ div.optionalSportOpportunitiesLinks, .optionalSportOpportunitiesLinks:hover{
+        margin-left: 30px;
+        cursor: pointer;
+        display: flex !important;
+        position: relative;
+        flex-direction: column;
+        align-items: flex-start;
+        background: #f2f2f2;
+        width: fit-content;
+        border-radius: 5px;
+
+    }
+
+
+    .SportComplexLink:hover ~ div.optionalSportComplexLinks, .optionalSportComplexLinks:hover{
+        margin-left: 30px;
+        cursor: pointer;
+        display: flex !important;
+        position: relative;
+        flex-direction: column;
+        align-items: flex-start;
+        background: #f2f2f2;
+        width: fit-content;
+        border-radius: 5px;
+
+    }
+
 }
 
 
@@ -59,9 +101,11 @@
 }
 
 @media screen and (max-width: 500px) {
-    .logoName{
+    .logoName {
         font-size: 15px !important;
     }
+
+
 }
 
 .openbtn{
@@ -180,3 +224,10 @@
     align-items: flex-end;
 }
 
+.optionalSportComplexLinks{
+    display: none;
+}
+
+.optionalSportOpportunitiesLinks{
+    display: none;
+}

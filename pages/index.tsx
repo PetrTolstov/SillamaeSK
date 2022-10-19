@@ -17,7 +17,7 @@ import { observer } from "mobx-react-lite";
 import LanguageStore from "../Stores/LanguageStore";
 
 const Home: NextPage = () => {
-	//<ScheduleOnMainPageComponent/>
+	//
 	//after main
 
 	const { data: configData } = useGetPageConfigQuery({
@@ -31,6 +31,7 @@ const Home: NextPage = () => {
 			{configData?.GetPageConfig?.showBanner ? (
 				<AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
 			) : (
+				<>
 				<main className={styles.main}>
 					<ImageWithSchedule isMain={true} />
 
@@ -40,6 +41,8 @@ const Home: NextPage = () => {
 					</div>
 					<SideNavComponent/>
 				</main>
+				<ScheduleOnMainPageComponent/>
+				</>
 			)}
 		</Layout>
 	);

@@ -61,7 +61,7 @@ function NewsFacebookComponent() {
 				<span>{new Date(latestNews.created_time).toLocaleDateString()}</span>
 				<a href={"https://www.facebook.com/spordikompleksKalev"}>{`${
 					LanguageStoreV2.mainPage.latestNews.button[LanguageStoreV2.currentLanguage]
-				} ▶`}</a>
+				}`}</a>
 			</div>
 		</article>
 	);

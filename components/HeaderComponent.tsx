@@ -10,20 +10,33 @@ import Image from "next/image";
 import LanguageStoreV2, { language } from "../Stores/LanguageStoreV2";
 
 function HeaderComponent() {
-	const [navStyles, setNavStyles] = useState([styles.mainNav]); //, styles.hiddenMainNav
-	const [langStyle, setLangStyles] = useState([styles.changeLanguage]); //, styles.hiddenLang
-	const [contentBut, setContentBut] = useState(cross);
+	const [navStyles, setNavStyles] = useState([styles.mainNav, styles.hiddenMainNav]); //, styles.hiddenMainNav
+	const [langStyle, setLangStyles] = useState([styles.changeLanguage, styles.hiddenLang]); //, styles.hiddenLang
+	const [contentBut, setContentBut] = useState(threeScticks);
 	const [isEstLanguage, setIsEstLanguage] = useState(LanguageStore.currentLanguage.isEst);
+
+	const labelsSportComplex = {
+		RUS: ['План развития',  'Распорядок', 'Галерея'],
+		EST: ['Arengukava',  'Kodukord', 'Galerii'],
+		ENG: ['Development plan',  'Internal rules', 'Gallery']
+	}
+
+	const labelsSportOpp = {
+		EST: ['Ujula', 'Staadion', 'Kunstmurustaadion', 'Suur saal', 'Väike saal', 'Fitnessi saal', 'Jõusaal', 'Maleruum', 'Kergejõustikumaneež'],
+		ENG: ['Swimming pool', 'Stadium', 'Turf', 'Big hall', 'Small hall', 'Fitness hall', 'Gym', 'Chess room', 'Athletics'],
+		RUS: ['Бассейн', 'Стадион', 'Стадион с искусственным покрытием', 'Большой зал', 'Малый залl', 'Фитнес зал', 'Тренажерный зал', 'Шахматная комната', 'Легкоатлетический манеж'],
+	}
 
 	function openNav() {
 		switch (navStyles.length) {
 			case 1:
 				setNavStyles([styles.mainNav, styles.hiddenMainNav]);
 				setContentBut(threeScticks);
+				setLangStyles([styles.changeLanguage, styles.hiddenLang])
 				break;
 			case 2:
 				setNavStyles([styles.mainNav]);
-				setLangStyles([styles.changeLanguage, styles.hiddenLang])
+				setLangStyles([styles.changeLanguage])
 				setContentBut(cross);
 				break;
 		}
@@ -82,14 +95,14 @@ function HeaderComponent() {
 
 				</div>
 				<div className={styles.switchButtons}>
-					<a className={langStyle.join("")} onClick={changeLang}>
+					<a className={langStyle.join(" ")} onClick={changeLang}>
 						{isEstLanguage ? "EN" : "ET"}
 					</a>
 					<a className={styles.optionalLang} onClick={() => { LanguageStoreV2.switchToLanguage(language.RUS)}}>
 						RU
 					</a>
 					<button className={styles.openbtn} onClick={openNav}>
-						<Image src={contentBut} alt={'☰'}/>
+						<Image src={contentBut} alt={'☰'} width={'18px'}/>
 					</button>
 				</div>
 
@@ -98,16 +111,61 @@ function HeaderComponent() {
 				<Link href={`/`}>
 					<a className={router.pathname == "/" ? styles.chosenPage : ""}>{LanguageStoreV2.header.tabs.homePageTab.getTranslation(LanguageStoreV2.currentLanguage)}</a>
 				</Link>
+				<div className={styles.SportComplexLink}>
 				<Link href={`/SportComplex/Regulations`}>
 					<a className={router.pathname.includes("/SportComplex") ? styles.chosenPage : ""}>
 						{LanguageStoreV2.header.tabs.FromSportComplexPageTab.getTranslation(LanguageStoreV2.currentLanguage)}
 					</a>
 				</Link>
+				</div>
+				<div className={styles.optionalSportComplexLinks}>
+					<Link href={`/SportComplex/`}>
+						<a>{labelsSportComplex[LanguageStoreV2.currentLanguage][0]}</a>
+					</Link>
+					<Link href={`/SportComplex/Regulations`}>
+						<a>{labelsSportComplex[LanguageStoreV2.currentLanguage][1]}</a>
+					</Link>
+					<Link href={`/SportComplex/Gallery`}>
+						<a>{labelsSportComplex[LanguageStoreV2.currentLanguage][2]}</a>
+					</Link>
+				</div>
+
+				<div className={styles.SportOpportunitiesLink}>
 				<Link href={`/SportOpportunities`}>
 					<a className={router.pathname.includes("/SportOpportunities") ? styles.chosenPage : ""}>
 						{LanguageStoreV2.header.tabs.SportOpportunitiesPageTab.getTranslation(LanguageStoreV2.currentLanguage)}
 					</a>
 				</Link>
+				</div>
+				<div className={styles.optionalSportOpportunitiesLinks}>
+					<Link href={`/SportOpportunities`}>
+						<a>{labelsSportOpp[LanguageStoreV2.currentLanguage][0]}</a>
+					</Link>
+					<Link href={`/SportOpportunities/Staadion`}>
+						<a>{labelsSportOpp[LanguageStoreV2.currentLanguage][1]}</a>
+					</Link>
+					<Link href={`/SportOpportunities/Kunstmurustaadion`}>
+						<a>{labelsSportOpp[LanguageStoreV2.currentLanguage][2]}</a>
+					</Link>
+					<Link href={`/SportOpportunities/SuurSaal`}>
+						<a>{labelsSportOpp[LanguageStoreV2.currentLanguage][3]}</a>
+					</Link>
+					<Link href={`/SportOpportunities/VaikeSaal`}>
+						<a>{labelsSportOpp[LanguageStoreV2.currentLanguage][4]}</a>
+					</Link>
+					<Link href={`/SportOpportunities/FitnessiSaal`}>
+						<a>{labelsSportOpp[LanguageStoreV2.currentLanguage][5]}</a>
+					</Link>
+					<Link href={`/SportOpportunities/Jousaal`}>
+						<a>{labelsSportOpp[LanguageStoreV2.currentLanguage][6]}</a>
+					</Link>
+					<Link href={`/SportOpportunities/Maleruum`}>
+						<a>{labelsSportOpp[LanguageStoreV2.currentLanguage][7]}</a>
+					</Link>
+					<Link href={`/SportOpportunities/Kergejoustikumaneez`}>
+						<a>{labelsSportOpp[LanguageStoreV2.currentLanguage][8]}</a>
+					</Link>
+				</div>
 				<Link href={`/Kalender`}>
 					<a className={router.pathname == "/Kalender" ? styles.chosenPage : ""}>{LanguageStoreV2.header.tabs.CalendarPageTab.getTranslation(LanguageStoreV2.currentLanguage)}</a>
 				</Link>
