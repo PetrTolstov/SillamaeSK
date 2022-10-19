@@ -42,13 +42,13 @@ class LanguageStore {
             }
 		},
 		tabs: {
-			homePageTab: new TranslatableElement("AVALEHT", "ГЛАВНАЯ", "HOME"),
-			FromSportComplexPageTab: new TranslatableElement("SPORDIKOMPLEKSIST", "СПОРТКОМПЛЕКС", "SPORTCOMPLEX"),
-			SportOpportunitiesPageTab: new TranslatableElement("SPORTIMISVÕIMALUSED", "СПОРТ-СООРУЖЕНИЯ", "SPORT FACILITIES"),
-			CalendarPageTab: new TranslatableElement("KALENDER", "КАЛЕНДАРЬ", "CALENDAR"),
-			PriceListPageTab: new TranslatableElement("HINNAKIRI", "РАСЦЕНКИ", "PRICELIST"),
-			HostelPageTab: new TranslatableElement("HOSTEL", "ХОСТЕЛ", "HOSTEL"),
-			ContactPageTab: new TranslatableElement("KONTAKT", "КОНТАКТ", "CONTACT"),
+			homePageTab: new TranslatableElement("AVALEHT", "ГЛАВНАЯ", "⠀HOME"),
+			FromSportComplexPageTab: new TranslatableElement("SPORDIKOMPLEKSIST", "СПОРТКОМПЛЕКС", "⠀SPORTCOMPLEX⠀"),
+			SportOpportunitiesPageTab: new TranslatableElement("SPORTIMISVÕIMALUSED", "СПОРТ-СООРУЖЕНИЯ", "⠀SPORT FACILITIES⠀"),
+			CalendarPageTab: new TranslatableElement("KALENDER", "КАЛЕНДАРЬ", "⠀CALENDAR⠀"),
+			PriceListPageTab: new TranslatableElement("HINNAKIRI", "РАСЦЕНКИ", "⠀PRICELIST⠀"),
+			HostelPageTab: new TranslatableElement("HOSTEL", "ХОСТЕЛ", "⠀HOSTEL⠀"),
+			ContactPageTab: new TranslatableElement("KONTAKT", "КОНТАКТ", "⠀CONTACT"),
 		},
 	};
 

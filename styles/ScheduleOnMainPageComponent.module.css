@@ -4,6 +4,21 @@
     }
 }
 
+@media screen and (max-width: 500px) {
+
+    article.kalender ul li{
+        flex-basis: 100%;
+    }
+
+}
+
+@media screen and (max-width: 900px) {
+
+    article.kalender ul li{
+        flex-basis: 70%;
+    }
+
+}
 
 .kalender{
     display: flex;
@@ -13,9 +28,11 @@
     width: 100%;
     background: #0167FF;
     color: white;
+    padding-bottom: 20px;
 }
 
 .kalender h2{
+    margin-left: 10px;
     font-weight: 500;
     font-size: 32px;
 }
@@ -28,11 +45,13 @@
     justify-content: space-around;
     margin: 0;
     padding: 0  ;
+    flex-wrap: wrap;
 
 }
 
 .kalender ul li{
-    margin: 0 10px;
+    flex-basis: 25%;
+    margin: 0 10px 20px 10px;
     display: flex;
     flex-direction: column;
     background: #FFFFFF;
@@ -43,6 +62,7 @@
 }
 
 .kalenderFrame li h3{
+    margin-bottom: 0;
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 600;
@@ -70,7 +90,7 @@
     font-size: 16px;
 }
 
-.kalenderFrame li button{
+.kalenderFrame li a{
     margin-left: auto;
     border: none;
     padding: 5px 15px;
@@ -79,7 +99,7 @@
     border-radius: 3px;
 }
 
-.kalenderFrame button{
+.kalenderFrame a{
     margin: 20px;
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -88,7 +108,7 @@
 }
 
 button.more{
-    margin-left: auto;
+    margin-left: 10px;
     border: none;
     padding: 5px 15px;
     color: #ffffff;

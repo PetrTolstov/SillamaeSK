@@ -18,8 +18,7 @@ import LanguageStore from "../Stores/LanguageStore";
 import CarouselComponent from "../components/MainPage/CarouselComponent";
 
 const Home: NextPage = () => {
-	//<ScheduleOnMainPageComponent/>
-	//after main
+
 
 	const { data: configData } = useGetPageConfigQuery({
 		variables: {
@@ -32,6 +31,7 @@ const Home: NextPage = () => {
 			{configData?.GetPageConfig?.showBanner ? (
 				<AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
 			) : (
+				<>
 				<main className={styles.main}>
 					<CarouselComponent
 						showSchedule
@@ -47,6 +47,8 @@ const Home: NextPage = () => {
 					</div>
 					<SideNavComponent />
 				</main>
+				<ScheduleOnMainPageComponent/>
+				</>
 			)}
 		</Layout>
 	);

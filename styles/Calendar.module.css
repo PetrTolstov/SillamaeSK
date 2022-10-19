@@ -5,6 +5,20 @@
 
 
 }
+@media screen and (max-width: 900px) {
+    div.container{
+        flex-direction: column;
+    }
+
+    button.tileCalendar{
+        height: calc(100vw / 7.85);
+    }
+
+    ol.calenderAsList li{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
 
 
 .container{
@@ -245,4 +259,24 @@ li.chosenLi > div:nth-child(3) > a{
 .calenderAsList li.chosenLi > div:nth-child(2) span:nth-child(3):before{
     background-image: url('../public/timeClockWhite.png');
 
+}
+
+.hidden{
+    display: none !important;
+}
+
+.hiddenB{
+    display: none !important;
+}
+
+.moreLi{
+    width: 100%;
+    color: #0167ff;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0px 6px 5px -6px rgb(0 0 0 / 49%);
+    -webkit-box-shadow: 0px 6px 5px -6px rgb(0 0 0 / 49%);
+    -moz-box-shadow: 0px 6px 5px -6px rgba(0,0,0,0.49)
 }
