@@ -4,6 +4,7 @@ import { ButtonAdmin } from "../ButtonAdmin";
 import UploadFile from "../UploadFile";
 import frameStyles from "../../../styles/FormStyles.module.css"
 import {clearParseAndGenerateServicesCalls} from "@typescript-eslint/typescript-estree/dist/parser";
+import DeleteFile from "../deleteFile";
 
 export function getPage(str: string) { 
     switch(str) { 
@@ -37,6 +38,7 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
     const [ currentPage, setCurrentPage] = useState(page); 
     const [editPageConfigs, {data: editConfigData}] = useEditPageConfigMutation();
     const [editSimplePage, {loading, data, error}] = useEditSimplePageMutation();
+    const [isShowDelete, setIsShowDelete] = useState(false);
     const [ showUploadFile, setShowUploadFile ] = useState(false); 
     useEffect(() => {
         console.log(currentPage)
@@ -115,6 +117,10 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
 				</label>
                 <UploadFile page={getPage(currentPage?.pageName ?? "") ?? ""} show={showUploadFile} closeModal={() => setShowUploadFile(false)} />
                 <ButtonAdmin border action={() => setShowUploadFile(true)} label={"Add image"} />
+                <DeleteFile page={getPage(currentPage?.pageName ?? '')?.slice(1) ?? ""} show={isShowDelete} closeModal={() => {
+                    setIsShowDelete(false);
+                }} />
+                <ButtonAdmin border action={() => setIsShowDelete(true)} label={"Delete images"} />
                 <input style={{width: "fit-content"}} type="submit" />
 			</form>
 		</div>

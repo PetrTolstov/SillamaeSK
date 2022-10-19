@@ -14,7 +14,7 @@ import CarouselComponent from '../../components/MainPage/CarouselComponent';
 
 const FitnessiSaal: NextPage = () => {
     const page = 'FitnessiSaal'
-    const [imgFile, setImgFile] = useState('');
+    const [imgFile, setImgFile] = useState([]);
 // @ts-ignore
     const [ currentPage, setCurrentPage ] = useState<SimplePage>([])
     const {loading, data, error} = useGetSimplePagesQuery({variables: {type: 1}, onCompleted(data) {
@@ -27,8 +27,11 @@ const FitnessiSaal: NextPage = () => {
                     'optional': page
                 }
             });
-            console.log(res.data)
-            setImgFile(`${LINK}/public/images/${page}/${res.data[0]}`)
+            let list = res.data.map((el: string) => {
+                return `${LINK}/public/images/${page}/${el}`
+            })
+
+            setImgFile(list);
         })()
     }, [])
 
@@ -45,7 +48,7 @@ const FitnessiSaal: NextPage = () => {
                 <AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
             ) : (
             <>
-                <CarouselComponent roundedCorners={false} imageList={[imgFile]} />
+                <CarouselComponent roundedCorners={false} imageList={imgFile} />
                 {loading ? <p>Loading</p> :
                     <>
                         <h2>

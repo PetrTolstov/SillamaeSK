@@ -10,9 +10,11 @@ import GoBackPage from "../../components/AdminComponents/GoBackPage";
 import ImageForm from "../../components/AdminComponents/UploadFile";
 import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
 import { useEditPageConfigMutation, useGetPageConfigQuery } from "../../graphqlGenerated/graphql";
+import DeleteFile from "../../components/AdminComponents/deleteFile";
 
 const MainPageAdmin: NextPageWithLayout = () => {
 	const [isShow, setIsShow] = useState(false);
+	const [isShowDelete, setIsShowDelete] = useState(false);
 
 	const { data: configData, refetch: refetchConfig } = useGetPageConfigQuery({
 		variables: {
@@ -35,6 +37,7 @@ const MainPageAdmin: NextPageWithLayout = () => {
 						setIsShow(false);
 					}}
 				/>
+
 				<ButtonAdmin
 					border
 					label={"Lisa"}
@@ -42,6 +45,11 @@ const MainPageAdmin: NextPageWithLayout = () => {
 						setIsShow(true);
 					}}
 				/>
+				<DeleteFile page={"Karusel"} show={isShowDelete} closeModal={() => {
+					setIsShowDelete(false);
+				}} />
+
+				<ButtonAdmin border action={() => setIsShowDelete(true)} label={"Delete images"} />
 				<h6>Show banner</h6>
 				<input
 					type='checkbox'

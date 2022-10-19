@@ -16,8 +16,27 @@ import AppIsBeingBuilt from "../components/Temporary/AppIsBeingBuilt";
 import { observer } from "mobx-react-lite";
 import LanguageStore from "../Stores/LanguageStore";
 import CarouselComponent from "../components/MainPage/CarouselComponent";
+import axios from "axios";
+import {LINK} from "../config/constants";
 
 const Home: NextPage = () => {
+	const page = "Karusel";
+	const [imgFile, setImgFile] = useState([]);
+	useEffect(() => {
+		(async () => {
+			const res = await axios.get(LINK + "/getPhoto", {
+				headers: {
+					optional: page,
+				},
+			});
+			// console.log(res.data)
+			let list = res.data.map((el: any) => {
+				return `${LINK}/public/images/${page}/${el}`
+			})
+
+			setImgFile(list);
+		})();
+	}, []);
 
 
 	const { data: configData } = useGetPageConfigQuery({
@@ -35,9 +54,7 @@ const Home: NextPage = () => {
 				<main className={styles.main}>
 					<CarouselComponent
 						showSchedule
-						imageList={[
-							"https://lola.land/wp-content/uploads/2019/11/LOLA-SPG-sports-park-genk-landscape-design-strip-list-antea-scaled.jpg",
-						]}
+						imageList={imgFile}
 					/>
 					{/* <ImageWithSchedule isMain={true} /> */}
 

@@ -14,7 +14,7 @@ import CarouselComponent from "../../components/MainPage/CarouselComponent";
 
 const Kunstmurustaadion: NextPage = () => {
 	const page = "Kunstmurustaadion";
-	const [imgFile, setImgFile] = useState("");
+	const [imgFile, setImgFile] = useState([]);
 	// @ts-ignore
 	const [currentPage, setCurrentPage] = useState<SimplePage>([]);
 	const { loading, data, error } = useGetSimplePagesQuery({
@@ -30,7 +30,11 @@ const Kunstmurustaadion: NextPage = () => {
 					optional: page,
 				},
 			});
-			setImgFile(`${LINK}/public/images/${page}/${res.data[0]}`);
+			let list = res.data.map((el: string) => {
+				return `${LINK}/public/images/${page}/${el}`
+			})
+
+			setImgFile(list);
 		})();
 	}, []);
 	const { data: configData } = useGetPageConfigQuery({
@@ -44,7 +48,7 @@ const Kunstmurustaadion: NextPage = () => {
 				<AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
 			) : (
 				<>
-					<CarouselComponent roundedCorners={false} imageList={[imgFile]} />
+					<CarouselComponent roundedCorners={false} imageList={imgFile} />
 					{loading ? (
 						<p>Loading</p>
 					) : (

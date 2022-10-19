@@ -14,7 +14,7 @@ import CarouselComponent from "../../components/MainPage/CarouselComponent";
 
 const Regulations: NextPage = () => {
 	const page = "Kodukord";
-	const [imgFile, setImgFile] = useState("");
+	const [imgFile, setImgFile] = useState([]);
 	const [title, setTitle] = useState("");
 	const [text, setText] = useState("");
 	// @ts-ignore
@@ -34,7 +34,12 @@ const Regulations: NextPage = () => {
 				},
 			});
 			console.log(res.data);
-			setImgFile(`${LINK}/public/images/${page}/${res.data[0]}`);
+			let list = res.data.map((el: string) => {
+				return `${LINK}/public/images/${page}/${el}`
+			})
+
+
+			setImgFile(list);
 		})();
 	}, []);
 
@@ -57,7 +62,7 @@ const Regulations: NextPage = () => {
 			) : (
 				<>
                     
-					<CarouselComponent roundedCorners={false} imageList={[imgFile]} />
+					<CarouselComponent roundedCorners={false} imageList={imgFile} />
 
 					{loading ? (
 						<p>Loading</p>

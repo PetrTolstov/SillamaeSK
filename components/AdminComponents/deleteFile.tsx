@@ -17,6 +17,7 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 					optional: page,
 				},
 			});
+
 			setImgFile(res.data);
 		})();
 	}, []);
@@ -42,6 +43,7 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 		if (listImgDel) {
 
 			axios.post(LINK + "/delete", listImgDel).then((r) => closeModal());
+			window.location.reload()
 		}else{
 			alert("Choose photo to remove")
 		}
@@ -96,6 +98,8 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 					<ButtonAdmin border action={closeModal} label={"Close modal"} />
 
 					<div  className={styles.butCon}>
+
+						{typeof imgFile[0] == "string" ? <></> :
 						<select name="listOfEvents" onChange={handleTitleChange} id={'select'}>
 						{
 							imgFile.map((el) => (
@@ -106,13 +110,17 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 							))
 						}
 						</select>
+						}
 
 						<button onClick={handleSubmit} className={stylesBut.filledBtn} style={{border : "none"}}>Delete</button>
 
 					</div>
 					{imgFile.map((el : {string : string[]}, i) => (
-						<div key={`${Object.keys(el)[0]}`} id={`${Object.keys(el)[0]}`} className={`${i == 0 ? '' : styles.hidden} ${styles.imgCont}`}>
+						<div key={`${el}`} id={`${el}-c`} className={`${i == 0 || typeof el == "string"? '' : styles.hidden} ${styles.imgCont}`}>
 							{
+								typeof el == "string" ?
+									<img src={`${LINK}/public/images/${page}/${el}`} key={`${el}`} id={`${page}/${el}`} style={{width: "300px"}} onClick={handleImgClick} className={`${styles.img}`}/>
+									:
 								Object.values(el)[0]?.map((img) =>(
 									<img src={`${LINK}/public/images/${page}/${Object.keys(el)[0]}/${img}`} key={`${Object.keys(el)[0]}-${img}`} id={`${Object.keys(el)[0]}/${img}`} style={{width: "300px"}} onClick={handleImgClick} className={`${styles.img}`}/>
 								))

@@ -17,8 +17,27 @@ import LanguageStore from "../Stores/LanguageStore";
 import { observer } from "mobx-react-lite";
 import LanguageStoreV2 from "../Stores/LanguageStoreV2";
 import CarouselComponent from "../components/MainPage/CarouselComponent";
+import axios from "axios";
+import {LINK} from "../config/constants";
 
 const Kalender: NextPage = () => {
+	const page = "Karusel";
+	const [imgFile, setImgFile] = useState([]);
+	useEffect(() => {
+		(async () => {
+			const res = await axios.get(LINK + "/getPhoto", {
+				headers: {
+					optional: page,
+				},
+			});
+			// console.log(res.data)
+			let list = res.data.map((el: any) => {
+				return `${LINK}/public/images/${page}/${el}`
+			})
+
+			setImgFile(list);
+		})();
+	}, []);
 	let newDate = new Date();
 	const [value, setValue] = useState(newDate);
 	const [currentMonthAndYear, setCurrentMonthAndYear] = useState(
@@ -150,7 +169,7 @@ const Kalender: NextPage = () => {
 	return (
 		<Layout>
 				<main className={styles.main}>
-                    <CarouselComponent roundedCorners={true} imageList={["https://lola.land/wp-content/uploads/2019/11/LOLA-SPG-sports-park-genk-landscape-design-strip-list-antea-scaled.jpg"]} />
+                    <CarouselComponent roundedCorners={true} imageList={imgFile} />
 
 					<div className={styles.container}>
 						<div data-aos='fade-right' data-aos-once={"true"} className={styles.calCon}>

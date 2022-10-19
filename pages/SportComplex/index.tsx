@@ -17,7 +17,7 @@ import CarouselComponent from '../../components/MainPage/CarouselComponent';
 
 const SportComplex: NextPage = () => {
     const page = 'Arengukava'
-    const [imgFile, setImgFile] = useState('');
+    const [imgFile, setImgFile] = useState([]);
     // @ts-ignore
     const [ currentPage, setCurrentPage ] = useState<SimplePage>([])
     const {loading, data, error} = useGetSimplePagesQuery({variables: {type: 0}, onCompleted(data) {
@@ -31,8 +31,12 @@ const SportComplex: NextPage = () => {
                     'optional': page
                 }
             });
-            console.log(res.data)
-            setImgFile(`${LINK}/public/images/${page}/${res.data[0]}`)
+            let list = res.data.map((el: string) => {
+                return `${LINK}/public/images/${page}/${el}`
+            })
+
+
+            setImgFile(list);
         })()
     }, [])
 
@@ -49,7 +53,7 @@ const SportComplex: NextPage = () => {
             ) : (
             <>
                 {/* <img src={imgFile} className={styles.titlePhoto}/> */}
-                <CarouselComponent roundedCorners={false} imageList={[imgFile]}/>
+                <CarouselComponent roundedCorners={false} imageList={imgFile}/>
                 {loading ? <p>Loading</p> :
                     <>
                        <h2>

@@ -83,6 +83,7 @@ const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, clo
 		}
 		console.log(data)
 		axios.post(LINK + "/upload", data).then((r) => closeModal());
+		window.location.reload()
 	};
 	if (show) {
 		return (
