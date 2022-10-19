@@ -115,6 +115,7 @@ const CarouselComponent = ({ showSchedule = false, imageList, roundedCorners = t
 			<div>
 				<Schedule />
 				<Carousel
+                    autoPlay
 					width={"100%"}
 					showThumbs={false}
 					showIndicators={false}
