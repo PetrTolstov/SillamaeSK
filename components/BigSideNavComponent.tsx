@@ -11,7 +11,6 @@ type SideNavProps = {
 function BigSideNavComponent({paths, labels} : SideNavProps){
 
     const router = useRouter()
-    console.log(router.pathname)
     return(
             <nav className={styles.sideNav} data-aos={'fade-right'} data-aos-once={'true'}>
                 {paths.map((el, i) => (

@@ -8,7 +8,6 @@ import axios from "axios";
 import { LINK } from "../../config/constants";
 import { SimplePage, useGetPageConfigQuery, useGetSimplePagesQuery } from "../../graphqlGenerated/graphql";
 import LanguageStore from "../../Stores/LanguageStore";
-import languageStore from "../../Stores/LanguageStore";
 import { observer } from "mobx-react-lite";
 import LanguageStoreV2 from "../../Stores/LanguageStoreV2";
 import CarouselComponent from "../../components/MainPage/CarouselComponent";
@@ -31,7 +30,6 @@ const Kunstmurustaadion: NextPage = () => {
 					optional: page,
 				},
 			});
-			console.log(res.data);
 			setImgFile(`${LINK}/public/images/${page}/${res.data[0]}`);
 		})();
 	}, []);

@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import LanguageStore from "../Stores/LanguageStore";
 import { observer } from "mobx-react-lite";
-import cross from '../public/cross.svg'
-import threeScticks from  '../public/threeSticks.svg'
+import cross from "../public/cross.svg";
+import threeScticks from "../public/threeSticks.svg";
 import Image from "next/image";
 import LanguageStoreV2, { language } from "../Stores/LanguageStoreV2";
 import BurgerMenuButton from "./SVGs/BurgerMenuButton";
@@ -18,80 +18,94 @@ function HeaderComponent() {
 	const [isEstLanguage, setIsEstLanguage] = useState(LanguageStore.currentLanguage.isEst);
 
 	const labelsSportComplex = {
-		RUS: ['План развития',  'Распорядок', 'Галерея'],
-		EST: ['Arengukava',  'Kodukord', 'Galerii'],
-		ENG: ['Development plan',  'Internal rules', 'Gallery']
-	}
+		RUS: ["План развития", "Распорядок", "Галерея"],
+		EST: ["Arengukava", "Kodukord", "Galerii"],
+		ENG: ["Development plan", "Internal rules", "Gallery"],
+	};
 
 	const labelsSportOpp = {
-		EST: ['Ujula', 'Staadion', 'Kunstmurustaadion', 'Suur saal', 'Väike saal', 'Fitnessi saal', 'Jõusaal', 'Maleruum', 'Kergejõustikumaneež'],
-		ENG: ['Swimming pool', 'Stadium', 'Turf', 'Big hall', 'Small hall', 'Fitness hall', 'Gym', 'Chess room', 'Athletics'],
-		RUS: ['Бассейн', 'Стадион', 'Стадион с искусственным покрытием', 'Большой зал', 'Малый залl', 'Фитнес зал', 'Тренажерный зал', 'Шахматная комната', 'Легкоатлетический манеж'],
-	}
+		EST: [
+			"Ujula",
+			"Staadion",
+			"Kunstmurustaadion",
+			"Suur saal",
+			"Väike saal",
+			"Fitnessi saal",
+			"Jõusaal",
+			"Maleruum",
+			"Kergejõustikumaneež",
+		],
+		ENG: [
+			"Swimming pool",
+			"Stadium",
+			"Turf",
+			"Big hall",
+			"Small hall",
+			"Fitness hall",
+			"Gym",
+			"Chess room",
+			"Athletics",
+		],
+		RUS: [
+			"Бассейн",
+			"Стадион",
+			"Стадион с искусственным покрытием",
+			"Большой зал",
+			"Малый залl",
+			"Фитнес зал",
+			"Тренажерный зал",
+			"Шахматная комната",
+			"Легкоатлетический манеж",
+		],
+	};
 
 	function openNav() {
 		switch (navStyles.length) {
 			case 1:
 				setNavStyles([styles.mainNav, styles.hiddenMainNav]);
 				setContentBut(true);
-				setLangStyles([styles.changeLanguage, styles.hiddenLang])
+				setLangStyles([styles.changeLanguage, styles.hiddenLang]);
 				break;
 			case 2:
 				setNavStyles([styles.mainNav]);
-				setLangStyles([styles.changeLanguage])
+				setLangStyles([styles.changeLanguage]);
 				setContentBut(false);
 				break;
 		}
-
 	}
 
 	const changeLang = () => {
-        if (isEstLanguage) { 
-            LanguageStoreV2.switchToLanguage(language.ENG);
-        } else { 
-            LanguageStoreV2.switchToLanguage(language.EST)
-        }
+		if (isEstLanguage) {
+			LanguageStoreV2.switchToLanguage(language.ENG);
+		} else {
+			LanguageStoreV2.switchToLanguage(language.EST);
+		}
 		LanguageStore.switchLanguage();
 		setIsEstLanguage(LanguageStore.currentLanguage.isEst);
-	};
-
-	// Languages
-	const lang = {
-		headerTitle: isEstLanguage ? LanguageStore.header.title.EST : LanguageStore.header.title.RUS,
-		homePageTab: isEstLanguage
-			? LanguageStore.header.tabs.homePageTab.EST
-			: LanguageStore.header.tabs.homePageTab.RUS,
-		fromSportComplexPageTab: isEstLanguage
-			? LanguageStore.header.tabs.FromSportComplexPageTab.EST
-			: LanguageStore.header.tabs.FromSportComplexPageTab.RUS,
-		sportOpportunitiesPageTab: isEstLanguage
-			? LanguageStore.header.tabs.SportOpportunitiesPageTab.EST
-			: LanguageStore.header.tabs.SportOpportunitiesPageTab.RUS,
-		calendarPageTab: isEstLanguage
-			? LanguageStore.header.tabs.CalendarPageTab.EST
-			: LanguageStore.header.tabs.CalendarPageTab.RUS,
-		priceListPageTab: isEstLanguage
-			? LanguageStore.header.tabs.PriceListPageTab.EST
-			: LanguageStore.header.tabs.PriceListPageTab.RUS,
-		hostelPageTab: isEstLanguage
-			? LanguageStore.header.tabs.HostelPageTab.EST
-			: LanguageStore.header.tabs.HostelPageTab.RUS,
-		contactPageTab: isEstLanguage
-			? LanguageStore.header.tabs.ContactPageTab.EST
-			: LanguageStore.header.tabs.ContactPageTab.RUS,
 	};
 
 	const router = useRouter();
 	const navRef = useRef(null);
 
+	// setTimeout(()=>{
+	// 	window.addEventListener('scroll', () => {
+	// 		if(document.getElementsByClassName(styles.mainNav)[0].classList.length == 1) {
+	// 			openNav()
+	// 		}
+	// 	})
+	// }, 100)
 
-	setTimeout(()=>{
-		window.addEventListener('scroll', () => {
-			if(document.getElementsByClassName(styles.mainNav)[0].classList.length == 1) {
-				openNav()
-			}
-		})
-	}, 100)
+	const handleScroll = () => {
+		setNavStyles([styles.mainNav, styles.hiddenMainNav]);
+		setContentBut(true);
+		setLangStyles([styles.changeLanguage, styles.hiddenLang]);
+	};
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll);
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
 
 	return (
 		<header className={styles.header}>
@@ -103,33 +117,38 @@ function HeaderComponent() {
 					<Link href={`/`}>
 						<h1 className={styles.logoName}>SILLAMÄE SPORDIKOMPLEKS KALEV</h1>
 					</Link>
-
 				</div>
 				<div className={styles.switchButtons}>
 					<a className={langStyle.join(" ")} onClick={changeLang}>
 						{isEstLanguage ? "EN" : "ET"}
 					</a>
-					<a className={styles.optionalLang} onClick={() => { LanguageStoreV2.switchToLanguage(language.RUS)}}>
+					<a
+						className={styles.optionalLang}
+						onClick={() => {
+							LanguageStoreV2.switchToLanguage(language.RUS);
+						}}>
 						RU
 					</a>
 					<button className={styles.openbtn} onClick={openNav}>
 						{/* <Image src={contentBut} alt={'☰'} width={'18px'} height={'18px'}/> */}
-                        {contentBut ? <BurgerMenuButton width={15} height={15} /> : <Cross width={15} height={15} /> }
-                        
+						{contentBut ? <BurgerMenuButton width={15} height={15} /> : <Cross width={15} height={15} />}
 					</button>
 				</div>
-
 			</div>
 			<nav className={navStyles.join(" ")}>
 				<Link href={`/`}>
-					<a className={router.pathname == "/" ? styles.chosenPage : ""}>{LanguageStoreV2.header.tabs.homePageTab.getTranslation(LanguageStoreV2.currentLanguage)}</a>
-				</Link>
-				<div className={styles.SportComplexLink}>
-				<Link href={`/SportComplex/Regulations`}>
-					<a className={router.pathname.includes("/SportComplex") ? styles.chosenPage : ""}>
-						{LanguageStoreV2.header.tabs.FromSportComplexPageTab.getTranslation(LanguageStoreV2.currentLanguage)}
+					<a className={router.pathname == "/" ? styles.chosenPage : ""}>
+						{LanguageStoreV2.header.tabs.homePageTab.getTranslation(LanguageStoreV2.currentLanguage)}
 					</a>
 				</Link>
+				<div className={styles.SportComplexLink}>
+					<Link href={`/SportComplex/Regulations`}>
+						<a className={router.pathname.includes("/SportComplex") ? styles.chosenPage : ""}>
+							{LanguageStoreV2.header.tabs.FromSportComplexPageTab.getTranslation(
+								LanguageStoreV2.currentLanguage
+							)}
+						</a>
+					</Link>
 				</div>
 				<div className={styles.optionalSportComplexLinks}>
 					<Link href={`/SportComplex/`}>
@@ -144,11 +163,13 @@ function HeaderComponent() {
 				</div>
 
 				<div className={styles.SportOpportunitiesLink}>
-				<Link href={`/SportOpportunities`}>
-					<a className={router.pathname.includes("/SportOpportunities") ? styles.chosenPage : ""}>
-						{LanguageStoreV2.header.tabs.SportOpportunitiesPageTab.getTranslation(LanguageStoreV2.currentLanguage)}
-					</a>
-				</Link>
+					<Link href={`/SportOpportunities`}>
+						<a className={router.pathname.includes("/SportOpportunities") ? styles.chosenPage : ""}>
+							{LanguageStoreV2.header.tabs.SportOpportunitiesPageTab.getTranslation(
+								LanguageStoreV2.currentLanguage
+							)}
+						</a>
+					</Link>
 				</div>
 				<div className={styles.optionalSportOpportunitiesLinks}>
 					<Link href={`/SportOpportunities`}>
@@ -180,16 +201,24 @@ function HeaderComponent() {
 					</Link>
 				</div>
 				<Link href={`/Kalender`}>
-					<a className={router.pathname == "/Kalender" ? styles.chosenPage : ""}>{LanguageStoreV2.header.tabs.CalendarPageTab.getTranslation(LanguageStoreV2.currentLanguage)}</a>
+					<a className={router.pathname == "/Kalender" ? styles.chosenPage : ""}>
+						{LanguageStoreV2.header.tabs.CalendarPageTab.getTranslation(LanguageStoreV2.currentLanguage)}
+					</a>
 				</Link>
 				<Link href={`/PriceList`}>
-					<a className={router.pathname == "/PriceList" ? styles.chosenPage : ""}>{LanguageStoreV2.header.tabs.PriceListPageTab.getTranslation(LanguageStoreV2.currentLanguage)}</a>
+					<a className={router.pathname == "/PriceList" ? styles.chosenPage : ""}>
+						{LanguageStoreV2.header.tabs.PriceListPageTab.getTranslation(LanguageStoreV2.currentLanguage)}
+					</a>
 				</Link>
 				<Link href={`/Hostel`}>
-					<a className={router.pathname == "/Hostel" ? styles.chosenPage : ""}>{LanguageStoreV2.header.tabs.HostelPageTab.getTranslation(LanguageStoreV2.currentLanguage)}</a>
+					<a className={router.pathname == "/Hostel" ? styles.chosenPage : ""}>
+						{LanguageStoreV2.header.tabs.HostelPageTab.getTranslation(LanguageStoreV2.currentLanguage)}
+					</a>
 				</Link>
 				<Link href={`/Contact`}>
-					<a className={router.pathname == "/Contact" ? styles.chosenPage : ""}>{LanguageStoreV2.header.tabs.ContactPageTab.getTranslation(LanguageStoreV2.currentLanguage)}</a>
+					<a className={router.pathname == "/Contact" ? styles.chosenPage : ""}>
+						{LanguageStoreV2.header.tabs.ContactPageTab.getTranslation(LanguageStoreV2.currentLanguage)}
+					</a>
 				</Link>
 			</nav>
 		</header>

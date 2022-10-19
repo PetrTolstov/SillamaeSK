@@ -122,8 +122,8 @@ const CarouselComponent = ({ showSchedule = false, imageList, roundedCorners = t
 					className={styles.Carousel}
 					renderArrowNext={ArrowNext}
 					renderArrowPrev={ArrowPrev}>
-					{imageList?.map((el) => (
-						<div className={styles.CarouselItem} style={{ width: "100%", backgroundImage: `url(${el})` }}></div>
+					{imageList?.map((el, index) => (
+						<div key={index} className={styles.CarouselItem} style={{ width: "100%", backgroundImage: `url(${el})` }}></div>
 					))}
 				</Carousel>
 			</div>
