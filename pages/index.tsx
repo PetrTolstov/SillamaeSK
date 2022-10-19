@@ -17,8 +17,7 @@ import { observer } from "mobx-react-lite";
 import LanguageStore from "../Stores/LanguageStore";
 
 const Home: NextPage = () => {
-	//
-	//after main
+
 
 	const { data: configData } = useGetPageConfigQuery({
 		variables: {

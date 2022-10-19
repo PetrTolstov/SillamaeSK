@@ -102,7 +102,7 @@ function HeaderComponent() {
 						RU
 					</a>
 					<button className={styles.openbtn} onClick={openNav}>
-						<Image src={contentBut} alt={'☰'} width={'18px'}/>
+						<Image src={contentBut} alt={'☰'} width={'18px'} height={'18px'}/>
 					</button>
 				</div>
 
