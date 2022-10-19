@@ -8,11 +8,13 @@ import cross from '../public/cross.svg'
 import threeScticks from  '../public/threeSticks.svg'
 import Image from "next/image";
 import LanguageStoreV2, { language } from "../Stores/LanguageStoreV2";
+import BurgerMenuButton from "./SVGs/BurgerMenuButton";
+import Cross from "./SVGs/Cross";
 
 function HeaderComponent() {
 	const [navStyles, setNavStyles] = useState([styles.mainNav, styles.hiddenMainNav]); //, styles.hiddenMainNav
 	const [langStyle, setLangStyles] = useState([styles.changeLanguage, styles.hiddenLang]); //, styles.hiddenLang
-	const [contentBut, setContentBut] = useState(threeScticks);
+	const [contentBut, setContentBut] = useState(true);
 	const [isEstLanguage, setIsEstLanguage] = useState(LanguageStore.currentLanguage.isEst);
 
 	const labelsSportComplex = {
@@ -31,13 +33,13 @@ function HeaderComponent() {
 		switch (navStyles.length) {
 			case 1:
 				setNavStyles([styles.mainNav, styles.hiddenMainNav]);
-				setContentBut(threeScticks);
+				setContentBut(true);
 				setLangStyles([styles.changeLanguage, styles.hiddenLang])
 				break;
 			case 2:
 				setNavStyles([styles.mainNav]);
 				setLangStyles([styles.changeLanguage])
-				setContentBut(cross);
+				setContentBut(false);
 				break;
 		}
 
@@ -111,7 +113,9 @@ function HeaderComponent() {
 						RU
 					</a>
 					<button className={styles.openbtn} onClick={openNav}>
-						<Image src={contentBut} alt={'☰'} width={'18px'} height={'18px'}/>
+						{/* <Image src={contentBut} alt={'☰'} width={'18px'} height={'18px'}/> */}
+                        {contentBut ? <BurgerMenuButton width={15} height={15} /> : <Cross width={15} height={15} /> }
+                        
 					</button>
 				</div>
 
