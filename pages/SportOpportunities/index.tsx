@@ -11,6 +11,7 @@ import {Observer, observer} from "mobx-react-lite";
 import {SimplePage, useGetPageConfigQuery, useGetSimplePagesQuery} from "../../graphqlGenerated/graphql";
 import LanguageStore from "../../Stores/LanguageStore";
 import LanguageStoreV2 from '../../Stores/LanguageStoreV2';
+import CarouselComponent from '../../components/MainPage/CarouselComponent';
 
 
 const Index: NextPage = () => {
@@ -45,7 +46,7 @@ const Index: NextPage = () => {
                 <AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
             ) : (
             <>
-                <img src={imgFile} className={styles.titlePhoto}/>
+                <CarouselComponent roundedCorners={false} imageList={[imgFile]} />
                 {loading ? <p>Loading</p> :
                     <>
                         <h2>

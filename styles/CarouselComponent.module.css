@@ -1,3 +1,52 @@
+.parent { 
+    width: 100%;
+    z-index: 0;
+    position: relative;
+}
+
+.CarouselItem { 
+    height: 200px;
+}
+
+.Carousel { 
+    z-index: 1;
+}
+
+.parentBorder > div > div > div > div{ 
+    clip-path: inset(0% 0% 0% 0% round 10px);
+}
+
+.arrows {    
+    position: relative;
+    width: 31px;
+    height: 31px;
+    z-index: 110;
+
+    cursor: pointer;
+    border: none;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.arrowNext { 
+    z-index: 110;
+    margin: 0px 50px;
+    bottom: 20px;
+    background: #005BE4;
+    border-radius: 0 5px 5px 0;
+}
+.arrowPrev { 
+    z-index: 110;
+    bottom: -211px;
+    margin: 0px 20px;
+    background: #0167FF;
+    border-radius: 5px 0 0 5px;
+}
+
+
+
 @media screen and (max-width: 800px) {
     img.backGroundImg{
         width: 100%;
@@ -13,6 +62,12 @@
 
         margin: auto 0;
     }
+    .CarouselItem { 
+        height: 300px;
+    }
+    .arrowPrev { 
+        bottom: -311px;
+    }
 
     .divSchedule{
         flex-direction: column;
@@ -23,13 +78,11 @@
     }
 
     div.AltScheduleButtons{
-
         bottom: -280px;
-
     }
 }
 
-.ImageWithSchedule{
+.ImageWithSchedule {
     width: 100%;
     max-width: 1300px;
     margin-top: 10px;
@@ -72,6 +125,11 @@
 
 
 .schedule{
+    z-index: 1;
+    position: absolute;
+
+    top: 50px;
+
     font-size: 16px;
     background: rgba(33, 53, 77, 0.75);
     color: #FFFFFF;

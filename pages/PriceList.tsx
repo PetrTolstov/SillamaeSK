@@ -8,6 +8,7 @@ import AppIsBeingBuilt from "../components/Temporary/AppIsBeingBuilt";
 import LanguageStore from "../Stores/LanguageStore";
 import { observer } from "mobx-react-lite";
 import LanguageStoreV2 from "../Stores/LanguageStoreV2";
+import CarouselComponent from "../components/MainPage/CarouselComponent";
 
 const PriceList: NextPage = () => {
     const { data: configData } = useGetPageConfigQuery({
@@ -18,7 +19,7 @@ const PriceList: NextPage = () => {
 	return (
 		<Layout>
             {configData?.GetPageConfig?.showBanner ? <AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} /> : <main className={styles.main}>
-				<ImageWithSchedule/>
+            <CarouselComponent roundedCorners={true} imageList={["https://lola.land/wp-content/uploads/2019/11/LOLA-SPG-sports-park-genk-landscape-design-strip-list-antea-scaled.jpg"]} />
 				<div className={styles.container}  data-aos="fade-up" data-aos-once={'true'}>
 					<h1 className={styles.h1}>{LanguageStoreV2.header.tabs.PriceListPageTab[LanguageStoreV2.currentLanguage]}</h1>
 					<PriceListTableComponent/>

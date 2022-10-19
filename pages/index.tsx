@@ -15,6 +15,7 @@ import { useGetPageConfigQuery } from "../graphqlGenerated/graphql";
 import AppIsBeingBuilt from "../components/Temporary/AppIsBeingBuilt";
 import { observer } from "mobx-react-lite";
 import LanguageStore from "../Stores/LanguageStore";
+import CarouselComponent from "../components/MainPage/CarouselComponent";
 
 const Home: NextPage = () => {
 	//<ScheduleOnMainPageComponent/>
@@ -32,13 +33,19 @@ const Home: NextPage = () => {
 				<AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
 			) : (
 				<main className={styles.main}>
-					<ImageWithSchedule isMain={true} />
+					<CarouselComponent
+						showSchedule
+						imageList={[
+							"https://lola.land/wp-content/uploads/2019/11/LOLA-SPG-sports-park-genk-landscape-design-strip-list-antea-scaled.jpg",
+						]}
+					/>
+					{/* <ImageWithSchedule isMain={true} /> */}
 
 					<div className={styles.textAndNewsFrame}>
 						<DescriptionNearNewsComponent />
 						<NewsFacebookComponent />
 					</div>
-					<SideNavComponent/>
+					<SideNavComponent />
 				</main>
 			)}
 		</Layout>

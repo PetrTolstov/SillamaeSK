@@ -11,6 +11,7 @@ import LanguageStore from "../../Stores/LanguageStore";
 import languageStore from "../../Stores/LanguageStore";
 import { observer } from "mobx-react-lite";
 import LanguageStoreV2 from "../../Stores/LanguageStoreV2";
+import CarouselComponent from "../../components/MainPage/CarouselComponent";
 
 const Maleruum: NextPage = () => {
 	const page = "Maleruum";
@@ -45,7 +46,7 @@ const Maleruum: NextPage = () => {
 				<AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
 			) : (
 				<>
-					<img src={imgFile} className={styles.titlePhoto} />
+					<CarouselComponent roundedCorners={false} imageList={[imgFile]} />
 					{loading ? (
 						<p>Loading</p>
 					) : (

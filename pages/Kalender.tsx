@@ -11,6 +11,7 @@ import { offset } from "@popperjs/core";
 import LanguageStore from "../Stores/LanguageStore";
 import { observer } from "mobx-react-lite";
 import LanguageStoreV2 from "../Stores/LanguageStoreV2";
+import CarouselComponent from "../components/MainPage/CarouselComponent";
 
 const Kalender: NextPage = () => {
 	let newDate = new Date();
@@ -121,7 +122,7 @@ const Kalender: NextPage = () => {
 	return (
 		<Layout>
 				<main className={styles.main}>
-					<ImageWithSchedule />
+                    <CarouselComponent roundedCorners={true} imageList={["https://lola.land/wp-content/uploads/2019/11/LOLA-SPG-sports-park-genk-landscape-design-strip-list-antea-scaled.jpg"]} />
 
 					<div className={styles.container}>
 						<div data-aos='fade-right' data-aos-once={"true"} className={styles.calCon}>
