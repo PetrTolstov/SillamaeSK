@@ -6,6 +6,7 @@ import {
     useGetCalendarEventsByMonthQuery
 } from "../../graphqlGenerated/graphql";
 import {useEffect, useState} from "react";
+import Link from "next/link";
 
 
 function ScheduleOnMainPageComponent(){
@@ -82,7 +83,9 @@ function ScheduleOnMainPageComponent(){
                         }})
                     )}
                 </ul>
-                <button className={styles.more}>Vaata rohkem ▶</button>
+                <Link href={'/Kalender'}>
+                    <a className={styles.more}>Vaata rohkem ▶</a>
+                </Link>
             </div>
         </article>
     )

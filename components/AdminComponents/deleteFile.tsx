@@ -43,7 +43,7 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 		if (listImgDel) {
 
 			axios.post(LINK + "/delete", listImgDel).then((r) => closeModal());
-			window.location.reload()
+			//window.location.reload()
 		}else{
 			alert("Choose photo to remove")
 		}
