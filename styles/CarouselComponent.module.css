@@ -2,6 +2,8 @@
     width: 100%;
     z-index: 0;
     position: relative;
+    margin-top: -20px;
+
 }
 
 .CarouselItem {
