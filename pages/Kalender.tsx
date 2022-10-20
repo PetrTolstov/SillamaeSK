@@ -155,6 +155,7 @@ const Kalender: NextPage = () => {
 
 
 	useEffect(() => {
+		setTimeout(correctCalendar, 1)
 		correctCalendar();
 		//document.getElementsByClassName(styles.chosenLi)[0]?.scrollIntoView();
 		//window.scroll(0,0)
