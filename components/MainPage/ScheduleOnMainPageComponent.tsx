@@ -15,21 +15,58 @@ function ScheduleOnMainPageComponent(){
         `${newDate.getFullYear()}-${newDate.getMonth() + 1}`
     );
 
-
-
     const [events, setEvents] = useState<CalendarEvent[]>([])
+
 
 
     const [getEventsByMonth, { loading, data, error }] = useGetCalendarEventsByMonthLazyQuery();
 
 
-
     useEffect(() => {
-
         getEventsByMonth({
             variables: {
                 monthStr: currentMonthAndYear,
             },
+            onCompleted(data){
+                let l = data?.GetCalendarEventsByMonth!.filter((el, i) => {
+                    if (!((new Date(el?.date ?? "")).getTime() < (new Date).getTime()) && el) {
+                        return el
+                    }
+                })
+
+
+                l?.filter((el) => {
+                    if(el){
+                        return el
+                    }
+                })
+
+
+
+                if(l != undefined){
+                    let list = [...events as [], ...l as []].slice(0,5)
+                    console.log(list)
+
+                    setEvents(list)
+
+                    if(events.length < 5){
+                        let month = parseInt(currentMonthAndYear.split('-')[1]) + 1
+                        let monthStr : string
+                        if (month < 10){
+                            monthStr = `0${month}`
+                        }else if (month > 12){
+                            monthStr = '01'
+                        }else{
+                            monthStr = month.toString()
+                        }
+
+
+
+
+                        setCurrentMonthAndYear(`${currentMonthAndYear.split('-')[0]}-${monthStr}`)
+                    }
+                }
+            }
         })
 
     }, [currentMonthAndYear])
@@ -41,46 +78,6 @@ function ScheduleOnMainPageComponent(){
     });*/
 
 
-    useEffect(() =>{
-
-            let l = data?.GetCalendarEventsByMonth!.filter((el, i) => {
-                if (!((new Date(el?.date ?? "")).getTime() < (new Date).getTime()) && el) {
-                    return el
-                }
-            })
-
-
-
-            l?.filter((el) => {
-                if(el){
-                    return el
-                }
-            })
-
-
-            if(l != undefined){
-                setEvents([...events as [], ...l as []].slice(0,5))
-
-                if(events.length < 5){
-                    let month = parseInt(currentMonthAndYear.split('-')[1]) + 1
-                    let monthStr : string
-                    if (month < 10){
-                        monthStr = `0${month}`
-                    }else if (month > 12){
-                        monthStr = '01'
-                    }else{
-                        monthStr = month.toString()
-                    }
-
-
-
-
-                    setCurrentMonthAndYear(`${currentMonthAndYear.split('-')[0]}-${monthStr}`)
-                }
-            }
-
-
-    }, [loading])
 
 
     const monthNames = [
@@ -106,7 +103,6 @@ function ScheduleOnMainPageComponent(){
                     {loading && events.length > 4? (
                         <p>Loading...</p>
                     ) : (
-
                         events?.map((el, i) => {
                             if (el){
                                 let date = new Date(el!.date ?? "");
