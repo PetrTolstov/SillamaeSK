@@ -362,6 +362,7 @@ export type Query = {
   GetPersonalContactsInfo?: Maybe<Array<Maybe<PersonContactInfo>>>;
   GetPriceList: Array<Maybe<PriceListElement>>;
   GetPriceListElementById: PriceListElement;
+  GetRelevantCalendarEventsByCurrentDate?: Maybe<Array<Maybe<CalendarEvent>>>;
   GetSimplePages?: Maybe<Array<SimplePage>>;
   GetSportOpportunitiesDescription?: Maybe<SportOpportunitiesDescription>;
   GetTimeTable?: Maybe<TimeTable>;
@@ -390,6 +391,11 @@ export type QueryGetPageConfigArgs = {
 
 export type QueryGetPriceListElementByIdArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryGetRelevantCalendarEventsByCurrentDateArgs = {
+  currentDate?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -698,6 +704,13 @@ export type GetPriceListNamesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetPriceListNamesQuery = { __typename?: 'Query', GetPriceList: Array<{ __typename?: 'PriceListElement', _id: string, name: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } } | null> };
+
+export type GetRelevantCalendarEventsByCurrentDateQueryVariables = Exact<{
+  currentDate?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetRelevantCalendarEventsByCurrentDateQuery = { __typename?: 'Query', GetRelevantCalendarEventsByCurrentDate?: Array<{ __typename?: 'CalendarEvent', _id: string, link?: string | null, date?: string | null, place?: string | null, startTime?: string | null, endTime?: string | null, name?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, eventDescription?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null };
 
 export type GetSimplePagesQueryVariables = Exact<{
   type?: InputMaybe<Scalars['Int']>;
@@ -1944,6 +1957,56 @@ export function useGetPriceListNamesLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetPriceListNamesQueryHookResult = ReturnType<typeof useGetPriceListNamesQuery>;
 export type GetPriceListNamesLazyQueryHookResult = ReturnType<typeof useGetPriceListNamesLazyQuery>;
 export type GetPriceListNamesQueryResult = Apollo.QueryResult<GetPriceListNamesQuery, GetPriceListNamesQueryVariables>;
+export const GetRelevantCalendarEventsByCurrentDateDocument = gql`
+    query GetRelevantCalendarEventsByCurrentDate($currentDate: String) {
+  GetRelevantCalendarEventsByCurrentDate(currentDate: $currentDate) {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    eventDescription {
+      RUS
+      EST
+      ENG
+    }
+    link
+    date
+    place
+    startTime
+    endTime
+  }
+}
+    `;
+
+/**
+ * __useGetRelevantCalendarEventsByCurrentDateQuery__
+ *
+ * To run a query within a React component, call `useGetRelevantCalendarEventsByCurrentDateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRelevantCalendarEventsByCurrentDateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRelevantCalendarEventsByCurrentDateQuery({
+ *   variables: {
+ *      currentDate: // value for 'currentDate'
+ *   },
+ * });
+ */
+export function useGetRelevantCalendarEventsByCurrentDateQuery(baseOptions?: Apollo.QueryHookOptions<GetRelevantCalendarEventsByCurrentDateQuery, GetRelevantCalendarEventsByCurrentDateQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRelevantCalendarEventsByCurrentDateQuery, GetRelevantCalendarEventsByCurrentDateQueryVariables>(GetRelevantCalendarEventsByCurrentDateDocument, options);
+      }
+export function useGetRelevantCalendarEventsByCurrentDateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRelevantCalendarEventsByCurrentDateQuery, GetRelevantCalendarEventsByCurrentDateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRelevantCalendarEventsByCurrentDateQuery, GetRelevantCalendarEventsByCurrentDateQueryVariables>(GetRelevantCalendarEventsByCurrentDateDocument, options);
+        }
+export type GetRelevantCalendarEventsByCurrentDateQueryHookResult = ReturnType<typeof useGetRelevantCalendarEventsByCurrentDateQuery>;
+export type GetRelevantCalendarEventsByCurrentDateLazyQueryHookResult = ReturnType<typeof useGetRelevantCalendarEventsByCurrentDateLazyQuery>;
+export type GetRelevantCalendarEventsByCurrentDateQueryResult = Apollo.QueryResult<GetRelevantCalendarEventsByCurrentDateQuery, GetRelevantCalendarEventsByCurrentDateQueryVariables>;
 export const GetSimplePagesDocument = gql`
     query GetSimplePages($type: Int) {
   GetSimplePages(type: $type) {

@@ -1,0 +1,20 @@
+query GetRelevantCalendarEventsByCurrentDate($currentDate: String) {
+  GetRelevantCalendarEventsByCurrentDate(currentDate: $currentDate) {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    eventDescription {
+      RUS
+      EST
+      ENG
+    }
+    link
+    date
+    place
+    startTime
+    endTime
+  }
+}
