@@ -98,7 +98,7 @@ const Kalender: NextPage = () => {
 
 
 			setCurrentMonthAndYear(`${dateList[1]}-${monthNames.indexOf(dateList[0])+1}`);
-			setTimeout(correctCalendar, 1);
+			setTimeout(correctCalendar, 100);
 			correctCalendar();
 
 		}, 1)
@@ -127,6 +127,7 @@ const Kalender: NextPage = () => {
 				list[i].style.background = "#FFFFFF";
 				list[i].style.color = "#afafaf";
 			} else if (parseInt(list[i].textContent!) > max) {
+				console.log('c')
 				let date = document.querySelectorAll(`.${styles.calendar} > div:nth-child(1) > button`)[2].textContent!;
 				date = date.charAt(0).toUpperCase() + date.slice(1);
 				let dateList = date.split(" ");
@@ -206,10 +207,10 @@ const Kalender: NextPage = () => {
 
 									if ((new Date(d?.date ?? "")).getTime() < newDate.getTime()){
 										document.getElementsByClassName(styles.moreLi)[0]?.classList.remove(styles.hiddenB)
-										console.log(document.getElementsByClassName(styles.hidden)[0])
+
 									}else{
 										document.getElementsByClassName(styles.moreLi)[0]?.classList.add(styles.hiddenB)
-										console.log(1)
+
 									}
 									return (
 										<li
