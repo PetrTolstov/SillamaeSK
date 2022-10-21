@@ -1,12 +1,14 @@
 @media screen and (max-width: 1300px) {
 
 
+
     .openbtn{
         display: block !important;
     }
 
-    .aboveNav{
+    div.aboveNav{
         min-width: 90vw;
+        align-items: center;
     }
 
     nav.mainNav{
@@ -17,7 +19,7 @@
         flex-direction: column;
         flex-wrap: nowrap;
         justify-content: flex-start;
-        top: 75px;
+        top: 70px;
         left: 0;
         background: #ffffff;
         height: auto;
@@ -48,7 +50,7 @@
 
     a.changeLanguage{
         position: fixed;
-        z-index: 3;
+        z-index: 4;
         top: 70px;
     }
 
@@ -59,6 +61,18 @@
 
     a.hiddenLang{
         display: none;
+    }
+
+    .estLang{
+
+    }
+
+    .engLang{
+        top: 100px !important;
+    }
+
+    .rusLang{
+        top: 130px !important;
     }
 
 
@@ -126,10 +140,12 @@
 .aboveNav{
     display: flex;
     justify-content: space-between;
-    align-items: center;
+   /* align-items: center;*/
 }
 
-
+.header{
+    z-index: 10;
+}
 
 .logoInformation{
     display: flex;
@@ -155,8 +171,8 @@
     font-weight: 600;
     font-size: 12px;
 
-    width: 44px;
-    height: 44px;
+    width: 30px;
+    height: 30px;
 
     display: flex;
     justify-content: center;
@@ -219,10 +235,13 @@
 }
 
 .switchButtons{
+    z-index: 3;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
 }
+
+
 
 .optionalSportComplexLinks{
     display: none;
@@ -230,4 +249,9 @@
 
 .optionalSportOpportunitiesLinks{
     display: none;
+}
+
+.chosenLang{
+    color: white;
+    background: #0167FF;
 }

@@ -1,8 +1,9 @@
-.parent { 
+
+.parent {
     width: 100%;
     z-index: 0;
     position: relative;
-    margin-top: -20px;
+    margin-top: -30px;
 
 }
 
@@ -50,9 +51,18 @@
     border-radius: 5px 0 0 5px;
 }
 
-
+@media screen and (max-width: 500px){
+    .schedule{
+        width: 100%;
+    }
+}
 
 @media screen and (max-width: 800px) {
+    .CarouselItem {
+
+        background-size: auto;
+
+    }
     img.backGroundImg{
         width: 100%;
         border-radius: 0;

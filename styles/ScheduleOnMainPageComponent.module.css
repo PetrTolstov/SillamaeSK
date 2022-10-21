@@ -61,6 +61,10 @@
     list-style-type: none;
 }
 
+.kalenderFrame{
+    max-width: 1300px;
+}
+
 .kalenderFrame li h3{
     margin-bottom: 0;
     font-family: 'Inter', sans-serif;

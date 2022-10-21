@@ -1,13 +1,10 @@
 import styles from "../styles/HeaderComponent.module.css";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
+import {useEffect, useRef, useState} from "react";
+import {useRouter} from "next/router";
 import LanguageStore from "../Stores/LanguageStore";
-import { observer } from "mobx-react-lite";
-import cross from "../public/cross.svg";
-import threeScticks from "../public/threeSticks.svg";
-import Image from "next/image";
-import LanguageStoreV2, { language } from "../Stores/LanguageStoreV2";
+import {observer} from "mobx-react-lite";
+import LanguageStoreV2, {language} from "../Stores/LanguageStoreV2";
 import BurgerMenuButton from "./SVGs/BurgerMenuButton";
 import Cross from "./SVGs/Cross";
 
@@ -119,14 +116,19 @@ function HeaderComponent() {
 					</Link>
 				</div>
 				<div className={styles.switchButtons}>
-					<a className={langStyle.join(" ")} onClick={changeLang}>
-						{isEstLanguage ? "EN" : "ET"}
+					<a className={[...langStyle, styles.estLang, LanguageStoreV2.currentLanguage == language.EST ? styles.chosenLang : '' ].join(' ')} onClick={() => {
+						LanguageStoreV2.switchToLanguage(language.EST);
+					}}>
+						ET
 					</a>
-					<a
-						className={styles.optionalLang}
-						onClick={() => {
-							LanguageStoreV2.switchToLanguage(language.RUS);
-						}}>
+					<a className={[...langStyle, styles.engLang, LanguageStoreV2.currentLanguage == language.ENG ? styles.chosenLang : '' ].join(' ')} onClick={() => {
+						LanguageStoreV2.switchToLanguage(language.ENG);
+					}}>
+						EN
+					</a>
+					<a className={[...langStyle,  styles.rusLang, LanguageStoreV2.currentLanguage == language.RUS ? styles.chosenLang : '' ].join(' ')} onClick={() => {
+						LanguageStoreV2.switchToLanguage(language.RUS);
+					}}>
 						RU
 					</a>
 					<button className={styles.openbtn} onClick={openNav}>
@@ -227,3 +229,15 @@ function HeaderComponent() {
 
 // for language store support
 export default observer(HeaderComponent);
+/*
+<a className={langStyle.join(" ")} onClick={changeLang}>
+						{isEstLanguage ? "EN" : "ET"}
+					</a>
+					<a
+						className={styles.optionalLang}
+						onClick={() => {
+							LanguageStoreV2.switchToLanguage(language.RUS);
+						}}>
+						RU
+					</a>
+ */

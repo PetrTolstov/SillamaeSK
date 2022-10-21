@@ -15,31 +15,74 @@ function ScheduleOnMainPageComponent(){
         `${newDate.getFullYear()}-${newDate.getMonth() + 1}`
     );
 
-    const [events, setEvents] = useState<CalendarEvent[]>()
 
+
+    const [events, setEvents] = useState<CalendarEvent[]>([])
+
+
+    const [getEventsByMonth, { loading, data, error }] = useGetCalendarEventsByMonthLazyQuery();
+
+
+
+    useEffect(() => {
+
+        getEventsByMonth({
+            variables: {
+                monthStr: currentMonthAndYear,
+            },
+        })
+
+    }, [currentMonthAndYear])
+    /*
     const { loading, data, error } = useGetCalendarEventsByMonthQuery({
         variables: {
             monthStr: currentMonthAndYear,
         },
-    });
+    });*/
+
 
     useEffect(() =>{
 
-        let l = data?.GetCalendarEventsByMonth!.filter((el, i) => {
-            if (!((new Date(el?.date ?? "")).getTime() < (new Date).getTime()) && el) {
-                return el
+            let l = data?.GetCalendarEventsByMonth!.filter((el, i) => {
+                if (!((new Date(el?.date ?? "")).getTime() < (new Date).getTime()) && el) {
+                    return el
+                }
+            })
+
+
+
+            l?.filter((el) => {
+                if(el){
+                    return el
+                }
+            })
+
+
+            if(l != undefined){
+                setEvents([...events as [], ...l as []].slice(0,5))
+
+                if(events.length < 5){
+                    let month = parseInt(currentMonthAndYear.split('-')[1]) + 1
+                    let monthStr : string
+                    if (month < 10){
+                        monthStr = `0${month}`
+                    }else if (month > 12){
+                        monthStr = '01'
+                    }else{
+                        monthStr = month.toString()
+                    }
+
+
+
+
+                    setCurrentMonthAndYear(`${currentMonthAndYear.split('-')[0]}-${monthStr}`)
+                }
             }
-        })
-
-
-
-        console.log(l)
-        if(l != undefined){
-            setEvents(l.slice(0,4) as CalendarEvent[])
-        }
 
 
     }, [loading])
+
+
     const monthNames = [
         "Jaanuar",
         "Veebruar",
@@ -60,7 +103,7 @@ function ScheduleOnMainPageComponent(){
 
                 <h2>SÜNDMUSTE KALENDER </h2>
                 <ul>
-                    {loading ? (
+                    {loading && events.length > 4? (
                         <p>Loading...</p>
                     ) : (
 

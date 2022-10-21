@@ -20,6 +20,12 @@
     }
 }
 
+@media screen and (min-width: 1100px) {
+    .calenderAsList {
+        flex-basis: 68% !important;
+
+    }
+}
 
 .container{
     max-width: 1300px;
@@ -50,7 +56,7 @@
 }
 
 .calCon{
-    flex-basis: 38%;
+    flex-basis: 28%;
 }
 .calendar{
     background: #ffffff;
@@ -101,7 +107,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 40px;
+    width: 100%;
     height: 40px;
     background: #0167FF;
     text-decoration: none;
@@ -119,12 +125,13 @@
     background: #F2F2F2;
     margin: 2px 0;
     width: 40px;
-    height: calc(38vw / 7.85);
+    height: 40px;
     max-height: 62px;
 }
 
 .calenderAsList{
-    flex-basis: 58%;
+    flex-basis: 70%;
+
 
     background: #FFFFFF;
     box-shadow: 0px 10px 10px 4px rgba(0, 0, 0, 0.1);
