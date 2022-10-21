@@ -48,6 +48,12 @@
 
 }
 
+.kalender ul::-webkit-scrollbar {
+    display: none;
+}
+
+
+
 .kalender ul li{
     width: 230px;
     margin: 0 10px 20px 10px;
@@ -113,6 +119,7 @@
 }
 
 a.more{
+    margin-top: 5px;
     margin-left: 10px;
     border: none;
     padding: 5px 15px;
