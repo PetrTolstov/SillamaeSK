@@ -10,6 +10,9 @@
         flex-basis: 100%;
     }
 
+    article.kalender ul{
+        flex-direction: column;
+    }
 }
 
 @media screen and (max-width: 900px) {
@@ -55,7 +58,7 @@
 
 
 .kalender ul li{
-    width: 230px;
+    min-width: 300px;
     margin: 0 10px 20px 10px;
     display: flex;
     flex-direction: column;

@@ -105,6 +105,7 @@ function FooterComponent() {
 						<></>
 					)}
 				</div>
+				<a href={"https://www.facebook.com/spordikompleksKalev"} className={styles.instagramIcon}></a>
 				<a href={"https://www.facebook.com/spordikompleksKalev"} className={styles.facebookIcon}></a>
 			</div>
 		</footer>

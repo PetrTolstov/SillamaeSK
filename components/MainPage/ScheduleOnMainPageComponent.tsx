@@ -11,7 +11,7 @@ import Link from "next/link";
 
 function ScheduleOnMainPageComponent() {
     // Event cards amount
-    const CARDS_AMOUNT = 5;
+    const CARDS_AMOUNT = 4;
 
 	let newDate = new Date();
 	const [currentMonthAndYear, setCurrentMonthAndYear] = useState(
@@ -98,10 +98,23 @@ function ScheduleOnMainPageComponent() {
 		"November",
 		"Detsember",
 	];
+
+	const hCalender = {
+		'EST' : 'SÜNDMUSTE KALENDER',
+		'RUS' : 'КАЛЕНДАРЬ СОБЫТИЙ',
+		'ENG' : 'CALENDAR OF EVENTS'
+	}
+
+	const bMore = {
+		'EST' : 'Vaata rohkem',
+		'RUS' : 'Посмотреть больше',
+		'ENG' : 'See more'
+	}
+
 	return (
 		<article className={styles.kalender}>
 			<div className={styles.kalenderFrame}>
-				<h2>SÜNDMUSTE KALENDER </h2>
+				<h2>{hCalender[LanguageStoreV2.currentLanguage]}</h2>
 				<ul>
 					{loading && events.length > 4 ? (
 						<p>Loading...</p>
@@ -114,7 +127,7 @@ function ScheduleOnMainPageComponent() {
 									id={`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}
 									key={`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}--${i}`}>
 									<h3>
-										{el!.name![LanguageStoreV2.currentLanguage] == ""
+										{el!.name![LanguageStoreV2.currentLanguage] == "EST"
 											? el?.name?.EST
 											: el!.name![LanguageStoreV2.currentLanguage]}
 									</h3>
@@ -132,7 +145,7 @@ function ScheduleOnMainPageComponent() {
 					)}
 				</ul>
 				<Link href={"/Kalender"}>
-					<a className={styles.more}>Vaata rohkem ▶</a>
+					<a className={styles.more}>{bMore[LanguageStoreV2.currentLanguage]}</a>
 				</Link>
 			</div>
 		</article>
