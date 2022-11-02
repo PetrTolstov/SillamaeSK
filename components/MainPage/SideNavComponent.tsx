@@ -1,10 +1,36 @@
 import styles from '../../styles/SideNavComponent.module.css'
 import Link from "next/link";
+import {router} from "next/client";
+import LanguageStoreV2, {language} from "../../Stores/LanguageStoreV2";
 
-function SideNavComponent(){
+
+type SideNavProps = {
+    paths : string[],
+    labels : string[]
+}
+
+function SideNavComponent({paths, labels} : SideNavProps){
+
+
+
     return(
         <nav className={styles.sideNav}>
-            <Link href={`/SportOpportunities/Kunstmurustaadion`}>
+            {paths.map((el, i) => (
+                <Link href={el}  key={`link-${i}`}>
+                    <a>{labels[i]}</a>
+                </Link>
+            ))}
+
+        </nav>
+    )
+}
+
+export default SideNavComponent
+
+
+
+/*
+<Link href={`/SportOpportunities/Kunstmurustaadion`}>
                 <a>Kunstmurustaadion</a>
             </Link>
             <Link href={`/SportOpportunities`}>
@@ -33,18 +59,4 @@ function SideNavComponent(){
                 <a>Maleruum</a>
             </Link>
 
-
-
-
-
-
-
-
-
-
-
-        </nav>
-    )
-}
-
-export default SideNavComponent
+ */
