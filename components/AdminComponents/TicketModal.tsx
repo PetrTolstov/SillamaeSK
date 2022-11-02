@@ -19,6 +19,7 @@ import { gql } from "@apollo/client";
 import Image from "next/image";
 import Bin from "../../public/Bin.svg";
 import frameStyles from "../../styles/FormStyles.module.css";
+import { prototype } from "events";
 
 type TicketModalProps = {
 	priceListElementId?: string;
@@ -250,9 +251,7 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													depth: 1,
 													property1: ticketProperties[e.currentTarget.name as ticketProperties],
 													property2: undefined,
-													lang: ticketProperties[
-														e.currentTarget.classList[0] as ticketProperties
-													],
+													lang: ticketProperties.EST,
 												});
 											}}
 
@@ -275,9 +274,7 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													depth: 1,
 													property1: ticketProperties[e.currentTarget.name as ticketProperties],
 													property2: undefined,
-													lang: ticketProperties[
-														e.currentTarget.classList[0] as ticketProperties
-													],
+													lang: ticketProperties.ENG,
 												});
 											}}
 										/>
@@ -300,9 +297,7 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 												depth: 1,
 												property1: ticketProperties[e.currentTarget.name as ticketProperties],
 												property2: undefined,
-												lang: ticketProperties[
-													e.currentTarget.classList[0] as ticketProperties
-												],
+												lang: ticketProperties.RUS,
 											});
 										}}
 									/>
@@ -324,9 +319,7 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													id,
 													depth: 2,
 													property1:
-														ticketProperties[
-															e.currentTarget.parentElement?.classList[0] as ticketProperties
-														],
+														ticketProperties.duration,
 													property2: ticketProperties[e.currentTarget.name as ticketProperties],
 												});
 											}}
@@ -349,14 +342,9 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													e,
 													id,
 													depth: 2,
-													property1:
-														ticketProperties[
-															e.currentTarget.parentElement?.classList[0] as ticketProperties
-														],
+													property1: ticketProperties.duration,
 													property2: ticketProperties[e.currentTarget.name as ticketProperties],
-													lang: ticketProperties[
-														e.currentTarget.classList[0] as ticketProperties
-													],
+													lang: ticketProperties.EST,
 												});
 											}}
 
@@ -379,13 +367,9 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													id,
 													depth: 2,
 													property1:
-														ticketProperties[
-															e.currentTarget.parentElement?.classList[0] as ticketProperties
-														],
+														ticketProperties.duration,
 													property2: ticketProperties[e.currentTarget.name as ticketProperties],
-													lang: ticketProperties[
-														e.currentTarget.classList[0] as ticketProperties
-													],
+													lang: ticketProperties.ENG,
 												});
 											}}
 										/>
@@ -407,13 +391,9 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													id,
 													depth: 2,
 													property1:
-														ticketProperties[
-															e.currentTarget.parentElement?.classList[0] as ticketProperties
-														],
+														ticketProperties.duration,
 													property2: ticketProperties[e.currentTarget.name as ticketProperties],
-													lang: ticketProperties[
-														e.currentTarget.classList[0] as ticketProperties
-													],
+													lang: ticketProperties.RUS,
 												});
 											}}
 										/>
@@ -513,6 +493,7 @@ const EditingForm = ({
 					name: { ...name },
 					tickets: [...tickets],
 				};
+                console.log(tickets);
 				updatePriceElement({
 					variables: {
 						id: priceListElement._id,
@@ -601,7 +582,7 @@ const EditingForm = ({
 												depth: 1,
 												property1: ticketProperties[e.currentTarget.name as ticketProperties],
 												property2: undefined,
-												lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+												lang: ticketProperties.EST,
 											});
 										}}
 									/>
@@ -624,7 +605,7 @@ const EditingForm = ({
 												depth: 1,
 												property1: ticketProperties[e.currentTarget.name as ticketProperties],
 												property2: undefined,
-												lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+												lang: ticketProperties.ENG,
 											});
 										}}
 									/>
@@ -648,7 +629,7 @@ const EditingForm = ({
 												depth: 1,
 												property1: ticketProperties[e.currentTarget.name as ticketProperties],
 												property2: undefined,
-												lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+												lang: ticketProperties.RUS,
 											});
 										}}
 									/>
@@ -670,10 +651,7 @@ const EditingForm = ({
 												e,
 												id,
 												depth: 2,
-												property1:
-													ticketProperties[
-														e.currentTarget.parentElement?.classList[0] as ticketProperties
-													],
+												property1: ticketProperties.duration,
 												property2: ticketProperties[e.currentTarget.name as ticketProperties],
 											});
 										}}
@@ -697,12 +675,9 @@ const EditingForm = ({
 												e,
 												id,
 												depth: 2,
-												property1:
-													ticketProperties[
-														e.currentTarget.parentElement?.classList[0] as ticketProperties
-													],
+												property1: ticketProperties.duration,
 												property2: ticketProperties[e.currentTarget.name as ticketProperties],
-												lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+												lang: ticketProperties.EST,
 											});
 										}}
 
@@ -725,12 +700,9 @@ const EditingForm = ({
 											e,
 											id,
 											depth: 2,
-											property1:
-												ticketProperties[
-													e.currentTarget.parentElement?.classList[0] as ticketProperties
-												],
+											property1: ticketProperties.duration,
 											property2: ticketProperties[e.currentTarget.name as ticketProperties],
-											lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+											lang: ticketProperties.ENG,
 										});
 									}}
 								/>
@@ -751,12 +723,9 @@ const EditingForm = ({
 												e,
 												id,
 												depth: 2,
-												property1:
-													ticketProperties[
-														e.currentTarget.parentElement?.classList[0] as ticketProperties
-													],
+												property1: ticketProperties.duration,
 												property2: ticketProperties[e.currentTarget.name as ticketProperties],
-												lang: ticketProperties[e.currentTarget.classList[0] as ticketProperties],
+												lang: ticketProperties.RUS,
 											});
 										}}
 									/>

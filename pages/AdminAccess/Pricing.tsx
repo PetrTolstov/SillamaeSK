@@ -16,7 +16,6 @@ import { ButtonAdmin } from "../../components/AdminComponents/ButtonAdmin";
 import { TicketModal } from "../../components/AdminComponents/TicketModal";
 import AdminStore from "../../Stores/AdminStore";
 import { observer } from "mobx-react-lite";
-import Link from "next/link";
 import GoBackPage from "../../components/AdminComponents/GoBackPage";
 
 export enum modalTypes {
