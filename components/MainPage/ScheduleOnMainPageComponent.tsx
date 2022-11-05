@@ -24,9 +24,13 @@ function ScheduleOnMainPageComponent() {
 
 	const getCurrentDateString = (date: Date) => {
 		let month = date.getUTCMonth() + 1; //months from 1-12
-		let day = date.getUTCDate();
+		let day = date.getUTCDate().toString();
+		if(parseInt(day) < 10){
+			day = "0" + day
+		}
 		let year = date.getUTCFullYear();
 		let result = year + "-" + month + "-" + day;
+		console.log(result)
 		return result;
 	};
 
@@ -34,6 +38,9 @@ function ScheduleOnMainPageComponent() {
 		variables: {
 			currentDate: getCurrentDateString(new Date()),
 		},
+		onCompleted: ((data) =>{
+			console.log(data)
+	})
 	});
 
 	// useEffect(() => {
@@ -121,7 +128,7 @@ function ScheduleOnMainPageComponent() {
 					) : (
 						data?.GetRelevantCalendarEventsByCurrentDate?.slice(0, CARDS_AMOUNT).map((el, i) => {
 							let date = new Date(el!.date ?? "");
-
+							console.log(date)
 							return (
 								<li
 									id={`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}
