@@ -17,9 +17,9 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 					optional: page,
 				},
 			});
-
+			console.log(page)
 			setImgFile(res.data);
-		})();
+		})()
 	}, []);
 
 
@@ -32,7 +32,8 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 				el.classList.add(styles.hidden)
 			}
 		})
-		document.getElementById(value)!.classList.remove(styles.hidden)
+		console.log(value)
+		document.getElementById(value+'-c')!.classList.remove(styles.hidden)
 	};
 
 	const handleSubmit = (event: { preventDefault: () => void }) => {
@@ -116,7 +117,7 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 
 					</div>
 					{imgFile.map((el : {string : string[]}, i) => (
-						<div key={`${el}`} id={`${el}-c`} className={`${i == 0 || typeof el == "string"? '' : styles.hidden} ${styles.imgCont}`}>
+						<div key={`${el}`} id={`${Object.keys(el)}-c`} className={`${i == 0 || typeof el == "string"? '' : styles.hidden} ${styles.imgCont}`}>
 							{
 								typeof el == "string" ?
 									<img src={`${LINK}/public/images/${page}/${el}`} key={`${el}`} id={`${page}/${el}`} style={{width: "300px"}} onClick={handleImgClick} className={`${styles.img}`}/>
