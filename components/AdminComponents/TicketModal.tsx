@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import {
 	PriceListElement,
 	PriceListElementInput,
@@ -8,20 +8,23 @@ import {
 	useChangePriceListElementByIdMutation,
 	Ticket,
 	useGetPriceListElementByIdQuery,
-    GetPriceListElementByIdDocument,
-    useGetPriceListElementByIdLazyQuery,
-    MutationUpdatePriceListElementByIdArgs,
+	GetPriceListElementByIdDocument,
+	useGetPriceListElementByIdLazyQuery,
+	MutationUpdatePriceListElementByIdArgs,
+	InputMaybe,
+	TicketInput,
 } from "../../graphqlGenerated/graphql";
 import { modalTypes } from "../../pages/AdminAccess/Pricing";
 import styles from "../../styles/ModalAdmin.module.css";
 import { ButtonAdmin } from "./ButtonAdmin";
-import { gql } from "@apollo/client";
 import Image from "next/image";
 import Bin from "../../public/Bin.svg";
 import frameStyles from "../../styles/FormStyles.module.css";
-import { prototype } from "events";
+import { Maybe } from "graphql/jsutils/Maybe";
+import { Arrow, ArrowDirection } from "../SVGs/Arrow";
 
 type TicketModalProps = {
+    showTicketModal: boolean,
 	priceListElementId?: string;
 	modalType: modalTypes | undefined;
 	closeModal: () => void;
@@ -57,22 +60,32 @@ type FormProps = {
 	closeModal: () => void;
 };
 // props -> priceListElement object
-export const TicketModal = ({ priceListElementId, modalType, closeModal }: TicketModalProps) => {
+export const TicketModal = ({ showTicketModal, priceListElementId, modalType, closeModal }: TicketModalProps) => {
 	useEffect(() => {
-		document.body.style.overflow = "hidden";
-
+        if (showTicketModal) { 
+            document.body.style.overflow = "hidden";
+        }
 		return () => {
 			document.body.style.overflow = "scroll";
 		};
-	}, []);
+	}, [showTicketModal]);
 
 	const [priceListElement, setPriceListElement] = useState<PriceListElement>();
-    const { data, loading, error } = useGetPriceListElementByIdQuery({ variables: { id: priceListElementId! }, onCompleted(data) {
-        setPriceListElement(data.GetPriceListElementById)
-    }, });
-    const [ lazyGetPriceListElementById, {data: lazyData, error: lazyError, loading: lazyLoading} ] = useGetPriceListElementByIdLazyQuery({ variables: { id: priceListElementId!}, onCompleted(data) {
-        setPriceListElement(data.GetPriceListElementById);
-    },})
+	const { data, loading, error } = useGetPriceListElementByIdQuery({
+		variables: { id: priceListElementId ?? "0" },
+		onCompleted(data) {
+			setPriceListElement(data.GetPriceListElementById);
+		},
+        onError(error) {;
+        },
+	});
+	const [lazyGetPriceListElementById, { data: lazyData, error: lazyError, loading: lazyLoading }] =
+		useGetPriceListElementByIdLazyQuery({
+			variables: { id: priceListElementId! },
+			onCompleted(data) {
+				setPriceListElement(data.GetPriceListElementById);
+			},
+		});
 
 	// depth: 1 or 2
 	const handleChange = ({ objToCopy, func, e, id, depth, property1, property2, lang }: handleChangeArgs): void => {
@@ -97,35 +110,302 @@ export const TicketModal = ({ priceListElementId, modalType, closeModal }: Ticke
 
 		func(TicketsCopy);
 	};
+    if (showTicketModal) { 
+        return (
+            <>
+                <div className={styles.shadow}></div>
+                <div className={styles.container}>
+                    <h2>Header</h2>
+                    {loading ? (
+                        <p>Loading...</p>
+                    ) : modalType == modalTypes.editModal ? (
+                        <EditingForm
+                            closeModal={closeModal}
+                            handleChange={handleChange}
+                            priceListElement={priceListElement!}
+                        />
+                    ) : (
+                        <AddingForm closeModal={closeModal} handleChange={handleChange} />
+                    )}
+    
+                    <div>
+                        <ButtonAdmin label={"CLOSE"} action={closeModal} />
+                    </div>
+                </div>
+            </>
+        );
+    } else { 
+        return (<></>)
+    }
+	
+};
+type TicketListProps = { 
+    tickets: Maybe<Ticket>[],
+	setTickets: (arr: Ticket[]) => void,
+	handleChange: (
+		{ objToCopy, func, e, id, depth, property1, property2, lang }: handleChangeArgs,
+	) => void,
+    deleteTicket: (id: number) => void 
+}
+const TicketsList: React.FC<TicketListProps> = (
+	{tickets, setTickets, handleChange, deleteTicket}
+) => {
+    const [newTickets, setNewTickets] = useState<Ticket[]>([]);
+    // const [other, setOther] = useState(0);
+    useEffect(() => { 
+        if (tickets.length == 0 && newTickets.length > 0) { 
+            setTickets(newTickets);
+        }
+    }, [tickets])
 
+    enum Direction {
+        UP, DOWN
+    }
+
+    function moveTicketEl(id: number, direction: Direction) { 
+        const arr = tickets.slice();
+        const movedItem = arr.find((item, index) => index === id);
+        const remainingItems = arr.filter((item, index) => index !== id);
+        const newIndex = direction == Direction.UP ? id - 1 : id + 1; 
+        const reorderedItems = [
+            ...remainingItems.slice(0, newIndex),
+            movedItem!,
+            ...remainingItems.slice(newIndex),
+        ];
+        if (reorderedItems !== undefined) {
+            setNewTickets(reorderedItems as Ticket[])
+            setTickets([]);
+        }
+    }
+    
 	return (
 		<>
-			<div className={styles.shadow}></div>
-			<div className={styles.container}>
-				<h2>Header</h2>
-				{loading ? (
-					<p>Loading...</p>
-				) : modalType == modalTypes.editModal ? (
-					<EditingForm
-						closeModal={closeModal}
-						handleChange={handleChange}
-						priceListElement={priceListElement!}
-					/>
-				) : (
-					<AddingForm closeModal={closeModal} handleChange={handleChange} />
-				)}
+			{tickets.map((ticket, id) => (
+				<tr key={id}>
+					<td>
+						<div className={frameStyles.flexCon}>
+							<input
+								id={`${id}`}
+								name={`description`}
+								defaultValue={tickets[id]?.description.EST ?? ""}
+								className={["EST", styles.input].join(" ") && frameStyles.input}
+								type='text'
+								placeholder='Teenuse nimetus EST'
+								onChange={(e) => {
+									handleChange({
+										objToCopy: tickets,
+										func: setTickets,
+										e,
+										id,
+										depth: 1,
+										property1: ticketProperties[e.currentTarget.name as ticketProperties],
+										property2: undefined,
+										lang: ticketProperties.EST,
+									});
+								}}
+							/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+						<div className={frameStyles.flexCon}>
+							<input
+								id={`${id}`}
+								name={`description`}
+								defaultValue={ticket?.description.ENG ?? ""}
+								className={["ENG", styles.input].join(" ") && frameStyles.input}
+								type='text'
+								placeholder='Teenuse nimetus ENG'
+								onChange={(e) => {
+									handleChange({
+										objToCopy: tickets,
+										func: setTickets,
+										e,
+										id,
+										depth: 1,
+										property1: ticketProperties[e.currentTarget.name as ticketProperties],
+										property2: undefined,
+										lang: ticketProperties.ENG,
+									});
+								}}
+							/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
 
-				<div>
-					<ButtonAdmin label={"CLOSE"} action={closeModal} />
-				</div>
-			</div>
+						<div className={frameStyles.flexCon}>
+							<input
+								id={`${id}`}
+								name={`description`}
+								defaultValue={ticket?.description.RUS ?? ""}
+								className={["RUS", styles.input].join(" ") && frameStyles.input}
+								type='text'
+								placeholder='Teenuse nimetus RUS'
+								onChange={(e) => {
+									handleChange({
+										objToCopy: tickets,
+										func: setTickets,
+										e,
+										id,
+										depth: 1,
+										property1: ticketProperties[e.currentTarget.name as ticketProperties],
+										property2: undefined,
+										lang: ticketProperties.RUS,
+									});
+								}}
+							/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+					</td>
+					<td className='duration'>
+						<div className={frameStyles.flexCon}>
+							<input
+								id={`${id}`}
+								name={`hours`}
+								defaultValue={`${ticket?.duration?.hours}` ?? ""}
+								type='number'
+								step={"0.1"}
+								onChange={(e) => {
+									handleChange({
+										objToCopy: tickets,
+										func: setTickets,
+										e,
+										id,
+										depth: 2,
+										property1: ticketProperties.duration,
+										property2: ticketProperties[e.currentTarget.name as ticketProperties],
+									});
+								}}
+								className={frameStyles.input}
+							/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+
+						<div className={frameStyles.flexCon}>
+							<input
+								id={`${id}`}
+								name={`additionalInfo`}
+								defaultValue={ticket?.duration?.additionalInfo?.EST ?? ""}
+								className={["EST", styles.input].join(" ") && frameStyles.input}
+								type='text'
+								placeholder='Teenuse nimetus EST'
+								onChange={(e) => {
+									handleChange({
+										objToCopy: tickets,
+										func: setTickets,
+										e,
+										id,
+										depth: 2,
+										property1: ticketProperties.duration,
+										property2: ticketProperties[e.currentTarget.name as ticketProperties],
+										lang: ticketProperties.EST,
+									});
+								}}
+							/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+
+						<div className={frameStyles.flexCon}>
+							<input
+								id={`${id}`}
+								name={`additionalInfo`}
+								defaultValue={ticket?.duration?.additionalInfo?.ENG ?? ""}
+								className={["ENG", styles.input].join(" ") && frameStyles.input}
+								type='text'
+								placeholder='Teenuse nimetus ENG'
+								onChange={(e) => {
+									handleChange({
+										objToCopy: tickets,
+										func: setTickets,
+										e,
+										id,
+										depth: 2,
+										property1: ticketProperties.duration,
+										property2: ticketProperties[e.currentTarget.name as ticketProperties],
+										lang: ticketProperties.ENG,
+									});
+								}}
+							/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+						<div className={frameStyles.flexCon}>
+							<input
+								id={`${id}`}
+								name={`additionalInfo`}
+								defaultValue={ticket?.duration?.additionalInfo?.RUS ?? ""}
+								className={["RUS", styles.input].join(" ") && frameStyles.input}
+								type='text'
+								placeholder='Teenuse nimetus RUS'
+								onChange={(e) => {
+									handleChange({
+										objToCopy: tickets,
+										func: setTickets,
+										e,
+										id,
+										depth: 2,
+										property1: ticketProperties.duration,
+										property2: ticketProperties[e.currentTarget.name as ticketProperties],
+										lang: ticketProperties.RUS,
+									});
+								}}
+							/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+					</td>
+					<td>
+						<div className={frameStyles.flexCon}>
+							<input
+								id={`${id}`}
+								name={`price`}
+								defaultValue={`${ticket?.price}` ?? ""}
+								type='number'
+								step={"0.1"}
+								onChange={(e) => {
+									handleChange({
+										objToCopy: tickets,
+										func: setTickets,
+										e,
+										id,
+										depth: 1,
+										property1: ticketProperties[e.currentTarget.name as ticketProperties],
+									});
+								}}
+								className={frameStyles.input}
+							/>
+							<span className={frameStyles.focusBorder}></span>
+						</div>
+					</td>
+					<td className={styles.RemoveRawButton}>
+						<ButtonAdmin
+							border
+							label={<Image src={Bin} width={23} height={20} />}
+							action={() => {
+								deleteTicket(id);
+							}}
+						/>
+					</td>
+					<td>
+						<ButtonAdmin
+							border
+							label={<Arrow direction={ArrowDirection.UP} color={"#BEBEBE"}/>}
+							action={() => {
+                                moveTicketEl(id, Direction.UP)
+							}}
+						/>
+						<ButtonAdmin
+							border
+							label={<Arrow direction={ArrowDirection.DOWN} color={"#BEBEBE"}/>}
+							action={() => {
+                                moveTicketEl(id, Direction.DOWN)
+							}}
+						/>
+					</td>
+				</tr>
+			))}
 		</>
 	);
 };
 
 const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 	const [newName, setNewName] = useState({ RUS: "", ENG: "", EST: "" });
-	const [newTickets, setNewTickets] = useState([
+	const [newTickets, setNewTickets] = useState<Ticket[]>([
 		{
 			description: {
 				RUS: "",
@@ -143,6 +423,7 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 			price: 0,
 		},
 	]);
+    const [tempTickets, setTempTickets] = useState<Ticket[]>([]);
 	const [createNewPriceListElement, { error, loading, data }] = useCreateNewPriceListElementMutation();
 
 	const addTicket = () => {
@@ -166,6 +447,22 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 			},
 		]);
 	};
+    useEffect(() => { 
+        if (newTickets.length == 0 && tempTickets.length != 0) { 
+            setNewTickets(tempTickets);
+        }
+    }, [newTickets])
+
+    const deleteTicket = (id: number) => { 
+        const arr = [...newTickets]; 
+        const newArr = arr.filter((element, index) => index !== id);
+        setTempTickets(newArr);
+        updateTickets([]);
+    }
+
+    function updateTickets(arr: Ticket[]) { 
+        setNewTickets([...arr]);
+    }
 	return (
 		<>
 			<form
@@ -178,7 +475,7 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 					});
 					closeModal();
 				}}>
-				<div className={frameStyles.flexCon} style={{width: 'fit-content'}}>
+				<div className={frameStyles.flexCon} style={{ width: "fit-content" }}>
 					<input
 						type='text'
 						placeholder='Nimi EST'
@@ -192,7 +489,7 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 					<span className={frameStyles.focusBorder}></span>
 				</div>
 
-				<div className={frameStyles.flexCon} style={{width: 'fit-content'}}>
+				<div className={frameStyles.flexCon} style={{ width: "fit-content" }}>
 					<input
 						type='text'
 						placeholder='Nimi ENG'
@@ -206,7 +503,7 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 					<span className={frameStyles.focusBorder}></span>
 				</div>
 
-				<div className={frameStyles.flexCon} style={{width: 'fit-content'}}>
+				<div className={frameStyles.flexCon} style={{ width: "fit-content" }}>
 					<input
 						type='text'
 						placeholder='Nimi RUS'
@@ -229,10 +526,13 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 						</tr>
 					</thead>
 					<tbody className={styles.tbody}>
-						{newTickets.map((ticket, id) => (
+                        <TicketsList tickets={newTickets} setTickets={updateTickets} handleChange={handleChange} deleteTicket={deleteTicket} />
+						{/* {newTickets.map((ticket, id) => (
 							<tr key={id}>
 								<td>
-									<div className={frameStyles.flexCon} style={{width: 'fit-content', margin: 'auto'}}>
+									<div
+										className={frameStyles.flexCon}
+										style={{ width: "fit-content", margin: "auto" }}>
 										<input
 											id={`${id}`}
 											name={`description`}
@@ -249,16 +549,18 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													e,
 													id,
 													depth: 1,
-													property1: ticketProperties[e.currentTarget.name as ticketProperties],
+													property1:
+														ticketProperties[e.currentTarget.name as ticketProperties],
 													property2: undefined,
 													lang: ticketProperties.EST,
 												});
 											}}
-
 										/>
 										<span className={frameStyles.focusBorder}></span>
 									</div>
-									<div className={frameStyles.flexCon} style={{width: 'fit-content' , margin: 'auto'}}>
+									<div
+										className={frameStyles.flexCon}
+										style={{ width: "fit-content", margin: "auto" }}>
 										<input
 											id={`${id}`}
 											name={`description`}
@@ -272,7 +574,8 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													e,
 													id,
 													depth: 1,
-													property1: ticketProperties[e.currentTarget.name as ticketProperties],
+													property1:
+														ticketProperties[e.currentTarget.name as ticketProperties],
 													property2: undefined,
 													lang: ticketProperties.ENG,
 												});
@@ -281,31 +584,36 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 										<span className={frameStyles.focusBorder}></span>
 									</div>
 
-									<div className={frameStyles.flexCon} style={{width: 'fit-content', margin: 'auto'}}>
-									<input
-										id={`${id}`}
-										name={`description`}
-										className={["RUS", styles.input].join(" ") && frameStyles.input}
-										type='text'
-										placeholder='Teenuse nimetus RUS'
-										onChange={(e) => {
-											handleChange({
-												objToCopy: newTickets,
-												func: setNewTickets,
-												e,
-												id,
-												depth: 1,
-												property1: ticketProperties[e.currentTarget.name as ticketProperties],
-												property2: undefined,
-												lang: ticketProperties.RUS,
-											});
-										}}
-									/>
+									<div
+										className={frameStyles.flexCon}
+										style={{ width: "fit-content", margin: "auto" }}>
+										<input
+											id={`${id}`}
+											name={`description`}
+											className={["RUS", styles.input].join(" ") && frameStyles.input}
+											type='text'
+											placeholder='Teenuse nimetus RUS'
+											onChange={(e) => {
+												handleChange({
+													objToCopy: newTickets,
+													func: setNewTickets,
+													e,
+													id,
+													depth: 1,
+													property1:
+														ticketProperties[e.currentTarget.name as ticketProperties],
+													property2: undefined,
+													lang: ticketProperties.RUS,
+												});
+											}}
+										/>
 										<span className={frameStyles.focusBorder}></span>
 									</div>
 								</td>
 								<td className='duration'>
-									<div className={frameStyles.flexCon} style={{width: 'fit-content', margin: 'auto'}}>
+									<div
+										className={frameStyles.flexCon}
+										style={{ width: "fit-content", margin: "auto" }}>
 										<input
 											id={`${id}`}
 											name={`hours`}
@@ -318,9 +626,9 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													e,
 													id,
 													depth: 2,
-													property1:
-														ticketProperties.duration,
-													property2: ticketProperties[e.currentTarget.name as ticketProperties],
+													property1: ticketProperties.duration,
+													property2:
+														ticketProperties[e.currentTarget.name as ticketProperties],
 												});
 											}}
 											className={frameStyles.input}
@@ -328,7 +636,9 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 										<span className={frameStyles.focusBorder}></span>
 									</div>
 
-									<div className={frameStyles.flexCon} style={{width: 'fit-content', margin: 'auto'}}>
+									<div
+										className={frameStyles.flexCon}
+										style={{ width: "fit-content", margin: "auto" }}>
 										<input
 											id={`${id}`}
 											name={`additionalInfo`}
@@ -343,16 +653,18 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													id,
 													depth: 2,
 													property1: ticketProperties.duration,
-													property2: ticketProperties[e.currentTarget.name as ticketProperties],
+													property2:
+														ticketProperties[e.currentTarget.name as ticketProperties],
 													lang: ticketProperties.EST,
 												});
 											}}
-
 										/>
 										<span className={frameStyles.focusBorder}></span>
 									</div>
 
-									<div className={frameStyles.flexCon} style={{width: 'fit-content', margin: 'auto'}}>
+									<div
+										className={frameStyles.flexCon}
+										style={{ width: "fit-content", margin: "auto" }}>
 										<input
 											id={`${id}`}
 											name={`additionalInfo`}
@@ -366,9 +678,9 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													e,
 													id,
 													depth: 2,
-													property1:
-														ticketProperties.duration,
-													property2: ticketProperties[e.currentTarget.name as ticketProperties],
+													property1: ticketProperties.duration,
+													property2:
+														ticketProperties[e.currentTarget.name as ticketProperties],
 													lang: ticketProperties.ENG,
 												});
 											}}
@@ -376,7 +688,9 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 										<span className={frameStyles.focusBorder}></span>
 									</div>
 
-									<div className={frameStyles.flexCon} style={{width: 'fit-content', margin: 'auto'}}>
+									<div
+										className={frameStyles.flexCon}
+										style={{ width: "fit-content", margin: "auto" }}>
 										<input
 											id={`${id}`}
 											name={`additionalInfo`}
@@ -390,9 +704,9 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													e,
 													id,
 													depth: 2,
-													property1:
-														ticketProperties.duration,
-													property2: ticketProperties[e.currentTarget.name as ticketProperties],
+													property1: ticketProperties.duration,
+													property2:
+														ticketProperties[e.currentTarget.name as ticketProperties],
 													lang: ticketProperties.RUS,
 												});
 											}}
@@ -400,10 +714,10 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 										<span className={frameStyles.focusBorder}></span>
 									</div>
 
-									<br/>
+									<br />
 								</td>
-								<td style={{display: "flex", justifyContent: 'space-around'}}>
-									<div className={frameStyles.flexCon} style={{width: 'fit-content'}}>
+								<td style={{ display: "flex", justifyContent: "space-around" }}>
+									<div className={frameStyles.flexCon} style={{ width: "fit-content" }}>
 										<input
 											id={`${id}`}
 											name={`price`}
@@ -416,7 +730,8 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 													e,
 													id,
 													depth: 1,
-													property1: ticketProperties[e.currentTarget.name as ticketProperties],
+													property1:
+														ticketProperties[e.currentTarget.name as ticketProperties],
 												});
 											}}
 											className={frameStyles.input}
@@ -425,7 +740,7 @@ const AddingForm = ({ handleChange, closeModal }: FormProps) => {
 									</div>
 								</td>
 							</tr>
-						))}
+						))} */}
 					</tbody>
 				</table>
 				<div className={styles.formBottomBtns}>
@@ -441,16 +756,15 @@ const EditingForm = ({
 	priceListElement,
 	handleChange,
 	closeModal,
-}: { priceListElement: PriceListElement } & FormProps ) => {
+}: { priceListElement: PriceListElement } & FormProps) => {
+	const [forUpdate, setForceUpdate] = useState(0);
 	const [updatePriceElement, { data, loading, error }] = useChangePriceListElementByIdMutation();
 	const [name, setName] = useState({ ...priceListElement.name });
 	const [tickets, setTickets] = useState([...priceListElement.tickets!]);
-	useEffect(() => {
-		// console.log(tickets);
-	}, [tickets]);
+
 	const deleteTicket = (id: number) => {
 		const ticketsCopy = tickets;
-		delete ticketsCopy[id]; 
+		delete ticketsCopy[id];
 		updatePriceElement({
 			variables: {
 				id: priceListElement._id,
@@ -459,7 +773,7 @@ const EditingForm = ({
 					tickets: [...ticketsCopy],
 				},
 			},
-			refetchQueries: [{ query: GetPriceListElementByIdDocument, variables: {id: priceListElement._id} }],
+			refetchQueries: [{ query: GetPriceListElementByIdDocument, variables: { id: priceListElement._id } }],
 		});
 	};
 
@@ -484,6 +798,11 @@ const EditingForm = ({
 			},
 		]);
 	};
+
+    function updateTickets(arr: Ticket[]) { 
+        setTickets(arr);
+    }
+
 	return (
 		<form
 			className={styles.form}
@@ -493,13 +812,14 @@ const EditingForm = ({
 					name: { ...name },
 					tickets: [...tickets],
 				};
-                console.log(tickets);
 				updatePriceElement({
 					variables: {
 						id: priceListElement._id,
 						updatedPriceListElement: newUpdated,
 					},
-					refetchQueries: [{ query: GetPriceListElementByIdDocument, variables: {id: priceListElement._id} }],
+					refetchQueries: [
+						{ query: GetPriceListElementByIdDocument, variables: { id: priceListElement._id } },
+					],
 				}).catch((e) => {
 					console.log(e);
 					e.networkError.result.errors.map((e: { message: any }) => {
@@ -508,8 +828,7 @@ const EditingForm = ({
 				});
 				closeModal();
 			}}>
-
-			<div className={frameStyles.flexCon} style={{width: "50%"}}>
+			<div className={frameStyles.flexCon} style={{ width: "50%" }}>
 				<input
 					type='text'
 					defaultValue={name.EST ?? ""}
@@ -523,8 +842,7 @@ const EditingForm = ({
 				<span className={frameStyles.focusBorder}></span>
 			</div>
 
-
-			<div className={frameStyles.flexCon} style={{width: "50%"}}>
+			<div className={frameStyles.flexCon} style={{ width: "50%" }}>
 				<input
 					type='text'
 					defaultValue={name.ENG ?? ""}
@@ -538,17 +856,17 @@ const EditingForm = ({
 				<span className={frameStyles.focusBorder}></span>
 			</div>
 
-			<div className={frameStyles.flexCon} style={{width: "50%"}}>
-			<input
-				type='text'
-				defaultValue={name.RUS ?? ""}
-				onChange={(e) => {
-					const copyName = name;
-					copyName.RUS = e.currentTarget.value;
-					setName(copyName);
-				}}
-				className={frameStyles.input}
-			/>
+			<div className={frameStyles.flexCon} style={{ width: "50%" }}>
+				<input
+					type='text'
+					defaultValue={name.RUS ?? ""}
+					onChange={(e) => {
+						const copyName = name;
+						copyName.RUS = e.currentTarget.value;
+						setName(copyName);
+					}}
+					className={frameStyles.input}
+				/>
 				<span className={frameStyles.focusBorder}></span>
 			</div>
 
@@ -562,212 +880,8 @@ const EditingForm = ({
 					</tr>
 				</thead>
 				<tbody>
-					{tickets.map((ticket, id) => (
-						<tr key={id}>
-							<td>
-								<div className={frameStyles.flexCon}>
-									<input
-										id={`${id}`}
-										name={`description`}
-										defaultValue={tickets[id]?.description.EST ?? ""}
-										className={["EST", styles.input].join(" ") && frameStyles.input}
-										type='text'
-										placeholder='Teenuse nimetus EST'
-										onChange={(e) => {
-											handleChange({
-												objToCopy: tickets,
-												func: setTickets,
-												e,
-												id,
-												depth: 1,
-												property1: ticketProperties[e.currentTarget.name as ticketProperties],
-												property2: undefined,
-												lang: ticketProperties.EST,
-											});
-										}}
-									/>
-									<span className={frameStyles.focusBorder}></span>
-								</div>
-								<div className={frameStyles.flexCon}>
-									<input
-										id={`${id}`}
-										name={`description`}
-										defaultValue={ticket?.description.ENG ?? ""}
-										className={["ENG", styles.input].join(" ")  && frameStyles.input}
-										type='text'
-										placeholder='Teenuse nimetus ENG'
-										onChange={(e) => {
-											handleChange({
-												objToCopy: tickets,
-												func: setTickets,
-												e,
-												id,
-												depth: 1,
-												property1: ticketProperties[e.currentTarget.name as ticketProperties],
-												property2: undefined,
-												lang: ticketProperties.ENG,
-											});
-										}}
-									/>
-									<span className={frameStyles.focusBorder}></span>
-								</div>
-
-								<div className={frameStyles.flexCon}>
-									<input
-										id={`${id}`}
-										name={`description`}
-										defaultValue={ticket?.description.RUS ?? ""}
-										className={["RUS", styles.input].join(" ") && frameStyles.input}
-										type='text'
-										placeholder='Teenuse nimetus RUS'
-										onChange={(e) => {
-											handleChange({
-												objToCopy: tickets,
-												func: setTickets,
-												e,
-												id,
-												depth: 1,
-												property1: ticketProperties[e.currentTarget.name as ticketProperties],
-												property2: undefined,
-												lang: ticketProperties.RUS,
-											});
-										}}
-									/>
-									<span className={frameStyles.focusBorder}></span>
-								</div>
-							</td>
-							<td className='duration'>
-								<div className={frameStyles.flexCon}>
-									<input
-										id={`${id}`}
-										name={`hours`}
-										defaultValue={`${ticket?.duration?.hours}` ?? ""}
-										type='number'
-										step={"0.1"}
-										onChange={(e) => {
-											handleChange({
-												objToCopy: tickets,
-												func: setTickets,
-												e,
-												id,
-												depth: 2,
-												property1: ticketProperties.duration,
-												property2: ticketProperties[e.currentTarget.name as ticketProperties],
-											});
-										}}
-										className={frameStyles.input}
-									/>
-									<span className={frameStyles.focusBorder}></span>
-								</div>
-
-								<div className={frameStyles.flexCon}>
-									<input
-										id={`${id}`}
-										name={`additionalInfo`}
-										defaultValue={ticket?.duration?.additionalInfo?.EST ?? ""}
-										className={["EST", styles.input].join(" ") && frameStyles.input}
-										type='text'
-										placeholder='Teenuse nimetus EST'
-										onChange={(e) => {
-											handleChange({
-												objToCopy: tickets,
-												func: setTickets,
-												e,
-												id,
-												depth: 2,
-												property1: ticketProperties.duration,
-												property2: ticketProperties[e.currentTarget.name as ticketProperties],
-												lang: ticketProperties.EST,
-											});
-										}}
-
-									/>
-									<span className={frameStyles.focusBorder}></span>
-								</div>
-
-								<div className={frameStyles.flexCon}>
-								<input
-									id={`${id}`}
-									name={`additionalInfo`}
-									defaultValue={ticket?.duration?.additionalInfo?.ENG ?? ""}
-									className={["ENG", styles.input].join(" ") && frameStyles.input}
-									type='text'
-									placeholder='Teenuse nimetus ENG'
-									onChange={(e) => {
-										handleChange({
-											objToCopy: tickets,
-											func: setTickets,
-											e,
-											id,
-											depth: 2,
-											property1: ticketProperties.duration,
-											property2: ticketProperties[e.currentTarget.name as ticketProperties],
-											lang: ticketProperties.ENG,
-										});
-									}}
-								/>
-									<span className={frameStyles.focusBorder}></span>
-								</div>
-								<div className={frameStyles.flexCon}>
-									<input
-										id={`${id}`}
-										name={`additionalInfo`}
-										defaultValue={ticket?.duration?.additionalInfo?.RUS ?? ""}
-										className={["RUS", styles.input].join(" ") && frameStyles.input}
-										type='text'
-										placeholder='Teenuse nimetus RUS'
-										onChange={(e) => {
-											handleChange({
-												objToCopy: tickets,
-												func: setTickets,
-												e,
-												id,
-												depth: 2,
-												property1: ticketProperties.duration,
-												property2: ticketProperties[e.currentTarget.name as ticketProperties],
-												lang: ticketProperties.RUS,
-											});
-										}}
-									/>
-									<span className={frameStyles.focusBorder}></span>
-								</div>
-							</td>
-							<td>
-								<div className={frameStyles.flexCon}>
-									<input
-										id={`${id}`}
-										name={`price`}
-										defaultValue={`${ticket?.price}` ?? ""}
-										type='number'
-										step={"0.1"}
-										onChange={(e) => {
-											handleChange({
-												objToCopy: tickets,
-												func: setTickets,
-												e,
-												id,
-												depth: 1,
-												property1: ticketProperties[e.currentTarget.name as ticketProperties],
-											});
-										}}
-
-										className={frameStyles.input}
-									/>
-									<span className={frameStyles.focusBorder}></span>
-								</div>
-							</td>
-							<td className={styles.RemoveRawButton}>
-								<ButtonAdmin
-									border
-									label={<Image src={Bin} width={23} height={20} />}
-									action={() => {
-										deleteTicket(id);
-									}}
-								/>
-							</td>
-						</tr>
-					))}
-				</tbody>
+                    <TicketsList tickets={tickets} setTickets={updateTickets} handleChange={handleChange} deleteTicket={deleteTicket}  />
+                </tbody>
 			</table>
 			<div className={styles.formBottomBtns}>
 				<ButtonAdmin label={"Lisage teenus"} filled action={addTicket} />
@@ -776,3 +890,5 @@ const EditingForm = ({
 		</form>
 	);
 };
+
+

@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { AdminLayout } from ".";
 import { NextPageWithLayout } from "../_app";
 import styles from "../../styles/PricingAdmin.module.css";
@@ -33,8 +33,11 @@ const Pricing: NextPageWithLayout = () => {
 	const { data: configData, refetch: refetchConfig } = useGetPageConfigQuery({
 		variables: {
 			pageName: "PriceList",
-		},
+		}, onError(error) {
+            console.log(error.networkError?.message)
+        },
 	});
+
 	const [editConfig, {}] = useEditPageConfigMutation();
 
 	const [DeletePriceListElementById, { data: deleteData, loading: deleteLoading, error: deleteError }] =
@@ -61,15 +64,12 @@ const Pricing: NextPageWithLayout = () => {
 	if (AdminStore.userInfo.isLoggedIn) {
 		return (
 			<>
-				{showModal ? (
-					<TicketModal
-						modalType={currentModalType}
-						priceListElementId={currentElementID}
-						closeModal={closeModal}
-					/>
-				) : (
-					<></>
-				)}
+				<TicketModal
+                    showTicketModal={showModal}
+					modalType={currentModalType}
+					priceListElementId={currentElementID}
+					closeModal={closeModal}
+				/>
 				<div className={styles.PricingMainContainer}>
 					<h1>Hinnakiri</h1>
 					<div>
@@ -97,7 +97,6 @@ const Pricing: NextPageWithLayout = () => {
 							type='checkbox'
 							defaultChecked={configData?.GetPageConfig?.showBanner ?? false}
 							onChange={(e) => {
-								console.log(e.target.checked);
 								editConfig({
 									variables: {
 										pageName: "PriceList",
