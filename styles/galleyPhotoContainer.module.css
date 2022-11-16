@@ -2,6 +2,9 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+
+    max-height: 100vh;
+    overflow-y: scroll;
 }
 
 .contForPhotos > div{
@@ -17,12 +20,19 @@
     border-radius: 2px;
 }
 
-img.imgFix{
-    position: fixed;
-    width: 50vw;
-    left: 25vw;
-    z-index: 10;
+.contForPhotos img{
+    width: auto;
+    margin: 0;
+    object-fit: cover;
+
 }
+
+
+.imgFrame div{
+    overflow: hidden;
+
+}
+
 
 button.blockBut{
     display: block;
