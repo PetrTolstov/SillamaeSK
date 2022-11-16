@@ -1,10 +1,11 @@
 .contForPhotos{
     display: flex;
     flex-wrap: wrap;
-
+    justify-content: center;
 }
 
 .contForPhotos > div{
+    margin: 5px;
     flex-direction: row;
     width: 200px;
     height: 200px;
@@ -42,7 +43,11 @@ button.blockBut{
     width: 44px;
 
 }
-.imgNotFix{}
+.imgNotFix{
+    object-fit: cover;
+    height: 200px;
+
+}
 
 .backBlack{
     z-index: 5;

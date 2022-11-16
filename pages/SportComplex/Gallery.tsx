@@ -1,13 +1,16 @@
 import type { NextPage } from 'next'
 import LayoutSportComplex from "./LayoutSportComplex";
 import img from "../../public/img.png"
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import {LINK} from "../../config/constants";
 import styles from '../../styles/galleyPhotoContainer.module.css'
 import AppIsBeingBuilt from "../../components/Temporary/AppIsBeingBuilt";
 import LanguageStore from "../../Stores/LanguageStore";
 import {useGetPageConfigQuery} from "../../graphqlGenerated/graphql";
+
+import ModalImage from "react-modal-image";
+
 
 const Gallery: NextPage = () => {
     const page = 'Gallery'
@@ -20,10 +23,11 @@ const Gallery: NextPage = () => {
                     'optional': page
                 }
             });
-            console.log(res.data)
+
             setImgFile(res.data)
         })()
     }, [])
+
 
     const handleClick = (event: any) => {
         event.currentTarget.classList.add(styles.imgFix)
@@ -47,8 +51,11 @@ const Gallery: NextPage = () => {
         },
     });
 
+
+
     return (
         <LayoutSportComplex>
+
             {configData?.GetPageConfig?.showBanner ? (
                 <AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
             ) : (
@@ -66,6 +73,7 @@ const Gallery: NextPage = () => {
                                    Object.values(el)[0]?.map((img: any) =>(
                                        <div key={`${Object.keys(el)[0]}/${img}`} >
 
+
                                            <img src={`${LINK}/public/images/${page}/${Object.keys(el)[0]}/${img}`} onClick={handleClick} className={styles.imgNotFix}/>
                                        </div>
                                    ))
@@ -80,6 +88,7 @@ const Gallery: NextPage = () => {
 
 
                 </div>
+
             </>
                 )}
         </LayoutSportComplex>
