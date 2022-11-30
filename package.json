@@ -28,7 +28,8 @@
     "react-dom": "^18.2.0",
     "react-intersection-observer": "^9.4.0",
     "react-pro-sidebar": "^0.7.1",
-    "react-responsive-carousel": "^3.2.23"
+    "react-responsive-carousel": "^3.2.23",
+    "react-timetable-events": "^2.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.12.1",

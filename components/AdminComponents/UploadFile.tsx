@@ -9,7 +9,7 @@ import frameStyles from "../../styles/FormStyles.module.css";
 
 const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, closeModal: ()=>void }) => {
 	//const page = '/Gallery'
-	console.log(page)
+	// console.log(page)
 	const [file, setFile] = useState<FileList>();
 	const [imgFile, setImgFile] = useState("");
 	const [imgFileName, setImgFileName] = useState([]);
@@ -25,14 +25,14 @@ const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, clo
 	const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		if(event.currentTarget.value){
 			setTitle(event.currentTarget.value)
-			console.log(event.currentTarget.value)
+			// console.log(event.currentTarget.value)
 		}
 	};
 
 	const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
 		if(event.currentTarget.value){
 			setDate(event.currentTarget.value)
-			console.log(event.currentTarget.value)
+			// console.log(event.currentTarget.value)
 		}
 	};
 
@@ -41,7 +41,7 @@ const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, clo
 			let l = event.currentTarget.value.split("-")
 			setTitle(l[3])
 			setDate(l.slice(0,3).join('-'))
-			console.log(event.currentTarget.value)
+			// console.log(event.currentTarget.value)
 
 		}
 	};
@@ -74,14 +74,14 @@ const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, clo
 		}
 
 		data.append("optional", page);
-		console.log(file)
+		// console.log(file)
 		if (file) {
 			// @ts-ignore
 			for (let x = 0; x < file.length; x++) {
 				data.append("file", file[x]);
 			}
 		}
-		console.log(data)
+		// console.log(data)
 		axios.post(LINK + "/upload", data).then((r) => closeModal());
 		//window.location.reload()
 	};

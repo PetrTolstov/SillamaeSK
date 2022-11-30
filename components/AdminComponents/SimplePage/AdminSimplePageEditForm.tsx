@@ -5,6 +5,7 @@ import UploadFile from "../UploadFile";
 import frameStyles from "../../../styles/FormStyles.module.css"
 import {clearParseAndGenerateServicesCalls} from "@typescript-eslint/typescript-estree/dist/parser";
 import DeleteFile from "../deleteFile";
+import TimeTableAdmin from "./TimeTableAdmin";
 
 export function getPage(str: string) { 
     switch(str) { 
@@ -41,7 +42,6 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
     const [isShowDelete, setIsShowDelete] = useState(false);
     const [ showUploadFile, setShowUploadFile ] = useState(false); 
     useEffect(() => {
-        console.log(currentPage)
         setCurrentPage(page)
     }, [page])
 	return (
@@ -67,7 +67,7 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
                     location.reload();
                 },
                 onError(error) {
-                    console.log(error);
+                    // console.log(error);
                 }, refetchQueries: [{query: GetSimplePagesDocument}]}).catch(e => { 
                     e.networkError.result.errors.map((e: { message: any }) => {
 						console.log(e.message);
@@ -122,7 +122,9 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
                 }} />
                 <ButtonAdmin border action={() => setIsShowDelete(true)} label={"Delete images"} />
                 <input style={{width: "fit-content"}} type="submit" />
-			</form>
+               
+            </form>
+            <TimeTableAdmin pageName={getPage(currentPage?.pageName ?? '')?.slice(1) ?? ""} />
 		</div>
 	);
 };
