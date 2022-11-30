@@ -26,7 +26,10 @@
     "react": "^18.2.0",
     "react-calendar": "^3.9.0",
     "react-dom": "^18.2.0",
+    "react-images": "^1.2.0-beta.7",
     "react-intersection-observer": "^9.4.0",
+    "react-modal-image": "^2.6.0",
+    "react-photo-gallery": "^8.0.0",
     "react-pro-sidebar": "^0.7.1",
     "react-responsive-carousel": "^3.2.23",
     "react-timetable-events": "^2.0.0"

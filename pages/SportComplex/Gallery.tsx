@@ -1,13 +1,17 @@
 import type { NextPage } from 'next'
 import LayoutSportComplex from "./LayoutSportComplex";
 import img from "../../public/img.png"
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import {LINK} from "../../config/constants";
 import styles from '../../styles/galleyPhotoContainer.module.css'
 import AppIsBeingBuilt from "../../components/Temporary/AppIsBeingBuilt";
 import LanguageStore from "../../Stores/LanguageStore";
 import {useGetPageConfigQuery} from "../../graphqlGenerated/graphql";
+
+// @ts-ignore
+import ModalImage from "react-modal-image";
+
 
 const Gallery: NextPage = () => {
     const page = 'Gallery'
@@ -20,10 +24,11 @@ const Gallery: NextPage = () => {
                     'optional': page
                 }
             });
-            console.log(res.data)
+
             setImgFile(res.data)
         })()
     }, [])
+
 
     const handleClick = (event: any) => {
         event.currentTarget.classList.add(styles.imgFix)
@@ -47,8 +52,11 @@ const Gallery: NextPage = () => {
         },
     });
 
+
+
     return (
         <LayoutSportComplex>
+
             {configData?.GetPageConfig?.showBanner ? (
                 <AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
             ) : (
@@ -64,9 +72,14 @@ const Gallery: NextPage = () => {
 
                                 {
                                    Object.values(el)[0]?.map((img: any) =>(
-                                       <div key={`${Object.keys(el)[0]}/${img}`} >
+                                       <div key={`${Object.keys(el)[0]}/${img}`} className={styles.imgFrame} >
 
-                                           <img src={`${LINK}/public/images/${page}/${Object.keys(el)[0]}/${img}`} onClick={handleClick} className={styles.imgNotFix}/>
+                                           <ModalImage
+                                               small={`${LINK}/public/images/${page}/${Object.keys(el)[0]}/${img}`}
+                                               large={`${LINK}/public/images/${page}/${Object.keys(el)[0]}/${img}`}
+                                               alt={Object.keys(el)[0]}
+                                           />
+
                                        </div>
                                    ))
                                 }
@@ -80,6 +93,7 @@ const Gallery: NextPage = () => {
 
 
                 </div>
+
             </>
                 )}
         </LayoutSportComplex>

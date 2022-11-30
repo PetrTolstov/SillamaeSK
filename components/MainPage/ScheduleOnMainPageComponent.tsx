@@ -122,7 +122,7 @@ function ScheduleOnMainPageComponent() {
 		<article className={styles.kalender}>
 			<div className={styles.kalenderFrame}>
 				<h2>{hCalender[LanguageStoreV2.currentLanguage]}</h2>
-				<ul>
+				<ul className={styles.kalenderUl}>
 					{loading && events.length > 4 ? (
 						<p>Loading...</p>
 					) : (

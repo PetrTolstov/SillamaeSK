@@ -1,10 +1,14 @@
 .contForPhotos{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 
+    max-height: 100vh;
+    overflow-y: scroll;
 }
 
 .contForPhotos > div{
+    margin: 5px;
     flex-direction: row;
     width: 200px;
     height: 200px;
@@ -16,12 +20,19 @@
     border-radius: 2px;
 }
 
-img.imgFix{
-    position: fixed;
-    width: 50vw;
-    left: 25vw;
-    z-index: 10;
+.contForPhotos img{
+    width: auto;
+    margin: 0;
+    object-fit: cover;
+
 }
+
+
+.imgFrame div{
+    overflow: hidden;
+
+}
+
 
 button.blockBut{
     display: block;
@@ -42,7 +53,11 @@ button.blockBut{
     width: 44px;
 
 }
-.imgNotFix{}
+.imgNotFix{
+    object-fit: cover;
+    height: 200px;
+
+}
 
 .backBlack{
     z-index: 5;
