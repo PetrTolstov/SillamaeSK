@@ -12,8 +12,20 @@ import languageStore from "../../Stores/LanguageStore";
 import { observer } from "mobx-react-lite";
 import LanguageStoreV2 from "../../Stores/LanguageStoreV2";
 import CarouselComponent from "../../components/MainPage/CarouselComponent";
+import { Document, Page } from 'react-pdf';
+import { pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const Maleruum: NextPage = () => {
+	//PDF
+	const [numPages, setNumPages] = useState(null);
+	const [pageNumber, setPageNumber] = useState(1);
+
+	// @ts-ignore
+	function onDocumentLoadSuccess({ numPages }) {
+		setNumPages(numPages);
+	}
+	//PDF
 	const page = "Maleruum";
 	const [imgFile, setImgFile] = useState([]);
 	// @ts-ignore
@@ -72,6 +84,9 @@ const Maleruum: NextPage = () => {
 					)}
 				</>
 			)}
+			<Document file={`${LINK}/public/images/pdf/${page}/s.pdf`} error={''} onLoadSuccess={onDocumentLoadSuccess} renderMode={"svg"}>
+				<Page pageNumber={pageNumber} className={styles.pdfPage} error={''}/>
+			</Document>
 		</LayoutSportComplexOpportunities>
 	);
 };

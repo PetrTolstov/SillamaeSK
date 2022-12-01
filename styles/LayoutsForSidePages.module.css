@@ -110,3 +110,22 @@ img.titlePhoto{
     padding: 0;
     border-radius: 5px 5px 0px 0px;
 }
+
+.pdfPage{
+    width: 100% !important;
+    height: auto !important;
+}
+
+.pdfPage div{
+    width: 100% !important;
+    height: auto !important;
+}
+
+.pdfPage div * {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.pdfPage div:nth-child(n+2){
+    display: none !important;
+}
