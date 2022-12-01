@@ -1,0 +1,19 @@
+.eventBodyEven { 
+    color: black;
+    background-color: rgb(57, 133, 255);
+    height: 100%;
+    cursor: pointer;
+}
+
+.eventBodyOdd { 
+    border-radius: 5px;
+    color: black;
+    background-color: rgb(59, 113, 200) !important;
+    height: 100%;
+    cursor: pointer;
+}
+
+.container { 
+    background-color: black !important;
+    border-radius: 100px;
+}

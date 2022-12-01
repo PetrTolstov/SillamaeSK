@@ -19,9 +19,8 @@ const ModalAdmin = ({children, isShowing, onClose}: PropsWithChildren & ModalAdm
                 {children}
                 <ButtonAdmin border action={onClose} label={"Close"} />
             </div>
-            
 		</>
 	);
 };
 
-export default ModalAdmin;
+export default ModalAdmin

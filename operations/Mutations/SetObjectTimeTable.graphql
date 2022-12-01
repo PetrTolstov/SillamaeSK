@@ -1,0 +1,3 @@
+mutation SetObjectTimeTable($objectName: String, $newObjectTimeTable: ObjectTimeTableInput) {
+  SetObjectTimeTable(objectName: $objectName, newObjectTimeTable: $newObjectTimeTable)
+}

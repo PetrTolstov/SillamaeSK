@@ -135,6 +135,7 @@ export type Mutation = {
   Login: LoginResponse;
   RefetchLatestNews: Scalars['String'];
   SetGeneralContactInfo?: Maybe<Scalars['String']>;
+  SetObjectTimeTable?: Maybe<Scalars['String']>;
   SetPersonalContactInfo?: Maybe<Scalars['String']>;
   SetSportOpportunitiesDescription?: Maybe<Scalars['String']>;
   SetTimeTable?: Maybe<Scalars['String']>;
@@ -222,6 +223,12 @@ export type MutationSetGeneralContactInfoArgs = {
 };
 
 
+export type MutationSetObjectTimeTableArgs = {
+  newObjectTimeTable?: InputMaybe<ObjectTimeTableInput>;
+  objectName?: InputMaybe<Scalars['String']>;
+};
+
+
 export type MutationSetPersonalContactInfoArgs = {
   newPersonalContactsInfo?: InputMaybe<Array<InputMaybe<PersonContactInfoInput>>>;
 };
@@ -258,6 +265,52 @@ export type NewsResponse = {
   data?: Maybe<LatestNews>;
   errorMessage?: Maybe<Scalars['String']>;
   success: Scalars['Boolean'];
+};
+
+export type ObjectTimeTable = {
+  __typename?: 'ObjectTimeTable';
+  E?: Maybe<Array<Maybe<ObjectTimeTableEvent>>>;
+  K?: Maybe<Array<Maybe<ObjectTimeTableEvent>>>;
+  L?: Maybe<Array<Maybe<ObjectTimeTableEvent>>>;
+  N?: Maybe<Array<Maybe<ObjectTimeTableEvent>>>;
+  P?: Maybe<Array<Maybe<ObjectTimeTableEvent>>>;
+  R?: Maybe<Array<Maybe<ObjectTimeTableEvent>>>;
+  T?: Maybe<Array<Maybe<ObjectTimeTableEvent>>>;
+};
+
+export type ObjectTimeTableEvent = {
+  __typename?: 'ObjectTimeTableEvent';
+  endTime?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+  startTime?: Maybe<Scalars['String']>;
+  textContent?: Maybe<TextContent>;
+  type?: Maybe<Scalars['String']>;
+};
+
+export type ObjectTimeTableEventInput = {
+  endTime?: InputMaybe<Scalars['String']>;
+  id: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  startTime?: InputMaybe<Scalars['String']>;
+  textContent?: InputMaybe<TextContentInput>;
+  type?: InputMaybe<Scalars['String']>;
+};
+
+export type ObjectTimeTableInput = {
+  E?: InputMaybe<Array<InputMaybe<ObjectTimeTableEventInput>>>;
+  K?: InputMaybe<Array<InputMaybe<ObjectTimeTableEventInput>>>;
+  L?: InputMaybe<Array<InputMaybe<ObjectTimeTableEventInput>>>;
+  N?: InputMaybe<Array<InputMaybe<ObjectTimeTableEventInput>>>;
+  P?: InputMaybe<Array<InputMaybe<ObjectTimeTableEventInput>>>;
+  R?: InputMaybe<Array<InputMaybe<ObjectTimeTableEventInput>>>;
+  T?: InputMaybe<Array<InputMaybe<ObjectTimeTableEventInput>>>;
+};
+
+export type ObjectTimeTimeTableContainer = {
+  __typename?: 'ObjectTimeTimeTableContainer';
+  objectName?: Maybe<Scalars['String']>;
+  timeTable?: Maybe<ObjectTimeTable>;
 };
 
 export type OptionalSingleStr = {
@@ -357,6 +410,7 @@ export type Query = {
   GetFooter?: Maybe<Footer>;
   GetGeneralContactsInfo?: Maybe<GeneralContactsInfo>;
   GetLatestNews: NewsResponse;
+  GetObjectTimeTable?: Maybe<ObjectTimeTimeTableContainer>;
   GetPageConfig?: Maybe<PageConfig>;
   GetPageNotWorkingBanner?: Maybe<PageNotWorkingBanner>;
   GetPersonalContactsInfo?: Maybe<Array<Maybe<PersonContactInfo>>>;
@@ -381,6 +435,11 @@ export type QueryGetCalendarEventsArgs = {
 
 export type QueryGetCalendarEventsByMonthArgs = {
   monthStr?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetObjectTimeTableArgs = {
+  objectName?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -591,6 +650,14 @@ export type SetGeneralContactInfoMutationVariables = Exact<{
 
 export type SetGeneralContactInfoMutation = { __typename?: 'Mutation', SetGeneralContactInfo?: string | null };
 
+export type SetObjectTimeTableMutationVariables = Exact<{
+  objectName?: InputMaybe<Scalars['String']>;
+  newObjectTimeTable?: InputMaybe<ObjectTimeTableInput>;
+}>;
+
+
+export type SetObjectTimeTableMutation = { __typename?: 'Mutation', SetObjectTimeTable?: string | null };
+
 export type SetPersonalContactInfoMutationVariables = Exact<{
   newPersonalContactsInfo?: InputMaybe<Array<InputMaybe<PersonContactInfoInput>> | InputMaybe<PersonContactInfoInput>>;
 }>;
@@ -670,6 +737,13 @@ export type GetLatestNewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetLatestNewsQuery = { __typename?: 'Query', GetLatestNews: { __typename?: 'NewsResponse', errorMessage?: string | null, success: boolean, data?: { __typename?: 'LatestNews', _id: string, created_time?: string | null, message?: string | null } | null } };
+
+export type GetObjectTimeTableQueryVariables = Exact<{
+  objectName?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetObjectTimeTableQuery = { __typename?: 'Query', GetObjectTimeTable?: { __typename?: 'ObjectTimeTimeTableContainer', objectName?: string | null, timeTable?: { __typename?: 'ObjectTimeTable', E?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, T?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, K?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, N?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, R?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, L?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, P?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null } | null } | null };
 
 export type GetPageConfigQueryVariables = Exact<{
   pageName?: InputMaybe<Scalars['String']>;
@@ -1130,6 +1204,41 @@ export function useSetGeneralContactInfoMutation(baseOptions?: Apollo.MutationHo
 export type SetGeneralContactInfoMutationHookResult = ReturnType<typeof useSetGeneralContactInfoMutation>;
 export type SetGeneralContactInfoMutationResult = Apollo.MutationResult<SetGeneralContactInfoMutation>;
 export type SetGeneralContactInfoMutationOptions = Apollo.BaseMutationOptions<SetGeneralContactInfoMutation, SetGeneralContactInfoMutationVariables>;
+export const SetObjectTimeTableDocument = gql`
+    mutation SetObjectTimeTable($objectName: String, $newObjectTimeTable: ObjectTimeTableInput) {
+  SetObjectTimeTable(
+    objectName: $objectName
+    newObjectTimeTable: $newObjectTimeTable
+  )
+}
+    `;
+export type SetObjectTimeTableMutationFn = Apollo.MutationFunction<SetObjectTimeTableMutation, SetObjectTimeTableMutationVariables>;
+
+/**
+ * __useSetObjectTimeTableMutation__
+ *
+ * To run a mutation, you first call `useSetObjectTimeTableMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetObjectTimeTableMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setObjectTimeTableMutation, { data, loading, error }] = useSetObjectTimeTableMutation({
+ *   variables: {
+ *      objectName: // value for 'objectName'
+ *      newObjectTimeTable: // value for 'newObjectTimeTable'
+ *   },
+ * });
+ */
+export function useSetObjectTimeTableMutation(baseOptions?: Apollo.MutationHookOptions<SetObjectTimeTableMutation, SetObjectTimeTableMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetObjectTimeTableMutation, SetObjectTimeTableMutationVariables>(SetObjectTimeTableDocument, options);
+      }
+export type SetObjectTimeTableMutationHookResult = ReturnType<typeof useSetObjectTimeTableMutation>;
+export type SetObjectTimeTableMutationResult = Apollo.MutationResult<SetObjectTimeTableMutation>;
+export type SetObjectTimeTableMutationOptions = Apollo.BaseMutationOptions<SetObjectTimeTableMutation, SetObjectTimeTableMutationVariables>;
 export const SetPersonalContactInfoDocument = gql`
     mutation SetPersonalContactInfo($newPersonalContactsInfo: [PersonContactInfoInput]) {
   SetPersonalContactInfo(newPersonalContactsInfo: $newPersonalContactsInfo)
@@ -1668,6 +1777,127 @@ export function useGetLatestNewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetLatestNewsQueryHookResult = ReturnType<typeof useGetLatestNewsQuery>;
 export type GetLatestNewsLazyQueryHookResult = ReturnType<typeof useGetLatestNewsLazyQuery>;
 export type GetLatestNewsQueryResult = Apollo.QueryResult<GetLatestNewsQuery, GetLatestNewsQueryVariables>;
+export const GetObjectTimeTableDocument = gql`
+    query GetObjectTimeTable($objectName: String) {
+  GetObjectTimeTable(objectName: $objectName) {
+    objectName
+    timeTable {
+      E {
+        id
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+        name
+        type
+        startTime
+        endTime
+      }
+      T {
+        id
+        name
+        type
+        startTime
+        endTime
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+      }
+      K {
+        id
+        name
+        type
+        startTime
+        endTime
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+      }
+      N {
+        id
+        name
+        type
+        startTime
+        endTime
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+      }
+      R {
+        id
+        name
+        type
+        startTime
+        endTime
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+      }
+      L {
+        id
+        name
+        type
+        startTime
+        endTime
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+      }
+      P {
+        id
+        name
+        type
+        startTime
+        endTime
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetObjectTimeTableQuery__
+ *
+ * To run a query within a React component, call `useGetObjectTimeTableQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetObjectTimeTableQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetObjectTimeTableQuery({
+ *   variables: {
+ *      objectName: // value for 'objectName'
+ *   },
+ * });
+ */
+export function useGetObjectTimeTableQuery(baseOptions?: Apollo.QueryHookOptions<GetObjectTimeTableQuery, GetObjectTimeTableQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetObjectTimeTableQuery, GetObjectTimeTableQueryVariables>(GetObjectTimeTableDocument, options);
+      }
+export function useGetObjectTimeTableLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetObjectTimeTableQuery, GetObjectTimeTableQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetObjectTimeTableQuery, GetObjectTimeTableQueryVariables>(GetObjectTimeTableDocument, options);
+        }
+export type GetObjectTimeTableQueryHookResult = ReturnType<typeof useGetObjectTimeTableQuery>;
+export type GetObjectTimeTableLazyQueryHookResult = ReturnType<typeof useGetObjectTimeTableLazyQuery>;
+export type GetObjectTimeTableQueryResult = Apollo.QueryResult<GetObjectTimeTableQuery, GetObjectTimeTableQueryVariables>;
 export const GetPageConfigDocument = gql`
     query GetPageConfig($pageName: String) {
   GetPageConfig(pageName: $pageName) {

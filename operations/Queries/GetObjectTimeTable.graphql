@@ -1,0 +1,91 @@
+query GetObjectTimeTable($objectName: String) {
+  GetObjectTimeTable(objectName: $objectName) {
+    objectName
+    timeTable {
+      E {
+        id
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+        name
+        type
+        startTime
+        endTime
+      }
+      T {
+        id
+        name
+        type
+        startTime
+        endTime
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+      }
+      K {
+        id
+        name
+        type
+        startTime
+        endTime
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+      }
+      N {
+        id
+        name
+        type
+        startTime
+        endTime
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+      }
+      R {
+        id
+        name
+        type
+        startTime
+        endTime
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+      }
+      L {
+        id
+        name
+        type
+        startTime
+        endTime
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+      }
+      P {
+        id
+        name
+        type
+        startTime
+        endTime
+        textContent {
+          RUS
+          EST
+          ENG
+        }
+      }
+    }
+  }
+}
