@@ -35,6 +35,58 @@ export function getPage(str: string) {
             break
     }  
 }
+export function GetTimeTableEventColor(str: string) { 
+    switch (str) { 
+        case "Iluvõimlemine": { 
+            return "#800000"
+        }
+        case "Sulgpall": { 
+            return "#E6194B"
+        }
+        case "SJK Dina": { 
+            return "#F58231"
+        }
+        case "FC NPM Silmet": { 
+            return "#BFEF45"
+        }
+        case "Jalgpallikool FC Kalev": { 
+            return "#0167FF"
+        }
+        case "Tennis": { 
+            return "#FFE119"
+        }
+        case "JK Almaz": { 
+            return "#42D4F4"
+        }
+        case "Korvpall": { 
+            return "#4363D8"
+        }
+        case "KJK Kalev-Sillamäe": { 
+            return "#911EB4"
+        }
+        case "Võrkpall": { 
+            return "#F032E6"
+        }
+        case "Narkokeskus": { 
+            return "#469990"
+        }
+        case "Aeroobika, S. Koort": { 
+            return "#9A6324"
+        }
+        case "Terviserühm „Fialka“": { 
+            return "#AAFFC3"
+        }
+        case "Taekwondo": { 
+            return "#FFD8B1"
+        }
+        case "Male": { 
+            return "#DCBEFF"
+        }
+        case "Poks": { 
+            return "#45CBB3"
+        }
+    }
+}
 export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage, pageConfig: PageConfig }) => {
     const [ currentPage, setCurrentPage] = useState(page); 
     const [editPageConfigs, {data: editConfigData}] = useEditPageConfigMutation();
@@ -45,7 +97,7 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
         setCurrentPage(page)
     }, [page])
 	return (
-		<div className={frameStyles.container}>
+		<div className={frameStyles.container} style={{width: "100%"}}>
 			<h3>{page?.title?.EST ?? ""}</h3>
 			<form style={{ display: "flex", flexDirection: "column", marginBottom: '50px' }} onSubmit={(e) => {
                 e.preventDefault();

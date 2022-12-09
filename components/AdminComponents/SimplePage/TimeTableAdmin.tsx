@@ -16,6 +16,7 @@ import {
 	useSetObjectTimeTableMutation,
 } from "../../../graphqlGenerated/graphql";
 import { json } from "node:stream/consumers";
+import { GetTimeTableEventColor } from "./AdminSimplePageEditForm";
 
 export type extendedEvent = Event & { textContent: { RUS: string; EST: string; ENG: string } };
 export type simplifiedEvent = {
@@ -173,18 +174,22 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 				events={schedule}
 				timeLabel={"Aeg"}
 				hoursInterval={{ from: 8, to: 22 }}
-				style={{ height: "600px" }}
+				style={{ height: "1100px" }}
 				renderEvent={(eventProps) => {
 					const event = eventProps.event as extendedEvent;
 					const height = parseInt(eventProps.defaultAttributes.style!.height! as string);
-					const isMinimal: boolean = height < 40;
+					const isMinimal: boolean = height <= 40;
+                    console.log(GetTimeTableEventColor(event.textContent.EST));
 					return (
 						<div
 							className={styles.container}
 							{...eventProps.defaultAttributes}
+                            // 
 							key={`${eventProps.event.type}${eventProps.event.id}`}>
 							<div
-								className={(event.id as number) % 2 == 0 ? styles.eventBodyEven : styles.eventBodyOdd}
+								// className={(event.id as number) % 2 == 0 ? styles.eventBodyEven : styles.eventBodyOdd}
+
+                                style={{backgroundColor: GetTimeTableEventColor(event.textContent.EST) ?? "blue", height: "100%"}}
 								onClick={() => {
 									setCurrentEvent(event as extendedEvent);
 									setShowModal(true);
@@ -194,7 +199,7 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 									<>
 										<p
 											style={{
-												fontSize: height <= 20 ? "8px" : height <= 30 ? "10px" : "20px",
+												fontSize: height <= 20 ? "8px" : height <= 100 ? "10px" : "20px",
 											}}>{`${padTo2Digits((event.startTime as Date).getHours())}:${padTo2Digits(
 											(event.startTime as Date).getMinutes()
 										)} - ${padTo2Digits((event.endTime as Date).getHours())}:${padTo2Digits(
@@ -290,7 +295,7 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 							/>
 						</span>
 					</div>
-					<div className={formStyles.flexCon}>
+					{/* <div className={formStyles.flexCon}>
 						<label htmlFor='eventTitleEST'></label>
 						<input
 							placeholder='EST'
@@ -322,7 +327,27 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 							defaultValue={currentEvent?.textContent.ENG}
 						/>
 						<span className={formStyles.focusBorder}></span>
-					</div>
+					</div> */}
+                    <div className={formStyles.flexCon}>
+                        <select name="eventTitleEST">
+                            <option value="Iluvõimlemine">Iluvõimlemine</option>
+                            <option value="Sulgpall">Sulgpall</option>
+                            <option value="SJK Dina">SJK Dina</option>
+                            <option value="FC NPM Silmet">FC NPM Silmet</option>
+                            <option value="Jalgpallikool FC Kalev">Jalgpallikool FC Kalev</option>
+                            <option value="Tennis">Tennis</option>
+                            <option value="JK Almaz">JK Almaz</option>
+                            <option value="Korvpall">Korvpall</option>
+                            <option value="KJK Kalev-Sillamäe">KJK Kalev-Sillamäe</option>
+                            <option value="Võrkpall">Võrkpall</option>
+                            <option value="Narkokeskus">Narkokeskus</option>
+                            <option value="Aeroobika, S. Koort">Aeroobika, S. Koort</option>
+                            <option value="Terviserühm „Fialka“">Terviserühm „Fialka“</option>
+                            <option value="Taekwondo">Taekwondo</option>
+                            <option value="Male">Male</option>
+                            <option value="Poks">Poks</option>
+                        </select>
+                    </div>
 					<ButtonAdmin isSubmit label={"Submit"} border action={() => {}} />
 					{isEditing ? (
 						<ButtonAdmin

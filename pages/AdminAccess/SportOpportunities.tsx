@@ -44,7 +44,7 @@ const SportOpportunities: NextPageWithLayout = () => {
 	},[])
     if (AdminStore.userInfo.isLoggedIn) {
 		return ( 
-            <div>
+            <div style={{width: "90%"}}>
                 <h1>Sportimisvõimalused</h1>
                 {loading ? <p>loading...</p> : <></>}
                 <AdminDropDown
