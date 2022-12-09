@@ -201,11 +201,13 @@ const Kalender: NextPage = () => {
 							) : (
 
 								data?.GetCalendarEventsByMonth!.map((el, i) => {
-									let date = new Date(el!.date ?? "");
+									let date = new Date(el!.date + "/" + el!.startTime ?? "");
 									// @ts-ignore
 									let d = data.GetCalendarEventsByMonth[0]
 
-									if ((new Date(d?.date ?? "")).getTime() < newDate.getTime()){
+									console.log((new Date(d?.date + "/" + d?.startTime ?? "")))
+
+									if ((new Date(d?.date + "/" + d?.startTime ?? "")).getTime() < newDate.getTime()){
 										document.getElementsByClassName(styles.moreLi)[0]?.classList.remove(styles.hiddenB)
 
 									}else{
