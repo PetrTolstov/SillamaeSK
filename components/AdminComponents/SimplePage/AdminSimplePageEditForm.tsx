@@ -92,7 +92,8 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
     const [editPageConfigs, {data: editConfigData}] = useEditPageConfigMutation();
     const [editSimplePage, {loading, data, error}] = useEditSimplePageMutation();
     const [isShowDelete, setIsShowDelete] = useState(false);
-    const [ showUploadFile, setShowUploadFile ] = useState(false); 
+    const [ showUploadFile, setShowUploadFile ] = useState(false);
+    const [ showUploadFilePDF, setShowUploadFilePDF ] = useState(false);
     useEffect(() => {
         setCurrentPage(page)
     }, [page])
@@ -169,6 +170,10 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
 				</label>
                 <UploadFile page={getPage(currentPage?.pageName ?? "") ?? ""} show={showUploadFile} closeModal={() => setShowUploadFile(false)} />
                 <ButtonAdmin border action={() => setShowUploadFile(true)} label={"Add image"} />
+
+                <UploadFile page={`pdf/${getPage(currentPage?.pageName ?? "") ?? ""}`} show={showUploadFilePDF} closeModal={() => setShowUploadFilePDF(false)} />
+                <ButtonAdmin border action={() => setShowUploadFilePDF(true)} label={"Add pdf"} />
+
                 <DeleteFile page={getPage(currentPage?.pageName ?? '')?.slice(1) ?? ""} show={isShowDelete} closeModal={() => {
                     setIsShowDelete(false);
                 }} />
