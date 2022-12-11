@@ -1,6 +1,6 @@
 .eventBodyEven { 
     color: black;
-    background-color: rgb(57, 133, 255);
+    background-color: rgba(57, 133, 255, 1);
     height: 100%;
     cursor: pointer;
 }
@@ -8,11 +8,17 @@
 .eventBodyOdd { 
     /* border-radius: 5px; */
     color: black;
-    background-color: rgb(59, 113, 200) !important;
+    background-color: rgba(59, 113, 200, 1) !important;
     height: 100%;
     cursor: pointer;
 }
 
 .container { 
     border-radius: 100px;
+}
+
+.contrastText { 
+    /* color: gray; */
+    /* mix-blend-mode: difference;
+    filter: contrast(19); */
 }

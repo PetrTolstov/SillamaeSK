@@ -65,6 +65,58 @@ export type ObjectTimeTable = {
 	P: extendedEvent[];
 };
 
+function getTextColor(rgb: string) {
+	let rgba = rgb.match(/\d+/g);
+	if (rgba) {
+		if (rgba[0] as any * 0.299 + rgba[1] as any * 0.587 + rgba[2] as any * 0.114 > 186) {
+			return "black";
+		} else {
+			return "white";
+		}
+	}
+}
+
+const hex2rgba = (hex: string, alpha = 1) => {
+	const match = hex.match(/\w\w/g);
+	if (match) {
+		const [r, g, b] = match.map((x) => parseInt(x, 16) ?? 0);
+		return `rgba(${r},${g},${b},${alpha})`;
+	}
+	return `rgba(${0},${0},${0},${alpha})`;
+};
+function GetBackgroundColor(str: string) {
+	const div = document.querySelector(str) as HTMLElement;
+    console.log(div);
+	if (div) {
+		console.log(hex2rgba(div?.style.backgroundColor ?? "", 1));
+		console.log(div?.style.backgroundColor);
+	}
+}
+var getContrast = function (hexcolor: string){
+	// If a leading # is provided, remove it
+	if (hexcolor.slice(0, 1) === '#') {
+		hexcolor = hexcolor.slice(1);
+	}
+
+	// If a three-character hexcode, make six-character
+	if (hexcolor.length === 3) {
+		hexcolor = hexcolor.split('').map(function (hex) {
+			return hex + hex;
+		}).join('');
+	}
+
+	// Convert to RGB value
+	var r = parseInt(hexcolor.substr(0,2),16);
+	var g = parseInt(hexcolor.substr(2,2),16);
+	var b = parseInt(hexcolor.substr(4,2),16);
+
+	// Get YIQ ratio
+	var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+
+	// Check contrast
+	return (yiq >= 0) ? 'black' : 'white';
+
+};
 function TimeTableAdmin({ pageName }: { pageName: string }) {
 	const scheduleInitial = {
 		E: [],
@@ -179,17 +231,22 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 					const event = eventProps.event as extendedEvent;
 					const height = parseInt(eventProps.defaultAttributes.style!.height! as string);
 					const isMinimal: boolean = height <= 40;
-                    console.log(GetTimeTableEventColor(event.textContent.EST));
+					// console.log(GetTimeTableEventColor(event.textContent.EST));
 					return (
 						<div
 							className={styles.container}
 							{...eventProps.defaultAttributes}
-                            // 
+							//
 							key={`${eventProps.event.type}${eventProps.event.id}`}>
 							<div
 								// className={(event.id as number) % 2 == 0 ? styles.eventBodyEven : styles.eventBodyOdd}
-
-                                style={{backgroundColor: GetTimeTableEventColor(event.textContent.EST) ?? "blue", height: "100%"}}
+								className={`EventBackground${eventProps.event.type}${eventProps.event.id}`}
+								style={{
+                                    color: getContrast(GetTimeTableEventColor(event.textContent.EST) ?? ""),
+									backgroundColor:
+										GetTimeTableEventColor(event.textContent.EST) ?? "rgba(0, 0, 255, 1)",
+									height: "100%",
+								}}
 								onClick={() => {
 									setCurrentEvent(event as extendedEvent);
 									setShowModal(true);
@@ -198,6 +255,7 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 								{isMinimal ? (
 									<>
 										<p
+											className={styles.contrastText}
 											style={{
 												fontSize: height <= 20 ? "8px" : height <= 100 ? "10px" : "20px",
 											}}>{`${padTo2Digits((event.startTime as Date).getHours())}:${padTo2Digits(
@@ -208,8 +266,12 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 									</>
 								) : (
 									<>
-										<p style={{ fontSize: "10px" }}>{event.textContent.EST ?? ""}</p>
-										<p style={{ fontSize: "10px" }}>{`${padTo2Digits(
+										<p className={styles.contrastText} style={{ fontSize: "10px" }}>
+											{event.textContent.EST ?? ""}
+										</p>
+										<p
+											className={styles.contrastText}
+											style={{ fontSize: "10px" }}>{`${padTo2Digits(
 											(event.startTime as Date).getHours()
 										)}:${padTo2Digits((event.startTime as Date).getMinutes())} - ${padTo2Digits(
 											(event.endTime as Date).getHours()
@@ -328,26 +390,26 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 						/>
 						<span className={formStyles.focusBorder}></span>
 					</div> */}
-                    <div className={formStyles.flexCon}>
-                        <select name="eventTitleEST">
-                            <option value="Iluvõimlemine">Iluvõimlemine</option>
-                            <option value="Sulgpall">Sulgpall</option>
-                            <option value="SJK Dina">SJK Dina</option>
-                            <option value="FC NPM Silmet">FC NPM Silmet</option>
-                            <option value="Jalgpallikool FC Kalev">Jalgpallikool FC Kalev</option>
-                            <option value="Tennis">Tennis</option>
-                            <option value="JK Almaz">JK Almaz</option>
-                            <option value="Korvpall">Korvpall</option>
-                            <option value="KJK Kalev-Sillamäe">KJK Kalev-Sillamäe</option>
-                            <option value="Võrkpall">Võrkpall</option>
-                            <option value="Narkokeskus">Narkokeskus</option>
-                            <option value="Aeroobika, S. Koort">Aeroobika, S. Koort</option>
-                            <option value="Terviserühm „Fialka“">Terviserühm „Fialka“</option>
-                            <option value="Taekwondo">Taekwondo</option>
-                            <option value="Male">Male</option>
-                            <option value="Poks">Poks</option>
-                        </select>
-                    </div>
+					<div className={formStyles.flexCon}>
+						<select name='eventTitleEST'>
+							<option value='Iluvõimlemine'>Iluvõimlemine</option>
+							<option value='Sulgpall'>Sulgpall</option>
+							<option value='SJK Dina'>SJK Dina</option>
+							<option value='FC NPM Silmet'>FC NPM Silmet</option>
+							<option value='Jalgpallikool FC Kalev'>Jalgpallikool FC Kalev</option>
+							<option value='Tennis'>Tennis</option>
+							<option value='JK Almaz'>JK Almaz</option>
+							<option value='Korvpall'>Korvpall</option>
+							<option value='KJK Kalev-Sillamäe'>KJK Kalev-Sillamäe</option>
+							<option value='Võrkpall'>Võrkpall</option>
+							<option value='Narkokeskus'>Narkokeskus</option>
+							<option value='Aeroobika, S. Koort'>Aeroobika, S. Koort</option>
+							<option value='Terviserühm „Fialka“'>Terviserühm „Fialka“</option>
+							<option value='Taekwondo'>Taekwondo</option>
+							<option value='Male'>Male</option>
+							<option value='Poks'>Poks</option>
+						</select>
+					</div>
 					<ButtonAdmin isSubmit label={"Submit"} border action={() => {}} />
 					{isEditing ? (
 						<ButtonAdmin
