@@ -136,7 +136,7 @@ const ImageForm = ({ page, show, closeModal}: { page: string; show: boolean, clo
 							<button onClick={handleSubmit} className={stylesBut.filledBtn} style={{border : "none"}}>Upload</button>
 						</div>
 					</form>
-					{imgFile ? <img src={imgFile} alt='img' style={page == "Karusel" ? {width: "100%", height: "300px",  backgroundSize: '100% 100%', borderRadius: "10px"} : {} }/> : <p>Eelvaate nägemiseks lisage foto</p> }
+					{imgFile ? <img src={imgFile} alt='img' style={page == "Karusel" ? {width: "100%", height: "300px",  backgroundSize: '100% 100%', borderRadius: "10px"} : {maxWidth: '200px'} }/> : <p>Eelvaate nägemiseks lisage foto</p> }
 					{/* Display Image Here */}
 				</div>
 			</>
