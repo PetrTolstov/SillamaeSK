@@ -14,8 +14,16 @@ import LanguageStoreV2 from '../../Stores/LanguageStoreV2';
 import CarouselComponent from '../../components/MainPage/CarouselComponent';
 import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
+import dynamic from 'next/dynamic';
+import { GetContrast } from '../../components/AdminComponents/SimplePage/TimeTableAdmin';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
+const TimeTable = dynamic(
+	() => {
+		return import("../../components/AdminComponents/SimplePage/TimeTableAdmin");
+	},
+	{ ssr: false }
+);
 const Kergejoustikumaneez: NextPage = () => {
     //PDF
     const [numPages, setNumPages] = useState(null);
@@ -105,6 +113,9 @@ const Kergejoustikumaneez: NextPage = () => {
                 <Page pageNumber={24} className={styles.pdfPage} error={''}/>
                 <Page pageNumber={25} className={styles.pdfPage} error={''}/>
             </Document>
+            <div style={{width: "100%"}}>
+                <TimeTable pageName={page ?? ''}  />
+            </div>
         </LayoutSportComplexOpportunities>
     )
 }

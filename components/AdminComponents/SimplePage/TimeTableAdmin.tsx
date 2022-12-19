@@ -64,60 +64,36 @@ export type ObjectTimeTable = {
 	L: extendedEvent[];
 	P: extendedEvent[];
 };
+export type weekday = "E" | "T" | "K" | "N" | "R" | "L" | "P";
 
-function getTextColor(rgb: string) {
-	let rgba = rgb.match(/\d+/g);
-	if (rgba) {
-		if (rgba[0] as any * 0.299 + rgba[1] as any * 0.587 + rgba[2] as any * 0.114 > 186) {
-			return "black";
-		} else {
-			return "white";
-		}
-	}
-}
-
-const hex2rgba = (hex: string, alpha = 1) => {
-	const match = hex.match(/\w\w/g);
-	if (match) {
-		const [r, g, b] = match.map((x) => parseInt(x, 16) ?? 0);
-		return `rgba(${r},${g},${b},${alpha})`;
-	}
-	return `rgba(${0},${0},${0},${alpha})`;
-};
-function GetBackgroundColor(str: string) {
-	const div = document.querySelector(str) as HTMLElement;
-    console.log(div);
-	if (div) {
-		console.log(hex2rgba(div?.style.backgroundColor ?? "", 1));
-		console.log(div?.style.backgroundColor);
-	}
-}
-var getContrast = function (hexcolor: string){
+export const GetContrast = function (hexcolor: string) {
 	// If a leading # is provided, remove it
-	if (hexcolor.slice(0, 1) === '#') {
+	if (hexcolor.slice(0, 1) === "#") {
 		hexcolor = hexcolor.slice(1);
 	}
 
 	// If a three-character hexcode, make six-character
 	if (hexcolor.length === 3) {
-		hexcolor = hexcolor.split('').map(function (hex) {
-			return hex + hex;
-		}).join('');
+		hexcolor = hexcolor
+			.split("")
+			.map(function (hex) {
+				return hex + hex;
+			})
+			.join("");
 	}
 
 	// Convert to RGB value
-	var r = parseInt(hexcolor.substr(0,2),16);
-	var g = parseInt(hexcolor.substr(2,2),16);
-	var b = parseInt(hexcolor.substr(4,2),16);
+	var r = parseInt(hexcolor.substr(0, 2), 16);
+	var g = parseInt(hexcolor.substr(2, 2), 16);
+	var b = parseInt(hexcolor.substr(4, 2), 16);
 
 	// Get YIQ ratio
-	var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+	var yiq = (r * 299 + g * 587 + b * 114) / 1000;
 
 	// Check contrast
-	return (yiq >= 0) ? 'black' : 'white';
-
+	return yiq >= 128 ? "black" : "white";
 };
-function TimeTableAdmin({ pageName }: { pageName: string }) {
+function TimeTableAdmin({ pageName, isAdmin = false, getContrast=GetContrast }: { pageName: string; isAdmin?: boolean, getContrast?: (hexcolor: string) =>string }) {
 	const scheduleInitial = {
 		E: [],
 		T: [],
@@ -152,8 +128,6 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 	const [updateTimeTable, {}] = useSetObjectTimeTableMutation({
 		refetchQueries: [{ query: GetObjectTimeTableDocument, variables: { objectName: pageName } }],
 	});
-
-	type weekday = "E" | "T" | "K" | "N" | "R" | "L" | "P";
 
 	const [showModal, setShowModal] = useState(false);
 	const [currentEvent, setCurrentEvent] = useState<extendedEvent>();
@@ -208,20 +182,27 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 		});
 	}
 
-	if (pageName == "Arengukava" || pageName == "Kodukord") {
+	if (pageName == "Arengukava" || pageName == "Kodukord" ) {
 		return <></>;
 	}
 	return (
-		<>
-			<ButtonAdmin
-				label={"+"}
-				action={() => {
-					setCurrentEvent(undefined);
-					setIsEditing(false);
-					setShowModal(true);
-				}}
-				border
-			/>
+		<div style={{width:"100%"}}>
+			{isAdmin ? (
+				<>
+					<ButtonAdmin
+						label={"+"}
+						action={() => {
+							setCurrentEvent(undefined);
+							setIsEditing(false);
+							setShowModal(true);
+						}}
+						border
+					/>
+				</>
+			) : (
+				<></>
+			)}
+
 			<TimeTable
 				events={schedule}
 				timeLabel={"Aeg"}
@@ -229,28 +210,42 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 				style={{ height: "1100px" }}
 				renderEvent={(eventProps) => {
 					const event = eventProps.event as extendedEvent;
+					const eventID = event.id as number;
 					const height = parseInt(eventProps.defaultAttributes.style!.height! as string);
 					const isMinimal: boolean = height <= 40;
-					// console.log(GetTimeTableEventColor(event.textContent.EST));
+
+					// const currentColumn = sortEvents(schedule)[event.type as weekday];
+					// let isThin: boolean = false;
+					// const eventA = currentColumn[eventID];
+					// const eventB = currentColumn[eventID + 1];
+					// if (eventB) {
+					//     if (eventA.startTime <= eventB.endTime && eventB.startTime <= eventA.endTime) {
+					//         if (eventA.id != 0) {
+					//             isThin = true;
+					//         }
+
+					//     }
+					// }
+
 					return (
 						<div
 							className={styles.container}
 							{...eventProps.defaultAttributes}
-							//
 							key={`${eventProps.event.type}${eventProps.event.id}`}>
 							<div
-								// className={(event.id as number) % 2 == 0 ? styles.eventBodyEven : styles.eventBodyOdd}
-								className={`EventBackground${eventProps.event.type}${eventProps.event.id}`}
+								// className={[isMinimal ? styles.conatinerSmall : styles.containerBig, isThin ? styles.containerThin : ""].join(" ")}
 								style={{
-                                    color: getContrast(GetTimeTableEventColor(event.textContent.EST) ?? ""),
+									color: getContrast(GetTimeTableEventColor(event.textContent.EST) ?? ""),
 									backgroundColor:
 										GetTimeTableEventColor(event.textContent.EST) ?? "rgba(0, 0, 255, 1)",
 									height: "100%",
 								}}
 								onClick={() => {
-									setCurrentEvent(event as extendedEvent);
-									setShowModal(true);
-									setIsEditing(true);
+									if (isAdmin) {
+										setCurrentEvent(event as extendedEvent);
+										setShowModal(true);
+										setIsEditing(true);
+									}
 								}}>
 								{isMinimal ? (
 									<>
@@ -408,6 +403,8 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 							<option value='Taekwondo'>Taekwondo</option>
 							<option value='Male'>Male</option>
 							<option value='Poks'>Poks</option>
+							<option value='Spordiklubi Kalev'>Spordiklubi Kalev</option>
+							<option value='Ujumisklubi Kalev'>Ujumisklubi Kalev</option>
 						</select>
 					</div>
 					<ButtonAdmin isSubmit label={"Submit"} border action={() => {}} />
@@ -433,16 +430,46 @@ function TimeTableAdmin({ pageName }: { pageName: string }) {
 					)}
 				</form>
 			</ModalAdmin>
-		</>
+		</div>
 	);
 }
 
-function padTo2Digits(num: number): string {
+export function padTo2Digits(num: number): string {
 	if (String(num).length == 1) {
 		return String(num).padStart(2, "0");
 	} else {
 		return String(num);
 	}
+}
+
+function sortEvents(schedule: ObjectTimeTable): ObjectTimeTable {
+	let sortedSchedule: ObjectTimeTable = {
+		E: [],
+		T: [],
+		K: [],
+		N: [],
+		R: [],
+		L: [],
+		P: [],
+	};
+	for (let weekDay in schedule) {
+		sortedSchedule[weekDay as weekday] = schedule[weekDay as weekday].sort((eventA, eventB) => {
+			let startDateA = eventA.startTime;
+			let endDateA = eventA.endTime;
+			let startDateB = eventB.startTime;
+			let endDateB = eventB.endTime;
+
+			if (startDateA > endDateB) {
+				return 1;
+			}
+
+			if (startDateB > endDateA) {
+				return -1;
+			}
+			return 0;
+		});
+	}
+	return sortedSchedule;
 }
 
 export default observer(TimeTableAdmin);

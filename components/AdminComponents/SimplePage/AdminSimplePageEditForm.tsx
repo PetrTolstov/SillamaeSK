@@ -85,6 +85,12 @@ export function GetTimeTableEventColor(str: string) {
         case "Poks": { 
             return "#45CBB3"
         }
+        case "Spordiklubi Kalev": { 
+            return "#000075"
+        }
+        case "Ujumisklubi Kalev": { 
+            return "#808000"
+        }
     }
 }
 export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage, pageConfig: PageConfig }) => {
@@ -181,7 +187,7 @@ export const AdminSimplePageEditForm = ({ page, pageConfig }: { page: SimplePage
                 <input style={{width: "fit-content"}} type="submit" />
                
             </form>
-            <TimeTableAdmin pageName={getPage(currentPage?.pageName ?? '')?.slice(1) ?? ""} />
+            <TimeTableAdmin isAdmin pageName={getPage(currentPage?.pageName ?? '')?.slice(1) ?? ""} />
 		</div>
 	);
 };

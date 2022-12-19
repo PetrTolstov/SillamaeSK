@@ -6,19 +6,15 @@
 }
 
 .eventBodyOdd { 
-    /* border-radius: 5px; */
     color: black;
     background-color: rgba(59, 113, 200, 1) !important;
     height: 100%;
     cursor: pointer;
 }
 
-.container { 
-    border-radius: 100px;
+.containerBig { 
+    padding: 10px;
 }
-
-.contrastText { 
-    /* color: gray; */
-    /* mix-blend-mode: difference;
-    filter: contrast(19); */
+.conatinerSmall { 
+    padding: 1px;
 }
