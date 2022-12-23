@@ -33,6 +33,7 @@
     "react-photo-gallery": "^8.0.0",
     "react-pro-sidebar": "^0.7.1",
     "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.6.1",
     "react-timetable-events": "^2.0.0"
   },
   "devDependencies": {
