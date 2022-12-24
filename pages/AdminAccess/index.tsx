@@ -113,7 +113,7 @@ export function SidePanel({router}: {router: NextRouter}) {
 		{ href: "/AdminAccess/Gallery", label: "Galerii" },
 		{ href: "/AdminAccess/Banner", label: "Banner" }, 
 		{ href: "/AdminAccess/Footer", label: "Footer" }, 
-
+		{ href: "/AdminAccess/Hostel", label: "Hostel" }, 
 	];
 
 	if (isShown) {

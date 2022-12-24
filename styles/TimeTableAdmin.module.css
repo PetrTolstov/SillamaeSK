@@ -12,8 +12,8 @@
     cursor: pointer;
 }
 
-.containerBig { 
-    padding: 10px;
+.container { 
+    margin: 0;
 }
 .conatinerSmall { 
     padding: 1px;

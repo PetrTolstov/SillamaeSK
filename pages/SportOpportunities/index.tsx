@@ -24,7 +24,6 @@ import { Document, Page } from "react-pdf";
 import { pdfjs } from "react-pdf";
 import TimeTableAdmin, {
 	extendedEvent,
-	GetContrast,
 	padTo2Digits,
 	simplifiedObjectTimeTable,
 	simplifiedObjectTimeTableNonNullable,
@@ -142,7 +141,7 @@ const Index: NextPage = () => {
 				<Page pageNumber={25} className={styles.pdfPage} error={""} />
 			</Document>
             <div style={{width: "100%"}}>
-                <TimeTable pageName={"Ujula"} getContrast={GetContrast} />
+                <TimeTable pageName={"Ujula"} />
             </div>
 			
 		</LayoutSportComplexOpportunities>

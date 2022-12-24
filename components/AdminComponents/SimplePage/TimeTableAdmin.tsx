@@ -66,34 +66,7 @@ export type ObjectTimeTable = {
 };
 export type weekday = "E" | "T" | "K" | "N" | "R" | "L" | "P";
 
-export const GetContrast = function (hexcolor: string) {
-	// If a leading # is provided, remove it
-	if (hexcolor.slice(0, 1) === "#") {
-		hexcolor = hexcolor.slice(1);
-	}
-
-	// If a three-character hexcode, make six-character
-	if (hexcolor.length === 3) {
-		hexcolor = hexcolor
-			.split("")
-			.map(function (hex) {
-				return hex + hex;
-			})
-			.join("");
-	}
-
-	// Convert to RGB value
-	var r = parseInt(hexcolor.substr(0, 2), 16);
-	var g = parseInt(hexcolor.substr(2, 2), 16);
-	var b = parseInt(hexcolor.substr(4, 2), 16);
-
-	// Get YIQ ratio
-	var yiq = (r * 299 + g * 587 + b * 114) / 1000;
-
-	// Check contrast
-	return yiq >= 128 ? "black" : "white";
-};
-function TimeTableAdmin({ pageName, isAdmin = false, getContrast=GetContrast }: { pageName: string; isAdmin?: boolean, getContrast?: (hexcolor: string) =>string }) {
+function TimeTableAdmin({ pageName, isAdmin = false }: { pageName: string; isAdmin?: boolean }) {
 	const scheduleInitial = {
 		E: [],
 		T: [],
@@ -132,6 +105,33 @@ function TimeTableAdmin({ pageName, isAdmin = false, getContrast=GetContrast }: 
 	const [showModal, setShowModal] = useState(false);
 	const [currentEvent, setCurrentEvent] = useState<extendedEvent>();
 
+	function GetContrast(hexcolor: string) {
+		// If a leading # is provided, remove it
+		if (hexcolor.slice(0, 1) === "#") {
+			hexcolor = hexcolor.slice(1);
+		}
+
+		// If a three-character hexcode, make six-character
+		if (hexcolor.length === 3) {
+			hexcolor = hexcolor
+				.split("")
+				.map(function (hex) {
+					return hex + hex;
+				})
+				.join("");
+		}
+
+		// Convert to RGB value
+		var r = parseInt(hexcolor.substr(0, 2), 16);
+		var g = parseInt(hexcolor.substr(2, 2), 16);
+		var b = parseInt(hexcolor.substr(4, 2), 16);
+
+		// Get YIQ ratio
+		var yiq = (r * 299 + g * 587 + b * 114) / 1000;
+
+		// Check contrast
+		return yiq >= 128 ? "black" : "white";
+	}
 	function convertScheduleDateToTimeObject(schedule: ObjectTimeTable) {
 		const copy = JSON.parse(JSON.stringify(schedule)) as simplifiedObjectTimeTable;
 		for (const [key, value] of Object.entries(copy)) {
@@ -182,11 +182,11 @@ function TimeTableAdmin({ pageName, isAdmin = false, getContrast=GetContrast }: 
 		});
 	}
 
-	if (pageName == "Arengukava" || pageName == "Kodukord" ) {
+	if (pageName == "Arengukava" || pageName == "Kodukord") {
 		return <></>;
 	}
 	return (
-		<div style={{width:"100%"}}>
+		<div style={{ width: "100%" }}>
 			{isAdmin ? (
 				<>
 					<ButtonAdmin
@@ -226,7 +226,8 @@ function TimeTableAdmin({ pageName, isAdmin = false, getContrast=GetContrast }: 
 
 					//     }
 					// }
-
+					let fontColor = GetContrast(GetTimeTableEventColor(event.textContent.EST) ?? "");
+					console.log(fontColor);
 					return (
 						<div
 							className={styles.container}
@@ -235,10 +236,11 @@ function TimeTableAdmin({ pageName, isAdmin = false, getContrast=GetContrast }: 
 							<div
 								// className={[isMinimal ? styles.conatinerSmall : styles.containerBig, isThin ? styles.containerThin : ""].join(" ")}
 								style={{
-									color: getContrast(GetTimeTableEventColor(event.textContent.EST) ?? ""),
+									color: fontColor,
 									backgroundColor:
 										GetTimeTableEventColor(event.textContent.EST) ?? "rgba(0, 0, 255, 1)",
 									height: "100%",
+                                    border: "0.5px solid black"
 								}}
 								onClick={() => {
 									if (isAdmin) {
@@ -252,6 +254,7 @@ function TimeTableAdmin({ pageName, isAdmin = false, getContrast=GetContrast }: 
 										<p
 											className={styles.contrastText}
 											style={{
+                                               
 												fontSize: height <= 20 ? "8px" : height <= 100 ? "10px" : "20px",
 											}}>{`${padTo2Digits((event.startTime as Date).getHours())}:${padTo2Digits(
 											(event.startTime as Date).getMinutes()
@@ -261,12 +264,18 @@ function TimeTableAdmin({ pageName, isAdmin = false, getContrast=GetContrast }: 
 									</>
 								) : (
 									<>
-										<p className={styles.contrastText} style={{ fontSize: "10px" }}>
+										<p className={styles.contrastText} style={{ fontSize: "10px",  margin: "0px", }}>
 											{event.textContent.EST ?? ""}
+											{/* <span style={{ fontSize: "8px" }}>
+												{`${padTo2Digits((event.startTime as Date).getHours())}:${padTo2Digits(
+													(event.startTime as Date).getMinutes()
+												)} - ${padTo2Digits((event.endTime as Date).getHours())}:${padTo2Digits(
+													(event.endTime as Date).getMinutes()
+												)}`}
+											</span> */}
 										</p>
 										<p
-											className={styles.contrastText}
-											style={{ fontSize: "10px" }}>{`${padTo2Digits(
+											style={{ fontSize: "8px", marginTop: "-5px" }}>{`${padTo2Digits(
 											(event.startTime as Date).getHours()
 										)}:${padTo2Digits((event.startTime as Date).getMinutes())} - ${padTo2Digits(
 											(event.endTime as Date).getHours()

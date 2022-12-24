@@ -14,7 +14,6 @@ import LanguageStoreV2 from "../../Stores/LanguageStoreV2";
 import CarouselComponent from "../../components/MainPage/CarouselComponent";
 import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
-import { GetContrast } from "../../components/AdminComponents/SimplePage/TimeTableAdmin";
 import dynamic from "next/dynamic";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -120,7 +119,7 @@ const Maleruum: NextPage = () => {
 				<Page pageNumber={25} className={styles.pdfPage} error={''}/>
 			</Document>
             <div style={{width: "100%"}}>
-                <TimeTable pageName={page ?? ''} getContrast={GetContrast} />
+                <TimeTable pageName={page ?? ''} />
             </div>
 		</LayoutSportComplexOpportunities>
 	);
