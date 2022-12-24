@@ -1,15 +1,17 @@
 import type { NextPage } from 'next'
 import styles from '../styles/Hostel.module.css'
 import Layout from "../components/Layout";
-import AppIsBeingBuilt from "../components/Temporary/AppIsBeingBuilt";
-import languageStore from "../Stores/LanguageStore";
 import AboutHostel from "../components/Hostel/AboutHostel";
+import HostelRooms from "../components/Hostel/HostelRooms";
+import Facilities from "../components/Hostel/Facilities";
 
 const Hostel: NextPage = () => {
     return (
         <Layout>
             <main className={styles.main}>
                 <AboutHostel/>
+                <HostelRooms/>
+                <Facilities/>
             </main>
         </Layout>
     )

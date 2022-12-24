@@ -1,0 +1,35 @@
+.h2{
+    margin-left: auto;
+    font-size: 25px;
+    line-height: 39px;
+    color: #002B5C;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.listOfFacilities{
+    margin: 15px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.listOfFacilities button{
+    border: none;
+    font: inherit;
+
+    background-color: transparent;
+    /* отображаем курсор в виде руки при наведении; некоторые
+    считают, что необходимо оставлять стрелочный вид для кнопок */
+    cursor: pointer;
+    margin: 10px;
+    color: #002B5C;
+    padding: 10px 20px;
+    box-shadow: 0 10px 10px 5px rgba(0, 0, 0, 0.1);
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+}
