@@ -41,7 +41,7 @@ const Kalender: NextPage = () => {
 	let newDate = new Date();
 	const [value, setValue] = useState(newDate);
 	const [currentMonthAndYear, setCurrentMonthAndYear] = useState(
-		`${newDate.getFullYear()}-${newDate.getMonth() + 1}`
+		`${newDate.getFullYear()}-${(newDate.getMonth() + 1) < 10 ? '0' + (newDate.getMonth() + 1) : (newDate.getMonth() + 1)}`
 	);
 	let isNotChoosen = true
 
@@ -60,7 +60,7 @@ const Kalender: NextPage = () => {
 		"Detsember",
 	];
 	const [getEventsByMonth, { loading, data, error }] = useGetCalendarEventsByMonthLazyQuery();
-
+	console.log(currentMonthAndYear)
 	useEffect(() => {
 		getEventsByMonth({
 			variables: {
