@@ -1,0 +1,3 @@
+mutation EditFacility($facilityId: ID, $newFacilityData: FacilityInput) {
+  EditFacility(facilityID: $facilityId, newFacilityData: $newFacilityData)
+}

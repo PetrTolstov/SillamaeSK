@@ -1,0 +1,15 @@
+query GetFacilities {
+  GetFacilities {
+    _id
+    title {
+      RUS
+      EST
+      ENG
+    }
+    description {
+      RUS
+      EST
+      ENG
+    }
+  }
+}

@@ -1,0 +1,3 @@
+mutation AddFacility($facility: FacilityInput) {
+  AddFacility(facility: $facility)
+}

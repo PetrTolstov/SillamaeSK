@@ -1,0 +1,15 @@
+query GetRooms {
+  GetRooms {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    description {
+      RUS
+      EST
+      ENG
+    }
+  }
+}

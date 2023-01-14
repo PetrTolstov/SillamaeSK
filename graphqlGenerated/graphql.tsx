@@ -37,6 +37,17 @@ export type CalendarEventInput = {
   startTime?: InputMaybe<Scalars['String']>;
 };
 
+export type Contact = {
+  __typename?: 'Contact';
+  body?: Maybe<TextContent>;
+  title?: Maybe<TextContent>;
+};
+
+export type ContactInput = {
+  body?: InputMaybe<TextContentInput>;
+  title?: InputMaybe<TextContentInput>;
+};
+
 export type Duration = {
   __typename?: 'Duration';
   additionalInfo?: Maybe<TextContent>;
@@ -46,6 +57,18 @@ export type Duration = {
 export type DurationInput = {
   additionalInfo?: InputMaybe<TextContentInput>;
   hours: Scalars['Float'];
+};
+
+export type Facility = {
+  __typename?: 'Facility';
+  _id?: Maybe<Scalars['ID']>;
+  description?: Maybe<TextContent>;
+  title?: Maybe<TextContent>;
+};
+
+export type FacilityInput = {
+  description?: InputMaybe<TextContentInput>;
+  title?: InputMaybe<TextContentInput>;
 };
 
 export type Field = {
@@ -117,26 +140,46 @@ export type LoginResponse = {
   str?: Maybe<Scalars['String']>;
 };
 
+export type MainDescription = {
+  __typename?: 'MainDescription';
+  contacts?: Maybe<Contact>;
+  text?: Maybe<TextContent>;
+};
+
+export type MainDescriptionInput = {
+  contacts?: InputMaybe<ContactInput>;
+  text?: InputMaybe<TextContentInput>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   AddCalendarEvent?: Maybe<Scalars['String']>;
+  AddFacility?: Maybe<Scalars['String']>;
   AddFooterData?: Maybe<Scalars['String']>;
   AddPageConfig?: Maybe<Scalars['String']>;
   AddPageNotWorkingBanner?: Maybe<Scalars['String']>;
+  AddRoom?: Maybe<Scalars['String']>;
   AddSimplePage?: Maybe<Scalars['String']>;
   CreateNewPriceListElement?: Maybe<PriceListElement>;
   DeleteCalendarEvent?: Maybe<Scalars['String']>;
+  DeleteFacility?: Maybe<Scalars['String']>;
   DeletePriceListElementById: Scalars['String'];
+  DeleteRoom?: Maybe<Scalars['String']>;
+  EditFacility?: Maybe<Scalars['String']>;
   EditFooterData?: Maybe<Scalars['String']>;
   EditPageConfig?: Maybe<Scalars['String']>;
   EditPageNotWorkingBanner?: Maybe<Scalars['String']>;
+  EditRoom?: Maybe<Scalars['String']>;
   EditSimplePage?: Maybe<Scalars['String']>;
   EditToken?: Maybe<Scalars['String']>;
   Login: LoginResponse;
   RefetchLatestNews: Scalars['String'];
+  SetFacilities?: Maybe<Scalars['String']>;
   SetGeneralContactInfo?: Maybe<Scalars['String']>;
+  SetMainDescription?: Maybe<Scalars['String']>;
   SetObjectTimeTable?: Maybe<Scalars['String']>;
   SetPersonalContactInfo?: Maybe<Scalars['String']>;
+  SetRooms?: Maybe<Scalars['String']>;
   SetSportOpportunitiesDescription?: Maybe<Scalars['String']>;
   SetTimeTable?: Maybe<Scalars['String']>;
   UpdateCalendarEvent?: Maybe<Scalars['String']>;
@@ -147,6 +190,11 @@ export type Mutation = {
 
 export type MutationAddCalendarEventArgs = {
   newEvent?: InputMaybe<CalendarEventInput>;
+};
+
+
+export type MutationAddFacilityArgs = {
+  facility?: InputMaybe<FacilityInput>;
 };
 
 
@@ -162,6 +210,11 @@ export type MutationAddPageConfigArgs = {
 
 export type MutationAddPageNotWorkingBannerArgs = {
   newBanner?: InputMaybe<PageNotWorkingBannerInput>;
+};
+
+
+export type MutationAddRoomArgs = {
+  newRoom?: InputMaybe<RoomInput>;
 };
 
 
@@ -181,8 +234,24 @@ export type MutationDeleteCalendarEventArgs = {
 };
 
 
+export type MutationDeleteFacilityArgs = {
+  facilityID?: InputMaybe<Scalars['ID']>;
+};
+
+
 export type MutationDeletePriceListElementByIdArgs = {
   _id: Scalars['String'];
+};
+
+
+export type MutationDeleteRoomArgs = {
+  RoomIdToDelete?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type MutationEditFacilityArgs = {
+  facilityID?: InputMaybe<Scalars['ID']>;
+  newFacilityData?: InputMaybe<FacilityInput>;
 };
 
 
@@ -202,6 +271,12 @@ export type MutationEditPageNotWorkingBannerArgs = {
 };
 
 
+export type MutationEditRoomArgs = {
+  RoomIdToEdit?: InputMaybe<Scalars['ID']>;
+  editedRoom?: InputMaybe<RoomInput>;
+};
+
+
 export type MutationEditSimplePageArgs = {
   _id: Scalars['ID'];
   updatedSimplePage?: InputMaybe<SimplePageInput>;
@@ -218,8 +293,18 @@ export type MutationLoginArgs = {
 };
 
 
+export type MutationSetFacilitiesArgs = {
+  facilities?: InputMaybe<Array<InputMaybe<FacilityInput>>>;
+};
+
+
 export type MutationSetGeneralContactInfoArgs = {
   newGeneralContactsInfo?: InputMaybe<GeneralContactsInfoInput>;
+};
+
+
+export type MutationSetMainDescriptionArgs = {
+  description?: InputMaybe<MainDescriptionInput>;
 };
 
 
@@ -231,6 +316,11 @@ export type MutationSetObjectTimeTableArgs = {
 
 export type MutationSetPersonalContactInfoArgs = {
   newPersonalContactsInfo?: InputMaybe<Array<InputMaybe<PersonContactInfoInput>>>;
+};
+
+
+export type MutationSetRoomsArgs = {
+  replaceRoomsWith?: InputMaybe<Array<InputMaybe<RoomInput>>>;
 };
 
 
@@ -281,7 +371,7 @@ export type ObjectTimeTable = {
 export type ObjectTimeTableEvent = {
   __typename?: 'ObjectTimeTableEvent';
   endTime?: Maybe<Scalars['String']>;
-  id: Scalars['Int'];
+  id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   startTime?: Maybe<Scalars['String']>;
   textContent?: Maybe<TextContent>;
@@ -290,7 +380,7 @@ export type ObjectTimeTableEvent = {
 
 export type ObjectTimeTableEventInput = {
   endTime?: InputMaybe<Scalars['String']>;
-  id: Scalars['Int'];
+  id?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
   startTime?: InputMaybe<Scalars['String']>;
   textContent?: InputMaybe<TextContentInput>;
@@ -407,9 +497,11 @@ export type Query = {
   GetCalendarEventById?: Maybe<CalendarEvent>;
   GetCalendarEvents?: Maybe<Array<Maybe<CalendarEvent>>>;
   GetCalendarEventsByMonth?: Maybe<Array<Maybe<CalendarEvent>>>;
+  GetFacilities?: Maybe<Array<Maybe<Facility>>>;
   GetFooter?: Maybe<Footer>;
   GetGeneralContactsInfo?: Maybe<GeneralContactsInfo>;
   GetLatestNews: NewsResponse;
+  GetMainDescription?: Maybe<MainDescription>;
   GetObjectTimeTable?: Maybe<ObjectTimeTimeTableContainer>;
   GetPageConfig?: Maybe<PageConfig>;
   GetPageNotWorkingBanner?: Maybe<PageNotWorkingBanner>;
@@ -417,6 +509,7 @@ export type Query = {
   GetPriceList: Array<Maybe<PriceListElement>>;
   GetPriceListElementById: PriceListElement;
   GetRelevantCalendarEventsByCurrentDate?: Maybe<Array<Maybe<CalendarEvent>>>;
+  GetRooms?: Maybe<Array<Maybe<Room>>>;
   GetSimplePages?: Maybe<Array<SimplePage>>;
   GetSportOpportunitiesDescription?: Maybe<SportOpportunitiesDescription>;
   GetTimeTable?: Maybe<TimeTable>;
@@ -463,6 +556,18 @@ export type QueryGetSimplePagesArgs = {
 };
 
 export type ResponseData = LatestNews | StringBox;
+
+export type Room = {
+  __typename?: 'Room';
+  _id: Scalars['ID'];
+  description?: Maybe<TextContent>;
+  name?: Maybe<TextContent>;
+};
+
+export type RoomInput = {
+  description?: InputMaybe<TextContentInput>;
+  name?: InputMaybe<TextContentInput>;
+};
 
 export type SimplePage = {
   __typename?: 'SimplePage';
@@ -572,6 +677,20 @@ export type AddCalendarEventMutationVariables = Exact<{
 
 export type AddCalendarEventMutation = { __typename?: 'Mutation', AddCalendarEvent?: string | null };
 
+export type AddFacilityMutationVariables = Exact<{
+  facility?: InputMaybe<FacilityInput>;
+}>;
+
+
+export type AddFacilityMutation = { __typename?: 'Mutation', AddFacility?: string | null };
+
+export type AddRoomMutationVariables = Exact<{
+  newRoom?: InputMaybe<RoomInput>;
+}>;
+
+
+export type AddRoomMutation = { __typename?: 'Mutation', AddRoom?: string | null };
+
 export type AddSimplePageMutationVariables = Exact<{
   type?: InputMaybe<Scalars['Int']>;
   newSimplePage?: InputMaybe<SimplePageInput>;
@@ -594,12 +713,34 @@ export type DeleteCalendarEventMutationVariables = Exact<{
 
 export type DeleteCalendarEventMutation = { __typename?: 'Mutation', DeleteCalendarEvent?: string | null };
 
+export type DeleteFacilityMutationVariables = Exact<{
+  facilityId?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type DeleteFacilityMutation = { __typename?: 'Mutation', DeleteFacility?: string | null };
+
 export type DeletePriceListElementByIdMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
 export type DeletePriceListElementByIdMutation = { __typename?: 'Mutation', DeletePriceListElementById: string };
+
+export type DeleteRoomMutationVariables = Exact<{
+  roomIdToDelete?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type DeleteRoomMutation = { __typename?: 'Mutation', DeleteRoom?: string | null };
+
+export type EditFacilityMutationVariables = Exact<{
+  facilityId?: InputMaybe<Scalars['ID']>;
+  newFacilityData?: InputMaybe<FacilityInput>;
+}>;
+
+
+export type EditFacilityMutation = { __typename?: 'Mutation', EditFacility?: string | null };
 
 export type EditFooterDataMutationVariables = Exact<{
   updatedFooter?: InputMaybe<FooterInput>;
@@ -622,6 +763,14 @@ export type EditPageNotWorkingBannerMutationVariables = Exact<{
 
 
 export type EditPageNotWorkingBannerMutation = { __typename?: 'Mutation', EditPageNotWorkingBanner?: string | null };
+
+export type EditRoomMutationVariables = Exact<{
+  roomIdToEdit?: InputMaybe<Scalars['ID']>;
+  editedRoom?: InputMaybe<RoomInput>;
+}>;
+
+
+export type EditRoomMutation = { __typename?: 'Mutation', EditRoom?: string | null };
 
 export type EditSimplePageMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -649,6 +798,13 @@ export type SetGeneralContactInfoMutationVariables = Exact<{
 
 
 export type SetGeneralContactInfoMutation = { __typename?: 'Mutation', SetGeneralContactInfo?: string | null };
+
+export type SetMainDescriptionMutationVariables = Exact<{
+  description?: InputMaybe<MainDescriptionInput>;
+}>;
+
+
+export type SetMainDescriptionMutation = { __typename?: 'Mutation', SetMainDescription?: string | null };
 
 export type SetObjectTimeTableMutationVariables = Exact<{
   objectName?: InputMaybe<Scalars['String']>;
@@ -723,6 +879,11 @@ export type GetCalendarEventsByMonthQueryVariables = Exact<{
 
 export type GetCalendarEventsByMonthQuery = { __typename?: 'Query', GetCalendarEventsByMonth?: Array<{ __typename?: 'CalendarEvent', _id: string, link?: string | null, date?: string | null, place?: string | null, startTime?: string | null, endTime?: string | null, name?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, eventDescription?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null };
 
+export type GetFacilitiesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFacilitiesQuery = { __typename?: 'Query', GetFacilities?: Array<{ __typename?: 'Facility', _id?: string | null, title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, description?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null };
+
 export type GetFooterQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -738,12 +899,17 @@ export type GetLatestNewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetLatestNewsQuery = { __typename?: 'Query', GetLatestNews: { __typename?: 'NewsResponse', errorMessage?: string | null, success: boolean, data?: { __typename?: 'LatestNews', _id: string, created_time?: string | null, message?: string | null } | null } };
 
+export type GetMainDescriptionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMainDescriptionQuery = { __typename?: 'Query', GetMainDescription?: { __typename?: 'MainDescription', text?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, contacts?: { __typename?: 'Contact', title?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, body?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null } | null };
+
 export type GetObjectTimeTableQueryVariables = Exact<{
   objectName?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetObjectTimeTableQuery = { __typename?: 'Query', GetObjectTimeTable?: { __typename?: 'ObjectTimeTimeTableContainer', objectName?: string | null, timeTable?: { __typename?: 'ObjectTimeTable', E?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, T?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, K?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, N?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, R?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, L?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, P?: Array<{ __typename?: 'ObjectTimeTableEvent', id: number, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null } | null } | null };
+export type GetObjectTimeTableQuery = { __typename?: 'Query', GetObjectTimeTable?: { __typename?: 'ObjectTimeTimeTableContainer', objectName?: string | null, timeTable?: { __typename?: 'ObjectTimeTable', E?: Array<{ __typename?: 'ObjectTimeTableEvent', id?: number | null, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, T?: Array<{ __typename?: 'ObjectTimeTableEvent', id?: number | null, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, K?: Array<{ __typename?: 'ObjectTimeTableEvent', id?: number | null, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, N?: Array<{ __typename?: 'ObjectTimeTableEvent', id?: number | null, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, R?: Array<{ __typename?: 'ObjectTimeTableEvent', id?: number | null, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, L?: Array<{ __typename?: 'ObjectTimeTableEvent', id?: number | null, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null, P?: Array<{ __typename?: 'ObjectTimeTableEvent', id?: number | null, name?: string | null, type?: string | null, startTime?: string | null, endTime?: string | null, textContent?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null } | null } | null };
 
 export type GetPageConfigQueryVariables = Exact<{
   pageName?: InputMaybe<Scalars['String']>;
@@ -785,6 +951,11 @@ export type GetRelevantCalendarEventsByCurrentDateQueryVariables = Exact<{
 
 
 export type GetRelevantCalendarEventsByCurrentDateQuery = { __typename?: 'Query', GetRelevantCalendarEventsByCurrentDate?: Array<{ __typename?: 'CalendarEvent', _id: string, link?: string | null, date?: string | null, place?: string | null, startTime?: string | null, endTime?: string | null, name?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, eventDescription?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null };
+
+export type GetRoomsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRoomsQuery = { __typename?: 'Query', GetRooms?: Array<{ __typename?: 'Room', _id: string, name?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null, description?: { __typename?: 'TextContent', RUS?: string | null, EST?: string | null, ENG?: string | null } | null } | null> | null };
 
 export type GetSimplePagesQueryVariables = Exact<{
   type?: InputMaybe<Scalars['Int']>;
@@ -835,6 +1006,68 @@ export function useAddCalendarEventMutation(baseOptions?: Apollo.MutationHookOpt
 export type AddCalendarEventMutationHookResult = ReturnType<typeof useAddCalendarEventMutation>;
 export type AddCalendarEventMutationResult = Apollo.MutationResult<AddCalendarEventMutation>;
 export type AddCalendarEventMutationOptions = Apollo.BaseMutationOptions<AddCalendarEventMutation, AddCalendarEventMutationVariables>;
+export const AddFacilityDocument = gql`
+    mutation AddFacility($facility: FacilityInput) {
+  AddFacility(facility: $facility)
+}
+    `;
+export type AddFacilityMutationFn = Apollo.MutationFunction<AddFacilityMutation, AddFacilityMutationVariables>;
+
+/**
+ * __useAddFacilityMutation__
+ *
+ * To run a mutation, you first call `useAddFacilityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddFacilityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addFacilityMutation, { data, loading, error }] = useAddFacilityMutation({
+ *   variables: {
+ *      facility: // value for 'facility'
+ *   },
+ * });
+ */
+export function useAddFacilityMutation(baseOptions?: Apollo.MutationHookOptions<AddFacilityMutation, AddFacilityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddFacilityMutation, AddFacilityMutationVariables>(AddFacilityDocument, options);
+      }
+export type AddFacilityMutationHookResult = ReturnType<typeof useAddFacilityMutation>;
+export type AddFacilityMutationResult = Apollo.MutationResult<AddFacilityMutation>;
+export type AddFacilityMutationOptions = Apollo.BaseMutationOptions<AddFacilityMutation, AddFacilityMutationVariables>;
+export const AddRoomDocument = gql`
+    mutation AddRoom($newRoom: RoomInput) {
+  AddRoom(newRoom: $newRoom)
+}
+    `;
+export type AddRoomMutationFn = Apollo.MutationFunction<AddRoomMutation, AddRoomMutationVariables>;
+
+/**
+ * __useAddRoomMutation__
+ *
+ * To run a mutation, you first call `useAddRoomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddRoomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addRoomMutation, { data, loading, error }] = useAddRoomMutation({
+ *   variables: {
+ *      newRoom: // value for 'newRoom'
+ *   },
+ * });
+ */
+export function useAddRoomMutation(baseOptions?: Apollo.MutationHookOptions<AddRoomMutation, AddRoomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddRoomMutation, AddRoomMutationVariables>(AddRoomDocument, options);
+      }
+export type AddRoomMutationHookResult = ReturnType<typeof useAddRoomMutation>;
+export type AddRoomMutationResult = Apollo.MutationResult<AddRoomMutation>;
+export type AddRoomMutationOptions = Apollo.BaseMutationOptions<AddRoomMutation, AddRoomMutationVariables>;
 export const AddSimplePageDocument = gql`
     mutation AddSimplePage($type: Int, $newSimplePage: SimplePageInput) {
   AddSimplePage(type: $type, newSimplePage: $newSimplePage)
@@ -952,6 +1185,37 @@ export function useDeleteCalendarEventMutation(baseOptions?: Apollo.MutationHook
 export type DeleteCalendarEventMutationHookResult = ReturnType<typeof useDeleteCalendarEventMutation>;
 export type DeleteCalendarEventMutationResult = Apollo.MutationResult<DeleteCalendarEventMutation>;
 export type DeleteCalendarEventMutationOptions = Apollo.BaseMutationOptions<DeleteCalendarEventMutation, DeleteCalendarEventMutationVariables>;
+export const DeleteFacilityDocument = gql`
+    mutation DeleteFacility($facilityId: ID) {
+  DeleteFacility(facilityID: $facilityId)
+}
+    `;
+export type DeleteFacilityMutationFn = Apollo.MutationFunction<DeleteFacilityMutation, DeleteFacilityMutationVariables>;
+
+/**
+ * __useDeleteFacilityMutation__
+ *
+ * To run a mutation, you first call `useDeleteFacilityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteFacilityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteFacilityMutation, { data, loading, error }] = useDeleteFacilityMutation({
+ *   variables: {
+ *      facilityId: // value for 'facilityId'
+ *   },
+ * });
+ */
+export function useDeleteFacilityMutation(baseOptions?: Apollo.MutationHookOptions<DeleteFacilityMutation, DeleteFacilityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteFacilityMutation, DeleteFacilityMutationVariables>(DeleteFacilityDocument, options);
+      }
+export type DeleteFacilityMutationHookResult = ReturnType<typeof useDeleteFacilityMutation>;
+export type DeleteFacilityMutationResult = Apollo.MutationResult<DeleteFacilityMutation>;
+export type DeleteFacilityMutationOptions = Apollo.BaseMutationOptions<DeleteFacilityMutation, DeleteFacilityMutationVariables>;
 export const DeletePriceListElementByIdDocument = gql`
     mutation DeletePriceListElementById($id: String!) {
   DeletePriceListElementById(_id: $id)
@@ -983,6 +1247,69 @@ export function useDeletePriceListElementByIdMutation(baseOptions?: Apollo.Mutat
 export type DeletePriceListElementByIdMutationHookResult = ReturnType<typeof useDeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationResult = Apollo.MutationResult<DeletePriceListElementByIdMutation>;
 export type DeletePriceListElementByIdMutationOptions = Apollo.BaseMutationOptions<DeletePriceListElementByIdMutation, DeletePriceListElementByIdMutationVariables>;
+export const DeleteRoomDocument = gql`
+    mutation DeleteRoom($roomIdToDelete: ID) {
+  DeleteRoom(RoomIdToDelete: $roomIdToDelete)
+}
+    `;
+export type DeleteRoomMutationFn = Apollo.MutationFunction<DeleteRoomMutation, DeleteRoomMutationVariables>;
+
+/**
+ * __useDeleteRoomMutation__
+ *
+ * To run a mutation, you first call `useDeleteRoomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteRoomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteRoomMutation, { data, loading, error }] = useDeleteRoomMutation({
+ *   variables: {
+ *      roomIdToDelete: // value for 'roomIdToDelete'
+ *   },
+ * });
+ */
+export function useDeleteRoomMutation(baseOptions?: Apollo.MutationHookOptions<DeleteRoomMutation, DeleteRoomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteRoomMutation, DeleteRoomMutationVariables>(DeleteRoomDocument, options);
+      }
+export type DeleteRoomMutationHookResult = ReturnType<typeof useDeleteRoomMutation>;
+export type DeleteRoomMutationResult = Apollo.MutationResult<DeleteRoomMutation>;
+export type DeleteRoomMutationOptions = Apollo.BaseMutationOptions<DeleteRoomMutation, DeleteRoomMutationVariables>;
+export const EditFacilityDocument = gql`
+    mutation EditFacility($facilityId: ID, $newFacilityData: FacilityInput) {
+  EditFacility(facilityID: $facilityId, newFacilityData: $newFacilityData)
+}
+    `;
+export type EditFacilityMutationFn = Apollo.MutationFunction<EditFacilityMutation, EditFacilityMutationVariables>;
+
+/**
+ * __useEditFacilityMutation__
+ *
+ * To run a mutation, you first call `useEditFacilityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditFacilityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editFacilityMutation, { data, loading, error }] = useEditFacilityMutation({
+ *   variables: {
+ *      facilityId: // value for 'facilityId'
+ *      newFacilityData: // value for 'newFacilityData'
+ *   },
+ * });
+ */
+export function useEditFacilityMutation(baseOptions?: Apollo.MutationHookOptions<EditFacilityMutation, EditFacilityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditFacilityMutation, EditFacilityMutationVariables>(EditFacilityDocument, options);
+      }
+export type EditFacilityMutationHookResult = ReturnType<typeof useEditFacilityMutation>;
+export type EditFacilityMutationResult = Apollo.MutationResult<EditFacilityMutation>;
+export type EditFacilityMutationOptions = Apollo.BaseMutationOptions<EditFacilityMutation, EditFacilityMutationVariables>;
 export const EditFooterDataDocument = gql`
     mutation EditFooterData($updatedFooter: FooterInput) {
   EditFooterData(updatedFooter: $updatedFooter)
@@ -1077,6 +1404,38 @@ export function useEditPageNotWorkingBannerMutation(baseOptions?: Apollo.Mutatio
 export type EditPageNotWorkingBannerMutationHookResult = ReturnType<typeof useEditPageNotWorkingBannerMutation>;
 export type EditPageNotWorkingBannerMutationResult = Apollo.MutationResult<EditPageNotWorkingBannerMutation>;
 export type EditPageNotWorkingBannerMutationOptions = Apollo.BaseMutationOptions<EditPageNotWorkingBannerMutation, EditPageNotWorkingBannerMutationVariables>;
+export const EditRoomDocument = gql`
+    mutation EditRoom($roomIdToEdit: ID, $editedRoom: RoomInput) {
+  EditRoom(RoomIdToEdit: $roomIdToEdit, editedRoom: $editedRoom)
+}
+    `;
+export type EditRoomMutationFn = Apollo.MutationFunction<EditRoomMutation, EditRoomMutationVariables>;
+
+/**
+ * __useEditRoomMutation__
+ *
+ * To run a mutation, you first call `useEditRoomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditRoomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editRoomMutation, { data, loading, error }] = useEditRoomMutation({
+ *   variables: {
+ *      roomIdToEdit: // value for 'roomIdToEdit'
+ *      editedRoom: // value for 'editedRoom'
+ *   },
+ * });
+ */
+export function useEditRoomMutation(baseOptions?: Apollo.MutationHookOptions<EditRoomMutation, EditRoomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditRoomMutation, EditRoomMutationVariables>(EditRoomDocument, options);
+      }
+export type EditRoomMutationHookResult = ReturnType<typeof useEditRoomMutation>;
+export type EditRoomMutationResult = Apollo.MutationResult<EditRoomMutation>;
+export type EditRoomMutationOptions = Apollo.BaseMutationOptions<EditRoomMutation, EditRoomMutationVariables>;
 export const EditSimplePageDocument = gql`
     mutation EditSimplePage($id: ID!, $updatedSimplePage: SimplePageInput) {
   EditSimplePage(_id: $id, updatedSimplePage: $updatedSimplePage)
@@ -1204,6 +1563,37 @@ export function useSetGeneralContactInfoMutation(baseOptions?: Apollo.MutationHo
 export type SetGeneralContactInfoMutationHookResult = ReturnType<typeof useSetGeneralContactInfoMutation>;
 export type SetGeneralContactInfoMutationResult = Apollo.MutationResult<SetGeneralContactInfoMutation>;
 export type SetGeneralContactInfoMutationOptions = Apollo.BaseMutationOptions<SetGeneralContactInfoMutation, SetGeneralContactInfoMutationVariables>;
+export const SetMainDescriptionDocument = gql`
+    mutation SetMainDescription($description: MainDescriptionInput) {
+  SetMainDescription(description: $description)
+}
+    `;
+export type SetMainDescriptionMutationFn = Apollo.MutationFunction<SetMainDescriptionMutation, SetMainDescriptionMutationVariables>;
+
+/**
+ * __useSetMainDescriptionMutation__
+ *
+ * To run a mutation, you first call `useSetMainDescriptionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetMainDescriptionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setMainDescriptionMutation, { data, loading, error }] = useSetMainDescriptionMutation({
+ *   variables: {
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useSetMainDescriptionMutation(baseOptions?: Apollo.MutationHookOptions<SetMainDescriptionMutation, SetMainDescriptionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetMainDescriptionMutation, SetMainDescriptionMutationVariables>(SetMainDescriptionDocument, options);
+      }
+export type SetMainDescriptionMutationHookResult = ReturnType<typeof useSetMainDescriptionMutation>;
+export type SetMainDescriptionMutationResult = Apollo.MutationResult<SetMainDescriptionMutation>;
+export type SetMainDescriptionMutationOptions = Apollo.BaseMutationOptions<SetMainDescriptionMutation, SetMainDescriptionMutationVariables>;
 export const SetObjectTimeTableDocument = gql`
     mutation SetObjectTimeTable($objectName: String, $newObjectTimeTable: ObjectTimeTableInput) {
   SetObjectTimeTable(
@@ -1605,6 +1995,50 @@ export function useGetCalendarEventsByMonthLazyQuery(baseOptions?: Apollo.LazyQu
 export type GetCalendarEventsByMonthQueryHookResult = ReturnType<typeof useGetCalendarEventsByMonthQuery>;
 export type GetCalendarEventsByMonthLazyQueryHookResult = ReturnType<typeof useGetCalendarEventsByMonthLazyQuery>;
 export type GetCalendarEventsByMonthQueryResult = Apollo.QueryResult<GetCalendarEventsByMonthQuery, GetCalendarEventsByMonthQueryVariables>;
+export const GetFacilitiesDocument = gql`
+    query GetFacilities {
+  GetFacilities {
+    _id
+    title {
+      RUS
+      EST
+      ENG
+    }
+    description {
+      RUS
+      EST
+      ENG
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetFacilitiesQuery__
+ *
+ * To run a query within a React component, call `useGetFacilitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFacilitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFacilitiesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetFacilitiesQuery(baseOptions?: Apollo.QueryHookOptions<GetFacilitiesQuery, GetFacilitiesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFacilitiesQuery, GetFacilitiesQueryVariables>(GetFacilitiesDocument, options);
+      }
+export function useGetFacilitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFacilitiesQuery, GetFacilitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFacilitiesQuery, GetFacilitiesQueryVariables>(GetFacilitiesDocument, options);
+        }
+export type GetFacilitiesQueryHookResult = ReturnType<typeof useGetFacilitiesQuery>;
+export type GetFacilitiesLazyQueryHookResult = ReturnType<typeof useGetFacilitiesLazyQuery>;
+export type GetFacilitiesQueryResult = Apollo.QueryResult<GetFacilitiesQuery, GetFacilitiesQueryVariables>;
 export const GetFooterDocument = gql`
     query GetFooter {
   GetFooter {
@@ -1777,6 +2211,56 @@ export function useGetLatestNewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetLatestNewsQueryHookResult = ReturnType<typeof useGetLatestNewsQuery>;
 export type GetLatestNewsLazyQueryHookResult = ReturnType<typeof useGetLatestNewsLazyQuery>;
 export type GetLatestNewsQueryResult = Apollo.QueryResult<GetLatestNewsQuery, GetLatestNewsQueryVariables>;
+export const GetMainDescriptionDocument = gql`
+    query GetMainDescription {
+  GetMainDescription {
+    text {
+      RUS
+      EST
+      ENG
+    }
+    contacts {
+      title {
+        RUS
+        EST
+        ENG
+      }
+      body {
+        RUS
+        EST
+        ENG
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMainDescriptionQuery__
+ *
+ * To run a query within a React component, call `useGetMainDescriptionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMainDescriptionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMainDescriptionQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMainDescriptionQuery(baseOptions?: Apollo.QueryHookOptions<GetMainDescriptionQuery, GetMainDescriptionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMainDescriptionQuery, GetMainDescriptionQueryVariables>(GetMainDescriptionDocument, options);
+      }
+export function useGetMainDescriptionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMainDescriptionQuery, GetMainDescriptionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMainDescriptionQuery, GetMainDescriptionQueryVariables>(GetMainDescriptionDocument, options);
+        }
+export type GetMainDescriptionQueryHookResult = ReturnType<typeof useGetMainDescriptionQuery>;
+export type GetMainDescriptionLazyQueryHookResult = ReturnType<typeof useGetMainDescriptionLazyQuery>;
+export type GetMainDescriptionQueryResult = Apollo.QueryResult<GetMainDescriptionQuery, GetMainDescriptionQueryVariables>;
 export const GetObjectTimeTableDocument = gql`
     query GetObjectTimeTable($objectName: String) {
   GetObjectTimeTable(objectName: $objectName) {
@@ -2237,6 +2721,50 @@ export function useGetRelevantCalendarEventsByCurrentDateLazyQuery(baseOptions?:
 export type GetRelevantCalendarEventsByCurrentDateQueryHookResult = ReturnType<typeof useGetRelevantCalendarEventsByCurrentDateQuery>;
 export type GetRelevantCalendarEventsByCurrentDateLazyQueryHookResult = ReturnType<typeof useGetRelevantCalendarEventsByCurrentDateLazyQuery>;
 export type GetRelevantCalendarEventsByCurrentDateQueryResult = Apollo.QueryResult<GetRelevantCalendarEventsByCurrentDateQuery, GetRelevantCalendarEventsByCurrentDateQueryVariables>;
+export const GetRoomsDocument = gql`
+    query GetRooms {
+  GetRooms {
+    _id
+    name {
+      RUS
+      EST
+      ENG
+    }
+    description {
+      RUS
+      EST
+      ENG
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetRoomsQuery__
+ *
+ * To run a query within a React component, call `useGetRoomsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRoomsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRoomsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetRoomsQuery(baseOptions?: Apollo.QueryHookOptions<GetRoomsQuery, GetRoomsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRoomsQuery, GetRoomsQueryVariables>(GetRoomsDocument, options);
+      }
+export function useGetRoomsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRoomsQuery, GetRoomsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRoomsQuery, GetRoomsQueryVariables>(GetRoomsDocument, options);
+        }
+export type GetRoomsQueryHookResult = ReturnType<typeof useGetRoomsQuery>;
+export type GetRoomsLazyQueryHookResult = ReturnType<typeof useGetRoomsLazyQuery>;
+export type GetRoomsQueryResult = Apollo.QueryResult<GetRoomsQuery, GetRoomsQueryVariables>;
 export const GetSimplePagesDocument = gql`
     query GetSimplePages($type: Int) {
   GetSimplePages(type: $type) {

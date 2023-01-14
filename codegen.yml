@@ -1,5 +1,6 @@
 overwrite: true
-schema: "https://sillamae-sk.herokuapp.com/"
+# schema: "https://sillamae-sk.herokuapp.com/"
+schema: "https://sportcomplex-server.sillamaesk.ee"
 documents: "operations/**/*.graphql"
 generates:
   graphqlGenerated/graphql.tsx:

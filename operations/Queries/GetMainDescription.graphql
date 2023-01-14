@@ -1,0 +1,21 @@
+query GetMainDescription {
+  GetMainDescription {
+    text {
+      RUS
+      EST
+      ENG
+    }
+    contacts {
+      title {
+        RUS
+        EST
+        ENG
+      }
+      body {
+        RUS
+        EST
+        ENG
+      }
+    }
+  }
+}

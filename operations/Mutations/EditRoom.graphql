@@ -1,0 +1,3 @@
+mutation EditRoom($roomIdToEdit: ID, $editedRoom: RoomInput) {
+  EditRoom(RoomIdToEdit: $roomIdToEdit, editedRoom: $editedRoom)
+}

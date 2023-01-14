@@ -1,0 +1,3 @@
+mutation AddRoom($newRoom: RoomInput) {
+  AddRoom(newRoom: $newRoom)
+}
