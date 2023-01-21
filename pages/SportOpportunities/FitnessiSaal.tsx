@@ -59,7 +59,6 @@ const FitnessiSaal: NextPage = () => {
             pageName: "Fitnessi saal",
         },
     });
-    console.log(currentPage.pageName ?? "")
 
     return (
         <LayoutSportComplexOpportunities>

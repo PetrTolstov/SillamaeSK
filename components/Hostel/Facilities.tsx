@@ -1,25 +1,25 @@
 import styles from './Facilities.module.css'
-import {useGetGeneralContactsInfoQuery} from "../../graphqlGenerated/graphql";
+import {Facility, TextContent, useGetFacilitiesQuery} from "../../graphqlGenerated/graphql";
 import { observer } from 'mobx-react-lite';
-import LanguageStoreV2 from "../../Stores/LanguageStoreV2";
-import photo  from '../../public/RoomPhoto.png'
-import Link from "next/link";
+import ModalAdmin from '../AdminComponents/ModalAdmin';
+import { useState } from 'react';
+import { getTextContent } from '../../Helpers/TextContentService';
 
 function Facilities(){
-    const {data, loading, error} = useGetGeneralContactsInfoQuery()
-
+    const {data, loading, error} = useGetFacilitiesQuery()
+    const [currentFacility, setCurrentFacility] = useState<Facility>()
     return(
         <> <h2 className={styles.h2}>Facilities</h2>
         <article className={styles.listOfFacilities}  data-aos="fade-right" data-aos-once={'true'}>
-            <button>Parking</button>
-            <button>Free WiFi</button>
-            <button>Non-smoking rooms</button>
-            <button>Designated smoking area</button>
-            <button>Bathroom</button>
-            <button>English, Estonian, Russian spoken</button>
-            <button>Lockers</button>
-            <button>Kitchen</button>
+            {loading ? <p>Loading...</p> : data?.GetFacilities?.map(facility => ( 
+                <button onClick={()=>setCurrentFacility(facility as Facility)}>
+                    {getTextContent(facility?.title as TextContent)}
+                </button>
+            ))}
         </article>
+        <ModalAdmin isShowing={currentFacility != undefined} onClose={() => setCurrentFacility(undefined)}>
+                <p>{getTextContent(currentFacility?.description as TextContent)}</p>
+        </ModalAdmin>
         </>
     )
 }
