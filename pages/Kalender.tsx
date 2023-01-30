@@ -96,8 +96,9 @@ const Kalender: NextPage = () => {
 			date = date.charAt(0).toUpperCase() + date.slice(1);
 			let dateList = date.split(" ");
 
-
-			setCurrentMonthAndYear(`${dateList[1]}-${monthNames.indexOf(dateList[0])+1}`);
+            `${dateList[1]}-${(monthNames.indexOf(dateList[0])+1) < 10 ? '0' + (monthNames.indexOf(dateList[0])+1) : (monthNames.indexOf(dateList[0])+1)}`
+	
+			setCurrentMonthAndYear(`${dateList[1]}-${(monthNames.indexOf(dateList[0])+1) < 10 ? '0' + (monthNames.indexOf(dateList[0])+1) : (monthNames.indexOf(dateList[0])+1)}`);
 			setTimeout(correctCalendar, 100);
 			correctCalendar();
 
@@ -127,7 +128,6 @@ const Kalender: NextPage = () => {
 				list[i].style.background = "#FFFFFF";
 				list[i].style.color = "#afafaf";
 			} else if (parseInt(list[i].textContent!) > max) {
-				console.log('c')
 				let date = document.querySelectorAll(`.${styles.calendar} > div:nth-child(1) > button`)[2].textContent!;
 				date = date.charAt(0).toUpperCase() + date.slice(1);
 				let dateList = date.split(" ");
