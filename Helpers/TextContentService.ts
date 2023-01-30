@@ -6,6 +6,5 @@ export const getTextContent = (obj: TextContent | undefined): string | Maybe<str
 	if (obj === undefined) {
 		return "Failed to fetch";
 	}
-    console.log((obj as TextContent)[LanguageStoreV2.currentLanguage] ?? (obj as TextContent).EST ?? "Failed to fetch")
 	return (obj as TextContent)[LanguageStoreV2.currentLanguage] ?? (obj as TextContent).EST ?? "Failed to fetch";
 };

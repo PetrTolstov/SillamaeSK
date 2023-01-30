@@ -12,7 +12,7 @@ function Facilities(){
         <> <h2 className={styles.h2}>Facilities</h2>
         <article className={styles.listOfFacilities}  data-aos="fade-right" data-aos-once={'true'}>
             {loading ? <p>Loading...</p> : data?.GetFacilities?.map(facility => ( 
-                <button onClick={()=>setCurrentFacility(facility as Facility)}>
+                <button key={facility?._id} onClick={()=>setCurrentFacility(facility as Facility)}>
                     {getTextContent(facility?.title as TextContent)}
                 </button>
             ))}

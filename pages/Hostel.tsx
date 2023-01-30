@@ -19,15 +19,15 @@ const Hostel: NextPage = () => {
 	});
 	return (
 		<Layout>
-			{loading ? <p>Loading</p> : configData?.GetPageConfig?.showBanner ? (
+			{/* {loading ? <p>Loading</p> : configData?.GetPageConfig?.showBanner ? (
 				<AppIsBeingBuilt isEst={LanguageStore.currentLanguage.isEst} />
-			) : (
+			) : ( */}
 				<main className={styles.main}>
 					<AboutHostel />
 					<HostelRooms />
 					<Facilities />
 				</main>
-			)}
+			{/* )} */}
 		</Layout>
 	);
 };
