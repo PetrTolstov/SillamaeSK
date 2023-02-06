@@ -54,7 +54,7 @@ const Calendar: NextPageWithLayout = () => {
 	useEffect(() => {
 		const length = data?.GetCalendarEvents?.length || 0;
 		if (length > 0) {
-			console.log("length  " + length);
+			
 			fetchMore({
 				variables: {
 					options: {

@@ -227,7 +227,7 @@ function TimeTableAdmin({ pageName, isAdmin = false }: { pageName: string; isAdm
 					//     }
 					// }
 					let fontColor = GetContrast(GetTimeTableEventColor(event.textContent.EST) ?? "");
-					console.log(fontColor);
+					
 					return (
 						<div
 							className={styles.container}

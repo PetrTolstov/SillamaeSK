@@ -15,7 +15,6 @@ function HostelRooms() {
 				<ul className={styles.ul}>
 					{loading ? <p>Loading</p> : data?.GetRooms?.map((room) => (
 						<li key={room?._id}>
-							<img src={photo.src} alt={"Room photo"} />
 							<h3>{getTextContent(room?.name as TextContent)}</h3>
 							<p>{getTextContent(room?.description as TextContent)}</p>
 

@@ -40,10 +40,10 @@
 }
 
 .imageBlock{
+    position: relative;
     border-radius: 0 0 5px 0;
     width: 100%;
     height: 100%;
-    background-image: url("../../public/hostel.jpg");
     background-size: auto 100%;
     display: flex;
     flex-direction: column-reverse;
@@ -51,6 +51,7 @@
 }
 
 .contactInfo{
+    position: absolute;
     display: flex;
     flex-direction: column;
     background-color: #0167FF;
@@ -61,4 +62,58 @@
 
 .contactText{
     margin-bottom: 15px;
+}
+
+
+
+.arrows {
+    position: fixed;
+    width: 31px;
+    height: 31px;
+    z-index: 110;
+
+    cursor: pointer;
+    border: none;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.arrowNext {
+    bottom: 0;
+    z-index: 110;
+    margin: 0px 50px;
+    background: #005be4;
+    border-radius: 0 5px 5px 0;
+}
+.arrowPrev {
+    bottom: 0;
+    z-index: 110;
+   
+    margin: 0px 20px;
+    background: #0167ff;
+    border-radius: 5px 0 0 5px;
+}
+
+.Carousel {
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+}
+
+.Carousel div {
+    height: 100% !important;
+}
+
+.Carousel ul{
+    height: 100% !important;
+}
+
+.CarouselItem {
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position-x: 0;
+
+    height: 200px;
 }

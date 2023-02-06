@@ -45,7 +45,7 @@ const Regulations: NextPage = () => {
 					optional: page,
 				},
 			});
-			console.log(res.data);
+			
 			let list = res.data.map((el: string) => {
 				return `${LINK}/public/images/${page}/${el}`
 			})
@@ -56,7 +56,7 @@ const Regulations: NextPage = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(data?.GetSimplePages);
+		
 	}, [loading]);
 
 	const { data: configData } = useGetPageConfigQuery({

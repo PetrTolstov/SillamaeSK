@@ -37,7 +37,6 @@ function ScheduleOnMainPageComponent() {
         }
         let year = date.getUTCFullYear();
         let result = year + "-" + month + "-" + day;
-        console.log(result);
         return result;
     };
 
@@ -47,7 +46,7 @@ function ScheduleOnMainPageComponent() {
                 currentDate: getCurrentDateString(new Date()),
             },
             onCompleted: (data) => {
-                console.log(data);
+                
             },
         });
 
@@ -139,7 +138,6 @@ function ScheduleOnMainPageComponent() {
                             CARDS_AMOUNT
                         ).map((el, i) => {
                             let date = new Date(el!.date ?? "");
-                            console.log(date);
                             return (
                                 <li
                                     id={`${date.getDate()}-${

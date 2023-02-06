@@ -40,7 +40,7 @@ const Gallery: NextPageWithLayout = () => {
 			<ButtonAdmin border action={() => setShowDeleteFile(true)} label={"Delete images"} />
             <h6>Show banner</h6>
             <input type="checkbox" defaultChecked={configData?.GetPageConfig?.showBanner ?? false} onChange={e => { 
-                    console.log(e.target.checked);
+                    
                     editConfig({ variables: { 
                         pageName: "Gallery", 
                         newConfig: { 

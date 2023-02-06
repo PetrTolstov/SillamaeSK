@@ -55,7 +55,7 @@ const MainPageAdmin: NextPageWithLayout = () => {
 					type='checkbox'
 					defaultChecked={configData?.GetPageConfig?.showBanner ?? false}
 					onChange={(e) => {
-						console.log(e.target.checked);
+						
 						editConfig({
 							variables: {
 								pageName: "MainPage",

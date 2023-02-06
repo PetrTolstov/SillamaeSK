@@ -22,7 +22,7 @@ const ContactInfoPage: NextPageWithLayout = () => {
 
                 <h6>Show Banner</h6>
                 <input type="checkbox" defaultChecked={configData?.GetPageConfig?.showBanner ?? false} onChange={e => { 
-                    console.log(e.target.checked);
+                    
                     editConfig({ variables: { 
                         pageName: "Contacts", 
                         newConfig: { 

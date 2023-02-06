@@ -60,7 +60,7 @@ const Kalender: NextPage = () => {
 		"Detsember",
 	];
 	const [getEventsByMonth, { loading, data, error }] = useGetCalendarEventsByMonthLazyQuery();
-	console.log(currentMonthAndYear)
+	
 	useEffect(() => {
 		getEventsByMonth({
 			variables: {
@@ -165,7 +165,7 @@ const Kalender: NextPage = () => {
 
 
 	function onChangeCalender(value:any){
-		console.log(value)
+		
 	}
 
 	return (
@@ -205,7 +205,7 @@ const Kalender: NextPage = () => {
 									// @ts-ignore
 									let d = data.GetCalendarEventsByMonth[0]
 
-									console.log((new Date(d?.date + "/" + d?.startTime ?? "")))
+									
 
 									if ((new Date(d?.date + "/" + d?.startTime ?? "")).getTime() < newDate.getTime()){
 										document.getElementsByClassName(styles.moreLi)[0]?.classList.remove(styles.hiddenB)

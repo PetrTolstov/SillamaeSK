@@ -35,7 +35,6 @@ const FromSportComplex: NextPageWithLayout = () => {
        
 	},[currentPage])
     useEffect(() => {
-        console.log("current page " + currentPage);
         fetchConfig({variables: { 
             pageName: data?.GetSimplePages![0].pageName
         }, onCompleted(data) {

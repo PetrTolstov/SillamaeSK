@@ -17,7 +17,6 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 					optional: page,
 				},
 			});
-			console.log(page)
 			setImgFile(res.data);
 		})()
 	}, []);
@@ -32,7 +31,6 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 				el.classList.add(styles.hidden)
 			}
 		})
-		console.log(value)
 		document.getElementById(value+'-c')!.classList.remove(styles.hidden)
 	};
 
@@ -53,7 +51,6 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 
 
 	const handleImgClick = (event: any) => {
-		console.log(event.target.id)
 		const img : string = event.target.id
 		let copyList : string[] = [...listImgDel]
 
@@ -67,7 +64,7 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 			copyList.push(img)
 
 		}
-		console.log(copyList)
+	
 		// @ts-ignore
 		setListImgDel(copyList)
 
@@ -80,14 +77,13 @@ const DeleteImage = ({ page, show, closeModal}: { page: string; show: boolean, c
 		event.preventDefault();
 		const data = new FormData();
 		data.append("optional", page);
-		console.log(file)
 		if (file) {
 			// @ts-ignore
 			for (let x = 0; x < file.length; x++) {
 				data.append("file", file[x]);
 			}
 		}
-		console.log(data)
+		
 		axios.post(LINK + "/upload", data).then((r) => closeModal());
 	};
 	 */

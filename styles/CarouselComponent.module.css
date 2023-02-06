@@ -1,28 +1,28 @@
-
 .parent {
     width: 100%;
     z-index: 0;
     position: relative;
     margin-top: -30px;
-
+    min-height: 200px;
 }
 
 .CarouselItem {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position-x: 0;
+
     height: 200px;
 }
 
-.Carousel { 
+.Carousel {
     z-index: 1;
 }
 
-.parentBorder > div > div > div > div{ 
+.parentBorder > div > div > div > div {
     clip-path: inset(0% 0% 0% 0% round 10px);
 }
 
-.arrows {    
+.arrows {
     position: relative;
     width: 31px;
     height: 31px;
@@ -36,63 +36,60 @@
     justify-content: center;
     align-items: center;
 }
-.arrowNext { 
+.arrowNext {
     z-index: 110;
     margin: 0px 50px;
     bottom: 20px;
-    background: #005BE4;
+    background: #005be4;
     border-radius: 0 5px 5px 0;
 }
-.arrowPrev { 
+.arrowPrev {
     z-index: 110;
     bottom: -211px;
     margin: 0px 20px;
-    background: #0167FF;
+    background: #0167ff;
     border-radius: 5px 0 0 5px;
 }
 
-@media screen and (max-width: 500px){
-    .schedule{
+@media screen and (max-width: 500px) {
+    .schedule {
         width: 100%;
     }
 }
 
 @media screen and (max-width: 800px) {
     .CarouselItem {
-
         background-size: auto;
-
     }
-    img.backGroundImg{
+    img.backGroundImg {
         width: 100%;
         border-radius: 0;
         height: 300px;
     }
-    img.altBackGroundImg{
+    img.altBackGroundImg {
         width: 100%;
         border-radius: 0;
         height: 300px;
     }
-    div.schedule{
-
+    div.schedule {
         margin: auto 0;
     }
-    .CarouselItem { 
+    .CarouselItem {
         height: 300px;
     }
-    .arrowPrev { 
+    .arrowPrev {
         bottom: -311px;
     }
 
-    .divSchedule{
+    .divSchedule {
         flex-direction: column;
     }
-    article.ImageWithSchedule{
+    article.ImageWithSchedule {
         background-size: auto;
         height: 300px;
     }
 
-    div.AltScheduleButtons{
+    div.AltScheduleButtons {
         bottom: -280px;
     }
 }
@@ -112,22 +109,21 @@
     align-items: flex-start;
 }
 
-.ImageWithSchedule button{
+.ImageWithSchedule button {
     cursor: pointer;
 }
 
-
-.backGroundImg{
+.backGroundImg {
     position: absolute;
     z-index: -1;
     max-width: 1300px;
     height: 200px;
     background-size: 100% 100%;
-    width: calc( 100% - 100px);
+    width: calc(100% - 100px);
     border-radius: 10px;
 }
 
-.altBackGroundImg{
+.altBackGroundImg {
     position: absolute;
     z-index: -1;
     max-width: 1300px;
@@ -138,8 +134,7 @@
     width: 100%;
 }
 
-
-.schedule{
+.schedule {
     z-index: 1;
     position: absolute;
 
@@ -147,61 +142,54 @@
 
     font-size: 16px;
     background: rgba(33, 53, 77, 0.75);
-    color: #FFFFFF;
+    color: #ffffff;
     border-radius: 5px;
     padding: 15px;
     margin: auto 20px;
 }
 
-.divSchedule{
+.divSchedule {
     display: flex;
-
 }
 
-.divSchedule div:first-child{
+.divSchedule div:first-child {
     margin-right: 20px;
 }
-.schedule p{
+.schedule p {
     margin: 5px;
 }
 
-
-.AltScheduleButtons{
+.AltScheduleButtons {
     position: relative;
     bottom: -180px;
     display: flex;
     margin: 0 20px;
 }
 
-.scheduleButtons{
+.scheduleButtons {
     position: relative;
     bottom: -10px;
     display: flex;
     margin: 0 20px;
-
 }
 
-.ImageWithSchedule button{
+.ImageWithSchedule button {
     color: white;
     border: none;
     width: 31px;
     height: 31px;
-
 }
 
-.right{
-    background: #005BE4;
+.right {
+    background: #005be4;
     border-radius: 0 5px 5px 0;
 }
 
-.left{
-    background: #0167FF;
+.left {
+    background: #0167ff;
     border-radius: 5px 0 0 5px;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
-
-
-
