@@ -225,8 +225,8 @@ const Kalender: NextPage = () => {
 											id={`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}
 											key={`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}--${i}`}>
 											<div>
-												<span>{date.getDate()}</span>
-												<span>{monthNames[date.getUTCMonth()]}</span>
+												<span>{date.getDate()}.</span>
+												<span>{monthNames[date.getUTCMonth()].toLowerCase()}</span>
 											</div>
 											<div>
 												<h3>{el!.name![LanguageStoreV2.currentLanguage] == "" ? el?.name?.EST : el!.name![LanguageStoreV2.currentLanguage]}</h3>

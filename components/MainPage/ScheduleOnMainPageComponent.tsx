@@ -99,18 +99,18 @@ function ScheduleOnMainPageComponent() {
     });*/
 
     const monthNames = [
-        "Jaanuar",
-        "Veebruar",
-        "Märts",
-        "Aprill",
-        "Mai",
-        "Juuni",
-        "Juuli",
-        "August",
-        "September",
-        "Oktoober",
-        "November",
-        "Detsember",
+        "jaanuar",
+        "veebruar",
+        "märts",
+        "aprill",
+        "mai",
+        "juuni",
+        "juuli",
+        "august",
+        "september",
+        "oktoober",
+        "november",
+        "detsember",
     ];
 
     const hCalender = {
@@ -155,7 +155,7 @@ function ScheduleOnMainPageComponent() {
                                                       .currentLanguage
                                               ]}
                                     </h3>
-                                    <p>{`${date.getDate()} ${
+                                    <p>{`${date.getDate()}. ${
                                         monthNames[date.getUTCMonth()]
                                     }`}</p>
                                     <span className={styles.place}>
