@@ -20,6 +20,7 @@ import CarouselComponent from "../components/MainPage/CarouselComponent";
 import axios from "axios";
 import { LINK } from "../config/constants";
 import Script from "next/dist/client/script";
+import ScheduleOnMainPageComponent from "../components/MainPage/ScheduleOnMainPageComponent";
 
 const Kalender: NextPage = () => {
     const page = "Karusel";

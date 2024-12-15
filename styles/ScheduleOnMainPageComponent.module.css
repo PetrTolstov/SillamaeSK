@@ -42,40 +42,18 @@
 }
 
 
-
-.kalender ul{
-    display: flex;
-    overflow-x: scroll;
-    flex-direction: row;
-    margin: 0;
-    padding: 0;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-
-}
-
-.kalender ul::-webkit-scrollbar {
-    display: none;
-}
-
-
-
-.kalender ul li{
-    min-width: 300px;
-    margin: 0 10px 20px 10px;
-    display: flex;
-    flex-direction: column;
-    background: #FFFFFF;
-    color: #002B5C;
-    padding: 0 25px;
-    border-radius: 5px;
-    list-style-type: none;
-    justify-content: space-between;
-}
-
 .kalenderFrame{
     max-width: 1300px;
     width: 100%;
+}
+
+.customCalendar{
+    color: black
+}
+
+.customCalendar > div:first-child{
+    padding-bottom: 20px;
+    border-radius: 20px;
 }
 
 .kalenderFrame li h3{
